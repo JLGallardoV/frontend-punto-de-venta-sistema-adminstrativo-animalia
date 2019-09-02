@@ -12,6 +12,7 @@
   font-family: 'Darker Grotesque', sans-serif;
   font-size: 26px;
   margin: 0px auto;
+  padding-top: 5px;
 }
 .estiloToolbar{
   background-color: #7cafdbe3;
@@ -31,7 +32,11 @@
 .cardElementos{
   background-color: #7cafdbe3;
   border-radius: 6px;
-  height: 7.5em;
+  height: 6.5em;
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 2.2em;
 
 }
 .iconosMenuPrincipal{
@@ -39,11 +44,30 @@
   color:#eef4f9ad;
 }
 
+.espacioDerecho{
+  margin-right: 5px;
+}
+.espacioSuperior{
+  margin-top: 0px;
+}
+
 @media screen and (max-width: 600px) {
   .cardElementos{
-    background-color: #7cafdbe3;
-    border-radius: 6px;
-    height: 5.5em;
+    background-color:
+    #7cafdbe3;
+    border-radius: 5px;
+    height: 3em;
+    font-size: 14px;
+    text-align: center;
+    padding-top: 4px;
+    border: solid 1px black;
 
+
+  }
+  .espacioSuperior{
+    margin-top: 5px;
+  }
+  .espacioDerecho{
+    margin-right: 0px;
   }
 }
