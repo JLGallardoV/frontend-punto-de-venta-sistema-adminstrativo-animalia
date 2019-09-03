@@ -1,0 +1,27 @@
+<div class="imagenFondo">
+  <br>
+  <mat-card class="cardFormulario">
+    <form [formGroup]= "frmLogin"  class="darkerFuenteCuerpos">
+      <div style="text-align: center;">
+        <h3>Hola!</h3>
+        <h1>Bienvenido</h1>
+      </div>
+      <div class="contenedorInputs">
+        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
+          <input formControlName="emailUsuario" matInput placeholder="E-mail">
+        </mat-form-field>
+
+        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
+          <input formControlName="passwordUsuario" matInput placeholder="Contraseña">
+        </mat-form-field>
+        <br>
+        <div>
+          <mat-slide-toggle style="float: right;" color="primary">Gerente</mat-slide-toggle>
+        </div>
+        <br>
+      </div>
+    </form>
+    <br>
+    <button mat-stroked-button class="btLogin darkerFuenteTitulos margenSuperior" [routerLink]="[ '/home']">Ingresar</button>
+  </mat-card>
+</div>

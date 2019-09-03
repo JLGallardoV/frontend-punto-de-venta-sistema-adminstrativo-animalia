@@ -7,29 +7,16 @@
   height: 100vh;
   width: 100vw;
 }
-.margenMenu{
-  font-family: 'Darker Grotesque', sans-serif;
-  font-size: 26px;
-  margin: 0px auto;
-  padding-top: 5px;
-}
-.estiloToolbar{
-  background-color: #70b6c4;
-  width: 65vw;
-  border-radius: 5px;
-  margin: 0px auto;
-  height: 50px;
-  margin-top: -6px;
-}
+
 .cardPrincipal{
-  background-color: #eef4f9ad;
+  background-color: #092b239e;
   border-radius: 6px;
   width: 80%;
   height: 85vh;
   margin: 0 auto;
 }
 .cardElementos{
-  background-color: #70b6c4;
+  background: #f6f2ebe3;
   border-radius: 6px;
   height: 6.5em;
   font-family: 'Darker Grotesque', sans-serif;
@@ -55,7 +42,7 @@
 //LOS ESTILOS CAMBIARAN EN DISPOSITIVOS CON RESOLUCIONES PEQUEÑAS
 @media screen and (max-width: 600px) {
   .cardElementos{
-    background-color: #70b6c4;
+    background: #f6f2ebe3;
     border-radius: 5px;
     height: 3em;
     font-size: 14px;
@@ -75,7 +62,7 @@
     margin-right: 0px;
   }
   .cardPrincipal{
-    background-color: #eef4f9ad;
+    background-color: #092b239e;
     border-radius: 6px;
     width: 80%;
     height: 100vh;
@@ -95,7 +82,7 @@
 //DISPOSITIVOS MUY PEQUEÑOS
 @media screen and (max-width: 340px) {
   .cardPrincipal{
-    background-color: #eef4f9ad;
+    background-color: #092b239e;
     border-radius: 6px;
     width: 80%;
     height: 110vh;
