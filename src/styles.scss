@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.estiloToolbar{
+  background: linear-gradient(to top right, #ffffff, #c1b9b95c);
+  width: 65vw !important;
+  border-radius: 5px;
+  margin: 0px auto;
+  height: 50px !important;
+  margin-top: -6px;
+}
+
+.margenMenu{
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 26px;
+  margin: 0px auto;
+  padding-top: 5px;
+}
+
+.darkerFuenteTitulos{
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 26px;
+}
+
+.darkerFuenteCuerpos{
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 20px;
+}
