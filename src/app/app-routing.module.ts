@@ -7,7 +7,7 @@ import {ProveedoresComponent} from './proveedores/proveedores.component';
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'proveedores', component: LoginComponent},
+  {path: 'proveedores', component: ProveedoresComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 
