@@ -2,12 +2,13 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 .estiloToolbar{
-  background: linear-gradient(to top right, #ffffff, #c1b9b95c);
+  background-color: #092b239e;
   width: 65vw !important;
   border-radius: 5px;
   margin: 0px auto;
   height: 50px !important;
   margin-top: -6px;
+  color: darkseagreen !important;
 }
 
 .margenMenu{

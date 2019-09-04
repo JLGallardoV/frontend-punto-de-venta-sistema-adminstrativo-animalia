@@ -25,6 +25,16 @@
   padding-top: 2.2em;
 
 }
+.cardElementos:hover{
+  background: #00000091;
+  border-radius: 8px;
+  height: 6.5em;
+  font-family: "Darker Grotesque", sans-serif;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 2.2em;
+  color: darkseagreen;
+}
 .iconosMenuPrincipal{
   font-size:60px;
   color:#eef4f9ad;
@@ -44,6 +54,18 @@
   .cardElementos{
     background: #f6f2ebe3;
     border-radius: 5px;
+    height: 3em;
+    font-size: 14px;
+    text-align: center;
+    padding-top: 4px;
+    padding-right: 50px;
+    padding-left: 50px;
+
+  }
+  .cardElementos:hover{
+    background: #00000091;
+    color: darkseagreen;
+    border-radius: 7px;
     height: 3em;
     font-size: 14px;
     text-align: center;
