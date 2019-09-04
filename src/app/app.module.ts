@@ -15,11 +15,16 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { ProveedoresComponent } from './proveedores/proveedores.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    ProveedoresComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +40,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
     MatSlideToggleModule
   ],
   providers: [],

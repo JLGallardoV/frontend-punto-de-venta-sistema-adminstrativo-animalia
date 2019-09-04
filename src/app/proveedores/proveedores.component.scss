@@ -1,0 +1,56 @@
+.imagenFondo{
+  background: url('../../assets/img/fondo7.jpg');
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: top;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
+.contenedorAcciones{
+  width: 80%;
+  margin: auto;
+  background-color: #2d1f2c6e;
+  height: 60px;
+}
+
+.btnAcciones{
+  background: #f6f2ebe3;
+  width: 40px;
+  height: 40px;
+}
+.btnAcciones:hover{
+  background: #00000091;
+  color: darkseagreen;
+  width:  30px;
+  height: 30px;
+}
+
+.cardPrincipal{
+  background-color: #2d1f2c6e;
+  border-radius: 6px;
+  width: 80%;
+  height: 70vh;
+  margin: 0 auto;
+}
+.icono{
+  font-size: 15px;
+  margin-top: -25px;
+  color: #585766;
+}
+
+.inputBuscar{
+  font-size: 20px;
+  margin-top: -20px;
+  float: right;
+  width: 85%;
+}
+
+table {
+  width: 100%;
+  background: #eae4dd45;
+}
+
+
+//sobreescribiendo el color de angular material
