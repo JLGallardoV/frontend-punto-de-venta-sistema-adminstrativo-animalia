@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 
 export interface PeriodicElement {
   name: string;

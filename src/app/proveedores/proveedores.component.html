@@ -1,7 +1,7 @@
 <div class="imagenFondo">
-  <mat-toolbar class="estiloToolbar" style="background: #2d1f2c6e;cursor: pointer;" (click)="openBottomSheet()">
+  <mat-toolbar class="estiloToolbar animacionCambioColor" style="background: #2d1f2c6e;cursor: pointer;" (click)="openBottomSheet()">
     <div class="margenMenu">
-      <p>Menu</p>
+      <i class='fas fa-bars' style='font-size: 18px;color: darkseagreen'></i> Menu
     </div>
   </mat-toolbar>
   <br>
@@ -57,7 +57,11 @@
 
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
     </div>
-
+    <mat-card class="letreroModulo">
+      <div style="margin-bottom: -14px;">
+        Proveedores <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
+      </div>
+    </mat-card>
   </mat-card>
 
 
