@@ -1,6 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+//TEMA ANGULAR MATERIAL:
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+//ESTILOS GLOBALES GENERALES
 .estiloToolbar{
   background-color: #092b239e;
   width: 65vw !important;
@@ -25,9 +26,14 @@
 
 .darkerFuenteCuerpos{
   font-family: 'Darker Grotesque', sans-serif;
-  font-size: 20px;
+  font-size: 20px!important;
 }
-//ESTOS SON ESTILOS PARA EL bottomSheet:
+.icono{
+  font-size: 15px!important;
+  margin-top: -25px!important;
+  color: #585766!important;
+}
+//ESTOS SON ESTILOS PARA EL BOTTOMSHEET:
 .mat-bottom-sheet-container {
     padding: 8px 16px;
     min-width: 100vw;
@@ -42,4 +48,77 @@
   color: darkseagreen !important;
   font-family: 'Darker Grotesque', sans-serif;
   font-size: 26px;
+}
+
+//ESTILOS PARA MODULOS CRUD:
+.contenedorAcciones{
+  width: 80%;
+  margin: auto;
+  background-color: #2d1f2c6e;
+  height: 60px;
+}
+
+.btnAcciones{
+  background: #f6f2ebe3!important;
+  width: 40px!important;
+  height: 40px!important;
+}
+.btnAcciones:hover{
+  background: #00000091!important;
+  color: darkseagreen!important;
+  width:  35px!important;
+  height: 35px!important;
+}
+
+.inputBuscar{
+  font-size: 20px;
+  margin-top: -20px;
+  float: right;
+  width: 85%;
+}
+//ESTILOS PARA TABLA CRUD:
+
+table {
+  width: 100%;
+  background: #eae4dd45!important;
+}
+
+.mat-header-cell{ //contenido de cabeceras
+  font-size: 20px !important;
+  color: #191818 !important;
+}
+.mat-cell{ //contenido celda
+  font-size: 18px !important;
+  color: #191818;
+}
+
+.btnAccionesColumna{
+  width: 100px;
+  font-size: 18px!important;
+  color: #191818;
+}
+
+.mat-row:hover{
+  .mat-cell{
+    color: darkseagreen!important;
+    font-size: 24px!important;
+  }
+  .btnAccionesColumna{
+    width: 130px;
+    font-size: 24px!important;
+    color: darkseagreen!important;
+  }
+  background-color: #000000cc;
+}
+
+
+//LOS ESTILOS CAMBIARAN EN DISPOSITIVOS CON RESOLUCIONES PEQUEÑAS
+@media screen and (max-width: 600px) {
+  .inputBuscar{
+    font-size: 20px;
+    margin-top: -20px;
+    float: right;
+    width: 55%;
+  }
+
 }

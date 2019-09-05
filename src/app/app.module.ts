@@ -21,6 +21,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list'; //bottomSheet
 import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +48,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatBottomSheetModule
   ],

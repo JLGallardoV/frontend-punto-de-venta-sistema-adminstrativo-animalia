@@ -2,7 +2,7 @@
 
   <div name="grid" class="row">
     <div name="izquierdo" class="col-6">
-      <a href="https://keep.google.com/" mat-list-item (click)="openLink($event)">
+      <a [routerLink]="['/home']" mat-list-item (click)="openLink($event)">
         <span mat-line>Transacciones <i class='fas fa-exchange-alt' style='font-size: 20px;color: darkseagreen;'></i></span>
       </a>
 
@@ -37,7 +37,7 @@
       </a>
 
       <a href="https://hangouts.google.com/" mat-list-item (click)="openLink($event)">
-        <span mat-line>Calculadora <i class='fas fa-calculator' style='font-size: 20px;color: darkseagreen;'></i></span>
+        <span mat-line>Herramientas <i class='fas fa-toolbox' style='font-size: 20px;color: darkseagreen;'></i></span>
       </a>
 
       <a href="https://hangouts.google.com/" mat-list-item (click)="openLink($event)">
