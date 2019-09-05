@@ -27,3 +27,19 @@
   font-family: 'Darker Grotesque', sans-serif;
   font-size: 20px;
 }
+//ESTOS SON ESTILOS PARA EL bottomSheet:
+.mat-bottom-sheet-container {
+    padding: 8px 16px;
+    min-width: 100vw;
+    box-sizing: border-box;
+    display: block;
+    outline: 0;
+    max-height: 80vh;
+    overflow: auto;
+    background: #000000bd;
+}
+.mat-list-text{
+  color: darkseagreen !important;
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 26px;
+}
