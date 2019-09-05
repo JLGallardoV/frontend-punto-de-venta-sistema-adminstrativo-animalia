@@ -15,15 +15,18 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { ProveedoresComponent } from './proveedores/proveedores.component';
+import {ProveedoresComponent, BottomSheetOverviewExampleSheet } from './proveedores/proveedores.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
-
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatListModule} from '@angular/material/list'; //bottomSheet
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
+    BottomSheetOverviewExampleSheet, //bottomSheet lo agregue en proveedores
     ProveedoresComponent
   ],
   imports: [
@@ -39,11 +42,15 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatListModule,
+    MatIconModule,
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatBottomSheetModule
   ],
+  entryComponents: [BottomSheetOverviewExampleSheet], //bottomsheet
   providers: [],
   bootstrap: [AppComponent]
 })

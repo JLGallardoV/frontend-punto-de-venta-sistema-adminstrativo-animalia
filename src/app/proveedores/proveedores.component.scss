@@ -51,6 +51,27 @@ table {
   width: 100%;
   background: #eae4dd45;
 }
-
+.btnAccionesColumna{
+  width: 100px;
+  font-size: 14px!important;
+}
 
 //sobreescribiendo el color de angular material
+::ng-deep .mat-focused {
+  /*change color of label*/
+  color: darkseagreen !important;
+ }
+
+ ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: darkseagreen !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: darkseagreen !important;;
+}
+
+::ng-deep.mat-form-field-label{
+  color: darkseagreen !important;
+}
