@@ -20,6 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list'; //bottomSheet
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import {MatListModule} from '@angular/material/list'; //bottomSheet
     MatButtonModule,
     MatFormFieldModule,
     MatListModule,
+    MatIconModule,
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,

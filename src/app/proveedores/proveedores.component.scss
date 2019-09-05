@@ -57,13 +57,21 @@ table {
 }
 
 //sobreescribiendo el color de angular material
-::ng-deep {
-     .mat-form-field-appearance-outline .mat-form-field-outline {
-        color: white;
-     }
-     mat-form-field {
-        .mat-hint, input, ::placeholder, .mat-form-field-label {
-           color: white;
-        }
-     }
-  }
+::ng-deep .mat-focused {
+  /*change color of label*/
+  color: darkseagreen !important;
+ }
+
+ ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: darkseagreen !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: darkseagreen !important;;
+}
+
+::ng-deep.mat-form-field-label{
+  color: darkseagreen !important;
+}
