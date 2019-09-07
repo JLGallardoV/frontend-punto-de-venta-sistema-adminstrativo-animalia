@@ -22,13 +22,14 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list'; //bottomSheet
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { TransaccionesComponent } from './transacciones/transacciones.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
     BottomSheetOverviewExampleSheet, //bottomSheet lo agregue en proveedores
-    ProveedoresComponent
+    ProveedoresComponent, TransaccionesComponent
   ],
   imports: [
     BrowserModule,

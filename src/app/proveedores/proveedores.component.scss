@@ -16,7 +16,12 @@
   height: 70vh;
   margin: 0 auto;
 }
-
+.btnAgregar{
+    color: darkseagreen;
+    border: solid 1px #dcd8d2;
+    margin: auto;
+    width: 65%;
+}
 
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
 ::ng-deep .mat-focused {
