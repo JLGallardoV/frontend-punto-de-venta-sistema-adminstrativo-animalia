@@ -1,7 +1,7 @@
 //TEMA ANGULAR MATERIAL:
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-//ESTILOS GLOBALES GENERALES
+//ESTILOS GLOBALES
 .estiloToolbar{
   background-color: #092b239e;
   width: 65vw !important;
@@ -150,12 +150,12 @@ table {
 
 
 //LOS ESTILOS CAMBIARAN EN DISPOSITIVOS CON RESOLUCIONES PEQUEÑAS
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 765px) {
   .inputBuscar{
     font-size: 20px;
     margin-top: -20px;
     float: right;
-    width: 55%;
+    width: 80%;
   }
   .letreroModulo {
     width: 185px;
@@ -163,6 +163,36 @@ table {
 
 }
 
+@media screen and (max-width: 600px) {
+  .inputBuscar{
+    font-size: 20px;
+    margin-top: -20px;
+    float: right;
+    width: 50%;
+  }
+  .letreroModulo {
+    width: 185px;
+  }
+
+}
+
+
+/*MODAL AGREGAR*/
+.modal-title {
+    margin: auto;
+    margin-right: -30px;
+    color: darkseagreen;
+}
+
+.modal-header {
+    border-bottom: 1px solid #f6f2ebe3!important;
+}
+
+.modal-content {
+    background-color: #000000d6!important;
+    border: 1px solid black!important;
+}
+/*ANIMACIONES*/
 .animacionCambioColor {
   position: relative;
   transition-property: background-color, color;
