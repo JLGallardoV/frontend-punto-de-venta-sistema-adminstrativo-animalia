@@ -1,5 +1,5 @@
 .imagenFondo{
-  background: url('../../assets/img/fondo2.jpg');
+  background-image: url('../../assets/img/fondo2.jpg');
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: top;
@@ -9,24 +9,29 @@
 }
 
 .cardPrincipal{
-  background-color: #092b239e;
+  background-color: #0000008c;
   border-radius: 6px;
   width: 80%;
   height: 85vh;
   margin: 0 auto;
 }
 .cardElementos{
-  background: #f6f2ebe3;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: top;
+  background-size: cover;
   border-radius: 6px;
   height: 6.5em;
   font-family: 'Darker Grotesque', sans-serif;
   font-size: 20px;
+  color: #212529;
+  position: initial;
   text-align: center;
   padding-top: 2.2em;
 
 }
 .cardElementos:hover{
-  background: #00000091;
+  background: #00000091!important;
   border-radius: 8px;
   height: 6.5em;
   font-family: "Darker Grotesque", sans-serif;

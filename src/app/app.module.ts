@@ -22,14 +22,32 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list'; //bottomSheet
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { TransaccionesComponent } from './transacciones/transacciones.component';
+import { TransaccionesComponent, BottomSheetTransacciones} from './transacciones/transacciones.component';
+import { ClientesComponent, BottomSheetClientes} from './clientes/clientes.component';
+import { FacturasComponent, BottomSheetFacturas} from './facturas/facturas.component';
+import { ProductosComponent, BottomSheetProductos} from './productos/productos.component';
+import { DevolucionesComponent, BottomSheetDevoluciones} from './devoluciones/devoluciones.component';
+import { CategoriasComponent, BottomSheetCategorias} from './categorias/categorias.component';
+import { VendedoresComponent, BottomSheetVendedores} from './vendedores/vendedores.component';
+import { UsuariosComponent, BottomSheetUsuarios} from './usuarios/usuarios.component';
+import { AccesosComponent, BottomSheetAccesos} from './accesos/accesos.component';
+import { HerramientasComponent } from './herramientas/herramientas.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
     BottomSheetOverviewExampleSheet, //bottomSheet lo agregue en proveedores
-    ProveedoresComponent, TransaccionesComponent
+    BottomSheetTransacciones,
+    BottomSheetClientes,
+    BottomSheetFacturas,
+    BottomSheetDevoluciones,
+    BottomSheetProductos,
+    BottomSheetVendedores,
+    BottomSheetCategorias,
+    BottomSheetUsuarios,
+    BottomSheetAccesos,
+    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +71,17 @@ import { TransaccionesComponent } from './transacciones/transacciones.component'
     MatSlideToggleModule,
     MatBottomSheetModule
   ],
-  entryComponents: [BottomSheetOverviewExampleSheet], //bottomsheet
+  entryComponents: [
+    BottomSheetOverviewExampleSheet,
+    BottomSheetTransacciones,
+    BottomSheetFacturas,
+    BottomSheetProductos,
+    BottomSheetDevoluciones,
+    BottomSheetCategorias,
+    BottomSheetVendedores,
+    BottomSheetUsuarios,
+    BottomSheetAccesos,
+    BottomSheetClientes], //bottomsheet
   providers: [],
   bootstrap: [AppComponent]
 })

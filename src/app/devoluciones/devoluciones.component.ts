@@ -33,17 +33,20 @@ const ELEMENT_DATA: PeriodicElement[] = [
 {position: 19, name: 'Potassium', weight: 39.0983},
 {position: 20, name: 'Calcium', weight: 40.078},
 ];
+
 @Component({
-  selector: 'app-transacciones',
-  templateUrl: './transacciones.component.html',
-  styleUrls: ['./transacciones.component.scss']
+  selector: 'app-devoluciones',
+  templateUrl: './devoluciones.component.html',
+  styleUrls: ['./devoluciones.component.scss']
 })
-export class TransaccionesComponent implements OnInit {
+export class DevolucionesComponent implements OnInit {
+
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
   public frmProveedores: FormGroup;
   public formValid:Boolean=false;
+
   displayedColumns: string[] = ['position', 'name', 'weight', 'acciones'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
@@ -61,7 +64,7 @@ export class TransaccionesComponent implements OnInit {
     });
   }
   public openBottomSheet(): void {
-  this._bottomSheet.open(BottomSheetTransacciones);
+  this._bottomSheet.open(BottomSheetDevoluciones);
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -75,12 +78,14 @@ export class TransaccionesComponent implements OnInit {
   }
 
 }
+
+
 @Component({
-  selector:  'bottomSheetTransacciones',
-  templateUrl: 'bottomSheetTransacciones.html',
+  selector: 'bottomSheetDevoluciones',
+  templateUrl: 'bottomSheetDevoluciones.html',
 })
-export class BottomSheetTransacciones {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetTransacciones>) {}
+export class BottomSheetDevoluciones {
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetDevoluciones>) {}
 
   openLink(event: MouseEvent): void {
     this._bottomSheetRef.dismiss();

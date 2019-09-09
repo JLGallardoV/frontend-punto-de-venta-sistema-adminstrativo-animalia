@@ -34,11 +34,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
 {position: 20, name: 'Calcium', weight: 40.078},
 ];
 @Component({
-  selector: 'app-transacciones',
-  templateUrl: './transacciones.component.html',
-  styleUrls: ['./transacciones.component.scss']
+  selector: 'app-vendedores',
+  templateUrl: './vendedores.component.html',
+  styleUrls: ['./vendedores.component.scss']
 })
-export class TransaccionesComponent implements OnInit {
+export class VendedoresComponent implements OnInit {
+
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
@@ -61,7 +62,7 @@ export class TransaccionesComponent implements OnInit {
     });
   }
   public openBottomSheet(): void {
-  this._bottomSheet.open(BottomSheetTransacciones);
+  this._bottomSheet.open(BottomSheetVendedores);
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -76,11 +77,11 @@ export class TransaccionesComponent implements OnInit {
 
 }
 @Component({
-  selector:  'bottomSheetTransacciones',
-  templateUrl: 'bottomSheetTransacciones.html',
+  selector:  'bottomSheetVendedores',
+  templateUrl: 'bottomSheetVendedores.html',
 })
-export class BottomSheetTransacciones {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetTransacciones>) {}
+export class BottomSheetVendedores {
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetVendedores>) {}
 
   openLink(event: MouseEvent): void {
     this._bottomSheetRef.dismiss();
