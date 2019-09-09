@@ -30,7 +30,8 @@ import { DevolucionesComponent, BottomSheetDevoluciones} from './devoluciones/de
 import { CategoriasComponent, BottomSheetCategorias} from './categorias/categorias.component';
 import { VendedoresComponent, BottomSheetVendedores} from './vendedores/vendedores.component';
 import { UsuariosComponent, BottomSheetUsuarios} from './usuarios/usuarios.component';
-import { AccesosComponent } from './accesos/accesos.component';
+import { AccesosComponent, BottomSheetAccesos} from './accesos/accesos.component';
+import { HerramientasComponent } from './herramientas/herramientas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import { AccesosComponent } from './accesos/accesos.component';
     BottomSheetVendedores,
     BottomSheetCategorias,
     BottomSheetUsuarios,
-    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent
+    BottomSheetAccesos,
+    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +80,7 @@ import { AccesosComponent } from './accesos/accesos.component';
     BottomSheetCategorias,
     BottomSheetVendedores,
     BottomSheetUsuarios,
+    BottomSheetAccesos,
     BottomSheetClientes], //bottomsheet
   providers: [],
   bootstrap: [AppComponent]
