@@ -22,14 +22,17 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list'; //bottomSheet
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { TransaccionesComponent } from './transacciones/transacciones.component';
+import { TransaccionesComponent, BottomSheetTransacciones} from './transacciones/transacciones.component';
+import { ClientesComponent, BottomSheetClientes} from './clientes/clientes.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
     BottomSheetOverviewExampleSheet, //bottomSheet lo agregue en proveedores
-    ProveedoresComponent, TransaccionesComponent
+    BottomSheetTransacciones,
+    BottomSheetClientes,
+    ProveedoresComponent, TransaccionesComponent, ClientesComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,7 @@ import { TransaccionesComponent } from './transacciones/transacciones.component'
     MatSlideToggleModule,
     MatBottomSheetModule
   ],
-  entryComponents: [BottomSheetOverviewExampleSheet], //bottomsheet
+  entryComponents: [BottomSheetOverviewExampleSheet, BottomSheetTransacciones, BottomSheetClientes], //bottomsheet
   providers: [],
   bootstrap: [AppComponent]
 })
