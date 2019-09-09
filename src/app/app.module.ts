@@ -24,6 +24,13 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TransaccionesComponent, BottomSheetTransacciones} from './transacciones/transacciones.component';
 import { ClientesComponent, BottomSheetClientes} from './clientes/clientes.component';
+import { FacturasComponent, BottomSheetFacturas} from './facturas/facturas.component';
+import { ProductosComponent, BottomSheetProductos} from './productos/productos.component';
+import { DevolucionesComponent, BottomSheetDevoluciones} from './devoluciones/devoluciones.component';
+import { CategoriasComponent, BottomSheetCategorias} from './categorias/categorias.component';
+import { VendedoresComponent, BottomSheetVendedores} from './vendedores/vendedores.component';
+import { UsuariosComponent, BottomSheetUsuarios} from './usuarios/usuarios.component';
+import { AccesosComponent } from './accesos/accesos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +39,13 @@ import { ClientesComponent, BottomSheetClientes} from './clientes/clientes.compo
     BottomSheetOverviewExampleSheet, //bottomSheet lo agregue en proveedores
     BottomSheetTransacciones,
     BottomSheetClientes,
-    ProveedoresComponent, TransaccionesComponent, ClientesComponent
+    BottomSheetFacturas,
+    BottomSheetDevoluciones,
+    BottomSheetProductos,
+    BottomSheetVendedores,
+    BottomSheetCategorias,
+    BottomSheetUsuarios,
+    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +69,16 @@ import { ClientesComponent, BottomSheetClientes} from './clientes/clientes.compo
     MatSlideToggleModule,
     MatBottomSheetModule
   ],
-  entryComponents: [BottomSheetOverviewExampleSheet, BottomSheetTransacciones, BottomSheetClientes], //bottomsheet
+  entryComponents: [
+    BottomSheetOverviewExampleSheet,
+    BottomSheetTransacciones,
+    BottomSheetFacturas,
+    BottomSheetProductos,
+    BottomSheetDevoluciones,
+    BottomSheetCategorias,
+    BottomSheetVendedores,
+    BottomSheetUsuarios,
+    BottomSheetClientes], //bottomsheet
   providers: [],
   bootstrap: [AppComponent]
 })
