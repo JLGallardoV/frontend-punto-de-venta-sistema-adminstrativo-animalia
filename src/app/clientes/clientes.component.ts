@@ -5,32 +5,25 @@ import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet'
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 export interface PeriodicElement {
-  name: string;
   position: number;
-  weight: number;
+  name: string;
+  apellidoPartenoCliente: string;
+  apellidoMartenoCliente: string;
+  ciudadCliente: string;
+  estadoCliente: string;
+  paisCliente: string;
+  direccionCliente: string;
+  coloniaCliente: string;
+  cpCliente: string;
+  telefonoCliente: string;
+  emailCliente: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079},
-  {position: 2, name: 'Helium', weight: 4.0026},
-  {position: 3, name: 'Lithium', weight: 6.941},
-  {position: 4, name: 'Beryllium', weight: 9.0122},
-  {position: 5, name: 'Boron', weight: 10.811},
-  {position: 6, name: 'Carbon', weight: 12.0107},
-  {position: 7, name: 'Nitrogen', weight: 14.0067},
-  {position: 8, name: 'Oxygen', weight: 15.9994},
-  {position: 9, name: 'Fluorine', weight: 18.9984},
-  {position: 10, name: 'Neon', weight: 20.1797},
-  {position: 11, name: 'Sodium', weight: 22.9897},
-  {position: 12, name: 'Magnesium', weight: 24.305},
-  {position: 13, name: 'Aluminum', weight: 26.9815},
-  {position: 14, name: 'Silicon', weight: 28.0855},
-  {position: 15, name: 'Phosphorus', weight: 30.9738},
-  {position: 16, name: 'Sulfur', weight: 32.065},
-  {position: 17, name: 'Chlorine', weight: 35.453},
-  {position: 18, name: 'Argon', weight: 39.948},
-  {position: 19, name: 'Potassium', weight: 39.0983},
-  {position: 20, name: 'Calcium', weight: 40.078},
+  {position: 1, name: 'Jose', apellidoPartenoCliente: 'Gallardo', apellidoMartenoCliente: 'Vaca', ciudadCliente: 'Abasolo', estadoCliente:'Gto', paisCliente: 'Mexico', direccionCliente: 'primavera 217', coloniaCliente: 'centro', cpCliente: '36970', telefonoCliente:'4291229889', emailCliente:'jlgv@gmail.com'},
+  {position: 2, name: 'Luis', apellidoPartenoCliente: 'Galindo', apellidoMartenoCliente: 'Vazquez', ciudadCliente: 'Abasolo', estadoCliente:'Gto', paisCliente: 'Mexico', direccionCliente: 'primavera 117', coloniaCliente: 'centro', cpCliente: '36970', telefonoCliente:'4291229889', emailCliente:'cheche@gmail.com'},
+  {position: 3, name: 'Pedro', apellidoPartenoCliente: 'Vaca', apellidoMartenoCliente: 'Duran', ciudadCliente: 'Abasolo', estadoCliente:'Gto', paisCliente: 'Mexico', direccionCliente: 'mina 17', coloniaCliente: 'centro', cpCliente: '36970', telefonoCliente:'4291229889', emailCliente:'tgv@gmail.com'},
+  {position: 4, name: 'Ruben', apellidoPartenoCliente: 'Fernandez', apellidoMartenoCliente: 'Figueroa', ciudadCliente: 'Leon', estadoCliente:'Gto', paisCliente: 'Mexico', direccionCliente: 'niebla 202', coloniaCliente: 'centro', cpCliente: '36970', telefonoCliente:'4291229889', emailCliente:'dmpf@gmail.com'},
 ];
 
 @Component({
@@ -46,7 +39,7 @@ export class ClientesComponent implements OnInit {
   public frmProveedores: FormGroup;
   public formValid:Boolean=false;
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'acciones'];
+  displayedColumns: string[] = ['position', 'name', 'apellidoPartenoCliente', 'apellidoMartenoCliente','ciudadCliente', 'estadoCliente', 'paisCliente', 'direccionCliente', 'coloniaCliente', 'cpCliente', 'telefonoCliente', 'emailCliente','acciones'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

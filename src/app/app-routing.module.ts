@@ -27,7 +27,7 @@ const routes: Routes = [
   {path: 'vendedores', component: VendedoresComponent},
   {path: 'usuarios', component: UsuariosComponent},
   {path: 'accesos', component: AccesosComponent},
-  {path: '', redirectTo: 'accesos', pathMatch: 'full'}
+  {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 
 @NgModule({

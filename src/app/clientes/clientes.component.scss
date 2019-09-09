@@ -17,26 +17,69 @@
   margin: 0 auto;
 }
 .btnAgregar{
-    color: darkseagreen;
-    border: solid 1px #dcd8d2;
-    margin: auto;
-    width: 65%;
+  color: darkseagreen;
+  border: solid 1px #dcd8d2;
+  margin: auto;
+  width: 65%;
+}
+th.mat-header-cell {
+    padding-right: 40px!important;
+}
+/*ESTILOS PARA PAGINADOR*/
+.mat-paginator {
+  width: 136%;
+  background: #eae4dda1;
+}
+
+/*PANTALLAS PEQUEÑAS*/
+@media screen and (max-width: 935px) {
+  .mat-paginator {
+    width: 109.99%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .mat-paginator {
+    width: 128.99%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mat-paginator {
+    width: 264%;
+  }
+}
+
+@media screen and (max-width: 365px) {
+  .mat-paginator {
+    width: 306%;
+  }
+}
+@media screen and (max-width: 375px) {
+  .mat-paginator {
+    width: 292%;
+  }
+}
+@media screen and (max-width: 320px) {
+  .mat-paginator {
+    width: 350%;
+  }
 }
 
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
 ::ng-deep .mat-focused {
   /*change color of label*/
   color: darkseagreen !important;
- }
+}
 
- ::ng-deep.mat-form-field-underline {
+::ng-deep.mat-form-field-underline {
   /*change color of underline*/
   background-color: darkseagreen !important;
 }
 
 ::ng-deep.mat-form-field-ripple {
- /*change color of underline when focused*/
- background-color: darkseagreen !important;;
+  /*change color of underline when focused*/
+  background-color: darkseagreen !important;;
 }
 
 ::ng-deep.mat-form-field-label{
