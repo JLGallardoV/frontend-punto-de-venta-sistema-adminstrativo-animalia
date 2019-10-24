@@ -32,6 +32,8 @@ import { VendedoresComponent, BottomSheetVendedores} from './vendedores/vendedor
 import { UsuariosComponent, BottomSheetUsuarios} from './usuarios/usuarios.component';
 import { AccesosComponent, BottomSheetAccesos} from './accesos/accesos.component';
 import { HerramientasComponent } from './herramientas/herramientas.component';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,13 +52,14 @@ import { HerramientasComponent } from './herramientas/herramientas.component';
     ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     NgbModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatCardModule,
-    AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatInputModule,

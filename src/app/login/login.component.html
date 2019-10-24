@@ -8,7 +8,7 @@
       </div>
       <div class="contenedorInputs">
         <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
-          <input formControlName="emailUsuario" matInput placeholder="E-mail">
+          <input formControlName="nombreUsuario" matInput placeholder="usuario">
         </mat-form-field>
 
         <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
@@ -22,6 +22,6 @@
       </div>
     </form>
     <br>
-    <button mat-stroked-button class="btLogin darkerFuenteTitulos margenSuperior" [routerLink]="['/home']">Ingresar</button>
+    <button mat-stroked-button class="btLogin darkerFuenteTitulos margenSuperior" (click)="login()">Ingresar</button>
   </mat-card>
 </div>
