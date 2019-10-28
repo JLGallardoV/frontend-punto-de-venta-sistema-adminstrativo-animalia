@@ -19,7 +19,7 @@ import {ProveedoresComponent, BottomSheetOverviewExampleSheet } from './proveedo
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-import {MatListModule} from '@angular/material/list'; //bottomSheet
+import {MatListModule} from '@angular/material/list'; 
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TransaccionesComponent, BottomSheetTransacciones} from './transacciones/transacciones.component';

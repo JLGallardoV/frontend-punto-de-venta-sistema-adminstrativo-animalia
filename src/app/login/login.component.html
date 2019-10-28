@@ -10,18 +10,25 @@
         <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
           <input formControlName="nombreUsuario" matInput placeholder="usuario">
         </mat-form-field>
+        <label *ngIf="frmLogin.controls.nombreUsuario.invalid && frmLogin.controls.nombreUsuario.dirty" style="color: #43b1b9;">Este campo es obligatorio</label>
 
         <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
-          <input formControlName="passwordUsuario" matInput placeholder="Contraseña">
+          <input formControlName="passwordUsuario" matInput placeholder="Contraseña" type="password">
         </mat-form-field>
+        <label *ngIf="frmLogin.controls.passwordUsuario.invalid && frmLogin.controls.passwordUsuario.dirty" style="color: #43b1b9;">Este campo es obligatorio</label>
         <br>
-        <div>
-          <mat-slide-toggle style="float: right;" color="primary">Gerente</mat-slide-toggle>
-        </div>
+        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
+          <mat-select formControlName="tipoUsuario" class="darkerFuenteCuerpos" style="font-size:20px;" placeholder="tipo de usuario">
+            <mat-option *ngFor="let i of arregloTiposDeUsuarios" [value]="i.idTipoUsuario">
+              {{ i.tipoUsuario }}
+            </mat-option>
+          </mat-select>
+          <label *ngIf="frmLogin.controls.tipoUsuario.invalid && frmLogin.controls.tipoUsuario.dirty" style="color: #43b1b9;">Este campo es obligatorio</label>
+        </mat-form-field>
         <br>
       </div>
     </form>
     <br>
-    <button mat-stroked-button class="btLogin darkerFuenteTitulos margenSuperior" (click)="login()">Ingresar</button>
+    <button mat-stroked-button class="btLogin darkerFuenteTitulos margenSuperior" [disabled]="frmLogin.invalid" (click)="login()">Ingresar</button>
   </mat-card>
 </div>
