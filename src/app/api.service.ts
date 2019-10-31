@@ -41,8 +41,8 @@ export class APIService {
     return this.http.get('http://localhost:3000/transaccionesWS/listarTransacciones',{headers:this.headers});
   }
   //agregar una transaccion; uso: transacciones (facturas)
-  public aniadirTransaccion(idCliente: number,idVendedor:number,pagoTransaccion:number,arregloProductos:IProductos[],arregloTiposDePagos:ITiposDePagos[]){
-    return this.http.post('http://localhost:3000/transaccionesWS/agregarTransaccion',{idCliente,idVendedor,pagoTransaccion,arregloProductos,arregloTiposDePagos},{headers:this.headers});
+  public aniadirTransaccion(idCliente: number,idVendedor:number,pagoTransaccion:number,productos:IProductos[],tiposDePagos:ITiposDePagos[]){
+    return this.http.post('http://localhost:3000/transaccionesWS/agregarTransaccion',{idCliente,idVendedor,pagoTransaccion,productos,tiposDePagos},{headers:this.headers});
 
   }
 }

@@ -67,6 +67,14 @@
   width: 100%;
 }
 
+//ESTILO PARA ETIQUETAS DE MONTO,CAMBIO,PAGO
+.resultadoOperaciones{
+  float: right;
+  color: #2a2d3b;
+  margin-bottom: 0px;
+  font-size: 22px!important;
+}
+
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
 ::ng-deep .mat-focused {
   /*change color of label*/
@@ -112,5 +120,8 @@
 }
 ::ng-deep.mat-radio-persistent-ripple{
   background-color: #14ff3e!important;
+}
 
+::ng-deep.mat-select-value {
+  color: rgb(192, 191, 192);//cambiar color de texto a select
 }

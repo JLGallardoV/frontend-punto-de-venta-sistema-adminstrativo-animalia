@@ -23,6 +23,7 @@ export class FacturasComponent implements OnInit {
   public arregloTiposDePagosSelect: ITiposDePagos[] = [];
   public arregloTiposDePagosLista: ITiposDePagos[] = [];
   public arregloTransacciones:ITransacciones[] = [];
+  public ultimaVenta:any;
 
   constructor(private _bottomSheet: MatBottomSheet, public formBuilder: FormBuilder, public API: APIService) {
     this.frmVenta = this.formBuilder.group({
@@ -64,51 +65,6 @@ export class FacturasComponent implements OnInit {
     );
   }
 
-  /*llena tanto la tabla como la lista de productos y tipos de pago con datos del input
-  public generarOuputs(seleccion:number){
-
-    0: productos
-    1: tiposDePagos
-
-
-    if(seleccion == 0){
-      let transaferirValorID: number = 0;
-      let transaferirValorCantidad: number = 0;
-
-      this.API.mostrarProductos().subscribe(
-        (success:any)=>{
-          transaferirValorID = this.frmVenta.get('idProducto').value;
-          transaferirValorCantidad = this.frmVenta.get('cantidadProducto').value;
-          this.arregloProductosTabla.push({idProducto:transaferirValorID,cantidadProducto:transaferirValorCantidad,nombreProducto:success.respuesta[transaferirValorID-1].nombreProducto,precioUnitarioProducto:success.respuesta[transaferirValorID-1].precioUnitarioProducto});
-          this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
-          console.log("insertar productos: ",this.dsProductos);
-        },
-        (error)=>{
-          console.log("algo ocurrio")
-        }
-      );
-    }else if(seleccion > 0){
-      console.log("esto era")
-      this.API.mostrarTiposDePagos().subscribe(
-        (success:any)=>{
-            let prueba = this.frmVenta.get('idTipoPago').value;
-            //si el checkbox esta marcado
-            if (prueba == true) {
-              this.arregloTiposDePagosLista.push({idTipoPago:seleccion})
-            }else if(prueba == false){//elimina los elementos desmarcados
-                this.arregloTiposDePagosLista.splice(seleccion-1,1)
-            }
-            //alert("arreglo final: "+JSON.stringify(this.arregloTiposDePagosLista));
-        },
-        (error)=>{
-          console.log("algo ocurrio: ",error)
-        }
-      );
-
-    }
-  }*/
-  //agrega productos del select e input a su tabla de ouput,
-  //ademas almacena los productos para usarlos posteriormente
   public transfiereProductos(){
     let transaferirValorID: number = 0;
     let transaferirValorCantidad: number = 0;
@@ -154,11 +110,15 @@ export class FacturasComponent implements OnInit {
     pagoTransaccionForm = this.frmVenta.get('pagoTransaccion').value;
     arregloProductosForm = this.arregloProductosTabla;
     arregloTiposDePagosForm = this.arregloTiposDePagosLista;
-    alert("cte: "+idClienteForm+" vdor: "+idVendedorForm+" pago: "+pagoTransaccionForm+" arrpdtos: "+JSON.stringify(arregloProductosForm)+" arrtipag: "+JSON.stringify(arregloTiposDePagosForm));
+    if (arregloProductosForm.length == 0) {
+        alert("no olvides presionar boton de agregar productos \n");
+    }
+    //alert("cte: "+idClienteForm+" vdor: "+idVendedorForm+" pago: "+pagoTransaccionForm+" arrpdtos: "+JSON.stringify(arregloProductosForm)+" arrtipag: "+JSON.stringify(arregloTiposDePagosForm));
     this.API.aniadirTransaccion(idClienteForm,idVendedorForm,pagoTransaccionForm,arregloProductosForm,arregloTiposDePagosForm).subscribe(
       (success:any)=>{
         if(success.estatus > 0){
           alert(success.respuesta);
+          this.listarTransacciones();
         }else if(success.estatus < 0) {
             alert("No cuentas con el dinero suficiente | verifica tu pago");
         }else{
@@ -167,7 +127,7 @@ export class FacturasComponent implements OnInit {
 
       },
       (error)=>{
-        alert("algo anda mal"+error);
+        alert("algo anda mal | "+ JSON.stringify(error));
       }
     );
   }
@@ -177,10 +137,10 @@ export class FacturasComponent implements OnInit {
       this.API.mostrarTransacciones().subscribe(
       (success:any)=>{
         this.arregloTransacciones = success.respuesta;
-        //investiga simbolo iterador
-        let ultimaVenta = this.arregloTransacciones[this.arregloTransacciones.length - 1]
-        this.dsTransacciones = new MatTableDataSource([ultimaVenta]); //[prueba] convierto a array la variable prueba para que pueda ser iterada
-        console.log("dataSource: ",ultimaVenta)
+        this.ultimaVenta = this.arregloTransacciones[this.arregloTransacciones.length - 1]
+        this.dsTransacciones = new MatTableDataSource([this.ultimaVenta]); //[prueba] convierto a array la variable prueba para que pueda ser iterada
+        this.arregloTransacciones = [this.ultimaVenta];//aplico simbolo iterador para que pueda iterarlo en un loop
+        //alert("arreglo mostrado: "+JSON.stringify(this.arregloTransacciones));
       },
       (error)=>{
         console.log("algo ocurrio: ",error)
@@ -192,7 +152,6 @@ export class FacturasComponent implements OnInit {
   ngOnInit() {
     this.listarTiposDePagos();
     this.listarProductos();
-    this.listarTransacciones();
   }
 
 }

@@ -31,7 +31,7 @@
 
                 <mat-form-field class="darkerFuenteCuerpos" style="width: 50%;margin-right: 15px;">
                   <mat-select formControlName="idProducto" class="darkerFuenteCuerpos" style="font-size:20px;" placeholder="producto">
-                    <mat-option *ngFor="let i of arregloProductosSelect" [value]="i.idProducto">
+                    <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i.idProducto">
                       {{ i.idProducto }}
                     </mat-option>
                   </mat-select>
@@ -39,7 +39,7 @@
                 <mat-form-field class="darkerFuenteCuerpos" style="width:40%;">
                   <div style="display: flex;">
                     <input formControlName="cantidadProducto" type="number" matInput placeholder="cantidad" style="color: #f6f2ebe3;">
-                    <button mat-mini-fab class="btnAcciones btnAniadirEntidad" [disabled]="frmVenta.controls.idProducto.invalid || frmVenta.controls.cantidadProducto.invalid" (click)="transfiereProductos()" style="margin-right: -11px;">+</button>
+                    <button mat-mini-fab matTooltip="Agrega el producto y su cantidad a la venta" class="btnAcciones btnAniadirEntidad" [disabled]="frmVenta.controls.idProducto.invalid || frmVenta.controls.cantidadProducto.invalid" (click)="transfiereProductos()" style="margin-right: -11px;">+</button>
                   </div>
                 </mat-form-field>
                 <label *ngIf="(frmVenta.controls.idProducto.invalid && frmVenta.controls.idProducto.dirty) || (frmVenta.controls.cantidadProducto.invalid && frmVenta.controls.cantidadProducto.dirty)" style="color: #f6f2ebe3;">Este campo es obligatorio</label>
@@ -111,7 +111,11 @@
               </div>
               <br>
                 <hr>
-                <p class="darkerFuenteTitulos" style="float:right;color:#2a2d3b;"> <i class='fas fa-shopping-cart' style='font-size:24px; margin-right: 19px;'></i>Monto Total: $ 2000.00 </p>
+                <div *ngFor="let i of arregloTransacciones" style="display: inline-block;">
+                  <p class="darkerFuenteTitulos resultadoOperaciones" style="float:right;color:#2a2d3b;"> <i class='fas fa-dollar-sign' style='font-size:24px; margin-right: 33px;'></i>Pago: {{i.pagoTransaccion}} </p>
+                  <p class="darkerFuenteTitulos resultadoOperaciones" style="float:left;color:#2a2d3b;"> <i class='fas fa-shopping-cart' style='font-size:24px; margin-right: 19px;'></i>Monto Total: {{i.montoConIvaTransaccion}} </p>
+                  <p class="darkerFuenteTitulos resultadoOperaciones" style="float:right;color:#2a2d3b;"> <i class='fas fa-handshake' style='font-size:24px; margin-right: 19px;'></i>Cambio: {{i.cambioTransaccion}} </p>
+                </div>
             </div>
           </div>
           <br>
