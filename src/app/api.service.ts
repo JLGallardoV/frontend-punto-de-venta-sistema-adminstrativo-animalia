@@ -36,9 +36,17 @@ export class APIService {
   public mostrarProductos(){
     return this.http.get('http://localhost:3000/productosWS/listarProductos',{headers:this.headers});
   }
-  //mostrar id productos en select - listar tipos de pagos; uso: transacciones (facturas)
+  //mostrar transaccion en tabla - listar tipos de pagos; uso: transacciones (facturas)
   public mostrarTransacciones(){
     return this.http.get('http://localhost:3000/transaccionesWS/listarTransacciones',{headers:this.headers});
+  }
+  //mostrar id cliente en select - listar tipos de pagos; uso: transacciones (facturas)
+  public mostrarClientes(){
+    return this.http.get('http://localhost:3000/clientesWS/listarClientes',{headers:this.headers});
+  }
+  //mostrar id vendedor en select - listar tipos de pagos; uso: transacciones (facturas)
+  public mostrarVendedores(){
+    return this.http.get('http://localhost:3000/vendedoresWS/listarVendedores',{headers:this.headers});
   }
   //agregar una transaccion; uso: transacciones (facturas)
   public aniadirTransaccion(idCliente: number,idVendedor:number,pagoTransaccion:number,productos:IProductos[],tiposDePagos:ITiposDePagos[]){

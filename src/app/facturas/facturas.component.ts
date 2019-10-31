@@ -20,6 +20,8 @@ export class FacturasComponent implements OnInit {
   public frmVenta: FormGroup;
   public arregloProductosSelect: IProductos[] = [];
   public arregloProductosTabla: IProductos[] = [];
+  public arregloClientesSelect: ITiposDePagos[] = [];
+  public arregloVendedoresSelect: ITiposDePagos[] = [];
   public arregloTiposDePagosSelect: ITiposDePagos[] = [];
   public arregloTiposDePagosLista: ITiposDePagos[] = [];
   public arregloTransacciones:ITransacciones[] = [];
@@ -58,6 +60,30 @@ export class FacturasComponent implements OnInit {
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
         return this.arregloProductosSelect = success.respuesta;
+      },
+      (error)=>{
+        console.log("algo ocurrio: ",error)
+      }
+    );
+  }
+
+  //llena el select de clientes
+  public listarClientes(){
+    this.API.mostrarClientes().subscribe(
+      (success:any)=>{
+        return this.arregloClientesSelect = success.respuesta;
+      },
+      (error)=>{
+        console.log("algo ocurrio: ",error)
+      }
+    );
+  }
+
+  //llena el select de vendedores
+  public listarVendedores(){
+    this.API.mostrarVendedores().subscribe(
+      (success:any)=>{
+        return this.arregloVendedoresSelect = success.respuesta;
       },
       (error)=>{
         console.log("algo ocurrio: ",error)
@@ -122,7 +148,7 @@ export class FacturasComponent implements OnInit {
         }else if(success.estatus < 0) {
             alert("No cuentas con el dinero suficiente | verifica tu pago");
         }else{
-          alert("hubo un problema: "+JSON.stringify(success.respuesta));
+          alert(JSON.stringify(success.respuesta));
         }
 
       },
@@ -137,7 +163,9 @@ export class FacturasComponent implements OnInit {
       this.API.mostrarTransacciones().subscribe(
       (success:any)=>{
         this.arregloTransacciones = success.respuesta;
+        alert("arreglot: "+JSON.stringify(this.arregloTransacciones))
         this.ultimaVenta = this.arregloTransacciones[this.arregloTransacciones.length - 1]
+        alert("ultima venta: "+JSON.stringify(this.ultimaVenta))
         this.dsTransacciones = new MatTableDataSource([this.ultimaVenta]); //[prueba] convierto a array la variable prueba para que pueda ser iterada
         this.arregloTransacciones = [this.ultimaVenta];//aplico simbolo iterador para que pueda iterarlo en un loop
         //alert("arreglo mostrado: "+JSON.stringify(this.arregloTransacciones));
@@ -146,15 +174,25 @@ export class FacturasComponent implements OnInit {
         console.log("algo ocurrio: ",error)
       }
     );
-    console.log("hola!")
   }
 
   ngOnInit() {
     this.listarTiposDePagos();
     this.listarProductos();
+    this.listarVendedores();
+    this.listarClientes();
   }
 
 }
+
+
+
+
+
+
+
+
+
 
 
 
