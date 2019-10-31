@@ -3,6 +3,11 @@ import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginJwtService } from '../login-jwt.service';
 import { sha256} from 'js-sha256';
+
+export interface ITiposDeUsuarios {
+  idTipoUsuario: number;
+  tipoUsuario: string;
+}
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,6 +16,7 @@ import { sha256} from 'js-sha256';
 export class LoginComponent implements OnInit {
    public frmLogin: FormGroup;
    public formValid:Boolean=false;
+   public arregloTiposDeUsuarios:ITiposDeUsuarios[] = [{idTipoUsuario:1,tipoUsuario:"admin"}];
 
   constructor(public router: Router,public formBuilder: FormBuilder, private jwt: LoginJwtService){
     this.frmLogin = this.formBuilder.group({
@@ -18,6 +24,8 @@ export class LoginComponent implements OnInit {
           passwordUsuario:["",Validators.required],
           tipoUsuario:["",Validators.required]
         });
+
+  //this.arregloTiposDeUsuarios=[{idTipoUsuario:1,tipoUsuario:"admin"}]
   }
   public login() {
     var constrasenaEncriptada = sha256(this.frmLogin.get('passwordUsuario').value)//Encriptacion de constraña sha256
