@@ -35,6 +35,7 @@ import { UsuariosComponent, BottomSheetUsuarios} from './usuarios/usuarios.compo
 import { AccesosComponent, BottomSheetAccesos} from './accesos/accesos.component';
 import { HerramientasComponent } from './herramientas/herramientas.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ComprasComponent, BottomSheetCompras } from './compras/compras.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { HttpClientModule } from '@angular/common/http';
     BottomSheetOverviewExampleSheet, //bottomSheet lo agregue en proveedores
     BottomSheetTransacciones,
     BottomSheetClientes,
+    BottomSheetCompras,
     BottomSheetFacturas,
     BottomSheetDevoluciones,
     BottomSheetProductos,
@@ -51,7 +53,7 @@ import { HttpClientModule } from '@angular/common/http';
     BottomSheetCategorias,
     BottomSheetUsuarios,
     BottomSheetAccesos,
-    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent
+    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent, ComprasComponent
   ],
   imports: [
     AppRoutingModule,
@@ -81,6 +83,7 @@ import { HttpClientModule } from '@angular/common/http';
   entryComponents: [
     BottomSheetOverviewExampleSheet,
     BottomSheetTransacciones,
+    BottomSheetCompras,
     BottomSheetFacturas,
     BottomSheetProductos,
     BottomSheetDevoluciones,
