@@ -3,13 +3,14 @@
 
 //ESTILOS GLOBALES
 .estiloToolbar{
-  background-color: #092b239e;
   width: 65vw !important;
   border-radius: 5px;
   margin: 0px auto;
   height: 50px !important;
   margin-top: -6px;
   color: darkseagreen !important;
+  background: #000000a1;
+  cursor: pointer;
 }
 
 .estiloToolbar:hover{

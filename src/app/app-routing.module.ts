@@ -12,6 +12,7 @@ import {CategoriasComponent} from './categorias/categorias.component';
 import {VendedoresComponent} from './vendedores/vendedores.component';
 import {UsuariosComponent} from './usuarios/usuarios.component';
 import {AccesosComponent} from './accesos/accesos.component';
+import {ComprasComponent} from './compras/compras.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'vendedores', component: VendedoresComponent},
   {path: 'usuarios', component: UsuariosComponent},
   {path: 'accesos', component: AccesosComponent},
+  {path: 'compras', component: ComprasComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

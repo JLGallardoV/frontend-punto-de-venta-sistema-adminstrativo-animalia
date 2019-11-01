@@ -5,11 +5,8 @@
 
 
 #PENDIENTES
-
-- validar con el dirty los inputs de idTransaccion (x)
-- conectar con la api
- - mostrar en la tabla de transacciones la transaccion
- - mostrar en el label el monto total
+- limpiar tabla despues de realizar una transaccion pero pon un setinterval para que deje ver la transaccion ya que se queda con la transaccion hecha.
+-poner un boton de limpiar tabla productos por si me equivoco.
  - continuar con las demas apis rest
 
 
