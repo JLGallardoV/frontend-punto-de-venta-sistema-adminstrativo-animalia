@@ -42,7 +42,11 @@ export interface IProveedores{
   emailProveedor: string;
   descripcionProveedor: string;
 }
-
+export interface IReportesEconomicos{
+  montoTransacciones: number;
+  montoCompras: number;
+  utilidad:number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -86,6 +90,10 @@ export class APIService {
   //mostrar id usuario en select; uso: compras
   public mostrarUsuarios(){
     return this.http.get('http://localhost:3000/usuariosWS/listarUsuarios',{headers:this.headers});
+  }
+  //mostrar registros en tabla; uso: herramientas (tab reportes economicos)
+  public mostrarReporte(fechaInicio:string,fechaFinal:string){
+    return this.http.get(`http://localhost:3000/reportesEconomicosWS/listarReportesEconomicos/${fechaInicio}/${fechaFinal}`,{headers:this.headers});
   }
   //mostrar id usuario en select; uso: compras
   public aniadirCompra(idUsuario:number,idProveedor:number,montoCompra:number,productos:IProductos[]){

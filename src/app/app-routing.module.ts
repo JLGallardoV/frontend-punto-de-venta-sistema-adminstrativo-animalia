@@ -13,6 +13,7 @@ import {VendedoresComponent} from './vendedores/vendedores.component';
 import {UsuariosComponent} from './usuarios/usuarios.component';
 import {AccesosComponent} from './accesos/accesos.component';
 import {ComprasComponent} from './compras/compras.component';
+import {HerramientasComponent} from './herramientas/herramientas.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'usuarios', component: UsuariosComponent},
   {path: 'accesos', component: AccesosComponent},
   {path: 'compras', component: ComprasComponent},
+  {path: 'herramientas', component: HerramientasComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

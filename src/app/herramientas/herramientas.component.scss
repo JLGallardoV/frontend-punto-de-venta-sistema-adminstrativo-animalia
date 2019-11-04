@@ -1,0 +1,111 @@
+.imagenFondo{
+  background: url('../../assets/img/fondo5.jpg');
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: top;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
+.cardPrincipal{
+  background-color: #000000bd;
+  border-radius: 6px;
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+}
+.btnAgregar{
+  color: darkseagreen;
+  border: solid 1px #dcd8d2;
+  margin: auto;
+  width: 65%;
+}
+th.mat-header-cell {
+    padding-right: 40px!important;
+}
+
+//PARA LOS 2 INPUTS QUE RECIBEN LA FECHA DE FILTRADO EN EN TAB DE REPORTES ECONOMICOS
+.inputFiltrarxFecha{
+  margin-left: 2%;
+  margin-top: -2%;
+  width: 45%;
+}
+//BTN FILTRAR POR FECHAS
+.btnFiltrar{
+  width: 100%;
+  color: antiquewhite;
+  border: solid 1px;
+}
+
+/*ESTILOS PARA PAGINADOR*/
+.mat-paginator {
+  width: 136%;
+  background: #eae4dda1;
+}
+
+/*PANTALLAS PEQUEÑAS*/
+@media screen and (max-width: 935px) {
+  .mat-paginator {
+    width: 109.99%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .mat-paginator {
+    width: 128.99%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mat-paginator {
+    width: 264%;
+  }
+}
+
+@media screen and (max-width: 365px) {
+  .mat-paginator {
+    width: 306%;
+  }
+}
+@media screen and (max-width: 375px) {
+  .mat-paginator {
+    width: 292%;
+  }
+}
+@media screen and (max-width: 320px) {
+  .mat-paginator {
+    width: 350%;
+  }
+}
+
+//SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL:
+::ng-deep .mat-focused {
+  /*change color of label*/
+  color: darkseagreen !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: darkseagreen !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: darkseagreen !important;;
+}
+
+::ng-deep.mat-form-field-label{
+  color: darkseagreen !important;
+}
+
+::ng-deep.mat-tab-label{ //fuente de cabeceras de tab
+  color: darkseagreen !important;
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 22px;
+}
+
+::ng-deep.mat-ink-bar{
+  background-color: #dfdcd4!important;
+
+}

@@ -18,11 +18,14 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {ProveedoresComponent, BottomSheetOverviewExampleSheet } from './proveedores/proveedores.component';
 import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TransaccionesComponent, BottomSheetTransacciones} from './transacciones/transacciones.component';
 import { ClientesComponent, BottomSheetClientes} from './clientes/clientes.component';
@@ -33,7 +36,7 @@ import { CategoriasComponent, BottomSheetCategorias} from './categorias/categori
 import { VendedoresComponent, BottomSheetVendedores} from './vendedores/vendedores.component';
 import { UsuariosComponent, BottomSheetUsuarios} from './usuarios/usuarios.component';
 import { AccesosComponent, BottomSheetAccesos} from './accesos/accesos.component';
-import { HerramientasComponent } from './herramientas/herramientas.component';
+import { HerramientasComponent, BottomSheetHerramientas } from './herramientas/herramientas.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ComprasComponent, BottomSheetCompras } from './compras/compras.component';
 
@@ -53,14 +56,17 @@ import { ComprasComponent, BottomSheetCompras } from './compras/compras.componen
     BottomSheetCategorias,
     BottomSheetUsuarios,
     BottomSheetAccesos,
+    BottomSheetHerramientas,
     ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent, ComprasComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     NgbModule,
+    MatDatepickerModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    MatTabsModule,
     MatCardModule,
     FormsModule,
     HttpClientModule,
@@ -72,6 +78,7 @@ import { ComprasComponent, BottomSheetCompras } from './compras/compras.componen
     MatFormFieldModule,
     MatListModule,
     MatIconModule,
+    MatNativeDateModule,
     MatSelectModule,
     MatTableModule,
     MatTooltipModule,
@@ -91,6 +98,7 @@ import { ComprasComponent, BottomSheetCompras } from './compras/compras.componen
     BottomSheetVendedores,
     BottomSheetUsuarios,
     BottomSheetAccesos,
+    BottomSheetHerramientas,
     BottomSheetClientes], //bottomsheet
   providers: [],
   bootstrap: [AppComponent]
