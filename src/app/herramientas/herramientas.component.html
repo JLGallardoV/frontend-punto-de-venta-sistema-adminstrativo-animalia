@@ -7,6 +7,9 @@
   <br>
   <mat-card class="cardPrincipal row">
     <mat-tab-group>
+
+      <!--primer tab-->
+
       <mat-tab label="Reporte Economico">
         <br>
         <mat-card class="contenedorAcciones">
@@ -29,7 +32,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-stroked-button class="btnFiltrar darkerFuenteTitulos" (click)="generarReportes()">Agregar</button>
+                    <button mat-stroked-button class="btnFiltrar darkerFuenteTitulos" (click)="generarReportes()">Filtrar</button>
                   </div>
                 </div>
             </div>
@@ -59,12 +62,69 @@
         </div>
         <mat-card class="letreroModulo">
           <div style="margin-bottom: -14px;">
-            Productos <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
+            Reporte Economico <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
           </div>
         </mat-card>
       </mat-tab>
-      <mat-tab label="Compras"> Content 2 </mat-tab>
-      <mat-tab label="utilidad"> Content 3 </mat-tab>
+
+      <!--segundo tab-->
+
+      <mat-tab label="Viabilidad Productos">
+        <br>
+        <mat-card class="contenedorAcciones">
+          <div style="margin-top: -7px;">
+            <div name="renglonDeFiltrado" class="row">
+                <div class="col-9">
+                  <form name="filtradoViabilidadProductos" [formGroup]="frmViabilidadProductos">
+                    <mat-form-field class="darkerFuenteCuerpos inputFiltrarxFecha" style="color: darkseagreen;">
+                      <input formControlName="fechaInicio" matInput [matDatepicker]="picker2" placeholder="Fecha Inicio" style="color: darkseagreen;">
+                      <mat-datepicker-toggle matSuffix [for]="picker2" style="color: #dddad3;"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field  class="darkerFuenteCuerpos inputFiltrarxFecha" style="color: darkseagreen;">
+                      <input formControlName="fechaFinal" matInput [matDatepicker]="picker3" placeholder="Fecha Final">
+                      <mat-datepicker-toggle matSuffix [for]="picker3" style="color: #dddad3;"></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+                  </form>
+                </div>
+                <div class="col-3">
+                  <div style="margin-top: 15px;">
+                    <button mat-stroked-button class="btnFiltrar darkerFuenteTitulos" (click)="generarViabilidad()">Filtrar</button>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </mat-card>
+        <br>
+        <div name="tablaViabilidadProductos">
+          <table mat-table [dataSource]="dsViabilidadProductos" class="mat-elevation-z8 darkerFuenteCuerpos" style="font-size:98px">
+            <ng-container matColumnDef="nombreProducto">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Producto </th>
+              <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.nombreProducto}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="vendidos">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Estatus </th>
+              <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.vendidos}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsMP"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsMP;"></tr>
+          </table>
+        </div>
+        <mat-card class="letreroModulo">
+          <div style="margin-bottom: -14px;">
+            Viabilidad Productos <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
+          </div>
+        </mat-card>
+      </mat-tab>
+
+
+      <!--tercer tab-->
+
+      <mat-tab label="Utilidad"> Content 3 </mat-tab>
     </mat-tab-group>
   </mat-card>
 

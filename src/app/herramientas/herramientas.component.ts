@@ -4,7 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
-import {IReportesEconomicos, APIService} from '../api.service';
+import {IReportesEconomicos,IViabilidadProductos,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 @Component({
   selector: 'app-herramientas',
@@ -16,17 +16,25 @@ export class HerramientasComponent implements OnInit {
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
   public frmFiltrado: FormGroup;
+  public frmViabilidadProductos: FormGroup;
   public formValid:Boolean=false;
-
+  //propiedades de la table
   displayedColumns: string[] = ['montoTransacciones', 'montoCompras', 'utilidad'];
+  displayedColumnsMP: string[] = ['nombreProducto','vendidos'];
   dsReporteEconomico: MatTableDataSource<IReportesEconomicos>;
+  dsViabilidadProductos: MatTableDataSource<IViabilidadProductos>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
     this.frmFiltrado = this.formBuilder.group({
           fechaInicio:["",Validators.required],
           fechaFinal:["",Validators.required]
-        });
+    });
+
+    this.frmViabilidadProductos = this.formBuilder.group({
+          fechaInicio:["",Validators.required],
+          fechaFinal:["",Validators.required]
+    });
   }
   //MENU INFERIOR (bottomsheet)
   public openBottomSheet(): void {
@@ -48,23 +56,44 @@ export class HerramientasComponent implements OnInit {
   let fechaInicioFormateada = this.formateandoFecha.formatearFecha(fechaInicioForm);
   let fechaFinalFormateada = this.formateandoFecha.formatearFecha(fechaFinalForm);
 
-  this.API.mostrarReporte(fechaInicioFormateada,fechaFinalFormateada).subscribe(
-    (success:any) =>{
+  this.API.mostrarReporte(fechaInicioFormateada, fechaFinalFormateada).subscribe(
+    (success: any) => {
       //los valores vienen en matriz como estructura
       let valorTransacciones = success.respuesta[0][0].montoTransacciones;
       let valorCompras = success.respuesta[1][0].montoCompras;
       let valorUtilidad = success.respuesta[2][0].utilidad;
 
-      let arregloReportesEconomicos: IReportesEconomicos[] = [{montoTransacciones:valorTransacciones, montoCompras:valorCompras, utilidad:valorUtilidad}];
+      let arregloReportesEconomicos: IReportesEconomicos[] = [{ montoTransacciones: valorTransacciones, montoCompras: valorCompras, utilidad: valorUtilidad }];
 
       this.dsReporteEconomico = new MatTableDataSource(arregloReportesEconomicos);
 
     },
-    (error) =>{
-      console.log("hubo un problema: ",error)
+    (error) => {
+      console.log("hubo un problema: ", error)
     }
   );
+}
+
+//MOSTRAR VIABILIDAD DE PRODUCTOS
+public generarViabilidad(){
+let fechaInicioForm: string = "";
+let fechaFinalForm: string = "";
+fechaInicioForm = this.frmViabilidadProductos.get('fechaInicio').value;
+fechaFinalForm = this.frmViabilidadProductos.get('fechaFinal').value;
+let fechaInicioFormateada = this.formateandoFecha.formatearFecha(fechaInicioForm);
+let fechaFinalFormateada = this.formateandoFecha.formatearFecha(fechaFinalForm);
+
+this.API.mostrarViabilidadProductos(fechaInicioFormateada, fechaFinalFormateada).subscribe(
+  (success: any) => {
+    alert(JSON.stringify(success));
+    this.dsViabilidadProductos = new MatTableDataSource(success.respuesta);
+
+  },
+  (error) => {
+    console.log("hubo un problema: ", error)
   }
+);
+}
 
 
   ngOnInit() {

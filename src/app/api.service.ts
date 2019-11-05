@@ -47,6 +47,11 @@ export interface IReportesEconomicos{
   montoCompras: number;
   utilidad:number;
 }
+
+export interface IViabilidadProductos{
+  nombreProducto: string;
+  vendidos: string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -94,6 +99,10 @@ export class APIService {
   //mostrar registros en tabla; uso: herramientas (tab reportes economicos)
   public mostrarReporte(fechaInicio:string,fechaFinal:string){
     return this.http.get(`http://localhost:3000/reportesEconomicosWS/listarReportesEconomicos/${fechaInicio}/${fechaFinal}`,{headers:this.headers});
+  }
+  //mostrar registros en tabla; uso: herramientas (tab viabilidad productos)
+  public mostrarViabilidadProductos(fechaInicio:string,fechaFinal:string){
+    return this.http.get(`http://localhost:3000/popularidadProductosWS/listarPopularidadProductos/${fechaInicio}/${fechaFinal}`,{headers:this.headers});
   }
   //mostrar id usuario en select; uso: compras
   public aniadirCompra(idUsuario:number,idProveedor:number,montoCompra:number,productos:IProductos[]){
