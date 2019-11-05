@@ -52,6 +52,11 @@ export interface IViabilidadProductos{
   nombreProducto: string;
   vendidos: string;
 }
+export interface IRendimientoVendedores{
+  nombreVendedor: string;
+  vendidos: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -104,6 +109,12 @@ export class APIService {
   public mostrarViabilidadProductos(fechaInicio:string,fechaFinal:string){
     return this.http.get(`http://localhost:3000/popularidadProductosWS/listarPopularidadProductos/${fechaInicio}/${fechaFinal}`,{headers:this.headers});
   }
+
+  //mostrar registros en tabla; uso: herramientas (tab viabilidad productos)
+  public mostrarRendimientoVendedores(fechaInicio:string,fechaFinal:string){
+    return this.http.get(`http://localhost:3000/rendimientoVendedoresWS/listarVentasVendedores/${fechaInicio}/${fechaFinal}`,{headers:this.headers});
+  }
+
   //mostrar id usuario en select; uso: compras
   public aniadirCompra(idUsuario:number,idProveedor:number,montoCompra:number,productos:IProductos[]){
     return this.http.post('http://localhost:3000/comprasWS/agregarCompra',{idUsuario,idProveedor,montoCompra,productos},{headers:this.headers});

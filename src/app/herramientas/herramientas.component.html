@@ -40,29 +40,31 @@
         </mat-card>
         <br>
         <div name="tablaReportesEconomicos">
-          <table mat-table [dataSource]="dsReporteEconomico" class="mat-elevation-z8 darkerFuenteCuerpos" style="font-size:98px">
-            <ng-container matColumnDef="montoTransacciones">
-              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto Transacciones </th>
-              <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.montoTransacciones}} </td>
-            </ng-container>
+          <div style="height: 49%;overflow: auto;">
+            <table mat-table [dataSource]="dsReporteEconomico" class="mat-elevation-z8 darkerFuenteCuerpos" style="font-size:98px">
+              <ng-container matColumnDef="montoTransacciones">
+                <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto Transacciones </th>
+                <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.montoTransacciones}} </td>
+              </ng-container>
 
-            <ng-container matColumnDef="montoCompras">
-              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto Compras </th>
-              <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.montoCompras}} </td>
-            </ng-container>
+              <ng-container matColumnDef="montoCompras">
+                <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto Compras </th>
+                <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.montoCompras}} </td>
+              </ng-container>
 
-            <ng-container matColumnDef="utilidad">
-              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Utilidad </th>
-              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.utilidad}} </td>
-            </ng-container>
+              <ng-container matColumnDef="utilidad">
+                <th mat-header-cell *matHeaderCellDef style="text-align:center"> Utilidad </th>
+                <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.utilidad}} </td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
         </div>
         <mat-card class="letreroModulo">
           <div style="margin-bottom: -14px;">
-            Reporte Economico <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
+            Reporte Economico <i class='fas fa-balance-scale' style='font-size: 20px;color: darkseagreen;'></i>
           </div>
         </mat-card>
       </mat-tab>
@@ -99,24 +101,26 @@
         </mat-card>
         <br>
         <div name="tablaViabilidadProductos">
-          <table mat-table [dataSource]="dsViabilidadProductos" class="mat-elevation-z8 darkerFuenteCuerpos" style="font-size:98px">
-            <ng-container matColumnDef="nombreProducto">
-              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Producto </th>
-              <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.nombreProducto}} </td>
-            </ng-container>
+          <div style="height: 49%;overflow: auto;">
+            <table mat-table [dataSource]="dsViabilidadProductos" class="mat-elevation-z8 darkerFuenteCuerpos" style="font-size:98px">
+              <ng-container matColumnDef="nombreProducto">
+                <th mat-header-cell *matHeaderCellDef style="text-align:center"> Producto </th>
+                <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.nombreProducto}} </td>
+              </ng-container>
 
-            <ng-container matColumnDef="vendidos">
-              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Estatus </th>
-              <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.vendidos}} </td>
-            </ng-container>
+              <ng-container matColumnDef="vendidos">
+                <th mat-header-cell *matHeaderCellDef style="text-align:center"> Estatus </th>
+                <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.vendidos}} </td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumnsMP"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsMP;"></tr>
-          </table>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsMP"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsMP;"></tr>
+            </table>
+          </div>
         </div>
         <mat-card class="letreroModulo">
           <div style="margin-bottom: -14px;">
-            Viabilidad Productos <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
+            Viabilidad Productos <i class='fas fa-chart-line' style='font-size: 20px;color: darkseagreen;'></i>
           </div>
         </mat-card>
       </mat-tab>
@@ -124,9 +128,60 @@
 
       <!--tercer tab-->
 
-      <mat-tab label="Utilidad"> Content 3 </mat-tab>
+      <mat-tab label="Ventas Vendedores">
+        <br>
+        <mat-card class="contenedorAcciones">
+          <div style="margin-top: -7px;">
+            <div name="renglonDeFiltrado" class="row">
+                <div class="col-9">
+                  <form name="filtradoRendimientoVendedores" [formGroup]="frmRendimientoVendedores">
+                    <mat-form-field class="darkerFuenteCuerpos inputFiltrarxFecha" style="color: darkseagreen;">
+                      <input formControlName="fechaInicio" matInput [matDatepicker]="picker4" placeholder="Fecha Inicio" style="color: darkseagreen;">
+                      <mat-datepicker-toggle matSuffix [for]="picker4" style="color: #dddad3;"></mat-datepicker-toggle>
+                      <mat-datepicker #picker4></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field  class="darkerFuenteCuerpos inputFiltrarxFecha" style="color: darkseagreen;">
+                      <input formControlName="fechaFinal" matInput [matDatepicker]="picker5" placeholder="Fecha Final">
+                      <mat-datepicker-toggle matSuffix [for]="picker5" style="color: #dddad3;"></mat-datepicker-toggle>
+                      <mat-datepicker #picker5></mat-datepicker>
+                    </mat-form-field>
+                  </form>
+                </div>
+                <div class="col-3">
+                  <div style="margin-top: 15px;">
+                    <button mat-stroked-button class="btnFiltrar darkerFuenteTitulos" (click)="generarRendimientoVendedores()">Filtrar</button>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </mat-card>
+        <br>
+        <div name="tablaViabilidadProductos">
+          <div style="height: 49%;overflow: auto;">
+            <table mat-table [dataSource]="dsRendimientoVendedores" class="mat-elevation-z8 darkerFuenteCuerpos" style="font-size:98px">
+              <ng-container matColumnDef="nombreVendedor">
+                <th mat-header-cell *matHeaderCellDef style="text-align:center"> Vendedor </th>
+                <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.nombreVendedor}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="vendidos">
+                <th mat-header-cell *matHeaderCellDef style="text-align:center"> Vendidos </th>
+                <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.vendidos}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsRV"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsRV;"></tr>
+            </table>
+          </div>
+        </div>
+        <mat-card class="letreroModulo">
+          <div style="margin-bottom: -14px;">
+            Rendimiento Vendedores <i class='fas fa-chart-pie' style='font-size: 20px;color: darkseagreen;'></i>
+          </div>
+        </mat-card>
+      </mat-tab>
     </mat-tab-group>
   </mat-card>
-
 
 </div>
