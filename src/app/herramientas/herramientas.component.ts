@@ -4,7 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
-import {IReportesEconomicos,IViabilidadProductos,APIService} from '../api.service';
+import {IReportesEconomicos,IViabilidadProductos,IRendimientoVendedores,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 @Component({
   selector: 'app-herramientas',
@@ -17,12 +17,15 @@ export class HerramientasComponent implements OnInit {
   public titulo = ""; //para el modal
   public frmFiltrado: FormGroup;
   public frmViabilidadProductos: FormGroup;
+  public frmRendimientoVendedores: FormGroup;
   public formValid:Boolean=false;
   //propiedades de la table
   displayedColumns: string[] = ['montoTransacciones', 'montoCompras', 'utilidad'];
   displayedColumnsMP: string[] = ['nombreProducto','vendidos'];
+  displayedColumnsRV: string[] = ['nombreVendedor','vendidos'];
   dsReporteEconomico: MatTableDataSource<IReportesEconomicos>;
   dsViabilidadProductos: MatTableDataSource<IViabilidadProductos>;
+  dsRendimientoVendedores: MatTableDataSource<IRendimientoVendedores>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
@@ -35,6 +38,12 @@ export class HerramientasComponent implements OnInit {
           fechaInicio:["",Validators.required],
           fechaFinal:["",Validators.required]
     });
+
+    this.frmRendimientoVendedores = this.formBuilder.group({
+          fechaInicio:["",Validators.required],
+          fechaFinal:["",Validators.required]
+    });
+
   }
   //MENU INFERIOR (bottomsheet)
   public openBottomSheet(): void {
@@ -76,23 +85,51 @@ export class HerramientasComponent implements OnInit {
 
 //MOSTRAR VIABILIDAD DE PRODUCTOS
 public generarViabilidad(){
-let fechaInicioForm: string = "";
-let fechaFinalForm: string = "";
-fechaInicioForm = this.frmViabilidadProductos.get('fechaInicio').value;
-fechaFinalForm = this.frmViabilidadProductos.get('fechaFinal').value;
-let fechaInicioFormateada = this.formateandoFecha.formatearFecha(fechaInicioForm);
-let fechaFinalFormateada = this.formateandoFecha.formatearFecha(fechaFinalForm);
+  let fechaInicioForm: string = "";
+  let fechaFinalForm: string = "";
+  fechaInicioForm = this.frmViabilidadProductos.get('fechaInicio').value;
+  fechaFinalForm = this.frmViabilidadProductos.get('fechaFinal').value;
+  let fechaInicioFormateada = this.formateandoFecha.formatearFecha(fechaInicioForm);
+  let fechaFinalFormateada = this.formateandoFecha.formatearFecha(fechaFinalForm);
 
-this.API.mostrarViabilidadProductos(fechaInicioFormateada, fechaFinalFormateada).subscribe(
-  (success: any) => {
-    alert(JSON.stringify(success));
-    this.dsViabilidadProductos = new MatTableDataSource(success.respuesta);
+  this.API.mostrarViabilidadProductos(fechaInicioFormateada, fechaFinalFormateada).subscribe(
+    (success: any) => {
+      if (success.respuesta == 1) {
+        this.dsViabilidadProductos = new MatTableDataSource(success.respuesta);
+      }
+      alert(JSON.stringify(success.respuesta));
 
-  },
-  (error) => {
-    console.log("hubo un problema: ", error)
-  }
-);
+    },
+    (error) => {
+      console.log("hubo un problema: ", error)
+    }
+  );
+}
+
+//MOSTRAR RENDIMIENTO VENDEDORES
+public generarRendimientoVendedores(){
+  let fechaInicioForm: string = "";
+  let fechaFinalForm: string = "";
+  fechaInicioForm = this.frmRendimientoVendedores.get('fechaInicio').value;
+  fechaFinalForm = this.frmRendimientoVendedores.get('fechaFinal').value;
+  let fechaInicioFormateada = this.formateandoFecha.formatearFecha(fechaInicioForm);
+  let fechaFinalFormateada = this.formateandoFecha.formatearFecha(fechaFinalForm);
+
+  this.API.mostrarRendimientoVendedores(fechaInicioFormateada, fechaFinalFormateada).subscribe(
+    (success: any) => {
+      //el ws regresa 0 en el numero de ventas en lugar de null y null el nombre del vendedor si no hay ventas por eso esta validacion.
+      if (success.estatus == 1 && success.respuesta[0].nombreVendedor != null) {
+        this.dsRendimientoVendedores = new MatTableDataSource(success.respuesta);
+      }else{
+        alert("Al parecer no hay registro en estas fechas.")
+      }
+
+
+    },
+    (error) => {
+      console.log("hubo un problema: ", error)
+    }
+  );
 }
 
 
