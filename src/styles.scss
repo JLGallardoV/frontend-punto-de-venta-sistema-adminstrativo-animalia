@@ -71,10 +71,10 @@
 
 //ESTILOS PARA MODULOS CRUD:
 .contenedorAcciones{
-  width: 80%;
+  width: 85%;
   margin: auto;
   background-color: #000000bd;
-  height: auto;
+  height: 18%;
 }
 
 .btnAcciones{
@@ -92,8 +92,7 @@
 .inputBuscar{
   font-size: 20px;
   margin-top: -20px;
-  float: right;
-  width: 85%;
+  width: 100%;
 }
 //ESTILOS PARA TABLA CRUD:
 
@@ -129,7 +128,7 @@ table {
     -webkit-transition-duration: 1s;
     -o-transition-property: background-color, color;
     -o-transition-duration: 1s;
-    background-color:#000000b8;
+    background-color:#000000d6;
     -moz-box-shadow: 2px 2px 1px black;
   }
   .btnAccionesColumna{
