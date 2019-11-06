@@ -1,76 +1,118 @@
 
 <div class="imagenFondo">
-  <mat-toolbar class="estiloToolbar animacionCambioColor" style="background: #2d1f2c6e;cursor: pointer;" (click)="openBottomSheet()">
+  <mat-toolbar class="estiloToolbar animacionCambioColor" style="transition:0.5s;" (click)="openBottomSheet()">
     <div class="margenMenu">
       <i class='fas fa-bars' style='font-size: 18px;color: darkseagreen'></i> Menu
     </div>
   </mat-toolbar>
   <br>
-  <mat-card class="contenedorAcciones">
-    <div style="margin-top: -7px;">
-      <button mat-fab class="btnAcciones darkerFuenteTitulos" (click)="openAlta(content)"><i class='fas fa-user-plus icono'></i></button>
-      &nbsp;
-      <button mat-fab class="btnAcciones darkerFuenteTitulos" [routerLink]="[ '/home']"><i class='fas fa-print icono'></i></button>
-      <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-        <input matInput placeholder="Buscar" style="color: darkseagreen;">
-      </mat-form-field>
-    </div>
-  </mat-card>
-  <br>
 
-  <mat-card class="cardPrincipal">
-    <br>
-    <div class="mat-elevation-z8" style="overflow-y: auto;height: 81%;">
-      <table mat-table [dataSource]="dataSource" class="darkerFuenteCuerpos" style="font-size:98px">
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> ID </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
+  <mat-card class="cardPrincipal row">
+  <mat-tab-group>
+    <!-- primer tab -->
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="montoIvaTransaccion">
-          <th mat-header-cell *matHeaderCellDef> Monto </th>
-          <td mat-cell *matCellDef="let element"> {{element.montoIvaTransaccion}} </td>
-        </ng-container>
-
-        <!-- Weight Column -->
-        <ng-container matColumnDef="fechaTransaccion">
-          <th mat-header-cell *matHeaderCellDef> Fecha </th>
-          <td mat-cell *matCellDef="let element"> {{element.fechaTransaccion}} </td>
-        </ng-container>
-
-        <!-- Weight Column -->
-        <ng-container matColumnDef="vendedor">
-          <th mat-header-cell *matHeaderCellDef> Vendedor </th>
-          <td mat-cell *matCellDef="let element"> {{element.vendedor}} </td>
-        </ng-container>
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef> acciones </th>
-          <td mat-cell *matCellDef="let element">
-            <div class="">
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" [routerLink]="['/home']" style="border: solid 1px #c3845d;">Informacion</button>
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" [routerLink]="['/home']" style="border: solid 1px #6496c1;">Modificar</button>
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" [routerLink]="['/home']" style="border: solid 1px #d06363;">Eliminar</button>
+    <mat-tab label="Historial Compras">
+      <br>
+      <mat-card class="contenedorAcciones" style="height: 14%;">
+        <div class="row">
+          <div class="col-4" style="margin-top: -5px; margin-right:-45px">
+            <div name="contedorBotones" style="margin-left: 20%;">
+              <button mat-fab class="btnAcciones darkerFuenteTitulos" (click)="openAlta(content)"><i class='fas fa-user-plus icono'></i></button>
+              &nbsp;
+              <button mat-fab class="btnAcciones darkerFuenteTitulos" [routerLink]="[ '/home']"><i class='fas fa-print icono'></i></button>
             </div>
-          </td>
-        </ng-container>
+          </div>
+          <div class="col-8" style="margin-top: -5px;">
+            <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
+              <input matInput placeholder="Buscar" style="color: darkseagreen;">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+      <br>
+      <div class="tablaElastica">
+        <table mat-table [dataSource]="dsTransacciones" class="darkerFuenteCuerpos" style="font-size:98px">
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+          <ng-container matColumnDef="idTransaccion">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idTransaccion}} </td>
+          </ng-container>
 
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
-    </div>
-    <mat-card class="letreroModulo">
-      <div style="margin-bottom: -14px;">
-        Transacciones <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
+          <ng-container matColumnDef="nombreProducto">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Producto </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreProducto}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="montoIvaTransaccion">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto ($) </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.montoConIvaTransaccion}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="pagoTransaccion">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Pago ($) </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.pagoTransaccion}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="cambioTransaccion">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cambio ($) </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.cambioTransaccion}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaTransaccion">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="numeroProductosEnTransaccion">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> n.° Productos </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.numeroProductosEnTransaccion}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreVendedor">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Vendedor </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreVendedor}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreCliente">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cliente </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreCliente}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="tipoPago">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Tipo Pago  </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.tipoPago}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsTransacciones"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsTransacciones;"></tr>
+        </table>
+
       </div>
-    </mat-card>
-  </mat-card>
+      <mat-paginator [pageSizeOptions]="[4, 8, 16, 24]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
+      <mat-card class="letreroModulo">
+        <div style="margin-bottom: -14px;">
+          Transacciones <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
+        </div>
+      </mat-card>
+    </mat-tab>
 
+
+    <!-- segundo tab -->
+
+
+    <mat-tab label="Historial Ventas">
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
+
+
+
+
+
+
+
+  <!-- codigo modal -->
   <ng-template #content let-modal>
     <div class="modal-header">
       <h3 class="modal-title darkerFuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
