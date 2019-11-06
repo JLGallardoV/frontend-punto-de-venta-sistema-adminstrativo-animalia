@@ -15,6 +15,7 @@
   width: 80%;
   height: auto;
   margin: 0 auto;
+  transition: 0.5s;
 }
 .btnAgregar{
     color: darkseagreen;
@@ -26,10 +27,18 @@
 //LONGITUDES DE LA TABLA, EVITA QUE SE DESBORDEN LOS DATOS DE LA TABLA
 .tablaElastica{
   overflow-y: auto;
-  min-height: 35%;
+  min-height: 30%;
   max-height: 45%;
   transition: 0.5s;
 }
+
+//ICONO LUPA DE INPUT BUSCAR
+.lupa{
+  font-size: 20px;
+  color: darkseagreen;
+  margin: 10px 0px 0px 10px;
+}
+
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
 ::ng-deep .mat-focused {
   /*change color of label*/

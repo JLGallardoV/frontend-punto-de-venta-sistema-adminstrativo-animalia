@@ -12,20 +12,16 @@
   <mat-tab-group>
     <!-- primer tab -->
 
-    <mat-tab label="Historial Compras">
+    <mat-tab label="Historial Ventas">
       <br>
       <mat-card class="contenedorAcciones" style="height: 14%;">
         <div class="row">
-          <div class="col-4" style="margin-top: -5px; margin-right:-45px">
-            <div name="contedorBotones" style="margin-left: 20%;">
-              <button mat-fab class="btnAcciones darkerFuenteTitulos" (click)="openAlta(content)"><i class='fas fa-user-plus icono'></i></button>
-              &nbsp;
-              <button mat-fab class="btnAcciones darkerFuenteTitulos" [routerLink]="[ '/home']"><i class='fas fa-print icono'></i></button>
-            </div>
+          <div class="col-1">
+            <i class='fas fa-search lupa'></i>
           </div>
-          <div class="col-8" style="margin-top: -5px;">
+          <div class="col-11" style="margin-top: -5px;">
             <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-              <input matInput placeholder="Buscar" style="color: darkseagreen;">
+              <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
             </mat-form-field>
           </div>
         </div>
@@ -89,7 +85,11 @@
         </table>
 
       </div>
-      <mat-paginator [pageSizeOptions]="[4, 8, 16, 24]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
+      <mat-paginator #MatPaginatorTransacciones
+                     [pageSize]="4"
+                     [pageSizeOptions]="[4, 16, 32]"
+                     style="width: 99.99%;background:#eae4dda1;">
+       </mat-paginator>
       <mat-card class="letreroModulo">
         <div style="margin-bottom: -14px;">
           Transacciones <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
@@ -101,7 +101,75 @@
     <!-- segundo tab -->
 
 
-    <mat-tab label="Historial Ventas">
+    <mat-tab label="Historial Compras">
+      <br>
+      <mat-card class="contenedorAcciones" style="height: 14%;">
+        <div class="row">
+          <div class="col-1">
+            <i class='fas fa-search lupa'></i>
+          </div>
+          <div class="col-11" style="margin-top: -5px;">
+            <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
+              <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+      <br>
+      <div class="tablaElastica">
+        <table mat-table [dataSource]="dsCompras" class="darkerFuenteCuerpos" style="font-size:98px">
+
+          <ng-container matColumnDef="idCompra">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
+            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.idCompra}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreProducto">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Producto </th>
+            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.nombreProducto}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="numeroProductosEnCompra">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> n.° Productos </th>
+            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.numeroProductosEnCompra}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="montoCompra">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto ($) </th>
+            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.montoCompra}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaCompra">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
+            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.fechaCompra}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreProveedor">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Proveedor </th>
+            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.nombreProveedor}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreUsuario">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Comprador </th>
+            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.nombreUsuario}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsCompras"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsCompras;"></tr>
+        </table>
+
+      </div>
+      <mat-paginator #MatPaginatorCompras
+                     [pageSize]="4"
+                     [pageSizeOptions]="[10, 20, 30]"
+                     style="width: 99.99%;background:#eae4dda1;">
+       </mat-paginator>
+      <mat-card class="letreroModulo">
+        <div style="margin-bottom: -14px;">
+          Compras <i class='fas fa-box-open' style='font-size: 20px;color: darkseagreen;'></i>
+        </div>
+      </mat-card>
+
     </mat-tab>
   </mat-tab-group>
 </mat-card>
