@@ -8,6 +8,7 @@
   width: 100vw;
 }
 
+//CARD DONDE ESTAN LA MAYORIA DE COMPONENTES (COMO LA TABLA)
 .cardPrincipal{
   background-color: #000000bd;
   border-radius: 6px;
@@ -16,8 +17,8 @@
   margin: 0 auto;
   transition: 0.5s;
 }
-
-.btnAgregar{
+//BTN PARA EJECUTAR UNA PETICION POST O PUT DEL MODAL
+.btnEjecutar{
     color: #191818;
     border: solid 1px #676767;
     margin: auto;
@@ -27,7 +28,7 @@
 //LONGITUDES DE LA TABLA, EVITA QUE SE DESBORDEN LOS DATOS DE LA TABLA
 .tablaElastica{
   overflow-y: auto;
-  min-height: 30%;
+  min-height: auto;
   max-height: 45%;
   transition: 0.5s;
 }

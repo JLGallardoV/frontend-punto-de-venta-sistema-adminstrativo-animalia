@@ -4,23 +4,39 @@
   background-attachment: scroll;
   background-position: top;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 }
 
-
+//CARD DONDE ESTAN LA MAYORIA DE COMPONENTES (COMO LA TABLA)
 .cardPrincipal{
-  background-color: #2d1f2c6e;
+  background-color: #000000bd;
   border-radius: 6px;
   width: 80%;
-  height: 70vh;
+  height: auto;
   margin: 0 auto;
+  transition: 0.5s;
 }
-.btnAgregar{
-    color: darkseagreen;
-    border: solid 1px #dcd8d2;
+
+//BTN PARA EJECUTAR UNA PETICION POST O PUT DEL MODAL
+.btnEjecutar{
+    color: #191818;
+    border: solid 1px #676767;
     margin: auto;
     width: 65%;
+}
+
+//LONGITUDES DE LA TABLA, EVITA QUE SE DESBORDEN LOS DATOS DE LA TABLA
+.tablaElastica{
+  overflow-y: auto;
+  min-height: auto;
+  max-height: 45%;
+  transition: 0.5s;
+}
+
+//PARA POPOVER DE MAS INFORMACION
+.popover{
+  z-index: 1005!important;
 }
 
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
@@ -41,4 +57,15 @@
 
 ::ng-deep.mat-form-field-label{
   color: darkseagreen !important;
+}
+
+//SOBREESCRIBIR DATEPICKER PARA QUE SE VEA ARRIBA DEL MODAL
+::ng-deep.mat-datepicker-content{
+  z-index: 10001!important;
+}
+::ng-deep.mat-calendar{
+  z-index: 10001!important;
+}
+::ng-deep.cdk-overlay-container {
+    z-index: 10001!important;
 }

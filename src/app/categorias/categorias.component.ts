@@ -107,26 +107,6 @@ export class CategoriasComponent implements OnInit {
   }
 
 
-  //EDITAR CATEGORIA
-  public editarCategoria(){
-    let idCategoriaForm = this.frmCategorias.get('idCategoria').value; //recuerda que el id esta oculto asi que el user no podra editarlo
-      let nombreCategoriaForm = this.frmCategorias.get('nombreCategoria').value;
-      let subCategoriaForm = this.frmCategorias.get('subCategoria').value;
-      let descripcionCategoriaForm = this.frmCategorias.get('descripcionCategoria').value;
-
-      this.API.actualizarCategoria(idCategoriaForm,nombreCategoriaForm,subCategoriaForm,descripcionCategoriaForm).subscribe(
-        (success: any)=>{
-          alert(JSON.stringify(success.respuesta));
-          this.listarCategorias();
-          this.frmCategorias.reset();
-        },
-        (error)=>{
-          console.log("Lo siento: "+error);
-        }
-      );
-  }
-
-
   //ELIMINAR CATEGORIA
   public eliminarCategoria(idCategoria:number){
     this.API.borrarCategoria(idCategoria).subscribe(
@@ -139,6 +119,12 @@ export class CategoriasComponent implements OnInit {
         console.log("hubo un problema: ", error);
       }
     );
+  }
+  //FUNCIONALIDAD FILTRAR
+  public filtrarRegistros(filterValue: string) {
+    this.dsCategorias.filter = filterValue.trim().toLowerCase();
+    //si se usa el modulo tab de transacciones, entonces arroja los resultados buscados en la primer pagina: (if reducido)
+    this.dsCategorias.paginator ? this.dsCategorias.paginator.firstPage(): null;
   }
 
   ngOnInit() {

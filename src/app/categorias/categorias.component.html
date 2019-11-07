@@ -15,7 +15,7 @@
 
       <div class="col-9" style="margin-top: -5px;">
         <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-          <input matInput placeholder="Buscar" style="color: darkseagreen;">
+          <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
         </mat-form-field>
       </div>
     </div>
@@ -99,7 +99,7 @@
       </form>
     </div>
     <div class="modal-footer" style="background: #f6f2ebe3;">
-      <button mat-stroked-button class="btnAgregar darkerFuenteTitulos margenSuperior" [disabled]="frmCategorias.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
+      <button mat-stroked-button class="btnEjecutar darkerFuenteTitulos margenSuperior" [disabled]="frmCategorias.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
     </div>
   </ng-template>
 
