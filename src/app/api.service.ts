@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
-export interface ITransacciones {
-  idTransaccion: number;
-  fechaTransaccion: string;
-  cantidadProductos: number;
+//INTERFACES USADAS AL REDEDOR DE LA APLICACION
+export interface ICategorias {
+  idCategoria: number;
+  nombreCategoria: string;
+  subCategoria: string;
+  descripcionCategoria: string;
 }
 
 export interface ICompras {
@@ -20,17 +22,7 @@ export interface IProductos{
   nombreProducto:string
   precioUnitarioProducto:string
 }
-export interface ITiposDePagos{
-  idTipoPago: number;
-}
-export interface IUsuarios{
-  idUsuario: number;
-  nombreUsuario: string;
-  emailUsuario: string;
-  contraseniaUsuario: string;
-  idVendedor: number;
-  idTipoUsuario: number;
-}
+
 export interface IProveedores{
   idProveedor: number;
   nombreProveedor: string;
@@ -48,12 +40,30 @@ export interface IReportesEconomicos{
   utilidad:number;
 }
 
-export interface IViabilidadProductos{
-  nombreProducto: string;
-  vendidos: string;
-}
 export interface IRendimientoVendedores{
   nombreVendedor: string;
+  vendidos: string;
+}
+export interface ITransacciones {
+  idTransaccion: number;
+  fechaTransaccion: string;
+  cantidadProductos: number;
+}
+
+export interface ITiposDePagos{
+  idTipoPago: number;
+}
+export interface IUsuarios{
+  idUsuario: number;
+  nombreUsuario: string;
+  emailUsuario: string;
+  contraseniaUsuario: string;
+  idVendedor: number;
+  idTipoUsuario: number;
+}
+
+export interface IViabilidadProductos{
+  nombreProducto: string;
   vendidos: string;
 }
 
@@ -115,6 +125,7 @@ export class APIService {
     return this.http.get(`http://localhost:3000/rendimientoVendedoresWS/listarVentasVendedores/${fechaInicio}/${fechaFinal}`,{headers:this.headers});
   }
 
+
   //mostrar id usuario en select; uso: compras
   public aniadirCompra(idUsuario:number,idProveedor:number,montoCompra:number,productos:IProductos[]){
     return this.http.post('http://localhost:3000/comprasWS/agregarCompra',{idUsuario,idProveedor,montoCompra,productos},{headers:this.headers});
@@ -122,6 +133,24 @@ export class APIService {
   //agregar una transaccion; uso: transacciones (facturas)
   public aniadirTransaccion(idCliente: number,idVendedor:number,pagoTransaccion:number,productos:IProductos[],tiposDePagos:ITiposDePagos[]){
     return this.http.post('http://localhost:3000/transaccionesWS/agregarTransaccion',{idCliente,idVendedor,pagoTransaccion,productos,tiposDePagos},{headers:this.headers});
+
+  }
+  //WS PARA MODULO CATEGORIAS
+
+  public mostrarCategorias(){
+    return this.http.get('http://localhost:3000/categoriasWS/listarCategorias',{headers:this.headers});
+  }
+
+  public aniadirCategoria(nombreCategoria:string,subCategoria:string,descripcionCategoria:string){
+    return this.http.post('http://localhost:3000/categoriasWS/agregarCategoria',{nombreCategoria,subCategoria,descripcionCategoria},{headers:this.headers});
+
+  }
+  public actualizarCategoria(idCategoria:number,nombreCategoria:string,subCategoria:string,descripcionCategoria:string){
+    return this.http.put(`http://localhost:3000/categoriasWS/actualizarCategoria/${idCategoria}`,{nombreCategoria,subCategoria,descripcionCategoria},{headers:this.headers});
+
+  }
+  public borrarCategoria(idCategoria:number){
+    return this.http.delete(`http://localhost:3000/categoriasWS/eliminarCategoria/${idCategoria}`,{headers:this.headers});
 
   }
 }
