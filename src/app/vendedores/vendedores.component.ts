@@ -4,35 +4,10 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
+import {IVendedores,APIService} from '../api.service';
+import {DateFormatService} from '../date-format.service';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-{position: 1, name: 'Hydrogen', weight: 1.0079},
-{position: 2, name: 'Helium', weight: 4.0026},
-{position: 3, name: 'Lithium', weight: 6.941},
-{position: 4, name: 'Beryllium', weight: 9.0122},
-{position: 5, name: 'Boron', weight: 10.811},
-{position: 6, name: 'Carbon', weight: 12.0107},
-{position: 7, name: 'Nitrogen', weight: 14.0067},
-{position: 8, name: 'Oxygen', weight: 15.9994},
-{position: 9, name: 'Fluorine', weight: 18.9984},
-{position: 10, name: 'Neon', weight: 20.1797},
-{position: 11, name: 'Sodium', weight: 22.9897},
-{position: 12, name: 'Magnesium', weight: 24.305},
-{position: 13, name: 'Aluminum', weight: 26.9815},
-{position: 14, name: 'Silicon', weight: 28.0855},
-{position: 15, name: 'Phosphorus', weight: 30.9738},
-{position: 16, name: 'Sulfur', weight: 32.065},
-{position: 17, name: 'Chlorine', weight: 35.453},
-{position: 18, name: 'Argon', weight: 39.948},
-{position: 19, name: 'Potassium', weight: 39.0983},
-{position: 20, name: 'Calcium', weight: 40.078},
-];
 @Component({
   selector: 'app-vendedores',
   templateUrl: './vendedores.component.html',
@@ -43,24 +18,29 @@ export class VendedoresComponent implements OnInit {
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
-  public frmProveedores: FormGroup;
+  public frmVendedores: FormGroup;
   public formValid:Boolean=false;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'acciones'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
+  //propiedades tabla
+  displayedColumnsVendedores: string[] = ['idVendedor', 'nombreVendedor', 'ciudadVendedor', 'estadoVendedor', 'telefonoVendedor', 'acciones'];
+  dsVendedores:MatTableDataSource<IVendedores>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder) {
-    this.frmProveedores = this.formBuilder.group({
-      nombreProveedor:["",Validators.required],
-      ciudadProveedor:["",Validators.required],
-      estadoProveedor:["",Validators.required],
-      paisProveedor:["",Validators.required],
-      direccionProveedor:["",Validators.required],
-      telefonoProveedor:["",Validators.required],
-      emailProveedor:["",Validators.required],
-      descripcionProveedor:["",Validators.required]
+
+  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
+    this.frmVendedores = this.formBuilder.group({
+      idVendedor:[""],
+      nombreVendedor:["",Validators.required],
+      ciudadVendedor:["",Validators.required],
+      estadoVendedor:["",Validators.required],
+      direccionVendedor:["",Validators.required],
+      telefonoVendedor:["",Validators.required],
+      emailVendedor:["",Validators.required],
+      fechaNacimientoVendedor:["",Validators.required],
+      rfcVendedor:["",Validators.required],
+      numeroSeguroSocialVendedor:["",Validators.required],
+      antiguedadVendedor:["",Validators.required]
     });
   }
+  //BOTTOMSHEET MENU
   public openBottomSheet(): void {
   this._bottomSheet.open(BottomSheetVendedores);
   }
@@ -68,14 +48,141 @@ export class VendedoresComponent implements OnInit {
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
   public openAlta(content) {
     this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
-    this.titulo = "Agregar Proveedor";
-  }//------fin open--------------------------------------------------
+    this.titulo = "Agregar Vendedor";
+  }
 
+  //ABRIR MODAL CON LOS DATOS A EDITAR
+  public openEditar(content,idVendedor:number,nombreVendedor: string, ciudadVendedor: string, estadoVendedor: string, direccionVendedor: string, telefonoVendedor: string, emailVendedor: string, fechaNacimientoVendedor: string, rfcVendedor: string, numeroSeguroSocialVendedor: number, antiguedadVendedor: number){
+    console.log("id: ",idVendedor," nombre: ",nombreVendedor," ciudad: ",ciudadVendedor," email: ",emailVendedor);
+    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.titulo = "Editar Vendedor";
+    //pintando los valores en el modal listos para editarlos
+    this.frmVendedores.controls['idVendedor'].setValue(idVendedor); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
+    this.frmVendedores.controls['nombreVendedor'].setValue(nombreVendedor);
+    this.frmVendedores.controls['ciudadVendedor'].setValue(ciudadVendedor);
+    this.frmVendedores.controls['estadoVendedor'].setValue(estadoVendedor);
+    this.frmVendedores.controls['direccionVendedor'].setValue(direccionVendedor);
+    this.frmVendedores.controls['telefonoVendedor'].setValue(telefonoVendedor);
+    this.frmVendedores.controls['emailVendedor'].setValue(emailVendedor);
+    this.frmVendedores.controls['fechaNacimientoVendedor'].setValue(fechaNacimientoVendedor);
+    this.frmVendedores.controls['rfcVendedor'].setValue(rfcVendedor);
+    this.frmVendedores.controls['numeroSeguroSocialVendedor'].setValue(numeroSeguroSocialVendedor);
+    this.frmVendedores.controls['antiguedadVendedor'].setValue(antiguedadVendedor);
+  }
+
+  //LISTAR VENDEDORES
+  public listarVendedores(){
+    this.API.mostrarVendedores().subscribe(
+      (success:any)=>{
+        this.dsVendedores = new MatTableDataSource(success.respuesta);
+        this.dsVendedores.paginator = this.paginator;
+      },
+      (error)=>{
+        console.log("hubo un problema: ",error)
+      }
+    );
+  }
+
+  //AGREGAR VENDEDOR Y ACTUALIZAR VENDEDOR: EVITO CREAR 2 MODALES
+  public ejecutarPeticion(){
+    let idVendedorForm = this.frmVendedores.get('idVendedor').value;
+    let nombreVendedorForm = this.frmVendedores.get('nombreVendedor').value;
+    let ciudadVendedorForm = this.frmVendedores.get('ciudadVendedor').value;
+    let estadoVendedorForm = this.frmVendedores.get('estadoVendedor').value;
+    let direccionVendedorForm = this.frmVendedores.get('direccionVendedor').value;
+    let telefonoVendedorForm = this.frmVendedores.get('telefonoVendedor').value;
+    let emailVendedorForm = this.frmVendedores.get('emailVendedor').value;
+    let fechaNacimientoVendedorForm = this.frmVendedores.get('fechaNacimientoVendedor').value;
+    let rfcVendedorForm = this.frmVendedores.get('rfcVendedor').value;
+    let numeroSeguroSocialVendedorForm = this.frmVendedores.get('numeroSeguroSocialVendedor').value;
+    let antiguedadVendedorForm = this.frmVendedores.get('antiguedadVendedor').value;
+
+
+    //formateo fecha para que sea compaible con el sgbd:
+    let fechaNacimientoVendedorFormateada = this.formateandoFecha.formatearFecha(fechaNacimientoVendedorForm);
+    if (this.titulo == "Agregar Vendedor") {
+      this.API.aniadirVendedor(nombreVendedorForm,ciudadVendedorForm,estadoVendedorForm,direccionVendedorForm,telefonoVendedorForm,emailVendedorForm,fechaNacimientoVendedorFormateada,rfcVendedorForm,numeroSeguroSocialVendedorForm,antiguedadVendedorForm).subscribe(
+        (success: any)=>{
+          alert(JSON.stringify(success.respuesta));
+          this.listarVendedores();
+          this.frmVendedores.reset();
+          this.modal.close();
+
+        },
+        (error)=>{
+          console.log("hubo un problema: ",error)
+        }
+      );
+    }
+    if(this.titulo == "Editar Vendedor"){
+      this.API.actualizarVendedor(idVendedorForm,nombreVendedorForm,ciudadVendedorForm,estadoVendedorForm,direccionVendedorForm,telefonoVendedorForm,emailVendedorForm,fechaNacimientoVendedorFormateada,rfcVendedorForm,numeroSeguroSocialVendedorForm,antiguedadVendedorForm).subscribe(
+        (success: any)=>{
+          alert(JSON.stringify(success.respuesta));
+          this.listarVendedores();
+          this.frmVendedores.reset();
+          this.modal.close();
+
+        },
+        (error)=>{
+          console.log("hubo un problema: ",error)
+        }
+      );
+    }
+  }
+
+  //ELIMINAR VENDEDOR
+  public eliminarVendedor(idVendedor:number){
+    this.API.borrarVendedor(idVendedor).subscribe(
+      (success:any)=>{
+        alert(success.respuesta);
+        this.listarVendedores();
+
+      },
+      (error)=>{
+        console.log("hubo un problema: ", error);
+      }
+    );
+  }
+
+  //FUNCIONALIDAD FILTRAR
+  public filtrarRegistros(filterValue: string) {
+    this.dsVendedores.filter = filterValue.trim().toLowerCase();
+    //si se usa el modulo tab de transacciones, entonces arroja los resultados buscados en la primer pagina: (if reducido)
+    this.dsVendedores.paginator ? this.dsVendedores.paginator.firstPage(): null;
+  }
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.listarVendedores();
+
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @Component({
   selector:  'bottomSheetVendedores',
   templateUrl: 'bottomSheetVendedores.html',
