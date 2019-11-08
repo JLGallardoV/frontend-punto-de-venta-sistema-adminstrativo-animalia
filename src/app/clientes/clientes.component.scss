@@ -4,66 +4,39 @@
   background-attachment: scroll;
   background-position: top;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 }
 
-
+//CARD DONDE ESTAN LA MAYORIA DE COMPONENTES (COMO LA TABLA)
 .cardPrincipal{
-  background-color: #2d1f2c6e;
+  background-color: #000000bd;
   border-radius: 6px;
   width: 80%;
-  height: 70vh;
+  height: auto;
   margin: 0 auto;
-}
-.btnAgregar{
-  color: darkseagreen;
-  border: solid 1px #dcd8d2;
-  margin: auto;
-  width: 65%;
-}
-th.mat-header-cell {
-    padding-right: 40px!important;
-}
-/*ESTILOS PARA PAGINADOR*/
-.mat-paginator {
-  width: 136%;
-  background: #eae4dda1;
+  transition: 0.5s;
 }
 
-/*PANTALLAS PEQUEÑAS*/
-@media screen and (max-width: 935px) {
-  .mat-paginator {
-    width: 109.99%;
-  }
+//BTN PARA EJECUTAR UNA PETICION POST O PUT DEL MODAL
+.btnEjecutar{
+    color: #191818;
+    border: solid 1px #676767;
+    margin: auto;
+    width: 65%;
 }
 
-@media screen and (max-width: 800px) {
-  .mat-paginator {
-    width: 128.99%;
-  }
+//LONGITUDES DE LA TABLA, EVITA QUE SE DESBORDEN LOS DATOS DE LA TABLA
+.tablaElastica{
+  overflow-y: auto;
+  min-height: auto;
+  max-height: 45%;
+  transition: 0.5s;
 }
 
-@media screen and (max-width: 600px) {
-  .mat-paginator {
-    width: 264%;
-  }
-}
-
-@media screen and (max-width: 365px) {
-  .mat-paginator {
-    width: 306%;
-  }
-}
-@media screen and (max-width: 375px) {
-  .mat-paginator {
-    width: 292%;
-  }
-}
-@media screen and (max-width: 320px) {
-  .mat-paginator {
-    width: 350%;
-  }
+//PARA POPOVER DE MAS INFORMACION
+.popover{
+  z-index: 1005!important;
 }
 
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
@@ -84,4 +57,12 @@ th.mat-header-cell {
 
 ::ng-deep.mat-form-field-label{
   color: darkseagreen !important;
+}
+//SOBREESCRIBIR OPTIONS DEL SELECT PARA QUE SE VEAN ARRIBA DEL MODAL
+::ng-deep.cdk-overlay-container {
+    z-index: 10001!important;
+}
+//SOBREESCRIBIR COLOR DE FUENTE A SELECT
+::ng-deep.mat-select-value {
+  color: rgb(192, 191, 192);
 }

@@ -16,6 +16,23 @@ export interface ICompras {
   cantidadProductos: number;
 }
 
+export interface IClientes {
+  idCliente: number;
+  nombreCliente: string;
+  apellidoPartenoCliente: string;
+  apellidoMartenoCliente: string;
+  ciudadCliente: string;
+  estadoCliente: string;
+  paisCliente: string;
+  direccionCliente: string;
+  coloniaCliente: string;
+  cpCliente: number;
+  telefonoCliente: string;
+  emailCliente: string;
+  puntuajeCliente: number;
+  idTipoCliente:number;
+}
+
 export interface IProductos {
   idProducto: number;
   cantidadProducto: number;
@@ -112,11 +129,11 @@ export class APIService {
   public mostrarClientes() {
     return this.http.get('http://localhost:3000/clientesWS/listarClientes', { headers: this.headers });
   }
-  public aniadirCliente(nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string, contraseniaCliente: string, puntuajeCliente: number, idTipoCliente: number) {
-    return this.http.post('http://localhost:3000/clientesWS/agregarCliente', { nombreCliente, apellidoPaternoCliente, apellidoMaternoCliente, ciudadCliente, estadoCliente, paisCliente, direccionCliente, coloniaCliente, cpCliente, telefonoCliente, emailCliente, contraseniaCliente, puntuajeCliente, idTipoCliente }, { headers: this.headers });
+  public aniadirCliente(nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string, puntuajeCliente: number, idTipoCliente: number) {
+    return this.http.post('http://localhost:3000/clientesWS/agregarCliente', { nombreCliente, apellidoPaternoCliente, apellidoMaternoCliente, ciudadCliente, estadoCliente, paisCliente, direccionCliente, coloniaCliente, cpCliente, telefonoCliente, emailCliente,  puntuajeCliente, idTipoCliente }, { headers: this.headers });
   }
-  public actualizarCliente(idCliente: number, nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string, contraseniaCliente: string, puntuajeCliente: number, idTipoCliente: number) {
-    return this.http.put(`http://localhost:3000/clientesWS/actualizarCliente/${idCliente}`, { nombreCliente, apellidoPaternoCliente, apellidoMaternoCliente, ciudadCliente, estadoCliente, paisCliente, direccionCliente, coloniaCliente, cpCliente, telefonoCliente, emailCliente, contraseniaCliente, puntuajeCliente, idTipoCliente }, { headers: this.headers });
+  public actualizarCliente(idCliente: number, nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string, puntuajeCliente: number, idTipoCliente: number) {
+    return this.http.put(`http://localhost:3000/clientesWS/actualizarCliente/${idCliente}`, { nombreCliente, apellidoPaternoCliente, apellidoMaternoCliente, ciudadCliente, estadoCliente, paisCliente, direccionCliente, coloniaCliente, cpCliente, telefonoCliente, emailCliente, puntuajeCliente, idTipoCliente }, { headers: this.headers });
   }
   public borrarCliente(idCliente: number) {
     return this.http.delete(`http://localhost:3000/clientesWS/eliminarCliente/${idCliente}`, { headers: this.headers });
@@ -174,12 +191,26 @@ export class APIService {
     return this.http.get(`http://localhost:3000/reportesEconomicosWS/listarReportesEconomicos/${fechaInicio}/${fechaFinal}`, { headers: this.headers });
   }
 
+  //WS PARA TIPOS DE CLIENTES
+  public mostrarTiposDeClientes() {
+    return this.http.get('http://localhost:3000/tiposClientesWS/listarTiposClientes', { headers: this.headers });
+  }
+  public aniadirTipoDeClientes(tipoCliente: string, descripcionTipoCliente: string) {
+    return this.http.post('http://localhost:3000/tiposClientesWS/agregarTipoCliente', {tipoCliente, descripcionTipoCliente }, { headers: this.headers });
+  }
+  public actualizarTipoDeClientes(idTipoCliente: number, tipoCliente: string, descripcionTipoCliente: string) {
+    return this.http.put(`http://localhost:3000/tiposClientesWS/actualizarTipoCliente/${idTipoCliente}`, {idTipoCliente, tipoCliente, descripcionTipoCliente }, { headers: this.headers });
+  }
+  public borrarTipoDeClientes(idTipoCliente: number) {
+    return this.http.delete(`http://localhost:3000/tiposClientesWS/eliminarTipoCliente/${idTipoCliente}`, { headers: this.headers });
+  }
+
   //WS PARA TIPOS DE PAGOS
   public mostrarTiposDePagos() {
     return this.http.get('http://localhost:3000/tiposPagosWS/listarTiposPagos', { headers: this.headers });
   }
-  public aniadirTipoDePago(idTipoPago: number, tipoPago: string, viaTipoPago: string, descripcionTipoPago: string) {
-    return this.http.post('http://localhost:3000/tiposPagosWS/agregarTipoPago', { idTipoPago, tipoPago, viaTipoPago, descripcionTipoPago }, { headers: this.headers });
+  public aniadirTipoDePago(tipoPago: string, viaTipoPago: string, descripcionTipoPago: string) {
+    return this.http.post('http://localhost:3000/tiposPagosWS/agregarTipoPago', {tipoPago, viaTipoPago, descripcionTipoPago }, { headers: this.headers });
   }
   public actualizarTipoDePago(idTipoPago: number, tipoPago: string, viaTipoPago: string, descripcionTipoPago: string) {
     return this.http.put(`http://localhost:3000/tiposPagosWS/actualizarTipoPago/${idTipoPago}`, { idTipoPago, tipoPago, viaTipoPago, descripcionTipoPago }, { headers: this.headers });
