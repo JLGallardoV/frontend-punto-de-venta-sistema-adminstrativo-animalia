@@ -75,7 +75,6 @@
                 <br><b>Descripcion:</b> {{i.descripcionProveedor}}
               </div>
             </ng-template>
-
             <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;"placement="left"
              [ngbPopover]="popContent" [popoverTitle]="popTitle">Informacion</button>
             <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #6496c1;" (click)="openEditar(content,i.idProveedor,i.nombreProveedor, i.ciudadProveedor, i.estadoProveedor, i.paisProveedor, i.direccionProveedor, i.telefonoProveedor, i.emailProveedor, i.descripcionProveedor)">Modificar</button>
