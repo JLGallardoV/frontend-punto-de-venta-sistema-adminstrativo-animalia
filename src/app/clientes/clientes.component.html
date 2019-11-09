@@ -90,9 +90,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumnsClientes"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsClientes;"></tr>
       </table>
-
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
     </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
     <mat-card class="letreroModulo">
       <div style="margin-bottom: -14px;">
         Clientes <i class='fas fa-id-card' style='font-size: 20px;color: darkseagreen;'></i>

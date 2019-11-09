@@ -114,7 +114,7 @@ export class ClientesComponent implements OnInit {
     let ciudadClienteForm = this.frmClientes.get('ciudadCliente').value;
     let estadoClienteForm = this.frmClientes.get('estadoCliente').value;
     let paisClienteForm = this.frmClientes.get('paisCliente').value;
-    let direccionClienteForm = this.frmClientes.get('paisCliente').value;
+    let direccionClienteForm = this.frmClientes.get('direccionCliente').value;
     let coloniaClienteForm = this.frmClientes.get('coloniaCliente').value;
     let cpClienteForm = this.frmClientes.get('cpCliente').value
     let telefonoClienteForm = this.frmClientes.get('telefonoCliente').value

@@ -19,7 +19,7 @@ export class ProveedoresComponent implements OnInit {
   public frmProveedores: FormGroup;
   public formValid:Boolean=false;
 
-  displayedColumnsProveedores: string[] = ['idProveedor', 'nombreProveedor', 'ciudadProveedor', 'estadoProveedor', 'telefonoProveedor', 'emailProveedor', 'acciones'];
+  displayedColumnsProveedores: string[] = ['idProveedor', 'nombreProveedor', 'ciudadProveedor', 'estadoProveedor', 'telefonoProveedor','acciones'];
   dsProveedores: MatTableDataSource<IProveedores>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
