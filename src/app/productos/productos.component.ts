@@ -4,21 +4,10 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
-export interface PeriodicElement {
-  position: number;
-  nombreProducto: string;
-  detalleProducto: string;
-  contenidoProducto: string;
-  stockProducto: string;
-  precioUnitarioProducto: string;
-  precioMayoreoProducto: string;
-  categoria: string;
-}
+import {IProductos,ICategorias,IAlmacenes,APIService} from '../api.service';
+import {DateFormatService} from '../date-format.service';
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, nombreProducto: 'collar castigo', detalleProducto:'granpet', contenidoProducto:'1 pieza',stockProducto:'2',precioUnitarioProducto:'20.00',precioMayoreoProducto:'13.00',categoria:'Articulos'},
-  {position: 1, nombreProducto: 'carne de res', detalleProducto:'dogchow', contenidoProducto:'1 lata',stockProducto:'5',precioUnitarioProducto:'20.00',precioMayoreoProducto:'13.00',categoria:'Alimentos'},
-];
+
 
 @Component({
   selector: 'app-productos',
@@ -30,23 +19,35 @@ export class ProductosComponent implements OnInit {
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
-  public frmProveedores: FormGroup;
+  public frmProductos: FormGroup;
   public formValid:Boolean=false;
+  public arregloCategoria: ICategorias[];
+  public arregloAlmacenes: IAlmacenes[];
 
-  displayedColumns: string[] = ['position', 'nombreProducto', 'detalleProducto','contenidoProducto','stockProducto','precioUnitarioProducto','precioMayoreoProducto','categoria','acciones',];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = [
+  'idProducto',
+  'nombreProducto',
+  'detalleProducto',
+  'stockProducto',
+  'precioUnitarioProducto',
+  'acciones'
+];
+  dsProductos:MatTableDataSource<IProductos>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder) {
-    this.frmProveedores = this.formBuilder.group({
-      nombreProveedor:["",Validators.required],
-      ciudadProveedor:["",Validators.required],
-      estadoProveedor:["",Validators.required],
-      paisProveedor:["",Validators.required],
-      direccionProveedor:["",Validators.required],
-      telefonoProveedor:["",Validators.required],
-      emailProveedor:["",Validators.required],
-      descripcionProveedor:["",Validators.required]
+  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
+    this.frmProductos = this.formBuilder.group({
+      idProducto:[""],
+      nombreProducto:["",Validators.required],
+      detalleProducto:["",Validators.required],
+      contenidoProducto:["",Validators.required],
+      fechaCaducidadProducto:[""],
+      paisOrigenProducto:["",Validators.required],
+      stockProducto:[""],
+      puntosProducto:["",Validators.required],
+      precioUnitarioProducto:["",Validators.required],
+      idCategoria:["",Validators.required],
+      idAlmacen:["",Validators.required]
     });
   }
   public openBottomSheet(): void {
@@ -56,14 +57,166 @@ export class ProductosComponent implements OnInit {
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
   public openAlta(content) {
     this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
-    this.titulo = "Agregar Proveedor";
-  }//------fin open--------------------------------------------------
+    this.titulo = "Agregar Producto";
+  }
 
+  //ABRIR MODAL CON LOS DATOS A EDITAR
+  public openEditar(content,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, idCategoria: number, idAlmacen: number){
+    console.log("id: ",idProducto," nombre: ",nombreProducto);
+    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.titulo = "Editar Producto";
+    //pintando los valores en el modal listos para editarlos
+    this.frmProductos.controls['idProducto'].setValue(idProducto); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
+    this.frmProductos.controls['nombreProducto'].setValue(nombreProducto);
+    this.frmProductos.controls['detalleProducto'].setValue(detalleProducto);
+    this.frmProductos.controls['contenidoProducto'].setValue(contenidoProducto);
+    this.frmProductos.controls['fechaCaducidadProducto'].setValue(fechaCaducidadProducto);
+    this.frmProductos.controls['paisOrigenProducto'].setValue(paisOrigenProducto);
+    this.frmProductos.controls['stockProducto'].setValue(stockProducto);
+    this.frmProductos.controls['puntosProducto'].setValue(puntosProducto);
+    this.frmProductos.controls['precioUnitarioProducto'].setValue(precioUnitarioProducto);
+    this.frmProductos.controls['idCategoria'].setValue(idCategoria);
+    this.frmProductos.controls['idAlmacen'].setValue(idAlmacen);
+  }
+
+
+  //LISTAR CLIENTES
+  public listarProductos(){
+    this.API.mostrarProductos().subscribe(
+      (success:any)=>{
+        this.dsProductos = new MatTableDataSource(success.respuesta);
+        this.dsProductos.paginator = this.paginator;
+      },
+      (error)=>{
+        console.log("hubo un problema: ",error)
+      }
+    );
+  }
+
+  //LISTAR CATEGORIA PARA EL SELECT DEL FORMULARIO
+  public listarCategorias(){
+    this.API.mostrarCategorias().subscribe(
+      (success: any)=>{
+        this.arregloCategoria = success.respuesta;
+        console.log("listando tipos de clientes")
+      },
+      (error)=>{
+        console.log("hubo un problema: ",error)
+      }
+    );
+  }
+  //LISTAR ALMACEN PARA EL SELECT DEL FORMULARIO
+  public listarAlmacenes(){
+    this.API.mostrarAlmacenes().subscribe(
+      (success: any)=>{
+        this.arregloAlmacenes = success.respuesta;
+        console.log("listando tipos de clientes")
+      },
+      (error)=>{
+        console.log("hubo un problema: ",error)
+      }
+    );
+  }
+
+  //AGREGAR CLIENTE Y ACTUALIZAR CLIENTE: EVITO CREAR 2 MODALES
+  public ejecutarPeticion(){
+
+    let idProductoForm = this.frmProductos.get('idProducto').value;
+    let nombreProductoForm = this.frmProductos.get('nombreProducto').value;
+    let detalleProductoForm = this.frmProductos.get('detalleProducto').value;
+    let contenidoProductoForm = this.frmProductos.get('contenidoProducto').value;
+    let fechaCaducidadProductoForm = this.frmProductos.get('fechaCaducidadProducto').value;
+    let paisOrigenProductoForm = this.frmProductos.get('paisOrigenProducto').value;
+    let stockProductoForm = this.frmProductos.get('stockProducto').value;
+    let puntosProductoForm = this.frmProductos.get('puntosProducto').value;
+    let precioUnitarioProductoForm = this.frmProductos.get('precioUnitarioProducto').value;
+    let idCategoriaForm = this.frmProductos.get('idCategoria').value;
+    let idAlmacenForm = this.frmProductos.get('idAlmacen').value
+
+    let fechaCaducidadProductoFormateada = this.formateandoFecha.formatearFecha(fechaCaducidadProductoForm);
+    //if reducido para formatear en caso de null en dato de la edicion de fecha (mi sgbd no me acepta null en date)
+    fechaCaducidadProductoForm == null ? fechaCaducidadProductoForm = '0000-00-00':null;
+    console.log(nombreProductoForm,"\n", detalleProductoForm,"\n", contenidoProductoForm,"\n", fechaCaducidadProductoFormateada,"\n", paisOrigenProductoForm,"\n", puntosProductoForm,"\n", precioUnitarioProductoForm,"\n", idCategoriaForm,"\n", idAlmacenForm);
+    if (this.titulo == "Agregar Producto") {
+      this.API.aniadirProducto(nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoFormateada, paisOrigenProductoForm, puntosProductoForm, precioUnitarioProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
+        (success: any)=>{
+          alert(JSON.stringify(success.respuesta));
+          this.listarProductos();
+          this.frmProductos.reset();
+          this.modal.close();
+
+        },
+        (error)=>{
+          console.log("hubo un problema: ",error)
+        }
+      );
+    }
+    if(this.titulo == "Editar Producto"){
+      this.API.actualizarProducto(idProductoForm,nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoForm, paisOrigenProductoForm, stockProductoForm, puntosProductoForm, precioUnitarioProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
+        (success: any)=>{
+          alert(JSON.stringify(success.respuesta));
+          this.listarProductos();
+          this.frmProductos.reset();
+          this.modal.close();
+
+        },
+        (error)=>{
+          console.log("hubo un problema: ",error)
+        }
+      );
+    }
+  }
+
+  //ELIMINAR CLIENTE
+  public eliminarProducto(idProducto:number){
+    this.API.borrarProducto(idProducto).subscribe(
+      (success:any)=>{
+        alert(success.respuesta);
+        this.listarProductos();
+
+      },
+      (error)=>{
+        console.log("hubo un problema: ", error);
+      }
+    );
+  }
+
+  //FUNCIONALIDAD FILTRAR
+  public filtrarRegistros(filterValue: string) {
+    this.dsProductos.filter = filterValue.trim().toLowerCase();
+    //si se usa el modulo tab de transacciones, entonces arroja los resultados buscados en la primer pagina: (if reducido)
+    this.dsProductos.paginator ? this.dsProductos.paginator.firstPage(): null;
+  }
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.listarProductos();
+    this.listarAlmacenes();
+    this.listarCategorias();
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @Component({

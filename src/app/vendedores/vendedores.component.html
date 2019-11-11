@@ -89,7 +89,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumnsVendedores;"></tr>
       </table>
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
+    <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
     <mat-card class="letreroModulo">
       <div style="margin-bottom: -14px;">
         Vendedores <i class='fas fa-users' style='font-size: 20px;color: darkseagreen;'></i>
