@@ -39,6 +39,8 @@ import { AccesosComponent, BottomSheetAccesos} from './accesos/accesos.component
 import { HerramientasComponent, BottomSheetHerramientas } from './herramientas/herramientas.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ComprasComponent, BottomSheetCompras } from './compras/compras.component';
+import{AuthGuard} from './auth.guard';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,7 @@ import { ComprasComponent, BottomSheetCompras } from './compras/compras.componen
     BottomSheetUsuarios,
     BottomSheetAccesos,
     BottomSheetHerramientas,
-    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent, ComprasComponent
+    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent, ComprasComponent, ConfiguracionComponent
   ],
   imports: [
     AppRoutingModule,
@@ -100,7 +102,9 @@ import { ComprasComponent, BottomSheetCompras } from './compras/compras.componen
     BottomSheetAccesos,
     BottomSheetHerramientas,
     BottomSheetClientes], //bottomsheet
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

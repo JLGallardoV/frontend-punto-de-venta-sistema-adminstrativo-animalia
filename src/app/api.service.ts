@@ -3,6 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 //INTERFACES USADAS AL REDEDOR DE LA APLICACION
+export interface IAccesos{
+  idAcceso:number;
+  fechaAcceso:string;
+  accionAcceso:string;
+  nombreUsuario:string;
+}
+
 export interface IAlmacenes {
   idAlmacen: number;
   ciudadAlmacen: string;
@@ -155,7 +162,15 @@ export class APIService {
   }
 
 
-  //WS PARA ENTIDAD ALMACENES
+  //WS PARA ENTIDAD ACCESOS
+  public mostrarAccesos() {
+    return this.http.get('http://localhost:3000/accesosWS/listarAccesos', { headers: this.headers });
+  }
+  public aniadirAcceso(accionAcceso:string,idUsuario:number) {
+    return this.http.post('http://localhost:3000/accesosWS/agregarAcceso', { accionAcceso,idUsuario}, { headers: this.headers });
+  }
+
+  //WS PARA ENTIDAD BITACORA ACCESOS
   public mostrarAlmacenes() {
     return this.http.get('http://localhost:3000/almacenesWS/listarAlmacenes', { headers: this.headers });
   }
@@ -248,8 +263,8 @@ export class APIService {
   public mostrarProductos() {
     return this.http.get('http://localhost:3000/productosWS/listarProductos', { headers: this.headers });
   }
-  public aniadirProducto(nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, puntosProducto: number, precioUnitaioProducto: number, idCategoria: number, idAlmacen: number) {
-    return this.http.post('http://localhost:3000/productosWS/agregarProducto', { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, puntosProducto, precioUnitaioProducto, idCategoria, idAlmacen }, { headers: this.headers });
+  public aniadirProducto(nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, puntosProducto: number, precioUnitarioProducto: number, idCategoria: number, idAlmacen: number) {
+    return this.http.post('http://localhost:3000/productosWS/agregarProducto', { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, puntosProducto, precioUnitarioProducto, idCategoria, idAlmacen }, { headers: this.headers });
   }
   public actualizarProducto(idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, idCategoria: number, idAlmacen: number) {
     return this.http.put(`http://localhost:3000/productosWS/actualizarProducto/${idProducto}`, { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, stockProducto, puntosProducto, precioUnitarioProducto, idCategoria, idAlmacen }, { headers: this.headers });
@@ -336,6 +351,9 @@ export class APIService {
   }
   public borrarUsuario(idUsuario: number) {
     return this.http.delete(`http://localhost:3000/usuariosWS/eliminarUsuario/${idUsuario}`, { headers: this.headers });
+  }
+  public buscarUsuarioPorNombre(nombreUsuario: string) {
+    return this.http.get(`http://localhost:3000/usuariosWS/buscarUsuarioPorNombre/${nombreUsuario}`, { headers: this.headers });
   }
 
 

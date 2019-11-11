@@ -4,23 +4,34 @@
   background-attachment: scroll;
   background-position: top;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 }
 
 
 .cardPrincipal{
-  background-color: #2d1f2c6e;
+  background-color: #000000bd;
   border-radius: 6px;
   width: 80%;
-  height: 70vh;
+  height: auto;
   margin: 0 auto;
+  transition: 0.5s;
 }
-.btnAgregar{
-    color: darkseagreen;
-    border: solid 1px #dcd8d2;
-    margin: auto;
-    width: 65%;
+
+
+//LONGITUDES DE LA TABLA, EVITA QUE SE DESBORDEN LOS DATOS DE LA TABLA
+.tablaElastica{
+  overflow-y: auto;
+  min-height: 30%;
+  max-height: 45%;
+  transition: 0.5s;
+}
+
+//ICONO LUPA DE INPUT BUSCAR
+.lupa{
+  font-size: 20px;
+  color: darkseagreen;
+  margin: 10px 0px 0px 10px;
 }
 
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
@@ -41,4 +52,16 @@
 
 ::ng-deep.mat-form-field-label{
   color: darkseagreen !important;
+}
+
+//SOBREESCRIBIR TAB ANGULAR MATERIAL
+::ng-deep.mat-tab-label{ //fuente de cabeceras de tab
+  color: darkseagreen !important;
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 22px;
+}
+
+::ng-deep.mat-ink-bar{
+  background-color: #dfdcd4!important;
+
 }
