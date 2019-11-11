@@ -3,6 +3,22 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 //INTERFACES USADAS AL REDEDOR DE LA APLICACION
+export interface IAccesos{
+  idAcceso:number;
+  fechaAcceso:string;
+  accionAcceso:string;
+  nombreUsuario:string;
+}
+
+export interface IAlmacenes {
+  idAlmacen: number;
+  ciudadAlmacen: string;
+  estadoAlmacen: string;
+  direccionAlmacen: string;
+  referenciaAlmacen: string;
+  telefonoAlmacen: string;
+}
+
 export interface ICategorias {
   idCategoria: number;
   nombreCategoria: string;
@@ -14,6 +30,12 @@ export interface ICompras {
   idCompra: number;
   fechaCompra: string;
   cantidadProductos: number;
+}
+
+export interface ICompensaciones{
+  idCompensacion: number;
+  tipoCompensacion: string;
+  descripcionCompensacion: string;
 }
 
 export interface IClientes {
@@ -31,6 +53,26 @@ export interface IClientes {
   emailCliente: string;
   puntuajeCliente: number;
   idTipoCliente:number;
+}
+
+export interface IDevoluciones{
+  idDevolucion: number;
+  nombreProducto: string;
+  montoConIvaDevolucion: number;
+  fechaDevolucion: string;
+  motivoDevolucion: string;
+  nombreCliente: string;
+  tipoProblema: string;
+  tipoCompensacion: string;
+}
+
+export interface IEnvios{
+  ciudadEnvio: string;
+  estadoEnvio: string;
+  paisEnvio: string;
+  observacionesEnvio: string;
+  idTransaccion: number;
+  idMedioEntrega: number;
 }
 
 export interface IProductos {
@@ -61,6 +103,13 @@ export interface IRendimientoVendedores {
   nombreVendedor: string;
   vendidos: string;
 }
+
+
+export interface ITiposDeProblemas{
+  idTipoProblema:number;
+  tipoProblema: string;
+}
+
 export interface ITransacciones {
   idTransaccion: number;
   fechaTransaccion: string;
@@ -70,6 +119,7 @@ export interface ITransacciones {
 export interface ITiposDePagos {
   idTipoPago: number;
 }
+
 export interface IUsuarios {
   idUsuario: number;
   nombreUsuario: string;
@@ -78,6 +128,7 @@ export interface IUsuarios {
   idVendedor: number;
   idTipoUsuario: number;
 }
+
 export interface IVendedores{
   nombreVendedor:string;
   ciudadVendedor:string;
@@ -111,6 +162,27 @@ export class APIService {
   }
 
 
+  //WS PARA ENTIDAD ACCESOS
+  public mostrarAccesos() {
+    return this.http.get('http://localhost:3000/accesosWS/listarAccesos', { headers: this.headers });
+  }
+  public aniadirAcceso(accionAcceso:string,idUsuario:number) {
+    return this.http.post('http://localhost:3000/accesosWS/agregarAcceso', { accionAcceso,idUsuario}, { headers: this.headers });
+  }
+
+  //WS PARA ENTIDAD BITACORA ACCESOS
+  public mostrarAlmacenes() {
+    return this.http.get('http://localhost:3000/almacenesWS/listarAlmacenes', { headers: this.headers });
+  }
+  public aniadirAlmacen(idAlmacen: number,estadoAlmacen:string,paisAlmacen:string,direccionAlmacen:string,referenciaAlmacen:string,telefonoAlmacen:string) {
+    return this.http.post('http://localhost:3000/almacenesWS/agregarAlmacen', { idAlmacen,estadoAlmacen,paisAlmacen,direccionAlmacen,referenciaAlmacen,telefonoAlmacen }, { headers: this.headers });
+  }
+  public actualizarAlmacen(idAlmacen: number,estadoAlmacen:string,paisAlmacen:string,direccionAlmacen:string,referenciaAlmacen:string,telefonoAlmacen:string) {
+    return this.http.put(`http://localhost:3000/almacenesWS/actualizarAlmacen/${idAlmacen}`, {idAlmacen,estadoAlmacen,paisAlmacen,direccionAlmacen,referenciaAlmacen,telefonoAlmacen}, { headers: this.headers });
+  }
+  public borrarAlmacen(idAlmacen: number) {
+    return this.http.delete(`http://localhost:3000/almacenesWS/eliminarAlmacen/${idAlmacen}`, { headers: this.headers });
+  }
   //WS PARA ENTIDAD CATEGORIAS
   public mostrarCategorias() {
     return this.http.get('http://localhost:3000/categoriasWS/listarCategorias', { headers: this.headers });
@@ -153,16 +225,49 @@ export class APIService {
     return this.http.get('http://localhost:3000/transaccionesWS/listarTransacciones', { headers: this.headers });
   }
 
+  //WS PARA ENTIDAD COMPENSACIONES
+  public mostrarCompensaciones() {
+    return this.http.get('http://localhost:3000/compensacionesWS/listarCompensaciones', { headers: this.headers });
+  }
+  public aniadirCompensacion(tipoCompensacion:string,descripcionCompensacion:string) {
+    return this.http.post('http://localhost:3000/compensacionesWS/agregarCompensacion', { tipoCompensacion,descripcionCompensacion}, { headers: this.headers });
+  }
+  public actualizarCompensacion(idCompensacion: number,tipoCompensacion:string,descripcionCompensacion:string) {
+    return this.http.put(`http://localhost:3000/compensacionesWS/actualizarCompensacion/${idCompensacion}`, { tipoCompensacion,descripcionCompensacion }, { headers: this.headers });
+  }
+  public borrarCompensacion(idCompensacion: number) {
+    return this.http.delete(`http://localhost:3000/compensacionesWS/eliminarCompensacion/${idCompensacion}`, { headers: this.headers });
+  }
+
+  //WS ENTIDAD DEVOLUCION
+  public mostrarDevoluciones() {
+    return this.http.get('http://localhost:3000/devolucionesWS/listarDevoluciones', { headers: this.headers });
+  }
+  public aniadirDevolucion(montoConIvaDevolucion:number,motivoDevolucion:string,idCliente:number,idTipoProblema:number,idProducto:number,idCompensacion:number) {
+    return this.http.post('http://localhost:3000/devolucionesWS/agregarDevolucion', {montoConIvaDevolucion,motivoDevolucion,idCliente,idTipoProblema,idProducto,idCompensacion}, { headers: this.headers });
+  }
+
+  //WS ENTIDAD ENVIO
+  public mostrarEnvios() {
+    return this.http.get('http://localhost:3000/enviosWS/listarEnvios', { headers: this.headers });
+  }
+  public aniadirEnvio(ciudadEnvio: string,estadoEnvio: string,paisEnvio: string,observacionesEnvio: string,idTransaccion: number,idMedioEntrega: number) {
+    return this.http.post('http://localhost:3000/enviosWS/agregarEnvio', {ciudadEnvio,estadoEnvio,paisEnvio,observacionesEnvio,idTransaccion,idMedioEntrega}, { headers: this.headers });
+  }
+  public borrarEnvio(idEnvio:number) {
+    return this.http.delete(`http://localhost:3000/enviosWS/agregarEnvio/${idEnvio}`, { headers: this.headers });
+  }
+
 
   //WS PARA PRODUCTOS
   public mostrarProductos() {
     return this.http.get('http://localhost:3000/productosWS/listarProductos', { headers: this.headers });
   }
-  public aniadirProducto(nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto: number, puntosProducto: number, precioUnitaioProducto: number, idCategoria: number, idAlmacen: number) {
-    return this.http.post('http://localhost:3000/productosWS/agregarProducto', { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, stockProducto, puntosProducto, precioUnitaioProducto, idCategoria, idAlmacen }, { headers: this.headers });
+  public aniadirProducto(nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, puntosProducto: number, precioUnitarioProducto: number, idCategoria: number, idAlmacen: number) {
+    return this.http.post('http://localhost:3000/productosWS/agregarProducto', { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, puntosProducto, precioUnitarioProducto, idCategoria, idAlmacen }, { headers: this.headers });
   }
-  public actualizarProducto(idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto: number, puntosProducto: number, precioUnitaioProducto: number, idCategoria: number, idAlmacen: number) {
-    return this.http.put(`http://localhost:3000/productosWS/actualizarProducto/${idProducto}`, { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, stockProducto, puntosProducto, precioUnitaioProducto, idCategoria, idAlmacen }, { headers: this.headers });
+  public actualizarProducto(idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, idCategoria: number, idAlmacen: number) {
+    return this.http.put(`http://localhost:3000/productosWS/actualizarProducto/${idProducto}`, { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, stockProducto, puntosProducto, precioUnitarioProducto, idCategoria, idAlmacen }, { headers: this.headers });
   }
   public borrarProducto(idProducto: number) {
     return this.http.delete(`http://localhost:3000/productosWS/eliminarProducto/${idProducto}`, { headers: this.headers });
@@ -219,6 +324,20 @@ export class APIService {
     return this.http.delete(`http://localhost:3000/tiposPagosWS/eliminarTipoPago/${idTipoPago}`, { headers: this.headers });
   }
 
+  //WS PARA TIPOS DE PROBLEMAS
+  public mostrarTiposDeProblemas() {
+    return this.http.get('http://localhost:3000/tiposProblemasWS/listarTiposProblemas', { headers: this.headers });
+  }
+  public aniadirTipoDeProblema(tipoProblema:number) {
+    return this.http.post('http://localhost:3000/tiposProblemasWS/agregarTipoProblema', {tipoProblema}, { headers: this.headers });
+  }
+  public actualizarTipoDeProblema(idTipoProblema: number,tipoProblema:string) {
+    return this.http.put(`http://localhost:3000/tiposProblemasWS/actualizarTipoProblema/${idTipoProblema}`, {tipoProblema}, { headers: this.headers });
+  }
+  public borrarTipoDeProblema(idTipoProblema: number) {
+    return this.http.delete(`http://localhost:3000/tiposProblemasWS/eliminarTipoProblema/${idTipoProblema}`, { headers: this.headers });
+  }
+
 
   //WS PARA ENTIDAD USUARIOS
   public mostrarUsuarios() {
@@ -232,6 +351,9 @@ export class APIService {
   }
   public borrarUsuario(idUsuario: number) {
     return this.http.delete(`http://localhost:3000/usuariosWS/eliminarUsuario/${idUsuario}`, { headers: this.headers });
+  }
+  public buscarUsuarioPorNombre(nombreUsuario: string) {
+    return this.http.get(`http://localhost:3000/usuariosWS/buscarUsuarioPorNombre/${nombreUsuario}`, { headers: this.headers });
   }
 
 

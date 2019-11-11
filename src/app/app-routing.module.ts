@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule,CanActivate } from '@angular/router';
+import{AuthGuard}from './auth.guard';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {ProveedoresComponent} from './proveedores/proveedores.component';
@@ -17,21 +18,22 @@ import {HerramientasComponent} from './herramientas/herramientas.component';
 
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent},
+  {path: 'home', component: HomeComponent,canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
-  {path: 'proveedores', component: ProveedoresComponent},
-  {path: 'transacciones', component: TransaccionesComponent},
-  {path: 'clientes', component: ClientesComponent},
-  {path: 'facturas', component: FacturasComponent},
-  {path: 'productos', component: ProductosComponent},
-  {path: 'devoluciones', component: DevolucionesComponent},
-  {path: 'categorias', component: CategoriasComponent},
-  {path: 'vendedores', component: VendedoresComponent},
-  {path: 'usuarios', component: UsuariosComponent},
-  {path: 'accesos', component: AccesosComponent},
-  {path: 'compras', component: ComprasComponent},
-  {path: 'herramientas', component: HerramientasComponent},
-  {path: '', redirectTo: 'login', pathMatch: 'full'}
+  {path: 'proveedores', component: ProveedoresComponent,canActivate:[AuthGuard]},
+  {path: 'transacciones', component: TransaccionesComponent,canActivate:[AuthGuard]},
+  {path: 'clientes', component: ClientesComponent,canActivate:[AuthGuard]},
+  {path: 'facturas', component: FacturasComponent,canActivate:[AuthGuard]},
+  {path: 'productos', component: ProductosComponent,canActivate:[AuthGuard]},
+  {path: 'devoluciones', component: DevolucionesComponent,canActivate:[AuthGuard]},
+  {path: 'categorias', component: CategoriasComponent,canActivate:[AuthGuard]},
+  {path: 'vendedores', component: VendedoresComponent,canActivate:[AuthGuard]},
+  {path: 'usuarios', component: UsuariosComponent,canActivate:[AuthGuard]},
+  {path: 'accesos', component: AccesosComponent,canActivate:[AuthGuard]},
+  {path: 'compras', component: ComprasComponent,canActivate:[AuthGuard]},
+  {path: 'herramientas', component: HerramientasComponent,canActivate:[AuthGuard]},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: '**', redirectTo: 'login', pathMatch: 'full'} //EN CASO DE QUE EL USUARIO SE INVENTE UNA RUTA
 ];
 
 @NgModule({
