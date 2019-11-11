@@ -16,6 +16,12 @@ export interface ICompras {
   cantidadProductos: number;
 }
 
+export interface ICompensaciones{
+  idCompensacion: number;
+  tipoCompensacion: string;
+  descripcionCompensacion: string;
+}
+
 export interface IClientes {
   idCliente: number;
   nombreCliente: string;
@@ -31,6 +37,26 @@ export interface IClientes {
   emailCliente: string;
   puntuajeCliente: number;
   idTipoCliente:number;
+}
+
+export interface IDevoluciones{
+  idDevolucion: number;
+  nombreProducto: string;
+  montoConIvaDevolucion: number;
+  fechaDevolucion: string;
+  motivoDevolucion: string;
+  nombreCliente: string;
+  tipoProblema: string;
+  tipoCompensacion: string;
+}
+
+export interface IEnvios{
+  ciudadEnvio: string;
+  estadoEnvio: string;
+  paisEnvio: string;
+  observacionesEnvio: string;
+  idTransaccion: number;
+  idMedioEntrega: number;
 }
 
 export interface IProductos {
@@ -61,6 +87,13 @@ export interface IRendimientoVendedores {
   nombreVendedor: string;
   vendidos: string;
 }
+
+
+export interface ITiposDeProblemas{
+  idTipoProblema:number;
+  tipoProblema: string;
+}
+
 export interface ITransacciones {
   idTransaccion: number;
   fechaTransaccion: string;
@@ -70,6 +103,7 @@ export interface ITransacciones {
 export interface ITiposDePagos {
   idTipoPago: number;
 }
+
 export interface IUsuarios {
   idUsuario: number;
   nombreUsuario: string;
@@ -78,6 +112,7 @@ export interface IUsuarios {
   idVendedor: number;
   idTipoUsuario: number;
 }
+
 export interface IVendedores{
   nombreVendedor:string;
   ciudadVendedor:string;
@@ -153,6 +188,39 @@ export class APIService {
     return this.http.get('http://localhost:3000/transaccionesWS/listarTransacciones', { headers: this.headers });
   }
 
+  //WS PARA ENTIDAD COMPENSACIONES
+  public mostrarCompensaciones() {
+    return this.http.get('http://localhost:3000/compensacionesWS/listarCompensaciones', { headers: this.headers });
+  }
+  public aniadirCompensacion(tipoCompensacion:string,descripcionCompensacion:string) {
+    return this.http.post('http://localhost:3000/compensacionesWS/agregarCompensacion', { tipoCompensacion,descripcionCompensacion}, { headers: this.headers });
+  }
+  public actualizarCompensacion(idCompensacion: number,tipoCompensacion:string,descripcionCompensacion:string) {
+    return this.http.put(`http://localhost:3000/compensacionesWS/actualizarCompensacion/${idCompensacion}`, { tipoCompensacion,descripcionCompensacion }, { headers: this.headers });
+  }
+  public borrarCompensacion(idCompensacion: number) {
+    return this.http.delete(`http://localhost:3000/compensacionesWS/eliminarCompensacion/${idCompensacion}`, { headers: this.headers });
+  }
+
+  //WS ENTIDAD DEVOLUCION
+  public mostrarDevoluciones() {
+    return this.http.get('http://localhost:3000/devolucionesWS/listarDevoluciones', { headers: this.headers });
+  }
+  public aniadirDevolucion(montoConIvaDevolucion:number,motivoDevolucion:string,idCliente:number,idTipoProblema:number,idProducto:number,idCompensacion:number) {
+    return this.http.post('http://localhost:3000/devolucionesWS/agregarDevolucion', {montoConIvaDevolucion,motivoDevolucion,idCliente,idTipoProblema,idProducto,idCompensacion}, { headers: this.headers });
+  }
+
+  //WS ENTIDAD ENVIO
+  public mostrarEnvios() {
+    return this.http.get('http://localhost:3000/enviosWS/listarEnvios', { headers: this.headers });
+  }
+  public aniadirEnvio(ciudadEnvio: string,estadoEnvio: string,paisEnvio: string,observacionesEnvio: string,idTransaccion: number,idMedioEntrega: number) {
+    return this.http.post('http://localhost:3000/enviosWS/agregarEnvio', {ciudadEnvio,estadoEnvio,paisEnvio,observacionesEnvio,idTransaccion,idMedioEntrega}, { headers: this.headers });
+  }
+  public borrarEnvio(idEnvio:number) {
+    return this.http.delete(`http://localhost:3000/enviosWS/agregarEnvio/${idEnvio}`, { headers: this.headers });
+  }
+
 
   //WS PARA PRODUCTOS
   public mostrarProductos() {
@@ -217,6 +285,20 @@ export class APIService {
   }
   public borrarTipoDePago(idTipoPago: number) {
     return this.http.delete(`http://localhost:3000/tiposPagosWS/eliminarTipoPago/${idTipoPago}`, { headers: this.headers });
+  }
+
+  //WS PARA TIPOS DE PROBLEMAS
+  public mostrarTiposDeProblemas() {
+    return this.http.get('http://localhost:3000/tiposProblemasWS/listarTiposProblemas', { headers: this.headers });
+  }
+  public aniadirTipoDeProblema(tipoProblema:number) {
+    return this.http.post('http://localhost:3000/tiposProblemasWS/agregarTipoProblema', {tipoProblema}, { headers: this.headers });
+  }
+  public actualizarTipoDeProblema(idTipoProblema: number,tipoProblema:string) {
+    return this.http.put(`http://localhost:3000/tiposProblemasWS/actualizarTipoProblema/${idTipoProblema}`, {tipoProblema}, { headers: this.headers });
+  }
+  public borrarTipoDeProblema(idTipoProblema: number) {
+    return this.http.delete(`http://localhost:3000/tiposProblemasWS/eliminarTipoProblema/${idTipoProblema}`, { headers: this.headers });
   }
 
 
