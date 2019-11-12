@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { APIService, IAccesos } from '../api.service';
+import {LoginJwtService} from '../login-jwt.service';
 @Component({
   selector: 'app-accesos',
   templateUrl: './accesos.component.html',
@@ -13,7 +14,7 @@ export class AccesosComponent implements OnInit {
   dsAccesos: MatTableDataSource<IAccesos>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private _bottomSheet: MatBottomSheet, public API: APIService) {
+  constructor(private _bottomSheet: MatBottomSheet, public API: APIService, public guardian:LoginJwtService) {
 
   }
 
@@ -36,6 +37,7 @@ export class AccesosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.guardian.restringirAcceso();
     this.listarAccesos();
   }
 

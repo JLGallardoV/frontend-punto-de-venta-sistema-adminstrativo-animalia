@@ -5,6 +5,7 @@ import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet'
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IDevoluciones,ITiposDeProblemas,ICompensaciones,IClientes,IProductos,APIService} from '../api.service';
+import {LoginJwtService} from '../login-jwt.service';
 
 
 @Component({
@@ -53,7 +54,7 @@ export class DevolucionesComponent implements OnInit {
   @ViewChild('MatPaginatorTiposProblemas',{static: true})paginatorTiposProblemas: MatPaginator;
   @ViewChild('MatPaginatorCompensaciones',{static: true})paginatorCompensaciones: MatPaginator;
 
-  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService) {
+  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService) {
     this.frmDevoluciones = this.formBuilder.group({
       montoConIvaDevolucion:["",Validators.required],
       motivoDevolucion:["",Validators.required],
@@ -313,6 +314,7 @@ export class DevolucionesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.guardian.restringirAcceso();
     this.listarDevoluciones();
     this.listarTiposProblemas();
     this.listarCompensaciones();

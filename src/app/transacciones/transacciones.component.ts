@@ -5,6 +5,7 @@ import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet'
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {ITransacciones,ICompras,APIService} from '../api.service';
+import {LoginJwtService} from '../login-jwt.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class TransaccionesComponent implements OnInit {
   @ViewChild('MatPaginatorTransacciones', {static: true}) paginatorTransacciones: MatPaginator;
 
   constructor(
+    public guardian:LoginJwtService,
     private _bottomSheet: MatBottomSheet,
     private modalService: NgbModal,
     public formBuilder: FormBuilder,
@@ -94,6 +96,7 @@ export class TransaccionesComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.guardian.restringirAcceso();
     this.listarTransacciones();
     this.listarCompras();
   }

@@ -6,6 +6,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOO
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IClientes,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
+import {LoginJwtService} from '../login-jwt.service';
 
 @Component({
   selector: 'app-clientes',
@@ -24,7 +25,7 @@ export class ClientesComponent implements OnInit {
   dsClientes: MatTableDataSource<IClientes>
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
     this.arregloTiposDeClientes = [];
     this.frmClientes = this.formBuilder.group({
       idCliente:[""],
@@ -174,6 +175,7 @@ export class ClientesComponent implements OnInit {
     this.dsClientes.paginator ? this.dsClientes.paginator.firstPage(): null;
   }
   ngOnInit() {
+    this.guardian.restringirAcceso();
     this.listarClientes();
     this.listarTiposDeClientes();
   }
