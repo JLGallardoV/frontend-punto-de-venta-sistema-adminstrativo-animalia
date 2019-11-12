@@ -110,15 +110,22 @@ export interface ITiposDeProblemas{
   tipoProblema: string;
 }
 
+export interface ITiposDePagos {
+  idTipoPago: number;
+}
+
+export interface ITiposDeUsuarios {
+  idTipoUsuario: number;
+  tipoUsuario: string;
+  descripcionTipoUsuario: string;
+}
+
 export interface ITransacciones {
   idTransaccion: number;
   fechaTransaccion: string;
   cantidadProductos: number;
 }
 
-export interface ITiposDePagos {
-  idTipoPago: number;
-}
 
 export interface IUsuarios {
   idUsuario: number;
@@ -338,13 +345,27 @@ export class APIService {
     return this.http.delete(`http://localhost:3000/tiposProblemasWS/eliminarTipoProblema/${idTipoProblema}`, { headers: this.headers });
   }
 
+  //WS PARA TIPOS DE USUARIOS
+  public mostrarTiposDeUsuarios() {
+    return this.http.get('http://localhost:3000/tiposUsuariosWS/listarTiposUsuarios', { headers: this.headers });
+  }
+  public aniadirTipoDeUsuario(tipoUsuario:string,descripcionTipoUsuario:string) {
+    return this.http.post('http://localhost:3000/tiposUsuariosWS/agregarTipoUsuario', {tipoUsuario,descripcionTipoUsuario}, { headers: this.headers });
+  }
+  public actualizarTipoDeUsuario(idTipoUsuario:number,tipoUsuario:string,descripcionTipoUsuario:string) {
+    return this.http.put(`http://localhost:3000/tiposUsuariosWS/actualizarTipoUsuario/${idTipoUsuario}`, {tipoUsuario,descripcionTipoUsuario}, { headers: this.headers });
+  }
+  public borrarTipoDeUsuario(idTipoUsuario: number) {
+    return this.http.delete(`http://localhost:3000/tiposUsuariosWS/eliminarTipoUsuario/${idTipoUsuario}`, { headers: this.headers });
+  }
+
 
   //WS PARA ENTIDAD USUARIOS
   public mostrarUsuarios() {
     return this.http.get('http://localhost:3000/usuariosWS/listarUsuarios', { headers: this.headers });
   }
-  public aniadirUsuario(idUsuario:number,nombreUsuario:string,emailUsuario:string,contraseniaUsuario:string,idVendedor:number,idTipoUsuario:number) {
-    return this.http.post('http://localhost:3000/usuariosWS/agregarUsuario', { idUsuario,nombreUsuario,emailUsuario,contraseniaUsuario,idVendedor,idTipoUsuario }, { headers: this.headers });
+  public aniadirUsuario(nombreUsuario:string,emailUsuario:string,contraseniaUsuario:string,idVendedor:number,idTipoUsuario:number) {
+    return this.http.post('http://localhost:3000/usuariosWS/agregarUsuario', {nombreUsuario,emailUsuario,contraseniaUsuario,idVendedor,idTipoUsuario }, { headers: this.headers });
   }
   public actualizarUsuario(idUsuario:number,nombreUsuario:string,emailUsuario:string,contraseniaUsuario:string,idVendedor:number,idTipoUsuario:number) {
     return this.http.put(`http://localhost:3000/usuariosWS/actualizarUsuario/${idUsuario}`, { idUsuario,nombreUsuario,emailUsuario,contraseniaUsuario,idVendedor,idTipoUsuario}, { headers: this.headers });

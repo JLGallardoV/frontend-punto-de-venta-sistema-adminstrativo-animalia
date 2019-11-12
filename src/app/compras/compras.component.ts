@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { APIService, IUsuarios, IProveedores } from '../api.service';
 import { IProductos } from '../api.service';
 import { ICompras } from '../api.service';
+import {LoginJwtService} from '../login-jwt.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ComprasComponent implements OnInit {
   public arregloCompras:ICompras[] = [];
   public ultimaVenta:any;
 
-  constructor(private _bottomSheet: MatBottomSheet, public formBuilder: FormBuilder, public API: APIService) {
+  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, public formBuilder: FormBuilder, public API: APIService) {
     this.frmCompra = this.formBuilder.group({
           idUsuario:["",Validators.required],
           idProveedor:["",Validators.required],
@@ -144,6 +145,7 @@ export class ComprasComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.guardian.restringirAcceso();
     this.listarProductos();
     this.listarProveedores();
     this.listarUsuarios();

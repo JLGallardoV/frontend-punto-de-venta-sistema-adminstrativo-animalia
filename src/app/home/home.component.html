@@ -8,43 +8,43 @@
   <mat-card class="row cardPrincipal">
     <div class="container">
       <div class="row margenSuperior">
-        <div class="col cardElementos espacioDerecho animacionCambioColor" [routerLink]="[ '/transacciones']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome1.jpg');">
+        <div class="col cardElementos espacioDerecho animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome1.jpg');" (click)="irTransacciones()">
           <h4>Transacciones</h4>
         </div>
-        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" [routerLink]="[ '/proveedores']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome2.jpg');">
+        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome2.jpg');" (click)="irProveedores()">
           <h4>Proveedores</h4>
         </div>
-        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" [routerLink]="[ '/clientes']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome3.jpg');">
+        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome3.jpg');" (click)="irClientes()">
           <h4>Clientes</h4>
         </div>
-        <div class="col cardElementos espacioSuperior animacionCambioColor" [routerLink]="[ '/facturas']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome4.jpg');">
+        <div class="col cardElementos espacioSuperior animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome4.jpg');" [routerLink]="['/facturas']">
           <h4>Operaciones</h4>
         </div>
       </div>
       <br>
       <div class="row">
-        <div class="col cardElementos espacioDerecho animacionCambioColor" [routerLink]="[ '/productos']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome5.jpg');">
+        <div class="col cardElementos espacioDerecho animacionCambioColor"  style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome5.jpg');" (click)="irProductos()">
           <h4>Productos</h4>
         </div>
-        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" [routerLink]="[ '/devoluciones']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome6.jpg');">
+        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome6.jpg');" (click)="irDevoluciones()">
           <h4>Devoluciones</h4>
         </div>
-        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" [routerLink]="[ '/categorias']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome7.jpg');">
+        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome7.jpg');" (click)="irCategoria()">
           <h4>Categorias</h4>
         </div>
-        <div class="col cardElementos espacioSuperior animacionCambioColor" [routerLink]="[ '/vendedores']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome8.jpg');">
+        <div class="col cardElementos espacioSuperior animacionCambioColor"  style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome8.jpg');" (click)="irVendedores()">
           <h4>Vendedores</h4>
         </div>
       </div>
       <br>
       <div class="row">
-        <div class="col cardElementos espacioDerecho animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome9.jpg');" [routerLink]="['/herramientas']">
+        <div class="col cardElementos espacioDerecho animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome9.jpg');" (click)="irHerramientas()">
           <h4>Herramientas</h4>
         </div>
-        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" [routerLink]="[ '/usuarios']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome10.jpg');">
+        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome10.jpg');" (click)="irUsuarios()">
           <h4>Usuarios</h4>
         </div>
-        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" [routerLink]="[ '/accesos']" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome11.jpg');">
+        <div class="col cardElementos espacioDerecho espacioSuperior animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome11.jpg');" (click)="irAccesos()">
           <h4>Accesos</h4>
         </div>
         <div class="col cardElementos espacioSuperior animacionCambioColor" style="background-image: linear-gradient(#ffffff,#f9f9f98a), url('../../assets/img/fondoHome12.jpg');">

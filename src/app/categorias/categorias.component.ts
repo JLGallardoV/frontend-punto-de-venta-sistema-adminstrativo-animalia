@@ -5,6 +5,8 @@ import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet'
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {ICategorias,APIService} from '../api.service';
+import {LoginJwtService} from '../login-jwt.service';
+
 
 @Component({
   selector: 'app-categorias',
@@ -23,7 +25,7 @@ export class CategoriasComponent implements OnInit {
   dsCategorias: MatTableDataSource<ICategorias>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService) {
+  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService) {
     this.titulo = "";
     this.frmCategorias = this.formBuilder.group({
       idCategoria:[""],
@@ -128,6 +130,7 @@ export class CategoriasComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.guardian.restringirAcceso();
     this.listarCategorias();
   }
 

@@ -6,6 +6,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOO
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IProductos,ICategorias,IAlmacenes,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
+import {LoginJwtService} from '../login-jwt.service';
 
 
 
@@ -35,7 +36,7 @@ export class ProductosComponent implements OnInit {
   dsProductos:MatTableDataSource<IProductos>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
     this.frmProductos = this.formBuilder.group({
       idProducto:[""],
       nombreProducto:["",Validators.required],
@@ -188,6 +189,7 @@ export class ProductosComponent implements OnInit {
     this.dsProductos.paginator ? this.dsProductos.paginator.firstPage(): null;
   }
   ngOnInit() {
+    this.guardian.restringirAcceso();
     this.listarProductos();
     this.listarAlmacenes();
     this.listarCategorias();

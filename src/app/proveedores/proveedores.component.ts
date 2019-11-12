@@ -6,6 +6,8 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOO
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IProveedores,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
+import {LoginJwtService} from '../login-jwt.service';
+
 
 @Component({
   selector: 'app-proveedores',
@@ -23,7 +25,7 @@ export class ProveedoresComponent implements OnInit {
   dsProveedores: MatTableDataSource<IProveedores>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
     this.frmProveedores = this.formBuilder.group({
       idProveedor:"",
       nombreProveedor:["",Validators.required],
@@ -142,6 +144,7 @@ export class ProveedoresComponent implements OnInit {
     this.dsProveedores.paginator ? this.dsProveedores.paginator.firstPage(): null;
   }
   ngOnInit() {
+    this.guardian.restringirAcceso();
     this.listarProveedores();
   }
 

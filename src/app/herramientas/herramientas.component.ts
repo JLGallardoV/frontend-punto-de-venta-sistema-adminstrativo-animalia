@@ -6,6 +6,8 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOO
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IReportesEconomicos,IViabilidadProductos,IRendimientoVendedores,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
+import {LoginJwtService} from '../login-jwt.service';
+
 @Component({
   selector: 'app-herramientas',
   templateUrl: './herramientas.component.html',
@@ -28,7 +30,7 @@ export class HerramientasComponent implements OnInit {
   dsRendimientoVendedores: MatTableDataSource<IRendimientoVendedores>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
     this.frmFiltrado = this.formBuilder.group({
           fechaInicio:["",Validators.required],
           fechaFinal:["",Validators.required]
@@ -134,10 +136,28 @@ public generarRendimientoVendedores(){
 
 
   ngOnInit() {
+    this.guardian.restringirAcceso();
 
   }
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   @Component({
