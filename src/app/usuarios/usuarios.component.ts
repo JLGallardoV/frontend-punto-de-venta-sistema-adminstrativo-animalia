@@ -20,14 +20,16 @@ export class UsuariosComponent implements OnInit {
   public formValid:Boolean=false;
   public arregloTiposDeUsuarios:ITiposDeUsuarios[];
   public arregloVendedores:IVendedores[];
-  displayedColumns: string[] = ['idUsuario','nombreUsuario','emailUsuario','idVendedor','idTipoUsuario'];
+  displayedColumns: string[] = ['idUsuario','nombreUsuario','emailUsuario','idTipoUsuario','acciones'];
   dsUsuarios:MatTableDataSource<IUsuarios>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService) {
     this.frmUsuarios = this.formBuilder.group({
+      idUsuario:[""],
       nombreUsuario:["",Validators.required],
       emailUsuario:["",Validators.required],
+      contraseniaUsuario:["",Validators.required],
       idVendedor:["",Validators.required],
       idTipoUsuario:["",Validators.required]
     });
@@ -51,6 +53,7 @@ export class UsuariosComponent implements OnInit {
     //pintando los valores en el modal listos para editarlos
     this.frmUsuarios.controls['idUsuario'].setValue(idUsuario); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
     this.frmUsuarios.controls['nombreUsuario'].setValue(nombreUsuario);
+    this.frmUsuarios.controls['emailUsuario'].setValue(emailUsuario);
     this.frmUsuarios.controls['idVendedor'].setValue(idVendedor);
     this.frmUsuarios.controls['idTipoUsuario'].setValue(idTipoUsuario);
   }
@@ -58,7 +61,7 @@ export class UsuariosComponent implements OnInit {
 
   //LISTAR USUARIOS
   public listarUsuarios(){
-    this.API.mostrarClientes().subscribe(
+    this.API.mostrarUsuarios().subscribe(
       (success:any)=>{
         this.dsUsuarios = new MatTableDataSource(success.respuesta);
         this.dsUsuarios.paginator = this.paginator;
@@ -105,7 +108,7 @@ export class UsuariosComponent implements OnInit {
     let idVendedorForm = this.frmUsuarios.get('idVendedor').value;
     let idTipoUsuarioForm = this.frmUsuarios.get('idTipoUsuario').value;
 
-    if (this.titulo == "Agregar Cliente") {
+    if (this.titulo == "Agregar Usuario") {
       this.API.aniadirUsuario(nombreUsuarioForm,emailUsuarioForm,contraseniaUsuarioForm,idVendedorForm,idTipoUsuarioForm).subscribe(
         (success: any)=>{
           alert(JSON.stringify(success.respuesta));
@@ -119,7 +122,7 @@ export class UsuariosComponent implements OnInit {
         }
       );
     }
-    if(this.titulo == "Editar Cliente"){
+    if(this.titulo == "Editar Usuario"){
       this.API.actualizarUsuario(idUsuarioForm,nombreUsuarioForm,emailUsuarioForm,contraseniaUsuarioForm,idVendedorForm,idTipoUsuarioForm).subscribe(
         (success: any)=>{
           alert(JSON.stringify(success.respuesta));
