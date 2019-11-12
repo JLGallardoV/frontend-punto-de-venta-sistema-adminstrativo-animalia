@@ -39,29 +39,9 @@
             <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreProducto}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="montoIvaTransaccion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto ($) </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.montoConIvaTransaccion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="pagoTransaccion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Pago ($) </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.pagoTransaccion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="cambioTransaccion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cambio ($) </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.cambioTransaccion}} </td>
-          </ng-container>
-
           <ng-container matColumnDef="fechaTransaccion">
             <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="numeroProductosEnTransaccion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> n.° Productos </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.numeroProductosEnTransaccion}} </td>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
           </ng-container>
 
           <ng-container matColumnDef="nombreVendedor">
@@ -74,9 +54,29 @@
             <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreCliente}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="tipoPago">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Tipo Pago  </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.tipoPago}} </td>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center">
+              <div class="">
+                <!-- contenido del popover -->
+                <ng-template  #popTitle>
+                  <div class="darkerFuenteCuerpos" style="text-align:center; color: black">
+                    Nombre: {{i.nombreProducto}}
+                  </div>
+                </ng-template>
+                <ng-template  #popContent>
+                  <div class="darkerFuenteCuerpos" style="font-size:16px!important;">
+                    <b>Monto $:</b> {{i.montoConIvaTransaccion}}
+                    <br><b>Pago:</b> {{i.pagoTransaccion}}
+                    <br><b>Cambio:</b> {{i.cambioTransaccion}}
+                    <br><b>N°. Productos:</b> {{i.numeroProductosEnTransaccion}}
+                    <br><b>tipoPago:</b> {{i.tipoPago}}
+                  </div>
+                </ng-template>
+                <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;"placement="left"
+                [ngbPopover]="popContent" [popoverTitle]="popTitle">Informacion</button>
+              </div>
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumnsTransacciones"></tr>
@@ -128,30 +128,35 @@
             <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.nombreProducto}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="numeroProductosEnCompra">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> n.° Productos </th>
-            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.numeroProductosEnCompra}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="montoCompra">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto ($) </th>
-            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.montoCompra}} </td>
-          </ng-container>
-
           <ng-container matColumnDef="fechaCompra">
             <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.fechaCompra}} </td>
+            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.fechaCompra | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="nombreProveedor">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Proveedor </th>
-            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.nombreProveedor}} </td>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center">
+              <div class="">
+                <!-- contenido del popover -->
+                <ng-template  #popTitle>
+                  <div class="darkerFuenteCuerpos" style="text-align:center; color: black">
+                    Nombre: {{i.nombreProducto}}
+                  </div>
+                </ng-template>
+                <ng-template  #popContent>
+                  <div class="darkerFuenteCuerpos" style="font-size:16px!important;">
+                    <b>Monto $:</b> {{i.montoCompra}}
+                    <br><b>N°. Productos $:</b> {{i.numeroProductosEnCompra}}
+                    <br><b>Proveedor:</b> {{i.nombreProveedor}}
+                    <br><b>Comprado Por:</b> {{i.nombreUsuario}}
+                  </div>
+                </ng-template>
+                <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;"placement="left"
+                [ngbPopover]="popContent" [popoverTitle]="popTitle">Informacion</button>
+              </div>
+            </td>
           </ng-container>
 
-          <ng-container matColumnDef="nombreUsuario">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Comprador </th>
-            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.nombreUsuario}} </td>
-          </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumnsCompras"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumnsCompras;"></tr>
