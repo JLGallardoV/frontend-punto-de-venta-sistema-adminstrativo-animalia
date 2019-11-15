@@ -32,7 +32,7 @@ export class FacturasComponent implements OnInit {
     this.montoAcumulado = 0;
     this.frmVenta = this.formBuilder.group({
           idCliente:["",Validators.required],
-          idVendedor:["",Validators.required],
+          idVendedor:localStorage.getItem("usuario"),
           pagoTransaccion:["",Validators.required],
           idProducto:["",Validators.required],
           cantidadProducto:["",Validators.required],
