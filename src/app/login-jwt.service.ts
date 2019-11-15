@@ -16,6 +16,7 @@ export class LoginJwtService {
 
           console.log("respueta", resp.estatus, " contenido: ", resp.respuesta);
           localStorage.setItem('token', resp.respuesta); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
+          localStorage.setItem('usuario', nombreUsuario); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
           this.router.navigate(['/home']);
           this.registrarAcceso(nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
 
@@ -27,6 +28,8 @@ export class LoginJwtService {
         console.log("este es tu error:", error);
       });
   }
+
+
 
   //INCIO - REGISTRAR ACCESO
   //esta funcion es invocada una vez se detecta el usuario a añadir
@@ -59,6 +62,8 @@ export class LoginJwtService {
     );
   }
   //FIN - REGISTRAR ACCESO
+
+
 
   //EVITAR ACCESO DE VENDEDORES A MODULOS DEL GERENTE
   public restringirAcceso() {

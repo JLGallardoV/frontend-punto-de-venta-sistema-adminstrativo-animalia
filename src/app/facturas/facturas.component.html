@@ -8,27 +8,24 @@
   <br>
   <mat-card class="cardPrincipal">
     <div name="renglonPrincipal" class="row">
-      <div name="columnaIzquierdaInputs" class="col-3">
+      <div name="columnaIzquierdaInputs" class="col-md-3">
         <h2>
           <form [formGroup]="frmVenta" class="darkerFuenteCuerpos">
             <div class="contenedorInputs bordeContenedorInputs">
+              <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
+                <input formControlName="idVendedor" matInput placeholder="Vendedor"  style="color:#f6f2ebe3;" readonly>
+              </mat-form-field>
+              <label *ngIf="frmVenta.controls.idVendedor.invalid && frmVenta.controls.idVendedor.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
+              <br>
+
               <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
                 <mat-select formControlName="idCliente" class="darkerFuenteCuerpos" style="font-size:20px;" placeholder="cliente">
                   <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloClientesSelect" [value]="i.idCliente">
-                    {{ i.idCliente }}
+                    {{ i.nombreCliente }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
               <label *ngIf="frmVenta.controls.idCliente.invalid && frmVenta.controls.idCliente.dirty" style="color: #f6f2ebe3;">Este campo es obligatorio</label>
-
-              <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
-                <mat-select formControlName="idVendedor" class="darkerFuenteCuerpos" style="font-size:20px;" placeholder="vendedor">
-                  <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloVendedoresSelect" [value]="i.idVendedor">
-                    {{ i.nombreVendedor }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <label *ngIf="frmVenta.controls.idVendedor.invalid && frmVenta.controls.idVendedor.dirty" style="color: #f6f2ebe3;">Este campo es obligatorio</label>
 
               <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
                 <input formControlName="pagoTransaccion" type="number" min="1" matInput placeholder="pago" style="color: #f6f2ebe3;">
@@ -40,7 +37,7 @@
                 <mat-form-field class="darkerFuenteCuerpos" style="width: 50%;margin-right: 15px;">
                   <mat-select formControlName="idProducto" class="darkerFuenteCuerpos" style="font-size:20px;" placeholder="producto">
                     <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i.idProducto">
-                      {{ i.idProducto }}
+                      {{ i.nombreProducto }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -64,40 +61,47 @@
       </div>
 
 
-      <div name="columnaDerechaOutpus" class="col-9">
+      <div name="columnaDerechaOutpus" class="col-md-9">
         <mat-card style="background:#dfdcd4;">
           <br>
           <div name="renglonOutpus" class="row bordeOutputs">
-            <div name="columnaIzquierdaOuputs" class="col-6">
+            <div name="columnaIzquierdaOuputs" class="col-md-6">
 
               <p class="darkerFuenteTitulos fuenteEncabezadosCentrada" style="color:#2a2d3b;">Productos:</p>
               <div name="tablaProductos" class="listaEntidad">
-                <table mat-table [dataSource]="dsProductos" class="mat-elevation-z8 darkerFuenteCuerpos" style="font-size:98px">
+                <table mat-table [dataSource]="dsProductos" class="darkerFuenteCuerpos" style="font-size:98px">
                   <ng-container matColumnDef="nombreProducto">
                     <th mat-header-cell *matHeaderCellDef style="text-align:center"> Nombre </th>
-                    <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.nombreProducto}} </td>
+                    <td mat-cell *matCellDef="let elemento; let i = index"style="text-align:center"> {{elemento.nombreProducto}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="precioUnitarioProducto">
                     <th mat-header-cell *matHeaderCellDef style="text-align:center"> p.Unitario </th>
-                    <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.precioUnitarioProducto}} </td>
+                    <td mat-cell *matCellDef="let elemento; let i = index"style="text-align:center"> {{elemento.precioUnitarioProducto}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="cantidadProducto">
                     <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cantidad </th>
-                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.cantidadProducto}} </td>
+                    <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.cantidadProducto}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="descartar">
+                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> Descartar </th>
+                    <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center">
+                      <button type="button" class="btnEliminarProductoInteresado"><i class='fas fa-trash-alt' (click)="eliminarProductosCarrito(elemento,i)"></i></button>
+                    </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumnsProductos"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumnsProductos;"></tr>
                 </table>
               </div>
-
+              <label class="darkerFuenteCuerpos">Monto $: <input class="outputMonto" type="text" readonly [(ngModel)]="montoAcumulado"></label>
             </div>
-            <div name="columnaDerechaOuputs" class="col-6">
+            <div name="columnaDerechaOuputs" class="col-md-6">
               <p class="darkerFuenteTitulos fuenteEncabezadosCentrada" style="color:#2a2d3b;">Información General:</p>
               <div name="informacionVenta" class="">
-                <table name="tablaTransacciones" mat-table [dataSource]="dsTransacciones" class="mat-elevation-z8 darkerFuenteCuerpos" style="font-size:98px">
+                <table name="tablaTransacciones" mat-table [dataSource]="dsTransacciones" class="darkerFuenteCuerpos" style="font-size:98px">
                   <ng-container matColumnDef="idTransaccion">
                     <th mat-header-cell *matHeaderCellDef style="text-align:center"> Id Venta </th>
                     <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idTransaccion}} </td>
@@ -105,7 +109,7 @@
 
                   <ng-container matColumnDef="fechaTransaccion">
                     <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion}} </td>
+                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="numeroProductosEnTransaccion">

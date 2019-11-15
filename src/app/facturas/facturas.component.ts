@@ -3,7 +3,7 @@ import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet'
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { APIService } from '../api.service';
-import { IProductos } from '../api.service';
+import { IProductos,IClientes,IVendedores } from '../api.service';
 import { ITransacciones } from '../api.service';
 import { ITiposDePagos } from '../api.service';
 
@@ -14,23 +14,25 @@ import { ITiposDePagos } from '../api.service';
 })
 export class FacturasComponent implements OnInit {
   displayedColumns: string[] = ['idTransaccion', 'fechaTransaccion', 'numeroProductosEnTransaccion'];//columnas tabla transacciones
-  displayedColumnsProductos: string[] = ['nombreProducto','precioUnitarioProducto','cantidadProducto'];//columnas tabla transacciones
+  displayedColumnsProductos: string[] = ['nombreProducto','precioUnitarioProducto','cantidadProducto','descartar'];//columnas tabla transacciones
   public dsTransacciones:MatTableDataSource<ITransacciones>; //datasource para transacciones
   public dsProductos:MatTableDataSource<IProductos>; //dataSource para productos
   public frmVenta: FormGroup;
   public arregloProductosSelect: IProductos[] = [];
   public arregloProductosTabla: IProductos[] = [];
-  public arregloClientesSelect: ITiposDePagos[] = [];
-  public arregloVendedoresSelect: ITiposDePagos[] = [];
+  public arregloClientesSelect: IClientes[] = [];
+  public arregloVendedoresSelect: IVendedores[] = [];
   public arregloTiposDePagosSelect: ITiposDePagos[] = [];
   public arregloTiposDePagosLista: ITiposDePagos[] = [];
   public arregloTransacciones:ITransacciones[] = [];
   public ultimaVenta:any;
+  public montoAcumulado : number;
 
   constructor(private _bottomSheet: MatBottomSheet, public formBuilder: FormBuilder, public API: APIService) {
+    this.montoAcumulado = 0;
     this.frmVenta = this.formBuilder.group({
           idCliente:["",Validators.required],
-          idVendedor:["",Validators.required],
+          idVendedor:localStorage.getItem("usuario"),
           pagoTransaccion:["",Validators.required],
           idProducto:["",Validators.required],
           cantidadProducto:["",Validators.required],
@@ -90,18 +92,68 @@ export class FacturasComponent implements OnInit {
       }
     );
   }
+  //limpiamos el formulario una vez e haya realizado uan venta.
+  public limpiarFormulario(){
+    this.frmVenta.reset();
+    this.montoAcumulado = 0;
 
+    this.dsProductos.data=[];
+    this.arregloProductosTabla = [];
+  }
+
+//agrego los productos del formulario a su tabla de productos
   public transfiereProductos(){
-    let transaferirValorID: number = 0;
+    let transaferirValorID: number = 0;//idProducto
     let transaferirValorCantidad: number = 0;
 
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
         transaferirValorID = this.frmVenta.get('idProducto').value;
         transaferirValorCantidad = this.frmVenta.get('cantidadProducto').value;
-        this.arregloProductosTabla.push({idProducto:transaferirValorID,cantidadProducto:transaferirValorCantidad,nombreProducto:success.respuesta[transaferirValorID-1].nombreProducto,precioUnitarioProducto:success.respuesta[transaferirValorID-1].precioUnitarioProducto});
-        this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
-        console.log("insertar productos: ",this.dsProductos);
+        //sumando monto cada que se agrega un producto
+        this.montoAcumulado = this.montoAcumulado + (success.respuesta[0].precioUnitarioProducto * transaferirValorCantidad);
+
+        if (this.arregloProductosTabla.length >= 1) {
+          console.log("posicion en arreglo: ",this.arregloProductosTabla[0].cantidadProducto);
+          //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
+          for (let i = 0; i < this.arregloProductosTabla.length; i++) {
+            if (transaferirValorID == this.arregloProductosTabla[i].idProducto) {
+              this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + transaferirValorCantidad;
+              this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+            }else{
+              if(i == this.arregloProductosTabla.length -1){
+                this.arregloProductosTabla.push({idProducto:transaferirValorID,cantidadProducto:transaferirValorCantidad,nombreProducto:success.respuesta[transaferirValorID-1].nombreProducto,precioUnitarioProducto:success.respuesta[transaferirValorID-1].precioUnitarioProducto});
+                this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+                break;
+              }
+
+            }
+          }
+
+        }else{
+          this.arregloProductosTabla.push({idProducto:transaferirValorID,cantidadProducto:transaferirValorCantidad,nombreProducto:success.respuesta[transaferirValorID-1].nombreProducto,precioUnitarioProducto:success.respuesta[transaferirValorID-1].precioUnitarioProducto});
+          this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+        }
+        //this.arregloProductosTabla.push({idProducto:transaferirValorID,cantidadProducto:transaferirValorCantidad,nombreProducto:success.respuesta[transaferirValorID-1].nombreProducto,precioUnitarioProducto:success.respuesta[transaferirValorID-1].precioUnitarioProducto});
+        //this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+      },
+      (error)=>{
+        console.log("algo ocurrio",error)
+      }
+    );
+  }
+
+  //eliminar productos de tabla (carrito)
+  public eliminarProductosCarrito(objetoProducto:any,indice:number){
+    console.log("producto a eliminar: ",indice-1,);
+    console.log(this.arregloProductosTabla)
+    this.arregloProductosTabla.splice(indice,1);
+    this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+
+    //hacemos que la eliminacion de un producto afecte tambien al monto $
+    this.API.mostrarProductos().subscribe(
+      (success:any)=>{
+            this.montoAcumulado = this.montoAcumulado - (success.respuesta[0].precioUnitarioProducto  *  objetoProducto.cantidadProducto);
       },
       (error)=>{
         console.log("algo ocurrio",error)
@@ -145,6 +197,7 @@ export class FacturasComponent implements OnInit {
         if(success.estatus > 0){
           alert(success.respuesta);
           this.listarTransacciones();
+          this.limpiarFormulario();
         }else if(success.estatus < 0) {
             alert("No cuentas con el dinero suficiente | verifica tu pago");
         }else{
@@ -163,9 +216,9 @@ export class FacturasComponent implements OnInit {
       this.API.mostrarTransacciones().subscribe(
       (success:any)=>{
         this.arregloTransacciones = success.respuesta;
-        alert("arreglot: "+JSON.stringify(this.arregloTransacciones))
+        //alert("arreglot: "+JSON.stringify(this.arregloTransacciones))
         this.ultimaVenta = this.arregloTransacciones[this.arregloTransacciones.length - 1]
-        alert("ultima venta: "+JSON.stringify(this.ultimaVenta))
+       //alert("ultima venta: "+JSON.stringify(this.ultimaVenta))
         this.dsTransacciones = new MatTableDataSource([this.ultimaVenta]); //[prueba] convierto a array la variable prueba para que pueda ser iterada
         this.arregloTransacciones = [this.ultimaVenta];//aplico simbolo iterador para que pueda iterarlo en un loop
         //alert("arreglo mostrado: "+JSON.stringify(this.arregloTransacciones));

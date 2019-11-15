@@ -226,6 +226,7 @@ export class APIService {
     return this.http.post('http://localhost:3000/comprasWS/agregarCompra', { idUsuario, idProveedor, montoCompra, productos }, { headers: this.headers });
   }
   public aniadirTransaccion(idCliente: number, idVendedor: number, pagoTransaccion: number, productos: IProductos[], tiposDePagos: ITiposDePagos[]) {
+    console.log("en el servicio: ",pagoTransaccion,"\n", productos,"\n", tiposDePagos )
     return this.http.post('http://localhost:3000/transaccionesWS/agregarTransaccion', { idCliente, idVendedor, pagoTransaccion, productos, tiposDePagos }, { headers: this.headers });
   }
   public mostrarTransacciones() {

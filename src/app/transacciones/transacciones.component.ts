@@ -19,8 +19,8 @@ export class TransaccionesComponent implements OnInit {
   public titulo = ""; //para el modal
 
   //propiedades para la tabla
-  displayedColumnsTransacciones: string[] = ['idTransaccion', 'nombreProducto', 'montoIvaTransaccion', 'pagoTransaccion', 'cambioTransaccion','fechaTransaccion','numeroProductosEnTransaccion','nombreVendedor','nombreCliente','tipoPago'];
-  displayedColumnsCompras: string[] = ['idCompra', 'nombreProducto', 'numeroProductosEnCompra', 'montoCompra', 'fechaCompra','nombreProveedor','nombreUsuario'];
+  displayedColumnsTransacciones: string[] = ['idTransaccion', 'nombreProducto','fechaTransaccion','nombreVendedor','nombreCliente','acciones'];
+  displayedColumnsCompras: string[] = ['idCompra', 'nombreProducto','fechaCompra','acciones'];
   dsTransacciones : MatTableDataSource<ITransacciones>;
   dsCompras : MatTableDataSource<ICompras>;
   @ViewChild('MatPaginatorCompras',{static: true})paginatorCompras: MatPaginator;

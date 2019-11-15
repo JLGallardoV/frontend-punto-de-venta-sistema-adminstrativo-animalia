@@ -4,15 +4,16 @@
   background-attachment: scroll;
   background-position: top;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
+  position: absolute;
 }
 
 //CONTENEDOR PRINCIPAL
 .cardPrincipal{
   background-color: #000000bd;
   border-radius: 6px;
-  width: 80%;
+  width: 90%;
   height: auto;
   margin: 0 auto;
 }
@@ -61,10 +62,16 @@
 
 //ESTILO PARA LISTA DE PRODUCTOS Y TIPOS DE PAGOS
 .listaEntidad{
-  height: 200px;
+  max-height: 175px;
   overflow-y: auto;
   margin-bottom: 12px;
   width: 100%;
+}
+
+.outputMonto{
+  width: 50%;
+  background:#dfdcd4;
+  border: none;
 }
 
 //ESTILO PARA ETIQUETAS DE MONTO,CAMBIO,PAGO
@@ -93,6 +100,11 @@
   font-size: 28px;
   color: darkseagreen;
   margin-left: -3px;
+}
+.btnEliminarProductoInteresado{
+  border: none;
+  font-size:16px;
+  background-color:transparent;
 }
 
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL:
