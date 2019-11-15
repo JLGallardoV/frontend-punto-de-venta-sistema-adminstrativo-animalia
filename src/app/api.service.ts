@@ -271,11 +271,11 @@ export class APIService {
   public mostrarProductos() {
     return this.http.get('http://localhost:3000/productosWS/listarProductos', { headers: this.headers });
   }
-  public aniadirProducto(nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, puntosProducto: number, precioUnitarioProducto: number, idCategoria: number, idAlmacen: number) {
-    return this.http.post('http://localhost:3000/productosWS/agregarProducto', { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, puntosProducto, precioUnitarioProducto, idCategoria, idAlmacen }, { headers: this.headers });
+  public aniadirProducto(nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto: string,puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number) {
+    return this.http.post('http://localhost:3000/productosWS/agregarProducto', { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto,stockProducto,puntosProducto, precioUnitarioProducto,precioCompraProducto,idCategoria, idAlmacen }, { headers: this.headers });
   }
-  public actualizarProducto(idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, idCategoria: number, idAlmacen: number) {
-    return this.http.put(`http://localhost:3000/productosWS/actualizarProducto/${idProducto}`, { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, stockProducto, puntosProducto, precioUnitarioProducto, idCategoria, idAlmacen }, { headers: this.headers });
+  public actualizarProducto(idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto: string, puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto:number, idCategoria: number, idAlmacen: number) {
+    return this.http.put(`http://localhost:3000/productosWS/actualizarProducto/${idProducto}`, { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, stockProducto, puntosProducto, precioUnitarioProducto, precioCompraProducto, idCategoria, idAlmacen }, { headers: this.headers });
   }
   public borrarProducto(idProducto: number) {
     return this.http.delete(`http://localhost:3000/productosWS/eliminarProducto/${idProducto}`, { headers: this.headers });
