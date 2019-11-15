@@ -47,6 +47,7 @@ export class ProductosComponent implements OnInit {
       stockProducto:[""],
       puntosProducto:["",Validators.required],
       precioUnitarioProducto:["",Validators.required],
+      precioCompraProducto:["",Validators.required],
       idCategoria:["",Validators.required],
       idAlmacen:["",Validators.required]
     });
@@ -62,8 +63,8 @@ export class ProductosComponent implements OnInit {
   }
 
   //ABRIR MODAL CON LOS DATOS A EDITAR
-  public openEditar(content,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, idCategoria: number, idAlmacen: number){
-    console.log("id: ",idProducto," nombre: ",nombreProducto);
+  public openEditar(content,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number){
+    console.log("id: ",idProducto," nombre: ",nombreProducto," caducidad: ",fechaCaducidadProducto);
     this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Editar Producto";
     //pintando los valores en el modal listos para editarlos
@@ -71,11 +72,19 @@ export class ProductosComponent implements OnInit {
     this.frmProductos.controls['nombreProducto'].setValue(nombreProducto);
     this.frmProductos.controls['detalleProducto'].setValue(detalleProducto);
     this.frmProductos.controls['contenidoProducto'].setValue(contenidoProducto);
+
+    /*si es un producto que no tiene fecha de caducidad, previamente se le asigno un formato como este; pero para evitar
+      que se aplique el disabled al btn de ejecutar del html por el formato incorrecto, entonces asignamos null
+      (posteriormente en el click de ejecutar se manda de nuevo el formato 0000-00-00 para que sea aceptado por mi sgbd)*/
+    fechaCaducidadProducto == '0000-00-00'? fechaCaducidadProducto = null :null;
     this.frmProductos.controls['fechaCaducidadProducto'].setValue(fechaCaducidadProducto);
+
+
     this.frmProductos.controls['paisOrigenProducto'].setValue(paisOrigenProducto);
     this.frmProductos.controls['stockProducto'].setValue(stockProducto);
     this.frmProductos.controls['puntosProducto'].setValue(puntosProducto);
     this.frmProductos.controls['precioUnitarioProducto'].setValue(precioUnitarioProducto);
+    this.frmProductos.controls['precioCompraProducto'].setValue(precioCompraProducto);
     this.frmProductos.controls['idCategoria'].setValue(idCategoria);
     this.frmProductos.controls['idAlmacen'].setValue(idAlmacen);
   }
@@ -131,15 +140,18 @@ export class ProductosComponent implements OnInit {
     let stockProductoForm = this.frmProductos.get('stockProducto').value;
     let puntosProductoForm = this.frmProductos.get('puntosProducto').value;
     let precioUnitarioProductoForm = this.frmProductos.get('precioUnitarioProducto').value;
+    let precioCompraProductoForm = this.frmProductos.get('precioCompraProducto').value;
     let idCategoriaForm = this.frmProductos.get('idCategoria').value;
     let idAlmacenForm = this.frmProductos.get('idAlmacen').value
 
-    let fechaCaducidadProductoFormateada = this.formateandoFecha.formatearFecha(fechaCaducidadProductoForm);
-    //if reducido para formatear en caso de null en dato de la edicion de fecha (mi sgbd no me acepta null en date)
+    let fechaCaducidadProductoFormateada = this.formateandoFecha.formatearFecha(fechaCaducidadProductoForm);//le quito el formato raro que manda el picker para que sea aceptado por mi sgbd
+
+    /*if reducido para formatear en caso de querer enviar un null en la edicion/alta de fecha (mi sgbd no me acepta null en date)
+    quitamos el null y justo al momento de guardar asignamos el siguiente formato*/
     fechaCaducidadProductoForm == null ? fechaCaducidadProductoForm = '0000-00-00':null;
-    console.log(nombreProductoForm,"\n", detalleProductoForm,"\n", contenidoProductoForm,"\n", fechaCaducidadProductoFormateada,"\n", paisOrigenProductoForm,"\n", puntosProductoForm,"\n", precioUnitarioProductoForm,"\n", idCategoriaForm,"\n", idAlmacenForm);
+
     if (this.titulo == "Agregar Producto") {
-      this.API.aniadirProducto(nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoFormateada, paisOrigenProductoForm, puntosProductoForm, precioUnitarioProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
+      this.API.aniadirProducto(nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoFormateada, paisOrigenProductoForm, stockProductoForm, puntosProductoForm, precioUnitarioProductoForm, precioCompraProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
         (success: any)=>{
           alert(JSON.stringify(success.respuesta));
           this.listarProductos();
@@ -153,7 +165,7 @@ export class ProductosComponent implements OnInit {
       );
     }
     if(this.titulo == "Editar Producto"){
-      this.API.actualizarProducto(idProductoForm,nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoForm, paisOrigenProductoForm, stockProductoForm, puntosProductoForm, precioUnitarioProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
+      this.API.actualizarProducto(idProductoForm,nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoForm, paisOrigenProductoForm, stockProductoForm, puntosProductoForm, precioUnitarioProductoForm, precioCompraProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
         (success: any)=>{
           alert(JSON.stringify(success.respuesta));
           this.listarProductos();
