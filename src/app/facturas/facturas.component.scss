@@ -38,7 +38,7 @@
   margin-top: -50px;
 }
 
-//BTN PARA AÑADIR PRODUCTOS A LA NUBE
+//BTN PARA AÑADIR PRODUCTOS AL CARRITO (TABLA PRODUCTOS)
 .btnAniadirEntidad{
   color: #2f2e2e;
   width: 18px !important;
@@ -68,6 +68,7 @@
   width: 100%;
 }
 
+//MONTO, QUITAR BORDE AL INPUT READONLY DONDE SE MUESTRA EL MONTO
 .outputMonto{
   width: 50%;
   background:#dfdcd4;
@@ -96,11 +97,14 @@
   background: black;
 }
 
+//ICONO DE CARRITO DEL BTN QUE REDIRIGE A COMPRAS
 .carritoIrCompras{
   font-size: 28px;
   color: darkseagreen;
   margin-left: -3px;
 }
+
+//BTN PARA ELIMINAR PRODUCTOS DEL CARRITO (TABLA PRODUCTOS) BASURERO
 .btnEliminarProductoInteresado{
   border: none;
   font-size:16px;
@@ -156,7 +160,7 @@
 ::ng-deep.mat-radio-persistent-ripple{
   background-color: #14ff3e!important;
 }
-
+//CAMBIA COLOR AL TEXTO DE LOS SELECT DE MATERIAL
 ::ng-deep.mat-select-value {
-  color: rgb(192, 191, 192);//cambiar color de texto a select
+  color: rgb(192, 191, 192);
 }

@@ -113,9 +113,9 @@ export class FacturasComponent implements OnInit {
         //sumando monto cada que se agrega un producto
         this.montoAcumulado = this.montoAcumulado + (success.respuesta[0].precioUnitarioProducto * transaferirValorCantidad);
 
+        //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
         if (this.arregloProductosTabla.length >= 1) {
           console.log("posicion en arreglo: ",this.arregloProductosTabla[0].cantidadProducto);
-          //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
           for (let i = 0; i < this.arregloProductosTabla.length; i++) {
             if (transaferirValorID == this.arregloProductosTabla[i].idProducto) {
               this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + transaferirValorCantidad;
@@ -134,8 +134,6 @@ export class FacturasComponent implements OnInit {
           this.arregloProductosTabla.push({idProducto:transaferirValorID,cantidadProducto:transaferirValorCantidad,nombreProducto:success.respuesta[transaferirValorID-1].nombreProducto,precioUnitarioProducto:success.respuesta[transaferirValorID-1].precioUnitarioProducto});
           this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
         }
-        //this.arregloProductosTabla.push({idProducto:transaferirValorID,cantidadProducto:transaferirValorCantidad,nombreProducto:success.respuesta[transaferirValorID-1].nombreProducto,precioUnitarioProducto:success.respuesta[transaferirValorID-1].precioUnitarioProducto});
-        //this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
       },
       (error)=>{
         console.log("algo ocurrio",error)

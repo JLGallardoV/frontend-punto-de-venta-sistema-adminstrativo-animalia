@@ -37,7 +37,15 @@
   margin-top: -50px;
 }
 
-//BTN PARA AÑADIR PRODUCTOS A LA NUBE
+
+//MONTO, QUITAR BORDE AL INPUT READONLY DONDE SE MUESTRA EL MONTO
+.outputMonto{
+  width: 50%;
+  background:#dfdcd4;
+  border: none;
+}
+
+//BTN PARA AÑADIR PRODUCTOS AL CARRITO (TABLA PRODUCTOS)
 .btnAniadirEntidad{
   color: #2f2e2e;
   width: 18px !important;
@@ -57,6 +65,13 @@
   border: solid 1px #a5a39d;
   border-radius: 6px;
   margin: auto;
+}
+
+//BTN PARA ELIMINAR PRODUCTOS DEL CARRITO (TABLA PRODUCTOS) BASURERO
+.btnEliminarProductoInteresado{
+  border: none;
+  font-size:16px;
+  background-color:transparent;
 }
 
 //ESTILO PARA LISTA DE PRODUCTOS Y TIPOS DE PAGOS
