@@ -26,9 +26,10 @@ export class ComprasComponent implements OnInit {
   public arregloCompras:ICompras[] = [];
   public ultimaCompra:any;
   public montoAcumulado : number;
-
+  public usuarioActual:number;
   constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, public formBuilder: FormBuilder, public API: APIService) {
     this.montoAcumulado = 0;
+    this.usuarioActual=0;
     this.frmCompra = this.formBuilder.group({
           idUsuario:localStorage.getItem("usuario"),
           idProveedor:["",Validators.required],
@@ -65,7 +66,18 @@ export class ComprasComponent implements OnInit {
       }
     );
   }
-
+  //llena el input del nombre de usuario, este usuario es el de la sesion
+  public mostrarUsuarioEnSesion(){
+    this.API.buscarUsuarioPorNombre(localStorage.getItem("usuario")).subscribe(
+      (success:any)=>{
+          this.usuarioActual = success.respuesta[0].idUsuario;
+          console.log("esta en sesion: ",this.usuarioActual)
+      },
+      (error)=>{
+        console.log(error)
+      }
+    );
+  }
   //llena el select de usuarios
   public listarUsuarios(){
     this.API.mostrarUsuarios().subscribe(
@@ -140,7 +152,7 @@ export class ComprasComponent implements OnInit {
     console.log("montoAcumulado")
    let idUsuarioForm:number = 0,idProveedorForm:number = 0,montoCompraForm: number = 0;
     let arregloProductosForm:any[] = []
-    idUsuarioForm = this.frmCompra.get('idUsuario').value;
+    idUsuarioForm = this.usuarioActual;
     idProveedorForm = this.frmCompra.get('idProveedor').value;
     montoCompraForm = this.montoAcumulado;
     arregloProductosForm = this.arregloProductosTabla;
@@ -153,8 +165,9 @@ export class ComprasComponent implements OnInit {
         if(success.estatus > 0){
           alert(success.respuesta);
           this.listarCompras();
+          this.limpiarFormulario();
         }else if(success.estatus < 0) {
-            alert("No cuentas con el dinero suficiente | verifica tu pago");
+            alert(JSON.stringify(success.respuesta));
         }else{
           alert(JSON.stringify(success.respuesta));
         }
@@ -184,8 +197,20 @@ export class ComprasComponent implements OnInit {
     );
   }
 
+  //limpiamos el formulario una vez e haya realizado uan venta.
+  public limpiarFormulario(){
+    this.frmCompra.reset();
+    this.frmCompra.controls['idUsuario'].setValue(localStorage.getItem("usuario"));
+    this.montoAcumulado = 0;
+
+    this.dsProductos.data=[];
+    this.arregloProductosTabla = [];
+  }
+
+
   ngOnInit() {
     this.guardian.restringirAcceso();
+    this.mostrarUsuarioEnSesion();
     this.listarProductos();
     this.listarProveedores();
     this.listarUsuarios();
