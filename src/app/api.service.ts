@@ -392,6 +392,9 @@ export class APIService {
   public borrarVendedor(idVendedor: number) {
     return this.http.delete(`http://localhost:3000/vendedoresWS/eliminarVendedor/${idVendedor}`, { headers: this.headers });
   }
+  public buscarVendedorPorNombre(nombreVendedor: string) {
+    return this.http.get(`http://localhost:3000/vendedores/buscarVendedorPorNombre/${nombreVendedor}`, { headers: this.headers });
+  }
   public mostrarRendimientoVendedores(fechaInicio: string, fechaFinal: string) {
     return this.http.get(`http://localhost:3000/rendimientoVendedoresWS/listarVentasVendedores/${fechaInicio}/${fechaFinal}`, { headers: this.headers });
   }

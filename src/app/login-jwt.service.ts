@@ -53,6 +53,7 @@ export class LoginJwtService {
         this.agregarAcceso(idCapturado); //anexamos a la db el usuario en acceso
         //almaceno el nivel en ls para poder restringir accesos a modulos
         let nivel: string = success.respuesta[0].tipoUsuario;
+        console.log("este sera tu nivel: ",nivel)
         localStorage.setItem('nivel', nivel);
 
       },

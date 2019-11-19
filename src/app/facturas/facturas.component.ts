@@ -27,9 +27,11 @@ export class FacturasComponent implements OnInit {
   public arregloTransacciones:ITransacciones[] = [];
   public ultimaVenta:any;
   public montoAcumulado : number;
+  public usuarioActual:number;
 
   constructor(private _bottomSheet: MatBottomSheet, public formBuilder: FormBuilder, public API: APIService) {
     this.montoAcumulado = 0;
+    this.usuarioActual = 0;
     this.frmVenta = this.formBuilder.group({
           idCliente:["",Validators.required],
           idVendedor:localStorage.getItem("usuario"),
@@ -92,13 +94,17 @@ export class FacturasComponent implements OnInit {
       }
     );
   }
-  //limpiamos el formulario una vez e haya realizado uan venta.
-  public limpiarFormulario(){
-    this.frmVenta.reset();
-    this.montoAcumulado = 0;
-
-    this.dsProductos.data=[];
-    this.arregloProductosTabla = [];
+  //llena el input del nombre de usuario, este usuario es el de la sesion
+  public mostrarUsuarioEnSesion(){
+    this.API.buscarUsuarioPorNombre(localStorage.getItem("usuario")).subscribe(
+      (success:any)=>{
+          this.usuarioActual = success.respuesta[0].idUsuario;
+          console.log("esta en sesion: ",this.usuarioActual)
+      },
+      (error)=>{
+        console.log(error)
+      }
+    );
   }
 
 //agrego los productos del formulario a su tabla de productos
@@ -182,7 +188,7 @@ export class FacturasComponent implements OnInit {
    let idClienteForm:number = 0,idVendedorForm:number = 0,pagoTransaccionForm: number = 0;
     let arregloProductosForm:any[] = [],arregloTiposDePagosForm:any[] = [];
     idClienteForm = this.frmVenta.get('idCliente').value;
-    idVendedorForm = this.frmVenta.get('idVendedor').value;
+    idVendedorForm =   this.usuarioActual;
     pagoTransaccionForm = this.frmVenta.get('pagoTransaccion').value;
     arregloProductosForm = this.arregloProductosTabla;
     arregloTiposDePagosForm = this.arregloTiposDePagosLista;
@@ -198,6 +204,7 @@ export class FacturasComponent implements OnInit {
           this.limpiarFormulario();
         }else if(success.estatus < 0) {
             alert("No cuentas con el dinero suficiente | verifica tu pago");
+            console.log("verdadero error: ",success.respuesta)
         }else{
           alert(JSON.stringify(success.respuesta));
         }
@@ -227,7 +234,19 @@ export class FacturasComponent implements OnInit {
     );
   }
 
+  //limpiamos el formulario una vez e haya realizado uan venta.
+  public limpiarFormulario(){
+    this.frmVenta.reset();
+    this.frmVenta.controls['idVendedor'].setValue(localStorage.getItem("usuario"));
+    this.montoAcumulado = 0;
+
+    this.dsProductos.data=[];
+    this.arregloProductosTabla = [];
+  }
+
+
   ngOnInit() {
+    this.mostrarUsuarioEnSesion();
     this.listarTiposDePagos();
     this.listarProductos();
     this.listarVendedores();
