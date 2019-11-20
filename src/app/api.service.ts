@@ -222,15 +222,22 @@ export class APIService {
   public mostrarCompras() {
     return this.http.get('http://localhost:3000/comprasWS/listarCompras', { headers: this.headers });
   }
+  public mostrarDetalleCompra(idCompra:number) {
+    return this.http.get(`http://localhost:3000/comprasWS/listarDetalleCompra/${idCompra}`, { headers: this.headers });
+  }
   public aniadirCompra(idUsuario: number, idProveedor: number, montoCompra: number, productos: IProductos[]) {
     return this.http.post('http://localhost:3000/comprasWS/agregarCompra', { idUsuario, idProveedor, montoCompra, productos }, { headers: this.headers });
   }
-  public aniadirTransaccion(idCliente: number, idVendedor: number, pagoTransaccion: number, productos: IProductos[], tiposDePagos: ITiposDePagos[]) {
-    console.log("en el servicio: ",pagoTransaccion,"\n", productos,"\n", tiposDePagos )
-    return this.http.post('http://localhost:3000/transaccionesWS/agregarTransaccion', { idCliente, idVendedor, pagoTransaccion, productos, tiposDePagos }, { headers: this.headers });
-  }
+
   public mostrarTransacciones() {
     return this.http.get('http://localhost:3000/transaccionesWS/listarTransacciones', { headers: this.headers });
+  }
+  public mostrarDetalleTransaccion(idTransaccion:number) {
+    return this.http.get(`http://localhost:3000/transaccionesWS/listarDetalleTransaccion/${idTransaccion}`, { headers: this.headers });
+  }
+  public aniadirTransaccion(idCliente: number, idVendedor: number, pagoTransaccion: number, productos: IProductos[], tiposDePagos: ITiposDePagos[]) {
+    console.log("en el servicio: ",pagoTransaccion,"\n", productos,"\n", tiposDePagos)
+    return this.http.post('http://localhost:3000/transaccionesWS/agregarTransaccion', { idCliente, idVendedor, pagoTransaccion, productos, tiposDePagos }, { headers: this.headers });
   }
 
   //WS PARA ENTIDAD COMPENSACIONES

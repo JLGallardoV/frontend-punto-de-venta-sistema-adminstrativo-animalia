@@ -27,7 +27,7 @@
 //LONGITUDES DE LA TABLA, EVITA QUE SE DESBORDEN LOS DATOS DE LA TABLA
 .tablaElastica{
   overflow-y: auto;
-  min-height: 30%;
+  min-height: 15%;
   max-height: 45%;
   transition: 0.5s;
 }

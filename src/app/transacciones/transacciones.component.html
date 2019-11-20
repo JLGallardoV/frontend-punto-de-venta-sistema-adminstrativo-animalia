@@ -34,9 +34,14 @@
             <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idTransaccion}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="nombreProducto">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Producto </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreProducto}} </td>
+          <ng-container matColumnDef="montoConIvaTransaccion">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.montoConIvaTransaccion}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="cantidadProductosTransaccion">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cantidad Productos </th>
+            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.cantidadProductosTransaccion}} </td>
           </ng-container>
 
           <ng-container matColumnDef="fechaTransaccion">
@@ -44,38 +49,10 @@
             <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="nombreVendedor">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Vendedor </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreVendedor}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="nombreCliente">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cliente </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreCliente}} </td>
-          </ng-container>
-
           <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
             <td mat-cell *matCellDef="let i" style="text-align:center">
-              <div class="">
-                <!-- contenido del popover -->
-                <ng-template  #popTitle>
-                  <div class="darkerFuenteCuerpos" style="text-align:center; color: black">
-                    Nombre: {{i.nombreProducto}}
-                  </div>
-                </ng-template>
-                <ng-template  #popContent>
-                  <div class="darkerFuenteCuerpos" style="font-size:16px!important;">
-                    <b>Monto $:</b> {{i.montoConIvaTransaccion}}
-                    <br><b>Pago:</b> {{i.pagoTransaccion}}
-                    <br><b>Cambio:</b> {{i.cambioTransaccion}}
-                    <br><b>N°. Productos:</b> {{i.numeroProductosEnTransaccion}}
-                    <br><b>tipoPago:</b> {{i.tipoPago}}
-                  </div>
-                </ng-template>
-                <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;"placement="left"
-                [ngbPopover]="popContent" [popoverTitle]="popTitle">Informacion</button>
-              </div>
+                <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;"(click)="openScrollableContent(longContent)">Informacion</button>
             </td>
           </ng-container>
 
@@ -123,9 +100,9 @@
             <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.idCompra}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="nombreProducto">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Producto </th>
-            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.nombreProducto}} </td>
+          <ng-container matColumnDef="montoCompra">
+            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto </th>
+            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.montoCompra}} </td>
           </ng-container>
 
           <ng-container matColumnDef="fechaCompra">
@@ -136,24 +113,7 @@
           <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
             <td mat-cell *matCellDef="let i" style="text-align:center">
-              <div class="">
-                <!-- contenido del popover -->
-                <ng-template  #popTitle>
-                  <div class="darkerFuenteCuerpos" style="text-align:center; color: black">
-                    Nombre: {{i.nombreProducto}}
-                  </div>
-                </ng-template>
-                <ng-template  #popContent>
-                  <div class="darkerFuenteCuerpos" style="font-size:16px!important;">
-                    <b>Monto $:</b> {{i.montoCompra}}
-                    <br><b>N°. Productos $:</b> {{i.numeroProductosEnCompra}}
-                    <br><b>Proveedor:</b> {{i.nombreProveedor}}
-                    <br><b>Comprado Por:</b> {{i.nombreUsuario}}
-                  </div>
-                </ng-template>
-                <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;"placement="left"
-                [ngbPopover]="popContent" [popoverTitle]="popTitle">Informacion</button>
-              </div>
+              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;" (click)="openScrollableContent(longContent)">Informacion</button>
             </td>
           </ng-container>
 
@@ -185,15 +145,21 @@
 
 
   <!-- codigo modal -->
-  <ng-template #content let-modal>
+  <ng-template #longContent let-modal>
     <div class="modal-header">
-      <h3 class="modal-title darkerFuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
+      <h3 class="modal-title darkerFuenteTitulos" id="modal-basic-title">modal prueba</h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]= "frmProveedores">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut al
+      iquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volu
+      ptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu
+      pidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <!--form [formGroup]= "frmProveedores">
         <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
           <input formControlName="nombreProveedor" type="text"  matInput placeholder="Nombre Proveedor" style="text-align: center;">
         </mat-form-field>
@@ -234,7 +200,7 @@
         </mat-form-field>
         <label *ngIf="frmProveedores.controls.descripcionProveedor.invalid && frmProveedores.controls.descripcionProveedor.dirty">Este campo es obligatorio</label>
         <br>
-      </form>
+      </form-->
     </div>
     <div class="modal-footer">
       <button mat-stroked-button class="btnAgregar darkerFuenteTitulos margenSuperior">Agregar</button>
