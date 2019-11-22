@@ -15,6 +15,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {ProveedoresComponent, BottomSheetOverviewExampleSheet } from './proveedores/proveedores.component';
 import {MatTableModule} from '@angular/material/table';
@@ -82,6 +83,7 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
     MatIconModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatSnackBarModule,
     MatTableModule,
     MatTooltipModule,
     MatPaginatorModule,

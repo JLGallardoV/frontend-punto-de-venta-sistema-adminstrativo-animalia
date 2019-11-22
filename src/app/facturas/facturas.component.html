@@ -1,4 +1,3 @@
-<div class="imagenFondo">
   <mat-toolbar class="estiloToolbar animacionCambioColor" style="transition:0.5s;" (click)="openBottomSheet()">
     <div class="margenMenu">
       <i class='fas fa-bars' style='font-size: 18px;color: darkseagreen'></i> Menu
@@ -13,12 +12,12 @@
           <form [formGroup]="frmVenta" class="darkerFuenteCuerpos">
             <div class="contenedorInputs bordeContenedorInputs">
               <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-                <input formControlName="idVendedor" matInput placeholder="Vendedor"  style="color:#f6f2ebe3;" readonly>
+                  <input formControlName="idVendedor" matInput placeholder="Vendedor"  style="color:#f6f2ebe3;" readonly>
               </mat-form-field>
               <label *ngIf="frmVenta.controls.idVendedor.invalid && frmVenta.controls.idVendedor.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
               <br>
 
-              <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
+              <mat-form-field class="darkerFuenteCuerpos" color="--yellow" style="font-size:20px;">
                 <mat-select formControlName="idCliente" class="darkerFuenteCuerpos" style="font-size:20px;" placeholder="cliente">
                   <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloClientesSelect" [value]="i.idCliente">
                     {{ i.nombreCliente }}
@@ -62,7 +61,7 @@
 
 
       <div name="columnaDerechaOutpus" class="col-md-9">
-        <mat-card style="background:#dfdcd4;">
+        <mat-card style="background:#f9f9f9;">
           <br>
           <div name="renglonOutpus" class="row bordeOutputs">
             <div name="columnaIzquierdaOuputs" class="col-md-6">
@@ -146,4 +145,3 @@
   <div name="redirigirCompras">
     <button mat-fab type="button" class="btnCompras" [routerLink]="[ '/compras']"><i class='fas fa-truck carritoIrCompras'></i></button>
   </div>
-</div>

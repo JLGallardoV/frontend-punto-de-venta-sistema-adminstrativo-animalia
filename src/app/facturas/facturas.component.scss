@@ -1,19 +1,6 @@
-.imagenFondo{
-  background: url('../../assets/img/fondo6.jpg');
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: top;
-  background-size: cover;
-  min-height: 100vh;
-  width: 100vw;
-  position: absolute;
-}
-
 //CONTENEDOR PRINCIPAL
 .cardPrincipal{
-  background-color: #000000bd;
-  border-radius: 6px;
-  width: 90%;
+  width: 100%;
   height: auto;
   margin: 0 auto;
 }
@@ -24,9 +11,9 @@
   display: block;
 }
 .bordeContenedorInputs{
-  border: solid 1px darkseagreen;
   border-radius: 6px;
   padding-left: 6%;
+  background:#f9f9f9;
 }
 
 //BTN PARA REALIZAR UNA VENTA
@@ -71,7 +58,7 @@
 //MONTO, QUITAR BORDE AL INPUT READONLY DONDE SE MUESTRA EL MONTO
 .outputMonto{
   width: 50%;
-  background:#dfdcd4;
+  background:#f9f9f9;
   border: none;
 }
 

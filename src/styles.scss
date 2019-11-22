@@ -1,5 +1,6 @@
 //TEMA ANGULAR MATERIAL:
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/css?family=Darker+Grotesque|Marcellus+SC&display=swap');
 
 //ESTILOS GLOBALES
 .estiloToolbar{
@@ -38,20 +39,20 @@
   margin: 0px auto;
 }
 
-.darkerFuenteTitulos{
-  font-family: 'Darker Grotesque', sans-serif;
-  font-size: 26px;
+//FUENTES PARA LA PLATAFORMA
+.fuenteTitulos{
+  font-family: 'Marcellus SC', serif;
 }
 
-.darkerFuenteCuerpos{
+.fuenteCuerpos{
   font-family: 'Darker Grotesque', sans-serif;
-  font-size: 20px!important;
 }
 .icono{
   font-size: 15px!important;
   margin-top: -25px!important;
   color: #585766!important;
 }
+
 //ESTOS SON ESTILOS PARA EL BOTTOMSHEET:
 .mat-bottom-sheet-container {
   padding: 8px 16px;
