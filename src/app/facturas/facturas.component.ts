@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { APIService } from '../api.service';
@@ -29,7 +28,7 @@ export class FacturasComponent implements OnInit {
   public montoAcumulado : number;
   public usuarioActual:number;
 
-  constructor(private _bottomSheet: MatBottomSheet, public formBuilder: FormBuilder, public API: APIService) {
+  constructor(public formBuilder: FormBuilder, public API: APIService) {
     this.montoAcumulado = 0;
     this.usuarioActual = 0;
     this.frmVenta = this.formBuilder.group({
@@ -40,11 +39,6 @@ export class FacturasComponent implements OnInit {
           cantidadProducto:["",Validators.required],
           idTipoPago:["",Validators.required]
         });
-  }
-
-  //bootsheet (menu emergente de la zona inferior)
-  public openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetFacturas);
   }
 
   //llena el select de tipos de pagos
@@ -253,41 +247,4 @@ export class FacturasComponent implements OnInit {
     this.listarClientes();
   }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//agregando bottomSheet (menu)
-@Component({
-  selector: 'bottomSheetFacturas',
-  templateUrl: 'bottomSheetFacturas.html',
-})
-export class BottomSheetFacturas {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetFacturas>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
 }

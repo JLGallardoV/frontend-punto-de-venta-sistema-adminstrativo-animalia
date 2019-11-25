@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IClientes,APIService} from '../api.service';
@@ -25,7 +24,7 @@ export class ClientesComponent implements OnInit {
   dsClientes: MatTableDataSource<IClientes>
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(public guardian:LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
     this.arregloTiposDeClientes = [];
     this.frmClientes = this.formBuilder.group({
       idCliente:[""],
@@ -44,10 +43,6 @@ export class ClientesComponent implements OnInit {
       puntuajeCliente:["",Validators.required],
       tipoCliente:["",Validators.required],
     });
-  }
-  //MENU BOTTOMSHEET
-  public openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetClientes);
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -180,41 +175,4 @@ export class ClientesComponent implements OnInit {
     this.listarTiposDeClientes();
   }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Component({
-  selector: 'bottomSheetClientes',
-  templateUrl: 'bottomSheetClientes.html',
-})
-export class BottomSheetClientes {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetClientes>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
 }

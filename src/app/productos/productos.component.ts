@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IProductos,ICategorias,IAlmacenes,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 import {LoginJwtService} from '../login-jwt.service';
-
-
 
 @Component({
   selector: 'app-productos',
@@ -36,7 +33,7 @@ export class ProductosComponent implements OnInit {
   dsProductos:MatTableDataSource<IProductos>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(public guardian:LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
     this.frmProductos = this.formBuilder.group({
       idProducto:[""],
       nombreProducto:["",Validators.required],
@@ -52,10 +49,7 @@ export class ProductosComponent implements OnInit {
       idAlmacen:["",Validators.required]
     });
   }
-  public openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetProductos);
-  }
-
+  
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
   public openAlta(content) {
     this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
@@ -207,41 +201,4 @@ export class ProductosComponent implements OnInit {
     this.listarCategorias();
   }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Component({
-  selector: 'bottomSheetProductos',
-  templateUrl: 'bottomSheetProductos.html',
-})
-export class BottomSheetProductos {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetProductos>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
 }

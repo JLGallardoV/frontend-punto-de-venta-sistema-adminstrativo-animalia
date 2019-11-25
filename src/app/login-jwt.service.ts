@@ -9,15 +9,16 @@ export class LoginJwtService {
   public headers = new HttpHeaders();
   constructor(private http: HttpClient, private router: Router, public API: APIService) { }
 
-  public login(nombreUsuario: string, contraseniaUsuario: string, idTipoUsuario: number) {
-    this.http.post('http://localhost:3000/loginWS/autenticarUsuarios', { nombreUsuario, contraseniaUsuario, idTipoUsuario }, { headers: this.headers }).subscribe(
+  public login(nombreUsuario: string, contraseniaUsuario: string) {
+    this.http.post('http://localhost:3000/loginWS/autenticarUsuarios', { nombreUsuario, contraseniaUsuario}, { headers: this.headers }).subscribe(
       (resp: any) => {
         if (resp.estatus > 0) {
 
           console.log("respueta", resp.estatus, " contenido: ", resp.respuesta);
           localStorage.setItem('token', resp.respuesta); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
           localStorage.setItem('usuario', nombreUsuario); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
-          this.router.navigate(['/home']);
+          this.router.navigate(['/facturas']);
+          document.getElementById("main").style.display = "block";
           this.registrarAcceso(nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
 
         } else {

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { APIService, IAccesos } from '../api.service';
 import {LoginJwtService} from '../login-jwt.service';
 @Component({
@@ -14,13 +13,8 @@ export class AccesosComponent implements OnInit {
   dsAccesos: MatTableDataSource<IAccesos>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private _bottomSheet: MatBottomSheet, public API: APIService, public guardian:LoginJwtService) {
+  constructor(public API: APIService, public guardian:LoginJwtService) {
 
-  }
-
-  //MENU INFERIOR BOTTOM SHEET
-  public openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetAccesos);
   }
 
   //LISTAR ACCESOS
@@ -41,33 +35,4 @@ export class AccesosComponent implements OnInit {
     this.listarAccesos();
   }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Component({
-  selector: 'bottomSheetAccesos',
-  templateUrl: 'bottomSheetAccesos.html',
-})
-export class BottomSheetAccesos {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetAccesos>) { }
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
 }

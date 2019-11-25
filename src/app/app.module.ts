@@ -15,8 +15,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {ProveedoresComponent, BottomSheetOverviewExampleSheet } from './proveedores/proveedores.component';
+import {ProveedoresComponent} from './proveedores/proveedores.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -27,18 +28,18 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { TransaccionesComponent, BottomSheetTransacciones} from './transacciones/transacciones.component';
-import { ClientesComponent, BottomSheetClientes} from './clientes/clientes.component';
-import { FacturasComponent, BottomSheetFacturas} from './facturas/facturas.component';
-import { ProductosComponent, BottomSheetProductos} from './productos/productos.component';
-import { DevolucionesComponent, BottomSheetDevoluciones} from './devoluciones/devoluciones.component';
-import { CategoriasComponent, BottomSheetCategorias} from './categorias/categorias.component';
-import { VendedoresComponent, BottomSheetVendedores} from './vendedores/vendedores.component';
-import { UsuariosComponent, BottomSheetUsuarios} from './usuarios/usuarios.component';
-import { AccesosComponent, BottomSheetAccesos} from './accesos/accesos.component';
-import { HerramientasComponent, BottomSheetHerramientas } from './herramientas/herramientas.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ComprasComponent, BottomSheetCompras } from './compras/compras.component';
+import { TransaccionesComponent} from './transacciones/transacciones.component';
+import { ClientesComponent} from './clientes/clientes.component';
+import { FacturasComponent} from './facturas/facturas.component';
+import { ProductosComponent} from './productos/productos.component';
+import { DevolucionesComponent} from './devoluciones/devoluciones.component';
+import { CategoriasComponent} from './categorias/categorias.component';
+import { VendedoresComponent} from './vendedores/vendedores.component';
+import { UsuariosComponent} from './usuarios/usuarios.component';
+import { AccesosComponent} from './accesos/accesos.component';
+import { HerramientasComponent} from './herramientas/herramientas.component';
+import { HttpClientModule} from '@angular/common/http';
+import { ComprasComponent} from './compras/compras.component';
 import{AuthGuard} from './auth.guard';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
@@ -47,18 +48,6 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
     AppComponent,
     HomeComponent,
     LoginComponent,
-    BottomSheetOverviewExampleSheet, //bottomSheet lo agregue en proveedores
-    BottomSheetTransacciones,
-    BottomSheetClientes,
-    BottomSheetCompras,
-    BottomSheetFacturas,
-    BottomSheetDevoluciones,
-    BottomSheetProductos,
-    BottomSheetVendedores,
-    BottomSheetCategorias,
-    BottomSheetUsuarios,
-    BottomSheetAccesos,
-    BottomSheetHerramientas,
     ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent, ComprasComponent, ConfiguracionComponent
   ],
   imports: [
@@ -82,6 +71,7 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
     MatIconModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatSnackBarModule,
     MatTableModule,
     MatTooltipModule,
     MatPaginatorModule,
@@ -89,19 +79,7 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
     MatSlideToggleModule,
     MatBottomSheetModule
   ],
-  entryComponents: [
-    BottomSheetOverviewExampleSheet,
-    BottomSheetTransacciones,
-    BottomSheetCompras,
-    BottomSheetFacturas,
-    BottomSheetProductos,
-    BottomSheetDevoluciones,
-    BottomSheetCategorias,
-    BottomSheetVendedores,
-    BottomSheetUsuarios,
-    BottomSheetAccesos,
-    BottomSheetHerramientas,
-    BottomSheetClientes], //bottomsheet
+  entryComponents: [],
   providers: [
     AuthGuard
   ],

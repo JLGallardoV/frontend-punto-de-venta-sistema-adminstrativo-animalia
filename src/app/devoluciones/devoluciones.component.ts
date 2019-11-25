@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IDevoluciones,ITiposDeProblemas,ICompensaciones,IClientes,IProductos,APIService} from '../api.service';
@@ -54,7 +53,7 @@ export class DevolucionesComponent implements OnInit {
   @ViewChild('MatPaginatorTiposProblemas',{static: true})paginatorTiposProblemas: MatPaginator;
   @ViewChild('MatPaginatorCompensaciones',{static: true})paginatorCompensaciones: MatPaginator;
 
-  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService) {
+  constructor(public guardian:LoginJwtService,private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService) {
     this.frmDevoluciones = this.formBuilder.group({
       montoConIvaDevolucion:["",Validators.required],
       motivoDevolucion:["",Validators.required],
@@ -74,9 +73,6 @@ export class DevolucionesComponent implements OnInit {
       tipoCompensacion:["",Validators.required],
       descripcionCompensacion:["",Validators.required]
     });
-  }
-  public openBottomSheet(): void {
-  this._bottomSheet.open(BottomSheetDevoluciones);
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -322,42 +318,4 @@ export class DevolucionesComponent implements OnInit {
     this.listarClientes();
   }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Component({
-  selector: 'bottomSheetDevoluciones',
-  templateUrl: 'bottomSheetDevoluciones.html',
-})
-export class BottomSheetDevoluciones {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetDevoluciones>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {ITransacciones,ICompras,APIService} from '../api.service';
@@ -19,8 +18,8 @@ export class TransaccionesComponent implements OnInit {
   public titulo = ""; //para el modal
 
   //propiedades para la tabla
-  displayedColumnsTransacciones: string[] = ['idTransaccion', 'nombreProducto','fechaTransaccion','nombreVendedor','nombreCliente','acciones'];
-  displayedColumnsCompras: string[] = ['idCompra', 'nombreProducto','fechaCompra','acciones'];
+  displayedColumnsTransacciones: string[] = ['idTransaccion','montoConIvaTransaccion','cantidadProductosTransaccion','fechaTransaccion','acciones'];
+  displayedColumnsCompras: string[] = ['idCompra', 'montoCompra','fechaCompra','acciones'];
   dsTransacciones : MatTableDataSource<ITransacciones>;
   dsCompras : MatTableDataSource<ICompras>;
   @ViewChild('MatPaginatorCompras',{static: true})paginatorCompras: MatPaginator;
@@ -28,21 +27,15 @@ export class TransaccionesComponent implements OnInit {
 
   constructor(
     public guardian:LoginJwtService,
-    private _bottomSheet: MatBottomSheet,
     private modalService: NgbModal,
     public formBuilder: FormBuilder,
     public API: APIService
   ) {}
 
-  //PARA EL MENU INFERIOR BOTTOMSHEET
-  public openBottomSheet(): void {
-  this._bottomSheet.open(BottomSheetTransacciones);
-  }
-
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
-  public openAlta(content) {
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
-    this.titulo = "Agregar Proveedor";
+  public openScrollableContent(longContent) {
+    console.log("aparecer modal");
+    this.modalService.open(longContent, { scrollable: true });
   }
 
 
@@ -56,12 +49,31 @@ export class TransaccionesComponent implements OnInit {
   public listarTransacciones(){
     this.API.mostrarTransacciones().subscribe(
       (success:any)=>{
+        console.log("success: ",success.respuesta)
         this.dsTransacciones = new MatTableDataSource(success.respuesta);
         if(!this.dsTransacciones.paginator){
           this.dsTransacciones.paginator = this.paginatorTransacciones;
 
         }
         console.log(this.dsTransacciones);
+      },
+      (error)=>{
+        console.log("entro al error directamente")
+        console.log(error);
+      }
+    );
+  }
+
+  //LISTAR LAS DETALLE TRANSACCION
+  public listarDetalleTransaccion(idTransaccion:number){
+    this.API.mostrarDetalleTransaccion(idTransaccion).subscribe(
+      (success:any)=>{
+        /*this.dsTransacciones = new MatTableDataSource(success.respuesta);
+        if(!this.dsTransacciones.paginator){
+          this.dsTransacciones.paginator = this.paginatorTransacciones;
+
+        }
+        console.log(this.dsTransacciones);*/
       },
       (error)=>{
         console.log(error);
@@ -84,6 +96,23 @@ export class TransaccionesComponent implements OnInit {
       }
     );
   }
+  //LISTAR LAS DETALLE COMPRA
+  public listarDetalleCompra(idCompra:number){
+    this.API.mostrarDetalleTransaccion(idCompra).subscribe(
+      (success:any)=>{
+        /*this.dsTransacciones = new MatTableDataSource(success.respuesta);
+        if(!this.dsTransacciones.paginator){
+          this.dsTransacciones.paginator = this.paginatorTransacciones;
+
+        }
+        console.log(this.dsTransacciones);*/
+      },
+      (error)=>{
+        console.log(error);
+      }
+    );
+  }
+
 
   //FUNCIONALIDAD FILTRAR
   public filtrarRegistros(filterValue: string) {
@@ -101,53 +130,4 @@ export class TransaccionesComponent implements OnInit {
     this.listarCompras();
   }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Component({
-  selector:  'bottomSheetTransacciones',
-  templateUrl: 'bottomSheetTransacciones.html',
-})
-export class BottomSheetTransacciones {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetTransacciones>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
 }
