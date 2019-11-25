@@ -3,25 +3,6 @@
 @import url('https://fonts.googleapis.com/css?family=Darker+Grotesque|Marcellus+SC&display=swap');
 
 //ESTILOS GLOBALES
-.estiloToolbar{
-  width: 65vw !important;
-  border-radius: 5px;
-  margin: 0px auto;
-  height: 50px !important;
-  margin-top: -6px;
-  color: darkseagreen !important;
-  background: #000000a1;
-  cursor: pointer;
-}
-
-.estiloToolbar:hover{
-  background-color:#000000c9!important;
-  width: 65vw !important;
-  border-radius: 5px;
-  margin: 0px auto;
-  height: 60px !important;
-  margin-top: -6px;
-}
 .letreroModulo {
   text-align: center;
   color: darkseagreen;
@@ -33,11 +14,6 @@
   padding-top: 0px!important;
   font-size: 24px;
 }
-.margenMenu{
-  font-family: 'Darker Grotesque', sans-serif;
-  font-size: 26px;
-  margin: 0px auto;
-}
 
 //FUENTES PARA LA PLATAFORMA
 .fuenteTitulos{
@@ -47,27 +23,11 @@
 .fuenteCuerpos{
   font-family: 'Darker Grotesque', sans-serif;
 }
+//ESTANDAR DE TAMAÑO DE ICONOS
 .icono{
   font-size: 15px!important;
   margin-top: -25px!important;
   color: #585766!important;
-}
-
-//ESTOS SON ESTILOS PARA EL BOTTOMSHEET:
-.mat-bottom-sheet-container {
-  padding: 8px 16px;
-  min-width: 100vw;
-  box-sizing: border-box;
-  display: block;
-  outline: 0;
-  max-height: 80vh;
-  overflow: auto;
-  background: #000000bd;
-}
-.mat-list-text{
-  color: darkseagreen !important;
-  font-family: 'Darker Grotesque', sans-serif;
-  font-size: 26px;
 }
 
 //ESTILOS PARA MODULOS CRUD:
@@ -96,7 +56,6 @@
   width: 100%;
 }
 //ESTILOS PARA TABLA CRUD:
-
 table {
   width: 100%;
   background: #eae4dd45!important;
@@ -176,7 +135,6 @@ table {
 
 }
 
-
 /*MODAL AGREGAR*/
 .modal-title {
     margin: auto;
@@ -191,34 +149,4 @@ table {
 .modal-content {
     background-color: #000000d6!important;
     border: 1px solid black!important;
-}
-/*ANIMACIONES*/
-.animacionCambioColor {
-  position: relative;
-  transition-property: background-color, color;
-  transition-duration: 1s;
-  transition-timing-function: ease-out;
-  -webkit-transition-property: background-color, color;
-  -webkit-transition-duration: 1s;
-  -o-transition-property: background-color, color;
-  -o-transition-duration: 1s;
-  left: 5px;
-  top: 5px;
-  color: white;
-  font-size: 20px;
-  text-decoration: none;
-  -moz-box-shadow: 2px 2px 1px black;
-}
-
-.animacionCambioColor:hover {
-  position: relative;
-  transition-property: background-color, color;
-  transition-duration: 1s;
-  transition-timing-function: ease-out;
-  -webkit-transition-property: background-color, color;
-  -webkit-transition-duration: 1s;
-  -o-transition-property: background-color, color;
-  -o-transition-duration: 1s;
-  color:black;
-  -moz-box-shadow: 2px 2px 1px black;
 }

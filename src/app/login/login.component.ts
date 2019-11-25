@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   openSnackBar() {
-    this._snackBar.open('Comunicate: JLGallardoV@yandex.com / 4291226929', 'Cerrar', {
+    this._snackBar.open('Comunicate: JLGallardoV@yandex.com', 'x', {
       duration: 10000,
     });
   }
