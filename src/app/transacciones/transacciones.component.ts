@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {ITransacciones,ICompras,APIService} from '../api.service';
@@ -28,16 +27,10 @@ export class TransaccionesComponent implements OnInit {
 
   constructor(
     public guardian:LoginJwtService,
-    private _bottomSheet: MatBottomSheet,
     private modalService: NgbModal,
     public formBuilder: FormBuilder,
     public API: APIService
   ) {}
-
-  //PARA EL MENU INFERIOR BOTTOMSHEET
-  public openBottomSheet(): void {
-  this._bottomSheet.open(BottomSheetTransacciones);
-  }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
   public openScrollableContent(longContent) {
@@ -137,53 +130,4 @@ export class TransaccionesComponent implements OnInit {
     this.listarCompras();
   }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Component({
-  selector:  'bottomSheetTransacciones',
-  templateUrl: 'bottomSheetTransacciones.html',
-})
-export class BottomSheetTransacciones {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetTransacciones>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
 }

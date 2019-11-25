@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IVendedores,APIService} from '../api.service';
@@ -26,7 +25,7 @@ export class VendedoresComponent implements OnInit {
   dsVendedores:MatTableDataSource<IVendedores>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(public guardian:LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
     this.frmVendedores = this.formBuilder.group({
       idVendedor:[""],
       nombreVendedor:["",Validators.required],
@@ -40,10 +39,6 @@ export class VendedoresComponent implements OnInit {
       numeroSeguroSocialVendedor:["",Validators.required],
       antiguedadVendedor:["",Validators.required]
     });
-  }
-  //BOTTOMSHEET MENU
-  public openBottomSheet(): void {
-  this._bottomSheet.open(BottomSheetVendedores);
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -157,43 +152,4 @@ export class VendedoresComponent implements OnInit {
 
   }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Component({
-  selector:  'bottomSheetVendedores',
-  templateUrl: 'bottomSheetVendedores.html',
-})
-export class BottomSheetVendedores {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetVendedores>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
 }

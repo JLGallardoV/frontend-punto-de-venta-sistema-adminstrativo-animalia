@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IProveedores,APIService} from '../api.service';
@@ -25,7 +24,7 @@ export class ProveedoresComponent implements OnInit {
   dsProveedores: MatTableDataSource<IProveedores>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(public guardian:LoginJwtService,private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
     this.frmProveedores = this.formBuilder.group({
       idProveedor:"",
       nombreProveedor:["",Validators.required],
@@ -37,11 +36,6 @@ export class ProveedoresComponent implements OnInit {
       emailProveedor:["",Validators.required],
       descripcionProveedor:["",Validators.required]
     });
-  }
-
-  //MENU BOTTOMSHEET
-  public openBottomSheet(): void {
-  this._bottomSheet.open(BottomSheetOverviewExampleSheet);
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -148,40 +142,4 @@ export class ProveedoresComponent implements OnInit {
     this.listarProveedores();
   }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Component({
-  selector: 'bottom-sheet-overview-example-sheet',
-  templateUrl: 'bottom-sheet-overview-example-sheet.html',
-})
-export class BottomSheetOverviewExampleSheet {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewExampleSheet>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
 }

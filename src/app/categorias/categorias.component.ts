@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {ICategorias,APIService} from '../api.service';
@@ -25,7 +24,7 @@ export class CategoriasComponent implements OnInit {
   dsCategorias: MatTableDataSource<ICategorias>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(public guardian:LoginJwtService,private _bottomSheet: MatBottomSheet, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService) {
+  constructor(public guardian:LoginJwtService,private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService) {
     this.titulo = "";
     this.frmCategorias = this.formBuilder.group({
       idCategoria:[""],
@@ -33,11 +32,6 @@ export class CategoriasComponent implements OnInit {
       subCategoria:["",Validators.required],
       descripcionCategoria:["",Validators.required]
     });
-  }
-
-  //MENU BOTTOMSHEET
-  public openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetCategorias);
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -135,44 +129,3 @@ export class CategoriasComponent implements OnInit {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  @Component({
-  selector: 'bottomSheetCategorias',
-  templateUrl: 'bottomSheetCategorias.html',
-  })
-  export class BottomSheetCategorias {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetCategorias>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
-  }
