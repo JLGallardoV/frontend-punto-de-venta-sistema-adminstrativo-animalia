@@ -35,9 +35,12 @@ export class LoginComponent implements OnInit {
 
   public login() {
     var constrasenaEncriptada = sha256(this.frmLogin.get('passwordUsuario').value)//Encriptacion de constraña sha256
-    this.jwt.login(this.frmLogin.get('nombreUsuario').value, constrasenaEncriptada,this.frmLogin.get('tipoUsuario').value);//invocando metodo con la peticon del login, proveniente del servicio
+    this.jwt.login(this.frmLogin.get('nombreUsuario').value,constrasenaEncriptada);//invocando metodo con la peticon del login, proveniente del servicio
   }
+
   ngOnInit() {
+    document.getElementById("main").style.display = "none";
+
   }
 
 }
