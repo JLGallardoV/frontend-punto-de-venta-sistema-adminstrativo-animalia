@@ -13,7 +13,7 @@
   width: 100%;
 }
 .cardFormulario {
-  background:#f9f9f9;
+  background:#f4f4f4;
   //#dfdcd4
   margin: auto;
   margin-top: 20px;
@@ -41,22 +41,22 @@
 
 //PERSONALIZAR EL COLOR DE INPUT
 ::ng-deep .mat-focused {/*cambia el color del label cuando se enfoca*/
-  color: #4b2b08 !important;
+  color: #272727 !important;
  }
  ::ng-deep.mat-form-field-underline { /*cambia el color del subrayado*/
-  background-color: #4b2b08 !important;
-  border-color: #4b2b08 !important;
+  background-color: #272727 !important;
+  border-color: #272727 !important;
 }
 ::ng-deep.mat-form-field-ripple {/*cambiar el color del subrayado cuando se enfoca*/
- background-color: #4b2b08 !important;
- border-color: #4b2b08 !important;
+ background-color: #272727 !important;
+ border-color: #272727 !important;
 
 }
 ::ng-deep.mat-form-field-label{/*color del label*/
-  color: #4b2b08 !important;
+  color: #272727 !important;
 }
 ::ng-deep.mat-input-element {/*color del punto de insercion (parpadeo de barra vertical al escribir)*/
-    caret-color: #4b2b08 !important;
+    caret-color: #272727 !important;
 }
 
 

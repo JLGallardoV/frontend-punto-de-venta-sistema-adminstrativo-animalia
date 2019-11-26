@@ -8,7 +8,7 @@ body {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   left: 0;
   background-color: #111;
@@ -49,11 +49,12 @@ body {
 }
 
 .hamburguesa{
-  background:#cfc597;
+  background:#fff;
+  color: #272727;
   border-radius: 6px;
   width: 70px;
   height: 46px;
   text-align: center;
-  box-shadow: #00000057 0px 1px 1px 2px;
+  box-shadow: #00000057 0px 1px 1px 1px;
 }
 /*FIN ESTILOS PARA SIDE MENU GLOBAL*/
