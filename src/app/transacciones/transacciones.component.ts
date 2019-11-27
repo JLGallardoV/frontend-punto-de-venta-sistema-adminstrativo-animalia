@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
@@ -38,10 +38,11 @@ export class TransaccionesComponent implements OnInit {
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
-  public arregloDetalleVenta:any[] = []; //para mostrar datos de determinado venta segun el usuario en el modal de informacion
+  public arregloDetalleVenta:any[] = []; //para mostrar datos de determinada venta segun el usuario en el modal de informacion
+  public arregloDetalleCompra:any[] = []; //para mostrar datos de determinada compra segun el usuario en el modal de informacion
   //propiedades para la tabla
   displayedColumnsTransacciones: string[] = ['idTransaccion','nombreCliente','apellidoPaternoCliente','fechaTransaccion','acciones'];
-  displayedColumnsCompras: string[] = ['idCompra', 'montoCompra','fechaCompra','acciones'];
+  displayedColumnsCompras: string[] = ['idCompra','fechaCompra', 'nombreUsuario', 'nombreProveedor','acciones'];
   dsTransacciones : MatTableDataSource<ITransacciones>;
   dsCompras : MatTableDataSource<ICompras>;
   @ViewChild('MatPaginatorCompras',{static: true})paginatorCompras: MatPaginator;
@@ -129,14 +130,28 @@ export class TransaccionesComponent implements OnInit {
   }
   //LISTAR LAS DETALLE COMPRA
   public listarDetalleCompra(idCompra:number){
-    this.API.mostrarDetalleTransaccion(idCompra).subscribe(
+    this.API.mostrarDetalleCompra(idCompra).subscribe(
       (success:any)=>{
-        /*this.dsTransacciones = new MatTableDataSource(success.respuesta);
-        if(!this.dsTransacciones.paginator){
-          this.dsTransacciones.paginator = this.paginatorTransacciones;
+        let arregloTemporalProductos:any[] = [];
+        let productos: string[] = [];
 
+        for (let i = 0; i < success.respuesta.length; i++) {
+          //atrapamos cada uno de los productos en un array
+          arregloTemporalProductos.push(success.respuesta[i].nombreProducto);
         }
-        console.log(this.dsTransacciones);*/
+        productos = arregloTemporalProductos
+        //arreglo de objetos listo para iterar
+        this.arregloDetalleCompra = [{
+          idCompra:success.respuesta[0].idCompra,
+          monto:success.respuesta[0].montoCompra,
+          productos:productos.join(', \n'),
+          fecha:success.respuesta[0].fechaCompra,
+          numeroProductosCompra:success.respuesta[0].numeroProductosEnCompra,
+          nombreUsuario:success.respuesta[0].nombreUsuario,
+          nombreProveedor:success.respuesta[0].nombreProveedor
+        }];
+
+        console.log("contenido arregloDetalleCompra: ",this.arregloDetalleCompra)
       },
       (error)=>{
         console.log(error);
@@ -144,11 +159,18 @@ export class TransaccionesComponent implements OnInit {
     );
   }
 
-  //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
-  public openScrollableContent(longContent, idTransaccion:number) {
-    console.log("idTransaccion",idTransaccion);
-    this.modalService.open(longContent, { size: 'lg', scrollable: true });
-    this.listarDetalleTransaccion(idTransaccion);
+  //FUNCION PARA ABRIR EL MODAL VENTAS, CONFIGURACIONES DE BOOTSTRAP
+  public openScrollableContentVentas(longContentVentas:any, idVenta:number) {
+    console.log("idTransaccion",idVenta);
+    this.modalService.open(longContentVentas, { size: 'lg', scrollable: true });
+    this.listarDetalleTransaccion(idVenta);
+  }
+
+  //FUNCION PARA ABRIR EL MODAL COMPRAS, CONFIGURACIONES DE BOOTSTRAP
+  public openScrollableContentCompras(longContentCompras:any, idCompra:number) {
+    console.log("idTransaccion",idCompra);
+    this.modalService.open(longContentCompras, { size: 'lg', scrollable: true });
+    this.listarDetalleCompra(idCompra);
   }
 
 

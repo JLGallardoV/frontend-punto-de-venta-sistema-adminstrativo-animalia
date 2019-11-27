@@ -47,7 +47,7 @@
                 <ng-container matColumnDef="acciones">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
                   <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center">
-                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContent(longContent,elemento.idTransaccion)">Información</button>
+                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentVentas(longContentVentas,elemento.idTransaccion)">Información</button>
                   </td>
                 </ng-container>
 
@@ -93,23 +93,28 @@
 
                 <ng-container matColumnDef="idCompra">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
-                  <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.idCompra}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="montoCompra">
-                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto </th>
-                  <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.montoCompra}} </td>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.idCompra}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="fechaCompra">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-                  <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.fechaCompra | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.fechaCompra  | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombreUsuario">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Comprador </th>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.nombreUsuario}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombreProveedor">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Proveedor </th>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.nombreProveedor}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="acciones">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
-                  <td mat-cell *matCellDef="let i" style="text-align:center">
-                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContent(longContent)">Información</button>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center">
+                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentCompras(longContentCompras,elemento.idCompra)">Información</button>
                   </td>
                 </ng-container>
 
@@ -136,11 +141,11 @@
 
 
 
+<!-- SECCION DE MODALELES -->
 
 
-
-  <!-- codigo modal -->
-  <ng-template #longContent let-modal>
+  <!-- codigo modal Ventas -->
+  <ng-template #longContentVentas let-modal>
     <div class="modal-header">
       <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
         Detalles de Venta
@@ -159,6 +164,30 @@
         <b>Vendedor:</b> {{i.vendedor}}<br>
         <b>Cliente:</b> {{i.cliente}}<br>
         <b>TipoPago:</b> {{i.tipoPago}}<br>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
+    </div>
+  </ng-template>
+
+  <!-- codigo modal compras -->
+  <ng-template #longContentCompras let-modal>
+    <div class="modal-header">
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
+        Detalles de Compras
+        <i class='fas fa-print' style='font-size:24px'></i>
+      </h3>
+    </div>
+    <div class="modal-body" *ngFor="let i of arregloDetalleCompra">
+      <p class="fuenteCuerpos" style="font-size:22px;">
+        <b>Id Compra:</b> {{i.idCompra}}<br>
+        <b>Monto $:</b> {{i.monto}}<br>
+        <b>Productos:</b> {{i.productos}}<br>
+        <b>Fecha:</b> {{i.fecha | date: 'yyyy-MM-dd HH:mm:ss'}}<br>
+        <b>N°Productos:</b> {{i.numeroProductosCompra}}<br>
+        <b>Comprador:</b> {{i.nombreUsuario}}<br>
+        <b>Proveedor:</b> {{i.nombreProveedor}}<br>
       </p>
     </div>
     <div class="modal-footer">
