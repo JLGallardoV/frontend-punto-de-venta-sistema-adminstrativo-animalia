@@ -1,186 +1,202 @@
-<div class="imagenFondo">
-  <mat-toolbar class="estiloToolbar animacionCambioColor" style="transition:0.5s;" (click)="openBottomSheet()">
-    <div class="margenMenu">
-      <i class='fas fa-bars' style='font-size: 18px;color: darkseagreen'></i> Menu
-    </div>
-  </mat-toolbar>
-  <br>
-
-
-  <mat-card class="contenedorAcciones" style="height:14%;width: 80%;">
-    <div class="row">
-      <div class="col-3" style="margin-right: -10%;">
-        <button mat-fab class="btnAcciones darkerFuenteTitulos" (click)="openAlta(content)"><i class='fas fa-user-plus icono'></i></button>
-        &nbsp;
-        <button mat-fab class="btnAcciones darkerFuenteTitulos" [routerLink]="[ '/home']"><i class='fas fa-print icono'></i></button>
-      </div>
-
-      <div class="col-9" style="margin-top: -5px;">
-        <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-          <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
-        </mat-form-field>
-      </div>
-    </div>
-  </mat-card>
-  <br>
-
-  <!-- card contenedora de tabla -->
-
-  <mat-card class="cardPrincipal row">
+<br>
+<br>
+<br>
+<mat-tab-group>
+<!-- TAB 1 PRODUCTOS  -->
+  <mat-tab label="Productos" name="aumentarPaddingAqui">
     <br>
-    <div class="tablaElastica">
-      <table mat-table [dataSource]="dsProductos" class="darkerFuenteCuerpos" style="font-size:98px">
+    <mat-card class="contenedorAcciones" style="width: 80%;">
+      <div class="row">
+        <div class="col-3" style="margin-right: -10%;">
+          <button mat-fab class="btnAcciones fuenteTitulos" (click)="openAltaProducto(contentProductos)"><i class='fas fa-user-plus icono'></i></button>
+          &nbsp;
+          <button mat-fab class="btnAcciones fuenteTitulos"><i class='fas fa-print icono'></i></button>
+        </div>
 
-        <ng-container matColumnDef="idProducto">
-          <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
-          <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idProducto}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="nombreProducto">
-          <th mat-header-cell *matHeaderCellDef style="text-align:center"> Nombre </th>
-          <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreProducto}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="detalleProducto">
-          <th mat-header-cell *matHeaderCellDef style="text-align:center"> Marca </th>
-          <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.detalleProducto}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="stockProducto">
-          <th mat-header-cell *matHeaderCellDef style="text-align:center"> Stock </th>
-          <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.stockProducto}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="precioUnitarioProducto">
-          <th mat-header-cell *matHeaderCellDef style="text-align:center"> P.Unitario </th>
-          <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.precioUnitarioProducto}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
-          <td mat-cell *matCellDef="let i" style="text-align:center">
-            <div class="">
-              <!-- contenido del popover -->
-              <ng-template  #popTitle>
-                <div class="darkerFuenteCuerpos" style="text-align:center; color: black">
-                  Nombre: {{i.nombreProducto}}
-                </div>
-              </ng-template>
-              <ng-template  #popContent>
-                <div class="darkerFuenteCuerpos" style="font-size:16px!important;">
-                  <b>caducidad:</b> {{i.fechaCaducidadProducto}}
-                  <br><b>Contenido:</b> {{i.contenidoProducto}}
-                  <br><b>Precio Compra:</b> {{i.precioCompraProducto}}
-                  <br><b>Categoria:</b> {{i.nombreCategoria}}
-                  <br><b>Puntos:</b> {{i.puntosProducto}}
-                  <br><b>Pais Origen:</b> {{i.paisOrigenProducto}}
-                  <br><b>Almacen:</b> {{i.ciudadAlmacen}}
-                  <br><b>Tel. Almacen:</b> {{i.telefonoAlmacen}}
-                </div>
-              </ng-template>
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;"placement="left"
-               [ngbPopover]="popContent" [popoverTitle]="popTitle">Informacion</button>
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #6496c1;" (click)="openEditar(content,i.idProducto, i.nombreProducto, i.detalleProducto, i.contenidoProducto, i.fechaCaducidadProducto, i.paisOrigenProducto,i.stockProducto,i.puntosProducto, i.precioUnitarioProducto, i.precioCompraProducto, i.idCategoria, i.idAlmacen)">Modificar</button>
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #d06363;" (click)="eliminarProducto(i.idProducto)">Eliminar</button>
-            </div>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
-    <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
-    <mat-card class="letreroModulo">
-      <div style="margin-bottom: -14px;">
-        Productos <i class='fas fa-box' style='font-size: 20px;color: darkseagreen;'></i>
+        <div class="col-9" style="margin-top: -5px;">
+          <mat-form-field class="fuenteCuerpos inputBuscar">
+            <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar">
+          </mat-form-field>
+        </div>
       </div>
     </mat-card>
-  </mat-card>
+    <br>
 
-  <!-- modal para el llenado de datos -->
+    <!-- card contenedora de tabla -->
+    <div name="cardTablaRegistros">
+      <mat-card style="width: 98%;margin: auto;">
+        <div class="tablaElastica">
+          <table mat-table [dataSource]="dsProductos" class="fuenteCuerpos" style="font-size:98px">
 
-    <ng-template #content let-modal>
-      <div class="modal-header">
-        <h3 class="modal-title darkerFuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]= "frmProductos">
-           <input formControlName="idProducto" type="hidden">
-          <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-            <input formControlName="nombreProducto" type="text"  matInput placeholder="Nombre" style="text-align:center;color:#f6f2ebe3">
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.nombreProducto.invalid && frmProductos.controls.nombreProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-          <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-            <input formControlName="detalleProducto"  type="text" matInput placeholder="Marca " style="text-align:center;color:#f6f2ebe3;">
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.detalleProducto.invalid && frmProductos.controls.detalleProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-          <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-            <input formControlName="contenidoProducto" type="text" matInput  placeholder="Contenido"  style="text-align:center;color:#f6f2ebe3;">
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.contenidoProducto.invalid && frmProductos.controls.contenidoProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-          <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-            <input formControlName="fechaCaducidadProducto" matInput [matDatepicker]="picker" placeholder="Caducidad"  style="text-align:center;color:#f6f2ebe3;">
-            <mat-datepicker-toggle matSuffix [for]="picker" style="color: #dddad3;"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.fechaCaducidadProducto.invalid && frmProductos.controls.fechaCaducidadProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-          <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-            <input formControlName="paisOrigenProducto" type="text" matInput  placeholder="Pais Origen"  style="text-align:center;color:#f6f2ebe3;">
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.paisOrigenProducto.invalid && frmProductos.controls.paisOrigenProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-          <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-            <input formControlName="stockProducto" type="text" matInput  placeholder="Stock"  style="text-align:center;color:#f6f2ebe3;">
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.stockProducto.invalid && frmProductos.controls.stockProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-          <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-            <input formControlName="puntosProducto"  matInput type="number" min="1"  placeholder="puntosProducto"  style="text-align:center;color:#f6f2ebe3;">
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.puntosProducto.invalid && frmProductos.controls.puntosProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-          <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-            <input formControlName="precioUnitarioProducto" type="number" min="1" matInput placeholder="Precio Unitario"  style="text-align:center;color:#f6f2ebe3;">
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.precioUnitarioProducto.invalid && frmProductos.controls.precioUnitarioProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-          <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-            <input formControlName="precioCompraProducto" type="number" min="1" matInput placeholder="Precio Compra"  style="text-align:center;color:#f6f2ebe3;">
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.precioCompraProducto.invalid && frmProductos.controls.precioCompraProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
+            <ng-container matColumnDef="idProducto">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idProducto}} </td>
+            </ng-container>
 
-          <mat-form-field class="darkerFuenteCuerpos">
-            <mat-select formControlName="idCategoria" class="darkerFuenteCuerpos" placeholder="Categoria">
-              <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloCategoria" [value]="i.idCategoria">
-                {{ i.nombreCategoria }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.idCategoria.invalid && frmProductos.controls.idCategoria.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-          <mat-form-field class="darkerFuenteCuerpos">
-            <mat-select formControlName="idAlmacen" class="darkerFuenteCuerpos" placeholder="Tel. Almacen">
-              <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloAlmacenes" [value]="i.idAlmacen">
-                {{ i.telefonoAlmacen }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <label *ngIf="frmProductos.controls.idAlmacen.invalid && frmProductos.controls.idAlmacen.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
-          <br>
-        </form>
-      </div>
-      <div class="modal-footer" style="background: #f6f2ebe3;">
-        <button mat-stroked-button class="btnEjecutar darkerFuenteTitulos margenSuperior" [disabled]="frmProductos.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
-      </div>
-    </ng-template>
+            <ng-container matColumnDef="nombreProducto">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Nombre </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreProducto}} </td>
+            </ng-container>
 
-</div>
+            <ng-container matColumnDef="detalleProducto">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Marca </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.detalleProducto}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="stockProducto">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Stock </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.stockProducto}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="precioUnitarioProducto">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> P.Unitario </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.precioUnitarioProducto}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center">
+                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentProductos(longContentProductos,i.idProducto)">Informacion</button>
+                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openEditarProducto(contentProductos,i.idProducto, i.nombreProducto, i.detalleProducto, i.contenidoProducto, i.fechaCaducidadProducto, i.paisOrigenProducto,i.stockProducto,i.puntosProducto, i.precioUnitarioProducto, i.precioCompraProducto, i.idCategoria, i.idAlmacen)">Modificar</button>
+                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="eliminarProducto(i.idProducto)">Eliminar</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+        <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+      </mat-card>
+    </div>
+      <mat-card class="letreroModulo">
+        <div style="margin-bottom: -14px;">
+          Productos <i class='fas fa-box' style='font-size: 20px;'></i>
+        </div>
+      </mat-card>
+  </mat-tab>
+
+<!-- TAB 2 CATEGORIAS  -->
+  <mat-tab label="Categorias">
+    <app-categorias></app-categorias>
+  </mat-tab>
+</mat-tab-group>
+
+
+<!-- SECCION DE MODALES -->
+
+
+
+<!-- modal productos - agregar/editar -->
+<ng-template #contentProductos let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title fuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frmProductos">
+      <input formControlName="idProducto" type="hidden">
+      <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <input formControlName="nombreProducto" type="text" matInput placeholder="Nombre" style="text-align:center;">
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.nombreProducto.invalid && frmProductos.controls.nombreProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+      <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <input formControlName="detalleProducto" type="text" matInput placeholder="Marca " style="text-align:center;">
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.detalleProducto.invalid && frmProductos.controls.detalleProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+      <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <input formControlName="contenidoProducto" type="text" matInput placeholder="Contenido" style="text-align:center;">
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.contenidoProducto.invalid && frmProductos.controls.contenidoProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+      <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <input formControlName="fechaCaducidadProducto" matInput [matDatepicker]="picker" placeholder="Caducidad" style="text-align:center;;">
+        <mat-datepicker-toggle matSuffix [for]="picker" style="color: #dddad3;"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.fechaCaducidadProducto.invalid && frmProductos.controls.fechaCaducidadProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+      <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <input formControlName="paisOrigenProducto" type="text" matInput placeholder="Pais Origen" style="text-align:center;">
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.paisOrigenProducto.invalid && frmProductos.controls.paisOrigenProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+      <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <input formControlName="stockProducto" type="number" matInput placeholder="Stock" style="text-align:center;">
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.stockProducto.invalid && frmProductos.controls.stockProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+      <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <input formControlName="puntosProducto" matInput type="number" min="1" placeholder="puntosProducto" style="text-align:center;">
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.puntosProducto.invalid && frmProductos.controls.puntosProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+      <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <input formControlName="precioUnitarioProducto" type="number" min="1" matInput placeholder="Precio Venta" style="text-align:center;">
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.precioUnitarioProducto.invalid && frmProductos.controls.precioUnitarioProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+      <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <input formControlName="precioCompraProducto" type="number" min="1" matInput placeholder="Precio Compra" style="text-align:center;">
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.precioCompraProducto.invalid && frmProductos.controls.precioCompraProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+
+      <mat-form-field class="fuenteCuerpos">
+        <mat-select formControlName="idCategoria" class="fuenteCuerpos" placeholder="Categoria">
+          <mat-option class="fuenteCuerpos" *ngFor="let i of arregloCategoria" [value]="i.idCategoria">
+            {{ i.nombreCategoria }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.idCategoria.invalid && frmProductos.controls.idCategoria.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+      <mat-form-field class="fuenteCuerpos">
+        <mat-select formControlName="idAlmacen" class="fuenteCuerpos" placeholder="Tel. Almacen">
+          <mat-option class="fuenteCuerpos" *ngFor="let i of arregloAlmacenes" [value]="i.idAlmacen">
+            {{ i.telefonoAlmacen }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <label *ngIf="frmProductos.controls.idAlmacen.invalid && frmProductos.controls.idAlmacen.dirty" style="color:red;">Este campo es obligatorio</label>
+      <br>
+    </form>
+  </div>
+  <div class="modal-footer" style="background: #f6f2ebe3;">
+    <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmProductos.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
+  </div>
+</ng-template>
+
+<!-- modal informacion productos -->
+
+<ng-template #longContentProductos let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
+      Detalles del Producto
+      <i class='fas fa-file-alt' style='font-size:24px'></i>
+    </h3>
+  </div>
+  <div class="modal-body" *ngFor="let i of arregloDetalleProducto">
+    <p class="fuenteCuerpos" style="font-size:22px;">
+      <b>ID Producto</b> {{i.idProducto}}
+      <br><b>Marca:</b> {{i.detalleProducto}}
+      <br><b>caducidad:</b> {{i.fechaCaducidadProducto | date: 'yyyy-MM-dd HH:mm:ss'}}
+      <br><b>Contenido:</b> {{i.contenidoProducto}}
+      <br><b>Precio Venta:</b> {{i.precioUnitarioProducto}}
+      <br><b>Precio Compra:</b> {{i.precioCompraProducto}}
+      <br><b>Stock:</b> {{i.stockProducto}}
+      <br><b>Categoria:</b> {{i.nombreCategoria}}
+      <br><b>Puntos:</b> {{i.puntosProducto}}
+      <br><b>Pais Origen:</b> {{i.paisOrigenProducto}}
+      <br><b>Almacen:</b> {{i.ciudadAlmacen}}
+      <br><b>Tel. Almacen:</b> {{i.telefonoAlmacen}}
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
+  </div>
+</ng-template>

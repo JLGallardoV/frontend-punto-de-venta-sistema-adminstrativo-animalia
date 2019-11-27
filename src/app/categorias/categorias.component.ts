@@ -6,6 +6,27 @@ import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {ICategorias,APIService} from '../api.service';
 import {LoginJwtService} from '../login-jwt.service';
 
+/*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
+ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
+
+const etiquetaRango = (page: number, pageSize: number, length: number) => {
+  if (length == 0 || pageSize == 0) { //caso paginador vacio
+    return `0 de ${length}`;
+  }
+  length = Math.max(length, 0);
+
+  const startIndex = page * pageSize; //indice de inicio
+
+/*if resumido; si el indice de inicio excede la logitud de la lista (6 - 5 de 6 por ejemplo) se veria: 6 - 10 de 6 gracias al
+[pageSizeOptions] lo cual es incorrecto pues solo hay 6 elementos en tal rango ENTONCES mejor coloca como indice final el indice inicial
+quedaria 6 - 6 de 6 que es lo correcto).*/
+  const endIndex = startIndex < length ?
+      Math.min(startIndex + pageSize, length) :
+      startIndex + pageSize;
+
+  return `${startIndex + 1} - ${endIndex} de ${length}`;
+}
+
 
 @Component({
   selector: 'app-categorias',
@@ -35,15 +56,15 @@ export class CategoriasComponent implements OnInit {
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
-  public openAlta(content) {
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  public openAltaCategoria(contentCategoria:any) {
+    this.modal= this.modalService.open(contentCategoria, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Agregar Categoria";
   }
 
   //ABRIR MODAL CON LOS DATOS A EDITAR
-  public openEditar(content,idCategoria:number,nombreCategoria:string,subCategoria:string,descripcionCategoria:string){
+  public openEditarCategoria(contentCategoria:any,idCategoria:number,nombreCategoria:string,subCategoria:string,descripcionCategoria:string){
     console.log("id: ",idCategoria," nombreCategoria: ",nombreCategoria," subcategorias: ",subCategoria," descripcion: ",descripcionCategoria);
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(contentCategoria, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Editar Categoria";
     //pintando los valores en el modal listos para editarlos
     this.frmCategorias.controls['idCategoria'].setValue(idCategoria); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
@@ -58,6 +79,8 @@ export class CategoriasComponent implements OnInit {
       (success:any)=>{
         this.dsCategorias = new MatTableDataSource(success.respuesta);
         this.dsCategorias.paginator = this.paginator;
+        this.dsCategorias.paginator._intl.itemsPerPageLabel = 'items por pagina';
+        this.dsCategorias.paginator._intl.getRangeLabel = etiquetaRango;
       },
       (error)=>{
         console.log("hubo un problema: ",error)

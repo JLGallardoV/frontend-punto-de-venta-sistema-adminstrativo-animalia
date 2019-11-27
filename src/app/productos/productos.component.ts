@@ -7,11 +7,40 @@ import {IProductos,ICategorias,IAlmacenes,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 import {LoginJwtService} from '../login-jwt.service';
 
+
+/*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
+ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
+
+const etiquetaRango = (page: number, pageSize: number, length: number) => {
+  if (length == 0 || pageSize == 0) { //caso paginador vacio
+    return `0 de ${length}`;
+  }
+  length = Math.max(length, 0);
+
+  const startIndex = page * pageSize; //indice de inicio
+
+/*if resumido; si el indice de inicio excede la logitud de la lista (6 - 5 de 6 por ejemplo) se veria: 6 - 10 de 6 gracias al
+[pageSizeOptions] lo cual es incorrecto pues solo hay 6 elementos en tal rango ENTONCES mejor coloca como indice final el indice inicial
+quedaria 6 - 6 de 6 que es lo correcto).*/
+  const endIndex = startIndex < length ?
+      Math.min(startIndex + pageSize, length) :
+      startIndex + pageSize;
+
+  return `${startIndex + 1} - ${endIndex} de ${length}`;
+}
+
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.scss']
 })
+@Component({
+  selector: 'app-categorias',
+  templateUrl: '../categorias/categorias.component.html'
+//  styleUrls: ['../categorias/categorias.component.scss']
+})
+
 export class ProductosComponent implements OnInit {
 
   public closeResult: string; //modal
@@ -21,7 +50,7 @@ export class ProductosComponent implements OnInit {
   public formValid:Boolean=false;
   public arregloCategoria: ICategorias[];
   public arregloAlmacenes: IAlmacenes[];
-
+  public arregloDetalleProducto:any[] = [];
   displayedColumns: string[] = [
   'idProducto',
   'nombreProducto',
@@ -49,17 +78,17 @@ export class ProductosComponent implements OnInit {
       idAlmacen:["",Validators.required]
     });
   }
-  
+
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
-  public openAlta(content) {
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  public openAltaProducto(contentProducto:any) {
+    this.modal= this.modalService.open(contentProducto, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Agregar Producto";
   }
 
   //ABRIR MODAL CON LOS DATOS A EDITAR
-  public openEditar(content,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number){
+  public openEditarProducto(contentProducto:any,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number){
     console.log("id: ",idProducto," nombre: ",nombreProducto," caducidad: ",fechaCaducidadProducto);
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(contentProducto, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Editar Producto";
     //pintando los valores en el modal listos para editarlos
     this.frmProductos.controls['idProducto'].setValue(idProducto); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
@@ -82,14 +111,33 @@ export class ProductosComponent implements OnInit {
     this.frmProductos.controls['idCategoria'].setValue(idCategoria);
     this.frmProductos.controls['idAlmacen'].setValue(idAlmacen);
   }
+  //LISTAR DETALLES PRODUCTOS
+  public listarDetalleProducto(idProducto:number){
+    this.API.mostrarDetalleProducto(idProducto).subscribe(
+      (success:any)=>{
+        this.arregloDetalleProducto = success.respuesta;
+      },
+      (error)=>{
+        console.log(error);
+      }
+    );
+  }
 
+  //FUNCION PARA ABRIR EL MODAL VENTAS, CONFIGURACIONES DE BOOTSTRAP
+  public openScrollableContentProductos(longContentVentas:any, idVenta:number) {
+    console.log("idTransaccion",idVenta);
+    this.modalService.open(longContentVentas, { size: 'lg', scrollable: true });
+    this.listarDetalleProducto(idVenta);
+  }
 
-  //LISTAR CLIENTES
+  //LISTAR PRODUCTOS
   public listarProductos(){
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
         this.dsProductos = new MatTableDataSource(success.respuesta);
         this.dsProductos.paginator = this.paginator;
+        this.dsProductos.paginator._intl.itemsPerPageLabel = 'items por pagina';
+        this.dsProductos.paginator._intl.getRangeLabel = etiquetaRango;
       },
       (error)=>{
         console.log("hubo un problema: ",error)
@@ -138,14 +186,17 @@ export class ProductosComponent implements OnInit {
     let idCategoriaForm = this.frmProductos.get('idCategoria').value;
     let idAlmacenForm = this.frmProductos.get('idAlmacen').value
 
-    let fechaCaducidadProductoFormateada = this.formateandoFecha.formatearFecha(fechaCaducidadProductoForm);//le quito el formato raro que manda el picker para que sea aceptado por mi sgbd
 
     /*if reducido para formatear en caso de querer enviar un null en la edicion/alta de fecha (mi sgbd no me acepta null en date)
     quitamos el null y justo al momento de guardar asignamos el siguiente formato*/
-    fechaCaducidadProductoForm == null ? fechaCaducidadProductoForm = '0000-00-00':null;
-
+    console.log("fecha! ",fechaCaducidadProductoForm)
+    if(fechaCaducidadProductoForm == null || fechaCaducidadProductoForm == NaN || fechaCaducidadProductoForm == undefined || fechaCaducidadProductoForm ==""){
+      fechaCaducidadProductoForm = '0000-00-00';
+    } else{
+      fechaCaducidadProductoForm = this.formateandoFecha.formatearFecha(fechaCaducidadProductoForm);//le quito el formato raro que manda el picker para que sea aceptado por mi sgbd
+    }
     if (this.titulo == "Agregar Producto") {
-      this.API.aniadirProducto(nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoFormateada, paisOrigenProductoForm, stockProductoForm, puntosProductoForm, precioUnitarioProductoForm, precioCompraProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
+      this.API.aniadirProducto(nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoForm, paisOrigenProductoForm, stockProductoForm, puntosProductoForm, precioUnitarioProductoForm, precioCompraProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
         (success: any)=>{
           alert(JSON.stringify(success.respuesta));
           this.listarProductos();

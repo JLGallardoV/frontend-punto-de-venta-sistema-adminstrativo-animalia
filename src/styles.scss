@@ -25,7 +25,7 @@
 .icono{
   font-size: 15px!important;
   margin-top: -25px!important;
-  color: #585766!important;
+  color: #272727!important;
 }
 
 //ESTILOS PARA MODULOS CRUD:
@@ -66,37 +66,6 @@ table {
   font-size: 18px!important;
   //color: #191818;
 }
-
-/*.mat-row:hover{
-  .mat-cell{
-    color: darkseagreen!important;
-    font-size: 18px!important;
-    position: relative;
-    transition-property: background-color, color;
-    transition-duration: 1s;
-    transition-timing-function: ease-out;
-    -webkit-transition-property: background-color, color;
-    -webkit-transition-duration: 1s;
-    -o-transition-property: background-color, color;
-    -o-transition-duration: 1s;
-    background-color:#000000d6;
-    -moz-box-shadow: 2px 2px 1px black;
-  }
-  .btnAccionesColumna{
-    font-size: 18px!important;
-    color: darkseagreen!important;
-    position: relative;
-    transition-property: background-color, color;
-    transition-duration: 1s;
-    transition-timing-function: ease-out;
-    -webkit-transition-property: background-color, color;
-    -webkit-transition-duration: 1s;
-    -o-transition-property: background-color, color;
-    -o-transition-duration: 1s;
-    background-color:#000000b8;
-    -moz-box-shadow: 2px 2px 1px black;
-  }
-}*/
 
 //MODAL DE NG-BOOTSTRAP AGREGAMOS ANIMACIONES
 @keyframes animacionModal {
