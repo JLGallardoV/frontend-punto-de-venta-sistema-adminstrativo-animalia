@@ -26,28 +26,28 @@
               <table mat-table [dataSource]="dsTransacciones" class="fuenteCuerpos">
                 <ng-container matColumnDef="idTransaccion">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
-                  <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idTransaccion}} </td>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.idTransaccion}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="montoConIvaTransaccion">
-                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto </th>
-                  <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.montoConIvaTransaccion}} </td>
+                <ng-container matColumnDef="nombreCliente">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cliente </th>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.nombreCliente}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="cantidadProductosTransaccion">
-                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cantidad Productos </th>
-                  <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.cantidadProductosTransaccion}} </td>
+                <ng-container matColumnDef="apellidoPaternoCliente">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Apellido P.</th>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.apellidoPaternoCliente}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="fechaTransaccion">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-                  <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="acciones">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
-                  <td mat-cell *matCellDef="let i" style="text-align:center">
-                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContent(longContent)">Información</button>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center">
+                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContent(longContent,elemento.idTransaccion)">Información</button>
                   </td>
                 </ng-container>
 
@@ -140,64 +140,28 @@
 
 
   <!-- codigo modal -->
-  <ng-template #longContent let-modal style="transition:1s;">
+  <ng-template #longContent let-modal>
     <div class="modal-header">
-      <h3 class="modal-title fuenteTitulos" id="modal-basic-title">modal prueba</h3>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
+        Detalles de Venta
+        <i class='fas fa-print' style='font-size:24px'></i>
+      </h3>
     </div>
-    <div class="modal-body">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut al
-      iquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volu
-      ptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu
-      pidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      <!--form [formGroup]= "frmProveedores">
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="nombreProveedor" type="text"  matInput placeholder="Nombre Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.nombreProveedor.invalid && frmProveedores.controls.nombreProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="ciudadProveedor"  type="text" matInput placeholder="ciudadProveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.ciudadProveedor.invalid && frmProveedores.controls.ciudadProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="estadoProveedor" type="text" matInput step="0.01" placeholder="Estado Proveedor"  style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.estadoProveedor.invalid && frmProveedores.controls.estadoProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="paisProveedor" type="text" matInput placeholder="Pais" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.paisProveedor.invalid && frmProveedores.controls.paisProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="direccionProveedor" type="text" matInput placeholder="Direccion Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.direccionProveedor.invalid && frmProveedores.controls.direccionProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="telefonoProveedor" type="text" matInput placeholder="Telefono Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.telefonoProveedor.invalid && frmProveedores.controls.telefonoProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="emailProveedor" type="text" matInput placeholder="Email Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.emailProveedor.invalid && frmProveedores.controls.emailProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="descripcionProveedor" type="text" matInput placeholder="Descripcion Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.descripcionProveedor.invalid && frmProveedores.controls.descripcionProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-      </form-->
+    <div class="modal-body" *ngFor="let i of arregloDetalleVenta">
+      <p class="fuenteCuerpos" style="font-size:22px;">
+        <b>Id Venta:</b> {{i.idVenta}}<br>
+        <b>Nombre cliente:</b> {{i.nombreCliente}}<br>
+        <b>Productos:</b> {{i.productos}}<br>
+        <b>Monto $:</b> {{i.monto}}<br>
+        <b>Iva total $:</b> {{i.iva}}<br>
+        <b>Fecha:</b> {{i.fecha | date: 'yyyy-MM-dd HH:mm:ss'}}<br>
+        <b>N°Productos:</b> {{i.numeroProductosTransaccion}}<br>
+        <b>Vendedor:</b> {{i.vendedor}}<br>
+        <b>Cliente:</b> {{i.cliente}}<br>
+        <b>TipoPago:</b> {{i.tipoPago}}<br>
+      </p>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnAgregar fuenteTitulos margenSuperior">Agregar</button>
+      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
     </div>
   </ng-template>

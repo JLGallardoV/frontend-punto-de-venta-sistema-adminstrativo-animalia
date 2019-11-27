@@ -38,9 +38,9 @@ export class TransaccionesComponent implements OnInit {
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
-
+  public arregloDetalleVenta:any[] = []; //para mostrar datos de determinado venta segun el usuario en el modal de informacion
   //propiedades para la tabla
-  displayedColumnsTransacciones: string[] = ['idTransaccion','montoConIvaTransaccion','cantidadProductosTransaccion','fechaTransaccion','acciones'];
+  displayedColumnsTransacciones: string[] = ['idTransaccion','nombreCliente','apellidoPaternoCliente','fechaTransaccion','acciones'];
   displayedColumnsCompras: string[] = ['idCompra', 'montoCompra','fechaCompra','acciones'];
   dsTransacciones : MatTableDataSource<ITransacciones>;
   dsCompras : MatTableDataSource<ICompras>;
@@ -53,13 +53,6 @@ export class TransaccionesComponent implements OnInit {
     public API: APIService
   ) {}
 
-  //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
-  public openScrollableContent(longContent) {
-    console.log("aparecer modal");
-    this.modalService.open(longContent, { scrollable: true });
-  }
-
-
   /*
     la primera vez que cargue su componente, el MatPaginator de la pestaña oculta no se renderiza,
     por lo que no está definido y no se puede vincular a la fuente de datos.
@@ -70,7 +63,6 @@ export class TransaccionesComponent implements OnInit {
   public listarTransacciones(){
     this.API.mostrarTransacciones().subscribe(
       (success:any)=>{
-        console.log("success: ",success.respuesta)
         this.dsTransacciones = new MatTableDataSource(success.respuesta);
         if(!this.dsTransacciones.paginator){
           this.dsTransacciones.paginator = this.paginatorTransacciones;
@@ -78,7 +70,6 @@ export class TransaccionesComponent implements OnInit {
           this.dsTransacciones.paginator._intl.getRangeLabel = etiquetaRango;
 
         }
-        console.log(this.dsTransacciones);
       },
       (error)=>{
         console.log("entro al error directamente")
@@ -87,16 +78,34 @@ export class TransaccionesComponent implements OnInit {
     );
   }
 
-  //LISTAR LAS DETALLE TRANSACCION
+  //LISTAR LAS DETALLE TRANSACCION PARA UNA VENTA EN ESPECIFICO
   public listarDetalleTransaccion(idTransaccion:number){
     this.API.mostrarDetalleTransaccion(idTransaccion).subscribe(
       (success:any)=>{
-        /*this.dsTransacciones = new MatTableDataSource(success.respuesta);
-        if(!this.dsTransacciones.paginator){
-          this.dsTransacciones.paginator = this.paginatorTransacciones;
+        let arregloTemporalProductos:any[] = [];
+        let productos: string[] = [];
 
+        for (let i = 0; i < success.respuesta.length; i++) {
+          //atrapamos cada uno de los productos en un array
+          arregloTemporalProductos.push(success.respuesta[i].nombreProducto);
         }
-        console.log(this.dsTransacciones);*/
+        productos = arregloTemporalProductos
+        //arreglo de objetos listo para iterar
+        this.arregloDetalleVenta = [{
+          idVenta:success.respuesta[0].idTransaccion,
+          nombreCliente:success.respuesta[0].nombreCliente,
+          productos:productos.join(', \n'),
+          monto:success.respuesta[0].montoConIvaTransaccion,
+          iva:success.respuesta[0].ivaTransaccion,
+          fecha:success.respuesta[0].fechaTransaccion,
+          numeroProductosTransaccion:success.respuesta[0].numeroProductosEnTransaccion,
+          vendedor:success.respuesta[0].nombreVendedor,
+          cliente:success.respuesta[0].nombreCliente,
+          tipoPago:success.respuesta[0].tipoPago
+        }];
+
+        console.log("contenido arregloDetalleVenta: ",this.arregloDetalleVenta)
+
       },
       (error)=>{
         console.log(error);
@@ -112,7 +121,6 @@ export class TransaccionesComponent implements OnInit {
         if(!this.dsCompras.paginator){
           this.dsCompras.paginator = this.paginatorCompras;
         }
-        console.log(this.dsCompras);
       },
       (error)=>{
         console.log(error);
@@ -135,6 +143,14 @@ export class TransaccionesComponent implements OnInit {
       }
     );
   }
+
+  //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
+  public openScrollableContent(longContent, idTransaccion:number) {
+    console.log("idTransaccion",idTransaccion);
+    this.modalService.open(longContent, { size: 'lg', scrollable: true });
+    this.listarDetalleTransaccion(idTransaccion);
+  }
+
 
 
   //FUNCIONALIDAD FILTRAR

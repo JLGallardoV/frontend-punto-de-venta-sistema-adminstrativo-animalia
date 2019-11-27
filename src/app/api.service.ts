@@ -122,6 +122,8 @@ export interface ITiposDeUsuarios {
 
 export interface ITransacciones {
   idTransaccion: number;
+  nombreCliente:string;
+  apellidoPaternoCliente:string;
   fechaTransaccion: string;
   cantidadProductos: number;
 }
