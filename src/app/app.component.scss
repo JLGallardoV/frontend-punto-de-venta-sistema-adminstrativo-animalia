@@ -1,6 +1,5 @@
 /*INICIO ESTILOS PARA SIDE MENU GLOBAL*/
 body {
-  font-family: "Lato", sans-serif;
   transition: background-color .5s;
 }
 
@@ -56,5 +55,15 @@ body {
   height: 46px;
   text-align: center;
   box-shadow: #00000057 0px 1px 1px 1px;
+}
+.logoMenu{
+  text-align: center;
+  //background-color:#f4f4f4;
+  background: url('../assets/img/tapizLogin1.jpg');
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center;
+  background-size: cover;;
+  margin-top: -61px;
 }
 /*FIN ESTILOS PARA SIDE MENU GLOBAL*/
