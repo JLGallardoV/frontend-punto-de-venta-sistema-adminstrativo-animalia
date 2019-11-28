@@ -1,276 +1,256 @@
-<div class="imagenFondo">
-  <mat-toolbar class="estiloToolbar animacionCambioColor" style="transition:0.5s;" (click)="openBottomSheet()">
-    <div class="margenMenu">
-      <i class='fas fa-bars' style='font-size: 18px;color: darkseagreen'></i> Menu
-    </div>
-  </mat-toolbar>
-  <br>
+<br>
+<br>
+<br>
+    <mat-tab-group id="contenido">
+<!-- TAB 1 DEVOLUCIONES -->
+      <mat-tab label="Devoluciones">
+        <br>
+        <mat-card class="contenedorAcciones" style="width: 80%;">
+          <div class="row">
+            <div class="col-3" style="margin-right: -10%;">
+              <button mat-fab class="btnAcciones fuenteTitulos" (click)="openAltaDevolucion(contentDevolucion)"><i class='fas fa-user-plus icono'></i></button>
+              &nbsp;
+              <button mat-fab class="btnAcciones fuenteTitulos"><i class='fas fa-print icono'></i></button>
+            </div>
 
-  <mat-card class="cardPrincipal row">
-  <mat-tab-group>
-    <!-- primer tab -->
-
-    <mat-tab label="Devoluciones">
-      <br>
-      <mat-card class="contenedorAcciones" style="width: 80%;">
-        <div class="row">
-          <div class="col-3" style="margin-right: -10%;">
-            <button mat-fab class="btnAcciones darkerFuenteTitulos" (click)="openAltaDevolucion(contentDevoluviones)"><i class='fas fa-user-plus icono'></i></button>
-            &nbsp;
-            <button mat-fab class="btnAcciones darkerFuenteTitulos" [routerLink]="[ '/home']"><i class='fas fa-print icono'></i></button>
+            <div class="col-9" style="margin-top: -5px;">
+              <mat-form-field class="fuenteCuerpos inputBuscar">
+                <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar">
+              </mat-form-field>
+            </div>
           </div>
+        </mat-card>
+        <br>
 
-          <div class="col-9" style="margin-top: -5px;">
-            <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-              <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
-            </mat-form-field>
+        <!-- card contenedora de tabla -->
+
+        <div name="cardTablaRegistros">
+          <mat-card style="width: 98%;margin: auto;">
+            <div class="tablaElastica">
+              <table mat-table [dataSource]="dsDevoluciones" class="fuenteCuerpos" style="font-size:98px">
+
+                <ng-container matColumnDef="idDevolucion">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
+                  <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idDevolucion}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombreProducto">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Producto </th>
+                  <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreProducto}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombreCliente">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cliente </th>
+                  <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreCliente}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tipoProblema">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Categoria Problema </th>
+                  <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.tipoProblema}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
+                  <td mat-cell *matCellDef="let i" style="text-align:center">
+                      <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentDevoluciones(longContentDevolucion,i.idDevolucion)">Informacion</button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsDevoluciones"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsDevoluciones;"></tr>
+              </table>
+            </div>
+            <mat-paginator #MatPaginatorDevoluciones [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+          </mat-card>
+        </div>
+          <mat-card class="letreroModulo">
+            <div style="margin-bottom: -14px;">
+              Devoluciones <i class='fas fa-handshake' style='font-size: 20px;'></i>
+            </div>
+          </mat-card>
+        </mat-tab>
+
+
+<!-- TAB 2 TIPOS DE PROBLEMAS -->
+
+
+      <mat-tab label="Tipos de Problemas">
+        <br>
+        <mat-card class="contenedorAcciones" style="width: 80%;">
+          <div class="row">
+            <div class="col-3" style="margin-right: -10%;">
+              <button mat-fab class="btnAcciones fuenteTitulos" (click)="openAltaTipoProblema(contentTiposProblemas)"><i class='fas fa-user-plus icono'></i></button>
+              &nbsp;
+              <button mat-fab class="btnAcciones fuenteTitulos" [routerLink]="[ '/home']"><i class='fas fa-print icono'></i></button>
+            </div>
+
+            <div class="col-9" style="margin-top: -5px;">
+              <mat-form-field class="fuenteCuerpos inputBuscar">
+                <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar">
+              </mat-form-field>
+            </div>
           </div>
+        </mat-card>
+        <br>
+        <!-- tabla de registros -->
+        <div name="cardTablaRegistros">
+          <mat-card style="width: 98%;margin: auto;">
+            <div class="tablaElastica">
+              <table mat-table [dataSource]="dsTiposProblemas" class="fuenteCuerpos" style="font-size:98px">
+
+            <ng-container matColumnDef="idTipoProblema">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idTipoProblema}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tipoProblema">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Problema </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.tipoProblema}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center">
+                <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openEditarTipoProblema(contentTiposProblemas,i.idTipoProblema,i.tipoProblema)">Modificar</button>
+                <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="eliminarTipoProblema(i.idTipoProblema)">Eliminar</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsTiposProblemas"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsTiposProblemas;"></tr>
+          </table>
+
+            </div>
+            <mat-paginator #MatPaginatorTiposProblemas [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+          </mat-card>
         </div>
-      </mat-card>
-      <br>
+          <mat-card class="letreroModulo">
+            <div style="margin-bottom: -14px;">
+              Problemas <i class='fas fa-exclamation' style='font-size: 20px;'></i>
+            </div>
+          </mat-card>
+        </mat-tab>
 
-      <div class="tablaElastica">
-        <table mat-table [dataSource]="dsDevoluciones" class="darkerFuenteCuerpos" style="font-size:98px">
+<!-- TAB 3 COMPENSACIONES -->
+      <mat-tab label="Compensaciones">
+        <br>
+        <mat-card class="contenedorAcciones" style="width: 80%;">
+          <div class="row">
+            <div class="col-3" style="margin-right: -10%;">
+              <button mat-fab class="btnAcciones fuenteCuerpos" (click)="openAltaCompensacion(contentCompensaciones)"><i class='fas fa-user-plus icono'></i></button>
+              &nbsp;
+              <button mat-fab class="btnAcciones fuenteCuerpos" [routerLink]="[ '/home']"><i class='fas fa-print icono'></i></button>
+            </div>
 
-          <ng-container matColumnDef="idDevolucion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idDevolucion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="nombreProducto">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Producto </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreProducto}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="nombreCliente">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cliente </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.nombreCliente}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="tipoProblema">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Categoria Problema </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.tipoProblema}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center">
-              <div class="">
-                <!-- contenido del popover -->
-                <ng-template  #popTitle>
-                  <div class="darkerFuenteCuerpos" style="text-align:center; color: black">
-                    Nombre: {{i.nombreProducto}}
-                  </div>
-                </ng-template>
-                <ng-template  #popContent>
-                  <div class="darkerFuenteCuerpos" style="font-size:16px!important;">
-                    <b>Monto $:</b> {{i.montoConIvaDevolucion}}
-                    <br><b>Detalle:</b> {{i.motivoDevolucion}}
-                    <br><b>Fecha:</b> {{i.fechaDevolucion}}
-                    <br><b>Tipo Compensacion:</b> {{i.tipoCompensacion}}
-                  </div>
-                </ng-template>
-                <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;"placement="left"
-                [ngbPopover]="popContent" [popoverTitle]="popTitle">Informacion</button>
-              </div>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsDevoluciones"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumnsDevoluciones;"></tr>
-        </table>
-
-      </div>
-      <mat-paginator #MatPaginatorDevoluciones
-                     [pageSize]="4"
-                     [pageSizeOptions]="[4, 16, 32]"
-                     style="width: 99.99%;background:#eae4dda1;">
-       </mat-paginator>
-      <mat-card class="letreroModulo">
-        <div style="margin-bottom: -14px;">
-          Devoluciones <i class='fas fa-calendar' style='font-size: 20px;color: darkseagreen;'></i>
-        </div>
-      </mat-card>
-    </mat-tab>
-
-
-    <!-- segundo tab -->
-
-
-    <mat-tab label="Tipos de Problemas">
-      <br>
-      <mat-card class="contenedorAcciones" style="width: 80%;">
-        <div class="row">
-          <div class="col-3" style="margin-right: -10%;">
-            <button mat-fab class="btnAcciones darkerFuenteTitulos" (click)="openAltaTipoProblema(contentTiposProblemas)"><i class='fas fa-user-plus icono'></i></button>
-            &nbsp;
-            <button mat-fab class="btnAcciones darkerFuenteTitulos" [routerLink]="[ '/home']"><i class='fas fa-print icono'></i></button>
+            <div class="col-9" style="margin-top: -5px;">
+              <mat-form-field class="fuenteCuerpos inputBuscar">
+                <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar">
+              </mat-form-field>
+            </div>
           </div>
+        </mat-card>
+        <br>
+        <!-- informacion tabla -->
+        <div name="cardTablaRegistros">
+          <mat-card style="width: 98%;margin: auto;">
+            <div class="tablaElastica">
+              <table mat-table [dataSource]="dsCompensaciones" class="fuenteCuerpos" style="font-size:98px">
 
-          <div class="col-9" style="margin-top: -5px;">
-            <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-              <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
-            </mat-form-field>
-          </div>
+            <ng-container matColumnDef="idCompensacion">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idCompensacion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tipoCompensacion">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Compensacion </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.tipoCompensacion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="descripcionCompensacion">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Descripcion </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.descripcionCompensacion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
+              <td mat-cell *matCellDef="let i" style="text-align:center">
+                <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna"
+                  (click)="openEditarCompensacion(contentCompensaciones,i.idCompensacion,i.tipoCompensacion,i.descripcionCompensacion)">Modificar</button>
+                <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="eliminarCompensacion(i.idCompensacion)">Eliminar</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsCompensaciones"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsCompensaciones;"></tr>
+          </table>
+
+
+            </div>
+            <mat-paginator #MatPaginatorCompensaciones [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+          </mat-card>
         </div>
-      </mat-card>
-      <br>
+          <mat-card class="letreroModulo">
+            <div style="margin-bottom: -14px;">
+              Compensaciones <i class='fas fa-gifts' style='font-size: 20px'></i>
+            </div>
+          </mat-card>
+      </mat-tab>
 
-      <div class="tablaElastica">
-        <table mat-table [dataSource]="dsTiposProblemas" class="darkerFuenteCuerpos" style="font-size:98px">
+    </mat-tab-group>
 
-          <ng-container matColumnDef="idTipoProblema">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idTipoProblema}} </td>
-          </ng-container>
+<!-- SECCION MODALES -->
 
-          <ng-container matColumnDef="tipoProblema">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Problema </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.tipoProblema}} </td>
-          </ng-container>
+  <!-- modal agregar devolucion-->
 
-          <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center">
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #6496c1;" (click)="openEditarTipoProblema(contentTiposProblemas,i.idTipoProblema,i.tipoProblema)">Modificar</button>
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #d06363;" (click)="eliminarTipoProblema(i.idTipoProblema)">Eliminar</button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsTiposProblemas"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumnsTiposProblemas;"></tr>
-        </table>
-
-      </div>
-      <mat-paginator #MatPaginatorTiposProblemas
-                     [pageSize]="4"
-                     [pageSizeOptions]="[4, 16, 32]"
-                     style="width: 99.99%;background:#eae4dda1;">
-       </mat-paginator>
-      <mat-card class="letreroModulo">
-        <div style="margin-bottom: -14px;">
-          Problemas <i class='fas fa-calendar' style='font-size: 20px;color: darkseagreen;'></i>
-        </div>
-      </mat-card>
-    </mat-tab>
-
-    <!-- tercer tab -->
-    <mat-tab label="Compensaciones">
-      <br>
-      <mat-card class="contenedorAcciones" style="width: 80%;">
-        <div class="row">
-          <div class="col-3" style="margin-right: -10%;">
-            <button mat-fab class="btnAcciones darkerFuenteTitulos" (click)="openAltaCompensacion(contentCompensaciones)"><i class='fas fa-user-plus icono'></i></button>
-            &nbsp;
-            <button mat-fab class="btnAcciones darkerFuenteTitulos" [routerLink]="[ '/home']"><i class='fas fa-print icono'></i></button>
-          </div>
-
-          <div class="col-9" style="margin-top: -5px;">
-            <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-              <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
-            </mat-form-field>
-          </div>
-        </div>
-      </mat-card>
-      <br>
-
-      <div class="tablaElastica">
-        <table mat-table [dataSource]="dsCompensaciones" class="darkerFuenteCuerpos" style="font-size:98px">
-
-          <ng-container matColumnDef="idCompensacion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idCompensacion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="tipoCompensacion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Compensacion </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.tipoCompensacion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="descripcionCompensacion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Descripcion </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.descripcionCompensacion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center">
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #6496c1;" (click)="openEditarCompensacion(contentCompensaciones,i.idCompensacion,i.tipoCompensacion,i.descripcionCompensacion)">Modificar</button>
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #d06363;" (click)="eliminarCompensacion(i.idCompensacion)">Eliminar</button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsCompensaciones"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumnsCompensaciones;"></tr>
-        </table>
-
-      </div>
-      <mat-paginator #MatPaginatorCompensaciones
-                     [pageSize]="4"
-                     [pageSizeOptions]="[4, 16, 32]"
-                     style="width: 99.99%;background:#eae4dda1;">
-       </mat-paginator>
-      <mat-card class="letreroModulo">
-        <div style="margin-bottom: -14px;">
-          Compensaciones <i class='fas fa-calendar' style='font-size: 20px;color: darkseagreen;'></i>
-        </div>
-      </mat-card>
-    </mat-tab>
-
-  </mat-tab-group>
-</mat-card>
-
-<!-- codigo modal 1/3 devoluciones-->
-
-  <ng-template #contentDevoluviones let-modal>
+  <ng-template #contentDevolucion let-modal>
     <div class="modal-header">
-      <h3 class="modal-title darkerFuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]= "frmDevoluciones">
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="montoConIvaDevolucion" type="text"  matInput placeholder="Monto ($)" style="text-align: center;">
+      <form [formGroup]="frmDevoluciones">
+        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+          <input formControlName="montoConIvaDevolucion" type="text" matInput placeholder="Monto ($)" style="text-align: center;">
         </mat-form-field>
         <label *ngIf="frmDevoluciones.controls.montoConIvaDevolucion.invalid && frmDevoluciones.controls.montoConIvaDevolucion.dirty">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="motivoDevolucion"  type="text" matInput placeholder="Motivo" style="text-align: center;">
+        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+          <input formControlName="motivoDevolucion" type="text" matInput placeholder="Motivo" style="text-align: center;">
         </mat-form-field>
         <label *ngIf="frmDevoluciones.controls.motivoDevolucion.invalid && frmDevoluciones.controls.motivoDevolucion.dirty">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="darkerFuenteCuerpos">
-          <mat-select formControlName="idCliente" class="darkerFuenteCuerpos" placeholder="Cliente">
-            <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloClientesSelect" [value]="i.idCliente">
+        <mat-form-field class="fuenteCuerpos">
+          <mat-select formControlName="idCliente" class="fuenteCuerpos" placeholder="Cliente">
+            <mat-option class="fuenteCuerpos" *ngFor="let i of arregloClientesSelect" [value]="i.idCliente">
               {{ i.nombreCliente }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <label *ngIf="frmDevoluciones.controls.idCliente.invalid && frmDevoluciones.controls.idCliente.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="darkerFuenteCuerpos">
-          <mat-select formControlName="idTipoProblema" class="darkerFuenteCuerpos" placeholder="Clasificacion Problema">
-            <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloTiposProblemasSelect" [value]="i.idTipoProblema">
+        <mat-form-field class="fuenteCuerpos">
+          <mat-select formControlName="idTipoProblema" class="fuenteCuerpos" placeholder="Clasificacion Problema">
+            <mat-option class="fuenteCuerpos" *ngFor="let i of arregloTiposProblemasSelect" [value]="i.idTipoProblema">
               {{ i.tipoProblema }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <label *ngIf="frmDevoluciones.controls.idTipoProblema.invalid && frmDevoluciones.controls.idTipoProblema.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="darkerFuenteCuerpos">
-          <mat-select formControlName="idProducto" class="darkerFuenteCuerpos" placeholder="Producto">
-            <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i.idProducto">
+        <mat-form-field class="fuenteCuerpos">
+          <mat-select formControlName="idProducto" class="fuenteCuerpos" placeholder="Producto">
+            <mat-option class="fuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i.idProducto">
               {{ i.nombreProducto }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <label *ngIf="frmDevoluciones.controls.idProducto.invalid && frmDevoluciones.controls.idProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="darkerFuenteCuerpos">
-          <mat-select formControlName="idCompensacion" class="darkerFuenteCuerpos" placeholder="Compensacion">
-            <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloCompensacionesSelect" [value]="i.idCompensacion">
+        <mat-form-field class="fuenteCuerpos">
+          <mat-select formControlName="idCompensacion" class="fuenteCuerpos" placeholder="Compensacion">
+            <mat-option class="fuenteCuerpos" *ngFor="let i of arregloCompensacionesSelect" [value]="i.idCompensacion">
               {{ i.tipoCompensacion }}
             </mat-option>
           </mat-select>
@@ -280,61 +260,84 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnEjecutar darkerFuenteTitulos margenSuperior" [disabled]="frmDevoluciones.invalid" (click)="ejecutarPeticionDevolucion()">Ejecutar</button>
+      <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmDevoluciones.invalid" (click)="ejecutarPeticionDevolucion()">Ejecutar</button>
     </div>
   </ng-template>
 
-<!-- codigo modal 2/3 tipos de pagos-->
+  <!-- modal agregar tipos de pagos-->
 
   <ng-template #contentTiposProblemas let-modal>
     <div class="modal-header">
-      <h3 class="modal-title darkerFuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]= "frmTiposProblemas">
+      <form [formGroup]="frmTiposProblemas">
         <input formControlName="idTipoProblema" type="hidden">
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="tipoProblema" type="text"  matInput placeholder="Tipo Problema" style="text-align: center;">
+        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+          <input formControlName="tipoProblema" type="text" matInput placeholder="Tipo Problema" style="text-align: center;">
         </mat-form-field>
         <label *ngIf="frmTiposProblemas.controls.tipoProblema.invalid && frmTiposProblemas.controls.tipoProblema.dirty">Este campo es obligatorio</label>
         <br>
       </form>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnEjecutar darkerFuenteTitulos margenSuperior" [disabled]="frmTiposProblemas.invalid" (click)="ejecutarPeticionTipoProblema()">Ejecutar</button>
+      <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmTiposProblemas.invalid" (click)="ejecutarPeticionTipoProblema()">Ejecutar</button>
     </div>
   </ng-template>
 
-<!-- codigo modal 3/3 compensaciones-->
+  <!-- modal agregar compensaciones-->
 
   <ng-template #contentCompensaciones let-modal>
     <div class="modal-header">
-      <h3 class="modal-title darkerFuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]= "frmCompensaciones">
+      <form [formGroup]="frmCompensaciones">
         <input formControlName="idCompensacion" type="hidden">
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
+        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
           <input formControlName="tipoCompensacion" type="text" matInput placeholder="Tipo Compensacion" style="text-align: center;">
         </mat-form-field>
         <label *ngIf="frmCompensaciones.controls.tipoCompensacion.invalid && frmCompensaciones.controls.tipoCompensacion.dirty">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="descripcionCompensacion"  type="text" matInput placeholder="Descripcion" style="text-align: center;">
+        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+          <input formControlName="descripcionCompensacion" type="text" matInput placeholder="Descripcion" style="text-align: center;">
         </mat-form-field>
         <label *ngIf="frmCompensaciones.controls.descripcionCompensacion.invalid && frmCompensaciones.controls.descripcionCompensacion.dirty">Este campo es obligatorio</label>
         <br>
       </form>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnEjecutar darkerFuenteTitulos margenSuperior" [disabled]="frmCompensaciones.invalid" (click)="ejecutarPeticionCompensacion()">Ejecutar</button>
+      <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmCompensaciones.invalid" (click)="ejecutarPeticionCompensacion()">Ejecutar</button>
     </div>
   </ng-template>
 
-</div>
+  <!-- modal informacion devoluciones  -->
+  <ng-template #longContentDevolucion let-modal>
+    <div class="modal-header">
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
+        Detalles de la Devolución
+        <i class='fas fa-file-alt' style='font-size:24px'></i>
+      </h3>
+    </div>
+    <div class="modal-body" *ngFor="let i of arregloDetalleDevolucion">
+      <p class="fuenteCuerpos" style="font-size:22px;">
+        <b>ID Devolución:</b> {{i.idDevolucion}}
+        <br><b>Producto:</b> {{i.nombreProducto}}
+        <br><b>Cliente:</b> {{i.nombreCliente}}
+        <br><b>Categoria Problema:</b> {{i.tipoProblema}}
+        <br><b>Monto $:</b> {{i.montoConIvaDevolucion}}
+        <br><b>Detalle:</b> {{i.motivoDevolucion}}
+        <br><b>Fecha:</b> {{i.fechaDevolucion | date: 'yyyy-MM-dd HH:mm:ss'}}
+        <br><b>Tipo Compensacion:</b> {{i.tipoCompensacion}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
+    </div>
+  </ng-template>

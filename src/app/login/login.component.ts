@@ -5,6 +5,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { LoginJwtService } from '../login-jwt.service';
 import { sha256} from 'js-sha256';
 import { APIService} from '../api.service';
+import { AppComponent} from '../app.component'; //invocaremos el metodo que cierra el login el cual se encuentra aquí
 
 export interface ITiposDeUsuarios {
   idTipoUsuario: number;
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
    public formValid:Boolean=false;
    public arregloTiposDeUsuarios:ITiposDeUsuarios[];
 
-  constructor(public router: Router,public formBuilder: FormBuilder, private jwt: LoginJwtService,public API:APIService,private _snackBar: MatSnackBar){
+  constructor(public router: Router,public formBuilder: FormBuilder, private jwt: LoginJwtService,public API:APIService,private _snackBar: MatSnackBar,public cerrarMenu:AppComponent){
     this.frmLogin = this.formBuilder.group({
           nombreUsuario:["",Validators.required],
           passwordUsuario:["",Validators.required],
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     document.getElementById("main").style.display = "none";
+    this.cerrarMenu.closeNav();
 
   }
 

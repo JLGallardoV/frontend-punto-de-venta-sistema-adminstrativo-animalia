@@ -1,6 +1,5 @@
 /*INICIO ESTILOS PARA SIDE MENU GLOBAL*/
 body {
-  font-family: "Lato", sans-serif;
   transition: background-color .5s;
 }
 
@@ -8,7 +7,7 @@ body {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   left: 0;
   background-color: #111;
@@ -49,11 +48,22 @@ body {
 }
 
 .hamburguesa{
-  background:#cfc597;
+  background:#fff;
+  color: #272727;
   border-radius: 6px;
   width: 70px;
   height: 46px;
   text-align: center;
-  box-shadow: #00000057 0px 1px 1px 2px;
+  box-shadow: #00000057 0px 1px 1px 1px;
+}
+.logoMenu{
+  text-align: center;
+  //background-color:#f4f4f4;
+  background: url('../assets/img/tapizLogin1.jpg');
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center;
+  background-size: cover;;
+  margin-top: -61px;
 }
 /*FIN ESTILOS PARA SIDE MENU GLOBAL*/

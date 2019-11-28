@@ -1,33 +1,42 @@
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-  <a [routerLink]="['/transacciones']" mat-list-item class="fuenteCuerpos">
-    <span mat-line>Transacciones <i class='fas fa-exchange-alt' style='font-size: 20px;color: #f9f9f9;'></i></span>
-  </a>
+<div name="fondoDeLaPlataforma" style="background:#f4f4f4;height:99vh">
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+    <div name="logo" class="logoMenu">
+      <img src="../assets/img/logoAnimalia2.png" alt="Animalia" style="height:150px;width:150px;">
+    </div>
+    <a [routerLink]="['/transacciones']" mat-list-item class="fuenteCuerpos">
+      <span mat-line>Transacciones <i class='fas fa-exchange-alt' style='font-size: 20px;color: #f9f9f9;'></i></span>
+    </a>
 
-  <a [routerLink]="['/facturas']" mat-list-item class="fuenteCuerpos">
-    <span mat-line>Operaciones  <i class='fas fa-box-open' style='font-size: 20px;color: #f9f9f9;'></i></span>
-  </a>
+    <a [routerLink]="['/facturas']" mat-list-item class="fuenteCuerpos">
+      <span mat-line>Operaciones  <i class='fas fa-box-open' style='font-size: 20px;color: #f9f9f9;'></i></span>
+    </a>
 
-  <a [routerLink]="['/productos']" mat-list-item class="fuenteCuerpos">
-    <span mat-line>Productos <i class='fas fa-paw' style='font-size: 20px;color: #f9f9f9;'></i></span>
-  </a>
+    <a [routerLink]="['/productos']" mat-list-item class="fuenteCuerpos">
+      <span mat-line>Productos <i class='fas fa-paw' style='font-size: 20px;color: #f9f9f9;'></i></span>
+    </a>
 
-  <a [routerLink]="['/devoluciones']" mat-list-item class="fuenteCuerpos">
-    <span mat-line>Devoluciones <i class='fas fa-handshake' style='font-size: 20px;color: #f9f9f9;'></i></span>
-  </a>
+    <a [routerLink]="['/devoluciones']" mat-list-item class="fuenteCuerpos">
+      <span mat-line>Devoluciones <i class='fas fa-handshake' style='font-size: 20px;color: #f9f9f9;'></i></span>
+    </a>
 
-  <a [routerLink]="['/usuarios']" mat-list-item class="fuenteCuerpos">
-    <span mat-line>Usuarios <i class='fas fa-user-lock' style='font-size: 20px;color: #f9f9f9;'></i></span>
-  </a>
+    <a [routerLink]="['/usuarios']" mat-list-item class="fuenteCuerpos">
+      <span mat-line>Usuarios <i class='fas fa-user-lock' style='font-size: 20px;color: #f9f9f9;'></i></span>
+    </a>
 
-  <a [routerLink]="['/herramientas']" mat-list-item class="fuenteCuerpos">
-    <span mat-line>Reportes <i class='fas fa-toolbox' style='font-size: 20px;color: #f9f9f9;'></i></span>
-  </a>
+    <a [routerLink]="['/herramientas']" mat-list-item class="fuenteCuerpos">
+      <span mat-line>Reportes <i class='fas fa-toolbox' style='font-size: 20px;color: #f9f9f9;'></i></span>
+    </a>
 
-</div>
-<div id="main" style="position: fixed;z-index: 1;">
-  <div class="hamburguesa">
-    <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
+    <a (click)="logout();" mat-list-item class="fuenteCuerpos">
+      <span mat-line>Salir <i class='fas fa-door-open' style='font-size: 20px;color: #f9f9f9;'></i></span>
+    </a>
+
   </div>
+  <div id="main" style="position: fixed;z-index: 1;">
+    <div class="hamburguesa">
+      <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
+    </div>
+  </div>
+  <router-outlet id="componenteEnUso"></router-outlet>
 </div>
-<router-outlet></router-outlet>

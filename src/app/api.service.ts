@@ -122,6 +122,8 @@ export interface ITiposDeUsuarios {
 
 export interface ITransacciones {
   idTransaccion: number;
+  nombreCliente:string;
+  apellidoPaternoCliente:string;
   fechaTransaccion: string;
   cantidadProductos: number;
 }
@@ -208,6 +210,9 @@ export class APIService {
   public mostrarClientes() {
     return this.http.get('http://localhost:3000/clientesWS/listarClientes', { headers: this.headers });
   }
+  public mostrarDetalleCliente(idCliente:number) {
+    return this.http.get(`http://localhost:3000/clientesWS/listarDetalleCliente/${idCliente}`, { headers: this.headers });
+  }
   public aniadirCliente(nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string, puntuajeCliente: number, idTipoCliente: number) {
     return this.http.post('http://localhost:3000/clientesWS/agregarCliente', { nombreCliente, apellidoPaternoCliente, apellidoMaternoCliente, ciudadCliente, estadoCliente, paisCliente, direccionCliente, coloniaCliente, cpCliente, telefonoCliente, emailCliente,  puntuajeCliente, idTipoCliente }, { headers: this.headers });
   }
@@ -258,6 +263,9 @@ export class APIService {
   public mostrarDevoluciones() {
     return this.http.get('http://localhost:3000/devolucionesWS/listarDevoluciones', { headers: this.headers });
   }
+  public mostrarDetalleDevolucion(idDevolucion:number) {
+    return this.http.get(`http://localhost:3000/devolucionesWS/listarDetalleDevolucion/${idDevolucion}`, { headers: this.headers });
+  }
   public aniadirDevolucion(montoConIvaDevolucion:number,motivoDevolucion:string,idCliente:number,idTipoProblema:number,idProducto:number,idCompensacion:number) {
     return this.http.post('http://localhost:3000/devolucionesWS/agregarDevolucion', {montoConIvaDevolucion,motivoDevolucion,idCliente,idTipoProblema,idProducto,idCompensacion}, { headers: this.headers });
   }
@@ -278,6 +286,9 @@ export class APIService {
   public mostrarProductos() {
     return this.http.get('http://localhost:3000/productosWS/listarProductos', { headers: this.headers });
   }
+  public mostrarDetalleProducto(idProducto:number) {
+    return this.http.get(`http://localhost:3000/productosWS/listarDetalleProducto/${idProducto}`, { headers: this.headers });
+  }
   public aniadirProducto(nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto: string,puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number) {
     return this.http.post('http://localhost:3000/productosWS/agregarProducto', { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto,stockProducto,puntosProducto, precioUnitarioProducto,precioCompraProducto,idCategoria, idAlmacen }, { headers: this.headers });
   }
@@ -295,6 +306,9 @@ export class APIService {
   //WS PARA ENTIDAD PROVEEDORES
   public mostrarProveedores() {
     return this.http.get('http://localhost:3000/proveedoresWS/listarProveedores', { headers: this.headers });
+  }
+  public mostrarDetalleProveedor(idProveedor:number) {
+    return this.http.get(`http://localhost:3000/proveedoresWS/listarDetalleProveedor/${idProveedor}`, { headers: this.headers });
   }
   public aniadirProveedor(nombreProveedor: string, ciudadProveedor: string, estadoProveedor: string, paisProveedor: string, direccionProveedor: string, telefonoProveedor: string, emailProveedor: string, descripcionProveedor: string) {
     return this.http.post('http://localhost:3000/proveedoresWS/agregarProveedor', { nombreProveedor, ciudadProveedor, estadoProveedor, paisProveedor, direccionProveedor, telefonoProveedor, emailProveedor, descripcionProveedor }, { headers: this.headers });
@@ -372,6 +386,9 @@ export class APIService {
   public mostrarUsuarios() {
     return this.http.get('http://localhost:3000/usuariosWS/listarUsuarios', { headers: this.headers });
   }
+  public mostrarDetalleUsuario(idUsuario:number) {
+    return this.http.get(`http://localhost:3000/usuariosWS/listarDetalleUsuario/${idUsuario}`, { headers: this.headers });
+  }
   public aniadirUsuario(nombreUsuario:string,emailUsuario:string,contraseniaUsuario:string,idVendedor:number,idTipoUsuario:number) {
     return this.http.post('http://localhost:3000/usuariosWS/agregarUsuario', {nombreUsuario,emailUsuario,contraseniaUsuario,idVendedor,idTipoUsuario }, { headers: this.headers });
   }
@@ -389,6 +406,9 @@ export class APIService {
   //WS PARA ENTIDAD VENDEDORES
   public mostrarVendedores() {
     return this.http.get('http://localhost:3000/vendedoresWS/listarVendedores', { headers: this.headers });
+  }
+  public mostrarDetalleVendedor(idVendedor:number) {
+    return this.http.get(`http://localhost:3000/vendedoresWS/listarDetalleVendedor/${idVendedor}`, { headers: this.headers });
   }
   public aniadirVendedor(nombreVendedor: string, ciudadVendedor: string, estadoVendedor: string, direccionVendedor: string, telefonoVendedor: string, emailVendedor: string, fechaNacimientoVendedor: string, rfcVendedor: string, numeroSeguroSocialVendedor: number, antiguedadVendedor: number) {
     return this.http.post('http://localhost:3000/vendedoresWS/agregarVendedor', { nombreVendedor, ciudadVendedor, estadoVendedor, direccionVendedor, telefonoVendedor, emailVendedor, fechaNacimientoVendedor, rfcVendedor, numeroSeguroSocialVendedor, antiguedadVendedor }, { headers: this.headers });

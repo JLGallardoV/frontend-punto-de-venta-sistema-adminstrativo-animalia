@@ -1,210 +1,191 @@
-<div class="imagenFondo">
-  <mat-toolbar class="estiloToolbar animacionCambioColor" style="transition:0.5s;" (click)="openBottomSheet()">
-    <div class="margenMenu">
-      <i class='fas fa-bars' style='font-size: 18px;color: darkseagreen'></i> Menu
-    </div>
-  </mat-toolbar>
-  <br>
+<br>
+<br>
+<br>
+    <mat-tab-group id="contenido">
+      <!-- primer tab -->
 
-
-  <mat-card class="cardPrincipal row">
-  <mat-tab-group>
-    <!-- primer tab -->
-
-    <mat-tab label="Historial Ventas">
-      <br>
-      <mat-card class="contenedorAcciones" style="height: 14%;">
-        <div class="row">
-          <div class="col-1">
-            <i class='fas fa-search lupa'></i>
+      <mat-tab label="Historial Ventas">
+        <br>
+        <mat-card class="contenedorAcciones" style="height: 14%;">
+          <div class="row">
+            <div class="col-1">
+              <i class='fas fa-search lupa'></i>
+            </div>
+            <div class="col-11" style="margin-top: -5px;">
+              <mat-form-field class="fuenteCuerpos inputBuscar">
+                <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar">
+              </mat-form-field>
+            </div>
           </div>
-          <div class="col-11" style="margin-top: -5px;">
-            <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-              <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
-            </mat-form-field>
+        </mat-card>
+        <br>
+        <div name="cardTablaRegistros">
+          <mat-card style="width: 98%;margin: auto;">
+            <div class="tablaElastica">
+              <table mat-table [dataSource]="dsTransacciones" class="fuenteCuerpos">
+                <ng-container matColumnDef="idTransaccion">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.idTransaccion}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombreCliente">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cliente </th>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.nombreCliente}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="apellidoPaternoCliente">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Apellido P.</th>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.apellidoPaternoCliente}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fechaTransaccion">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
+                  <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center">
+                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentVentas(longContentVentas,elemento.idTransaccion)">Información</button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsTransacciones"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsTransacciones;"></tr>
+              </table>
+
+            </div>
+            <mat-paginator #MatPaginatorTransacciones [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;">
+            </mat-paginator>
+          </mat-card>
+        </div>
+        <mat-card class="letreroModulo">
+          <div style="margin-bottom: -14px;">
+            Historial Ventas <i class='fas fa-calendar' style='font-size: 20px;'></i>
           </div>
-        </div>
-      </mat-card>
-      <br>
-      <div class="tablaElastica">
-        <table mat-table [dataSource]="dsTransacciones" class="darkerFuenteCuerpos" style="font-size:98px">
-
-          <ng-container matColumnDef="idTransaccion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idTransaccion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="montoConIvaTransaccion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.montoConIvaTransaccion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="cantidadProductosTransaccion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cantidad Productos </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.cantidadProductosTransaccion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="fechaTransaccion">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center">
-                <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;"(click)="openScrollableContent(longContent)">Informacion</button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsTransacciones"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumnsTransacciones;"></tr>
-        </table>
-
-      </div>
-      <mat-paginator #MatPaginatorTransacciones
-                     [pageSize]="4"
-                     [pageSizeOptions]="[4, 16, 32]"
-                     style="width: 99.99%;background:#eae4dda1;">
-       </mat-paginator>
-      <mat-card class="letreroModulo">
-        <div style="margin-bottom: -14px;">
-          Transacciones <i class='fas fa-calendar' style='font-size: 20px;color: darkseagreen;'></i>
-        </div>
-      </mat-card>
-    </mat-tab>
+        </mat-card>
+      </mat-tab>
 
 
-    <!-- segundo tab -->
+      <!-- segundo tab -->
 
 
-    <mat-tab label="Historial Compras">
-      <br>
-      <mat-card class="contenedorAcciones" style="height: 14%;">
-        <div class="row">
-          <div class="col-1">
-            <i class='fas fa-search lupa'></i>
+      <mat-tab label="Historial Compras">
+        <br>
+        <mat-card class="contenedorAcciones" style="height: 14%;">
+          <div class="row">
+            <div class="col-1">
+              <i class='fas fa-search lupa'></i>
+            </div>
+            <div class="col-11" style="margin-top: -5px;">
+              <mat-form-field class="fuenteCuerpos inputBuscar">
+                <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
+              </mat-form-field>
+            </div>
           </div>
-          <div class="col-11" style="margin-top: -5px;">
-            <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-              <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
-            </mat-form-field>
+        </mat-card>
+        <br>
+        <div name="cardTablaRegistros">
+          <mat-card style="width: 98%;margin: auto;">
+            <div class="tablaElastica">
+              <table mat-table [dataSource]="dsCompras" class="fuenteCuerpos" style="font-size:98px">
+
+                <ng-container matColumnDef="idCompra">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.idCompra}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fechaCompra">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.fechaCompra  | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombreUsuario">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Comprador </th>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.nombreUsuario}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombreProveedor">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Proveedor </th>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.nombreProveedor}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center">
+                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentCompras(longContentCompras,elemento.idCompra)">Información</button>
+                  </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsCompras"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsCompras;"></tr>
+              </table>
+
+            </div>
+            <mat-paginator #MatPaginatorCompras [pageSize]="4" [pageSizeOptions]="[10, 20, 30]" style="width: 99.99%;background-color: white!important;">
+            </mat-paginator>
+          </mat-card>
+        </div>
+        <mat-card class="letreroModulo">
+          <div style="margin-bottom: -14px;">
+            Historial Compras <i class='fas fa-calendar' style='font-size: 20px;'></i>
           </div>
-        </div>
-      </mat-card>
-      <br>
-      <div class="tablaElastica">
-        <table mat-table [dataSource]="dsCompras" class="darkerFuenteCuerpos" style="font-size:98px">
+        </mat-card>
 
-          <ng-container matColumnDef="idCompra">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> ID </th>
-            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.idCompra}} </td>
-          </ng-container>
+      </mat-tab>
+    </mat-tab-group>
 
-          <ng-container matColumnDef="montoCompra">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Monto </th>
-            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.montoCompra}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="fechaCompra">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-            <td mat-cell *matCellDef="let j" style="text-align:center"> {{j.fechaCompra | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
-            <td mat-cell *matCellDef="let i" style="text-align:center">
-              <button mat-stroked-button class="darkerFuenteTitulos btnAccionesColumna" style="border: solid 1px #c3845d;" (click)="openScrollableContent(longContent)">Informacion</button>
-            </td>
-          </ng-container>
+<!-- SECCION DE MODALELES -->
 
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsCompras"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumnsCompras;"></tr>
-        </table>
-
-      </div>
-      <mat-paginator #MatPaginatorCompras
-                     [pageSize]="4"
-                     [pageSizeOptions]="[10, 20, 30]"
-                     style="width: 99.99%;background:#eae4dda1;">
-       </mat-paginator>
-      <mat-card class="letreroModulo">
-        <div style="margin-bottom: -14px;">
-          Compras <i class='fas fa-calendar' style='font-size: 20px;color: darkseagreen;'></i>
-        </div>
-      </mat-card>
-
-    </mat-tab>
-  </mat-tab-group>
-</mat-card>
-
-
-
-
-
-
-
-  <!-- codigo modal -->
-  <ng-template #longContent let-modal>
+  <!-- codigo modal Ventas -->
+  <ng-template #longContentVentas let-modal>
     <div class="modal-header">
-      <h3 class="modal-title darkerFuenteTitulos" id="modal-basic-title">modal prueba</h3>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
+        Detalles de Venta
+        <i class='fas fa-file-alt' style='font-size:24px'></i>
+      </h3>
     </div>
-    <div class="modal-body">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut al
-      iquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volu
-      ptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cu
-      pidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      <!--form [formGroup]= "frmProveedores">
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="nombreProveedor" type="text"  matInput placeholder="Nombre Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.nombreProveedor.invalid && frmProveedores.controls.nombreProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="ciudadProveedor"  type="text" matInput placeholder="ciudadProveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.ciudadProveedor.invalid && frmProveedores.controls.ciudadProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="estadoProveedor" type="text" matInput step="0.01" placeholder="Estado Proveedor"  style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.estadoProveedor.invalid && frmProveedores.controls.estadoProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="paisProveedor" type="text" matInput placeholder="Pais" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.paisProveedor.invalid && frmProveedores.controls.paisProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="direccionProveedor" type="text" matInput placeholder="Direccion Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.direccionProveedor.invalid && frmProveedores.controls.direccionProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="telefonoProveedor" type="text" matInput placeholder="Telefono Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.telefonoProveedor.invalid && frmProveedores.controls.telefonoProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="emailProveedor" type="text" matInput placeholder="Email Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.emailProveedor.invalid && frmProveedores.controls.emailProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="descripcionProveedor" type="text" matInput placeholder="Descripcion Proveedor" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmProveedores.controls.descripcionProveedor.invalid && frmProveedores.controls.descripcionProveedor.dirty">Este campo es obligatorio</label>
-        <br>
-      </form-->
+    <div class="modal-body" *ngFor="let i of arregloDetalleVenta">
+      <p class="fuenteCuerpos" style="font-size:22px;">
+        <b>Id Venta:</b> {{i.idVenta}}<br>
+        <b>Nombre cliente:</b> {{i.nombreCliente}}<br>
+        <b>Productos:</b> {{i.productos}}<br>
+        <b>Monto $:</b> {{i.monto}}<br>
+        <b>Iva total $:</b> {{i.iva}}<br>
+        <b>Fecha:</b> {{i.fecha | date: 'yyyy-MM-dd HH:mm:ss'}}<br>
+        <b>N°Productos:</b> {{i.numeroProductosTransaccion}}<br>
+        <b>Vendedor:</b> {{i.vendedor}}<br>
+        <b>Cliente:</b> {{i.cliente}}<br>
+        <b>TipoPago:</b> {{i.tipoPago}}<br>
+      </p>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnAgregar darkerFuenteTitulos margenSuperior">Agregar</button>
+      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
     </div>
   </ng-template>
 
-</div>
+  <!-- codigo modal compras -->
+  <ng-template #longContentCompras let-modal>
+    <div class="modal-header">
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
+        Detalles de Compras
+        <i class='fas fa-file-alt' style='font-size:24px'></i>
+      </h3>
+    </div>
+    <div class="modal-body" *ngFor="let i of arregloDetalleCompra">
+      <p class="fuenteCuerpos" style="font-size:22px;">
+        <b>Id Compra:</b> {{i.idCompra}}<br>
+        <b>Monto $:</b> {{i.monto}}<br>
+        <b>Productos:</b> {{i.productos}}<br>
+        <b>Fecha:</b> {{i.fecha | date: 'yyyy-MM-dd HH:mm:ss'}}<br>
+        <b>N°Productos:</b> {{i.numeroProductosCompra}}<br>
+        <b>Comprador:</b> {{i.nombreUsuario}}<br>
+        <b>Proveedor:</b> {{i.nombreProveedor}}<br>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
+    </div>
+  </ng-template>

@@ -25,7 +25,7 @@ export class DevolucionesComponent implements OnInit {
   public arregloProductosSelect:IProductos[];
   public arregloTiposProblemasSelect:ITiposDeProblemas[];
   public arregloCompensacionesSelect:ICompensaciones[];
-
+  public arregloDetalleDevolucion:any[] = [];
 
   //propiedades para tabla
   displayedColumnsDevoluciones: string[] = [
@@ -76,37 +76,43 @@ export class DevolucionesComponent implements OnInit {
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
-  public openAltaDevolucion(content) {
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  public openAltaDevolucion(contentDevolucion:any) {
+    this.modal= this.modalService.open(contentDevolucion, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Agregar Devolucion";
   }
-  public openAltaTipoProblema(content) {
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  public openAltaTipoProblema(contentProblema:any) {
+    this.modal= this.modalService.open(contentProblema, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Agregar Problema";
   }
-  public openAltaCompensacion(content) {
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  public openAltaCompensacion(contentCompensacion:any) {
+    this.modal= this.modalService.open(contentCompensacion, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Agregar Compensacion";
   }
 
   //ABRIR EL MODAL CON LOS DATOS EN LOS INPUTS LISTOS PARA LA MODIFICACION
-  public openEditarTipoProblema(content,idTipoProblema: number,tipoProblema:string){
+  public openEditarTipoProblema(contentProblema:any,idTipoProblema: number,tipoProblema:string){
     console.log("id: ",idTipoProblema," nombre: ",tipoProblema);
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(contentProblema, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Editar Problema";
     //pintando los valores en el modal listos para editarlos
     this.frmTiposProblemas.controls['idTipoProblema'].setValue(idTipoProblema); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
     this.frmTiposProblemas.controls['tipoProblema'].setValue(tipoProblema);
   }
-  public openEditarCompensacion(content,idCompensacion: number,tipoCompensacion:string,descripcionCompensacion:string){
+  public openEditarCompensacion(contentCompensacion:any,idCompensacion: number,tipoCompensacion:string,descripcionCompensacion:string){
     console.log("id: ",idCompensacion," nombre: ",tipoCompensacion);
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(contentCompensacion, {ariaLabelledBy: 'modal-basic-title'});
     this.titulo = "Editar Compensacion";
     //pintando los valores en el modal listos para editarlos
     this.frmCompensaciones.controls['idCompensacion'].setValue(idCompensacion); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
     this.frmCompensaciones.controls['tipoCompensacion'].setValue(tipoCompensacion);
     this.frmCompensaciones.controls['descripcionCompensacion'].setValue(descripcionCompensacion);
   }
+  //FUNCION PARA ABRIR EL MODAL DE INFORMACION DEVOLUCIONES, CONFIGURACIONES DE BOOTSTRAP
+  public openScrollableContentDevoluciones(longContentDevolucion:any, idDevolucion:number) {
+    this.modalService.open(longContentDevolucion, { size: 'lg', scrollable: true });
+    this.listarDetalleDevolucion(idDevolucion);
+  }
+
 
   //LISTADO DE REGISTROS
   public listarDevoluciones(){
@@ -120,6 +126,19 @@ export class DevolucionesComponent implements OnInit {
       }
     );
   }
+
+  //LISTAR DETALLES DEVOLUCION
+  public listarDetalleDevolucion(idDevolucion:number){
+    this.API.mostrarDetalleDevolucion(idDevolucion).subscribe(
+      (success:any)=>{
+        this.arregloDetalleDevolucion = success.respuesta;
+      },
+      (error)=>{
+        console.log(error);
+      }
+    );
+  }
+  //LISTAR TIPOS DE PROBLEMAS
   public listarTiposProblemas(){
     this.API.mostrarTiposDeProblemas().subscribe(
       (success:any)=>{

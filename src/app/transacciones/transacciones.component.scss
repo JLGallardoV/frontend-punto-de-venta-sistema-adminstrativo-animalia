@@ -1,16 +1,8 @@
-.cardPrincipal{
-  background-color: #000000bd;
-  border-radius: 6px;
-  width: 80%;
+.contenido{
+  width: 100vw;
   height: auto;
   margin: 0 auto;
-  transition: 0.5s;
-}
-.btnAgregar{
-    color: darkseagreen;
-    border: solid 1px #dcd8d2;
-    margin: auto;
-    width: 65%;
+  display: block;
 }
 
 //LONGITUDES DE LA TABLA, EVITA QUE SE DESBORDEN LOS DATOS DE LA TABLA
@@ -24,33 +16,34 @@
 //ICONO LUPA DE INPUT BUSCAR
 .lupa{
   font-size: 20px;
-  color: darkseagreen;
   margin: 10px 0px 0px 10px;
 }
 
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
-::ng-deep .mat-focused {
-  /*change color of label*/
-  color: darkseagreen !important;
+//PERSONALIZAR EL COLOR DE INPUT
+::ng-deep .mat-focused {/*cambia el color del label cuando se enfoca*/
+  color: #272727 !important;
  }
+ ::ng-deep.mat-form-field-underline { /*cambia el color del subrayado*/
+  background-color: #272727 !important;
+  border-color: #272727 !important;
+}
+::ng-deep.mat-form-field-ripple {/*cambiar el color del subrayado cuando se enfoca*/
+ background-color: #272727 !important;
+ border-color: #272727 !important;
 
- ::ng-deep.mat-form-field-underline {
-  /*change color of underline*/
-  background-color: darkseagreen !important;
+}
+::ng-deep.mat-form-field-label{/*color del label*/
+  color: #272727 !important;
+}
+::ng-deep.mat-input-element {/*color del punto de insercion (parpadeo de barra vertical al escribir)*/
+    caret-color: #272727 !important;
 }
 
-::ng-deep.mat-form-field-ripple {
- /*change color of underline when focused*/
- background-color: darkseagreen !important;;
-}
-
-::ng-deep.mat-form-field-label{
-  color: darkseagreen !important;
-}
 
 //SOBREESCRIBIR TAB ANGULAR MATERIAL
 ::ng-deep.mat-tab-label{ //fuente de cabeceras de tab
-  color: darkseagreen !important;
+  //background-color: #4b2b08 !important;
   font-family: 'Darker Grotesque', sans-serif;
   font-size: 22px;
 }
