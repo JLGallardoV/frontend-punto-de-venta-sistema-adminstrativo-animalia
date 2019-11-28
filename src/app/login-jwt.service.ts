@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router'
-import { APIService } from './api.service'
+import { Router } from '@angular/router';
+import { APIService } from './api.service';
+import {AppComponent} from './app.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -69,12 +70,14 @@ export class LoginJwtService {
 
   //EVITAR ACCESO DE VENDEDORES A MODULOS DEL GERENTE
   public restringirAcceso() {
+    let cerrarMenu:AppComponent;
     let nivel: string = "";
     nivel = localStorage.getItem('nivel');
 
     if (nivel != 'gerente') {
       this.logout();
       this.router.navigate(['/login']);
+      cerrarMenu.closeNav()
       setTimeout(
         ()=>{
           alert('Verifica que eres gerente');

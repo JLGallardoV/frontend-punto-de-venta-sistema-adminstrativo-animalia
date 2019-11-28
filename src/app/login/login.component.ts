@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     document.getElementById("main").style.display = "none";
-    this.cerrarMenu.closeNav();
+    //this.cerrarMenu.closeNav();
 
   }
 
