@@ -21,7 +21,7 @@ export class ComprasComponent implements OnInit {
   public arregloProductosTabla: IProductos[] = [];
   public arregloUsuariosSelect: IUsuarios[] = [];
   public arregloProveedoresSelect: IProveedores[] = [];
-  public arregloCompras: ICompras[] = [];
+  public arregloCompras: any[] = [];
   public ultimaCompra: any;
   public montoAcumulado: number;
   public usuarioActual: number;
@@ -113,6 +113,8 @@ export class ComprasComponent implements OnInit {
         } else {
           this.arregloProductosTabla.push({ idProducto: transaferirValorID, cantidadProducto: transaferirValorCantidad, nombreProducto: success.respuesta[transaferirValorID - 1].nombreProducto, precioUnitarioProducto: success.respuesta[transaferirValorID - 1].precioUnitarioProducto });
           this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+          document.getElementById('tablaVentaConcluidaVacia').style.display = "none";
+
         }
       },
       (error) => {
@@ -157,7 +159,7 @@ export class ComprasComponent implements OnInit {
       (success: any) => {
         if (success.estatus > 0) {
           alert(success.respuesta);
-          this.listarCompras();
+          this.listarUltimaCompra();
           this.limpiarFormulario();
         } else if (success.estatus < 0) {
           alert(JSON.stringify(success.respuesta));
@@ -172,23 +174,44 @@ export class ComprasComponent implements OnInit {
     );
   }
 
-  //muestra la transaccion hecha despues de que se oprime el btn de vender
-  public listarCompras() {
-    this.API.mostrarCompras().subscribe(
-      (success: any) => {
-        this.arregloCompras = success.respuesta;
-        //alert("arreglot: "+JSON.stringify(this.arregloCompras))
-        this.ultimaCompra = this.arregloCompras[this.arregloCompras.length - 1]
-        //alert("ultima venta: "+JSON.stringify(this.ultimaCompra))
-        this.dsCompras = new MatTableDataSource([this.ultimaCompra]); //[prueba] convierto a array la variable prueba para que pueda ser iterada
-        this.arregloCompras = [this.ultimaCompra];//aplico simbolo iterador para que pueda iterarlo en un loop
-        //alert("arreglo mostrado: "+JSON.stringify(this.arregloTransacciones));
+  //muestra la ultima transaccion hecha despues de que se oprime el btn de vender
+  public listarUltimaCompra(){
+      this.API.mostrarUltimaCompra().subscribe(
+      (success:any)=>{
+        console.log("ultima compra: ",success.respuesta);
+        let ultimaCompraRegistro:number = 0;
+        ultimaCompraRegistro = success.respuesta[0].idCompra;
+        this.API.mostrarDetalleCompra(ultimaCompraRegistro).subscribe(
+          (success:any)=>{
+            let arregloTemporalProductos:any[] = [];
+            let productos: string[] = [];
+
+            for (let i = 0; i < success.respuesta.length; i++) {
+              //atrapamos cada uno de los productos en un array
+              arregloTemporalProductos.push(success.respuesta[i].nombreProducto);
+            }
+            productos = arregloTemporalProductos
+            //arreglo de objetos listo para iterar
+            this.arregloCompras = [{
+              idCompra: success.respuesta[0].idCompra,
+              montoCompra: success.respuesta[0].montoCompra,
+              fechaCompra: success.respuesta[0].fechaCompra,
+              nombreProveedor: success.respuesta[0].nombreProveedor,
+              nombreUsuario: success.respuesta[0].nombreUsuario,
+              productos: productos
+            }];
+          },
+          (error)=>{
+            console.log("algo ocurrio: ",error);
+          }
+        );
       },
-      (error) => {
-        console.log("algo ocurrio: ", error)
+      (error)=>{
+        console.log("algo ocurrio: ",error);
       }
     );
   }
+
 
   //limpiamos el formulario una vez e haya realizado uan venta.
   public limpiarFormulario() {

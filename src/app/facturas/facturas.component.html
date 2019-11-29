@@ -99,6 +99,7 @@
               </div>
               <label class="fuenteCuerpos" style="font-size:24px;">Monto $: <input class="outputMonto" type="text" readonly [(ngModel)]="montoAcumulado"></label>
             </div>
+
             <div name="columnaDerechaOuputs" class="col-md-6">
               <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#272727;"><i class='fas fa-clipboard'></i>&nbsp; Detalles de la Venta:</p>
               <hr>
@@ -135,6 +136,6 @@
   </mat-tab>
 <!-- TAB 2 COMPRAS -->
   <mat-tab label="Compras">
-    Content 2
+    <app-compras></app-compras>
   </mat-tab>
 </mat-tab-group>

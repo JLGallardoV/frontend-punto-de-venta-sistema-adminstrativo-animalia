@@ -227,6 +227,9 @@ export class APIService {
   public mostrarCompras() {
     return this.http.get('http://localhost:3000/comprasWS/listarCompras', { headers: this.headers });
   }
+  public mostrarUltimaCompra() {
+    return this.http.get('http://localhost:3000/comprasWS/listarUltimaCompra', { headers: this.headers });
+  }
   public mostrarDetalleCompra(idCompra:number) {
     return this.http.get(`http://localhost:3000/comprasWS/listarDetalleCompra/${idCompra}`, { headers: this.headers });
   }

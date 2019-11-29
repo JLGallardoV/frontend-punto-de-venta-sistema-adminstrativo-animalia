@@ -11,6 +11,11 @@ import { ITiposDePagos } from '../api.service';
   templateUrl: './facturas.component.html',
   styleUrls: ['./facturas.component.scss']
 })
+@Component({
+  selector: 'app-compras',
+  templateUrl: '../compras/compras.component.html',
+  styleUrls: ['../compras/compras.component.scss']
+})
 export class FacturasComponent implements OnInit {
   displayedColumns: string[] = ['idTransaccion', 'fechaTransaccion', 'numeroProductosEnTransaccion'];//columnas tabla transacciones
   displayedColumnsProductos: string[] = ['nombreProducto','precioUnitarioProducto','cantidadProducto','descartar'];//columnas tabla transacciones
