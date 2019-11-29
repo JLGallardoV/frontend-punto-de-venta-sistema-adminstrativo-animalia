@@ -6,8 +6,7 @@
   margin: 0 auto;
 }
 .btnAgregar{
-  color: darkseagreen;
-  border: solid 1px #dcd8d2;
+  color: #272727;
   margin: auto;
   width: 65%;
 }
@@ -24,14 +23,13 @@ th.mat-header-cell {
 //BTN FILTRAR POR FECHAS
 .btnFiltrar{
   width: 100%;
-  color: antiquewhite;
-  border: solid 1px;
+  color: #272727;
 }
 
 /*ESTILOS PARA PAGINADOR*/
 .mat-paginator {
   width: 136%;
-  background: #eae4dda1;
+  background:white;
 }
 
 /*PANTALLAS PEQUEÑAS*/
@@ -72,25 +70,25 @@ th.mat-header-cell {
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL:
 ::ng-deep .mat-focused {
   /*change color of label*/
-  color: darkseagreen !important;
+  color: #272727 !important;
 }
 
 ::ng-deep.mat-form-field-underline {
   /*change color of underline*/
-  background-color: darkseagreen !important;
+  background-color: #272727 !important;
 }
 
 ::ng-deep.mat-form-field-ripple {
   /*change color of underline when focused*/
-  background-color: darkseagreen !important;;
+  background-color: #272727 !important;;
 }
 
 ::ng-deep.mat-form-field-label{
-  color: darkseagreen !important;
+  color: #272727 !important;
 }
-
-::ng-deep.mat-tab-label{ //fuente de cabeceras de tab
-  color: darkseagreen !important;
+// ANGULAR TAB
+::ng-deep.mat-tab-label{
+  color: #272727 !important;
   font-family: 'Darker Grotesque', sans-serif;
   font-size: 22px;
 }
@@ -98,4 +96,8 @@ th.mat-header-cell {
 ::ng-deep.mat-ink-bar{
   background-color: #dfdcd4!important;
 
+}
+//AÑADIR PADDING AL TAB EN GENERAL PARA QUESE ALCANCE A DISTINGUIR LA SOMBRA INFERIOR DE LOS CARDS
+::ng-deep.mat-tab-body-content {
+  padding: 2px!important;
 }

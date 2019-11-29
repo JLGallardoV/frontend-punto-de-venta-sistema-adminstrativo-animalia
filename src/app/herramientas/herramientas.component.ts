@@ -7,6 +7,28 @@ import { IReportesEconomicos, IViabilidadProductos, IRendimientoVendedores, APIS
 import { DateFormatService } from '../date-format.service';
 import { LoginJwtService } from '../login-jwt.service';
 
+/*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
+ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
+
+const etiquetaRango = (page: number, pageSize: number, length: number) => {
+  if (length == 0 || pageSize == 0) { //caso paginador vacio
+    return `0 de ${length}`;
+  }
+  length = Math.max(length, 0);
+
+  const startIndex = page * pageSize; //indice de inicio
+
+/*if resumido; si el indice de inicio excede la logitud de la lista (6 - 5 de 6 por ejemplo) se veria: 6 - 10 de 6 gracias al
+[pageSizeOptions] lo cual es incorrecto pues solo hay 6 elementos en tal rango ENTONCES mejor coloca como indice final el indice inicial
+quedaria 6 - 6 de 6 que es lo correcto).*/
+  const endIndex = startIndex < length ?
+      Math.min(startIndex + pageSize, length) :
+      startIndex + pageSize;
+
+  return `${startIndex + 1} - ${endIndex} de ${length}`;
+}
+
+
 @Component({
   selector: 'app-herramientas',
   templateUrl: './herramientas.component.html',
@@ -72,6 +94,12 @@ export class HerramientasComponent implements OnInit {
         let arregloReportesEconomicos: IReportesEconomicos[] = [{ montoTransacciones: valorTransacciones, montoCompras: valorCompras, utilidad: valorUtilidad }];
 
         this.dsReporteEconomico = new MatTableDataSource(arregloReportesEconomicos);
+        if(!this.dsReporteEconomico.paginator){
+          this.dsReporteEconomico.paginator = this.paginator;
+          this.dsReporteEconomico.paginator._intl.itemsPerPageLabel = 'items por pagina';
+          this.dsReporteEconomico.paginator._intl.getRangeLabel = etiquetaRango;
+
+        }
 
       },
       (error) => {
@@ -91,11 +119,9 @@ export class HerramientasComponent implements OnInit {
 
     this.API.mostrarViabilidadProductos(fechaInicioFormateada, fechaFinalFormateada).subscribe(
       (success: any) => {
-        if (success.respuesta == 1) {
+        if (success.estatus == 1) {
           this.dsViabilidadProductos = new MatTableDataSource(success.respuesta);
         }
-        alert(JSON.stringify(success.respuesta));
-
       },
       (error) => {
         console.log("hubo un problema: ", error)
