@@ -95,42 +95,29 @@
                 <div id="tablaVentaConcluidaVacia" style="text-align: center;font-size: 20px;">
                   <p class="fuenteCuerpos"><i>Tabla vacía</i></p>
                 </div>
+                <hr>
               </div>
               <label class="fuenteCuerpos" style="font-size:24px;">Monto $: <input class="outputMonto" type="text" readonly [(ngModel)]="montoAcumulado"></label>
             </div>
             <div name="columnaDerechaOuputs" class="col-md-6">
               <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#272727;"><i class='fas fa-clipboard'></i>&nbsp; Detalles de la Venta:</p>
-              <div name="informacionVenta" class="">
-                <table name="tablaTransacciones" mat-table [dataSource]="dsTransacciones" class="fuenteCuerpos" style="font-size:98px">
-                  <ng-container matColumnDef="idTransaccion">
-                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> Id Venta </th>
-                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idTransaccion}} </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="fechaTransaccion">
-                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="numeroProductosEnTransaccion">
-                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> No.Productos </th>
-                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.numeroProductosEnTransaccion}} </td>
-                  </ng-container>
-
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-                <div id="tablaVentaConcluidaVacia" style="text-align: center;font-size: 20px;">
-                  <p class="fuenteCuerpos"><i>Tabla vacía</i></p>
-                </div>
+              <hr>
+              <div name="informacionVenta" class="fuenteCuerpos" style="text-align:center;font-size: 17px;" *ngFor="let i of arregloTransacciones">
+                <p>
+                  <b>ID Transaccion: </b> {{i.idTransaccion}}
+                  <br><b>Cliente: </b> {{i.nombreCliente}}
+                  <br><b>Vendedor: </b> {{i.nombreVendedor}}
+                  <br><b>Fecha : </b> {{i.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}}
+                  <br><b>Productos : </b> {{i.productos}}
+                  <br><b>N° Productos: </b> {{i.numeroProductosEnTransaccion}}
+                  <br><b>Monto $: </b> {{i.montoConIvaTransaccion}}
+                  <br><b>Iva $: </b> {{i.ivaTransaccion}}
+                  <br><b>Pago $: </b> {{i.pagoTransaccion}}
+                  <br><b>Cambio $: </b> {{i.cambioTransaccion}}
+                  <br><b>Tipo de Pago: </b> {{i.tipoPago}}
+                </p>
               </div>
               <br>
-              <hr>
-              <div *ngFor="let i of arregloTransacciones" style="display: inline-block;">
-                <p class="fuenteCuerpos resultadoOperaciones" style="float:right;color:#2a2d3b;"> <i class='fas fa-dollar-sign' style='font-size:24px; margin-right: 33px;'></i>Pago: {{i.pagoTransaccion}} </p>
-                <p class="fuenteCuerpos resultadoOperaciones" style="float:left;color:#2a2d3b;"> <i class='fas fa-shopping-cart' style='font-size:24px; margin-right: 19px;'></i>Monto Total: {{i.montoConIvaTransaccion}} </p>
-                <p class="fuenteCuerpos resultadoOperaciones" style="float:right;color:#2a2d3b;"> <i class='fas fa-handshake' style='font-size:24px; margin-right: 19px;'></i>Cambio: {{i.cambioTransaccion}} </p>
-              </div>
             </div>
           </div>
           <br>
@@ -138,14 +125,13 @@
           <br>
           <button mat-stroked-button class="btnVender fuenteCuerpos" style="width:100%;font-size:22px;" [disabled]="frmVenta.invalid" (click)="agregarTransaccion()">Vender</button>
         </mat-card>
+        <mat-card class="letreroModulo" style="">
+          <div style="margin-bottom: -14px;">
+            Ventas <i class='fas fa-shopping-cart' style='font-size: 20px;'></i>
+          </div>
+        </mat-card>
       </div>
     </div>
-    <mat-card class="letreroModulo" style="margin-top: -43px;">
-      <div style="margin-bottom: -14px;">
-        Ventas <i class='fas fa-shopping-cart' style='font-size: 20px;'></i>
-      </div>
-    </mat-card>
-    <br>
   </mat-tab>
 <!-- TAB 2 COMPRAS -->
   <mat-tab label="Compras">

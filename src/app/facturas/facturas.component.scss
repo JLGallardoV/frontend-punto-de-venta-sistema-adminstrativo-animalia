@@ -135,6 +135,7 @@ color: #272727;
 ::ng-deep.cdk-focused .cdk-mouse-focuse{
   color: #272727 !important;
 }
+//TAMAÑO CHECKBOX
 ::ng-deep.mat-checkbox{
   font-size: 20px!important;
 }
@@ -144,12 +145,3 @@ color: #272727;
     line-height: 18px !important;
     padding: 0!important;
 }
-
-/*.mat-mini-fab {
-
-    cursor: pointer;
-    white-space: nowrap;
-    text-align: center;
-    line-height: 18px;
-
-}*/

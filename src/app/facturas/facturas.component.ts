@@ -23,7 +23,7 @@ export class FacturasComponent implements OnInit {
   public arregloVendedoresSelect: IVendedores[] = [];
   public arregloTiposDePagosSelect: ITiposDePagos[] = [];
   public arregloTiposDePagosLista: ITiposDePagos[] = [];
-  public arregloTransacciones:ITransacciones[] = [];
+  public arregloTransacciones:any[] = [];
   public ultimaVenta:any;
   public montoAcumulado : number;
   public usuarioActual:number;
@@ -34,7 +34,7 @@ export class FacturasComponent implements OnInit {
     this.frmVenta = this.formBuilder.group({
           idCliente:["",Validators.required],
           idVendedor:localStorage.getItem("usuario"),
-          pagoTransaccion:["",Validators.required],
+          pagoTransaccion:[""],
           idProducto:["",Validators.required],
           cantidadProducto:["",Validators.required],
           idTipoPago:["",Validators.required]
@@ -171,7 +171,7 @@ export class FacturasComponent implements OnInit {
           }else if(prueba == false){//elimina los elementos desmarcados
               this.arregloTiposDePagosLista.splice(idTipoPago-1,1)
           }
-          //alert("arreglo final: "+JSON.stringify(this.arregloTiposDePagosLista));
+          //console.log("tipo de pago seleccionado: ",this.arregloTiposDePagosLista);
       },
       (error)=>{
         console.log("algo ocurrio: ",error)
@@ -190,7 +190,10 @@ export class FacturasComponent implements OnInit {
     if (arregloProductosForm.length == 0) {
         alert("no olvides presionar boton de agregar productos \n");
     }
-    //alert("cte: "+idClienteForm+" vdor: "+idVendedorForm+" pago: "+pagoTransaccionForm+" arrpdtos: "+JSON.stringify(arregloProductosForm)+" arrtipag: "+JSON.stringify(arregloTiposDePagosForm));
+    if (arregloTiposDePagosForm[0].idTipoPago == 1) {
+        pagoTransaccionForm = this.montoAcumulado;
+    }
+    //console.log("tipo de pago en transaccion: ", arregloTiposDePagosForm);
     this.API.aniadirTransaccion(idClienteForm,idVendedorForm,pagoTransaccionForm,arregloProductosForm,arregloTiposDePagosForm).subscribe(
       (success:any)=>{
         if(success.estatus > 0){
@@ -215,13 +218,40 @@ export class FacturasComponent implements OnInit {
   public listarUltimaTransaccion(){
       this.API.mostrarUltimaTransaccion().subscribe(
       (success:any)=>{
-        console.log("ultima Venta: ",success.respuesta[0]);
-        this.ultimaVenta = success.respuesta[0];
-        this.dsTransacciones = new MatTableDataSource([this.ultimaVenta]); //[prueba] convierto a array la variable prueba para que pueda ser iterada
-        this.arregloTransacciones = [this.ultimaVenta];//aplico simbolo iterador para que pueda iterarlo en un loop
+        let idUltimaTransaccion:number = 0;
+        idUltimaTransaccion = success.respuesta[0].idTransaccion;
+        this.API.mostrarDetalleTransaccion(idUltimaTransaccion).subscribe(
+          (success:any)=>{
+            let arregloTemporalProductos:any[] = [];
+            let productos: string[] = [];
+
+            for (let i = 0; i < success.respuesta.length; i++) {
+              //atrapamos cada uno de los productos en un array
+              arregloTemporalProductos.push(success.respuesta[i].nombreProducto);
+            }
+            productos = arregloTemporalProductos
+            //arreglo de objetos listo para iterar
+            this.arregloTransacciones = [{
+              idTransaccion:success.respuesta[0].idTransaccion,
+              nombreCliente:success.respuesta[0].nombreCliente,
+              nombreVendedor:success.respuesta[0].nombreVendedor,
+              fechaTransaccion:success.respuesta[0].fechaTransaccion,
+              productos:productos,
+              numeroProductosEnTransaccion:success.respuesta[0].cantidadProductosTransaccion,
+              montoConIvaTransaccion:success.respuesta[0].montoConIvaTransaccion,
+              ivaTransaccion:success.respuesta[0].ivaTransaccion,
+              pagoTransaccion:success.respuesta[0].pagoTransaccion,
+              cambioTransaccion:success.respuesta[0].cambioTransaccion,
+              tipoPago:success.respuesta[0].tipoPago
+            }];
+          },
+          (error)=>{
+            console.log("algo ocurrio: ",error);
+          }
+        );
       },
       (error)=>{
-        console.log("algo ocurrio: ",error)
+        console.log("algo ocurrio: ",error);
       }
     );
   }
