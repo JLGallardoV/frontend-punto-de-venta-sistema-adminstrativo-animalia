@@ -11,6 +11,22 @@ import { LoginJwtService } from '../login-jwt.service';
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.scss']
 })
+@Component({
+  selector: 'app-clientes',
+  templateUrl: '../clientes/clientes.component.html',
+  //styleUrls: ['../clientes/clientes.component.scss']
+})
+@Component({
+  selector: 'app-vendedores',
+  templateUrl: '../vendedores/vendedores.component.html',
+  //styleUrls: ['./vendedores.component.scss']
+})
+@Component({
+  selector: 'app-proveedores',
+  templateUrl: '../proveedores/proveedores.component.html',
+//  styleUrls: ['./proveedores.component.scss']
+})
+
 export class UsuariosComponent implements OnInit {
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
@@ -57,6 +73,7 @@ export class UsuariosComponent implements OnInit {
   public listarUsuarios() {
     this.API.mostrarUsuarios().subscribe(
       (success: any) => {
+        console.log("usuarios", success.respuesta)
         this.dsUsuarios = new MatTableDataSource(success.respuesta);
         this.dsUsuarios.paginator = this.paginator;
       },
