@@ -133,6 +133,7 @@ export class FacturasComponent implements OnInit {
         }else{
           this.arregloProductosTabla.push({idProducto:transaferirValorID,cantidadProducto:transaferirValorCantidad,nombreProducto:success.respuesta[transaferirValorID-1].nombreProducto,precioUnitarioProducto:success.respuesta[transaferirValorID-1].precioUnitarioProducto});
           this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+          document.getElementById('tablaVentaConcluidaVacia').style.display = "none";
         }
       },
       (error)=>{
@@ -194,7 +195,7 @@ export class FacturasComponent implements OnInit {
       (success:any)=>{
         if(success.estatus > 0){
           alert(success.respuesta);
-          this.listarTransacciones();
+          this.listarUltimaTransaccion();
           this.limpiarFormulario();
         }else if(success.estatus < 0) {
             alert("No cuentas con el dinero suficiente | verifica tu pago");
@@ -210,17 +211,14 @@ export class FacturasComponent implements OnInit {
     );
   }
 
-  //muestra la transaccion hecha despues de que se oprime el btn de vender
-  public listarTransacciones(){
-      this.API.mostrarTransacciones().subscribe(
+  //muestra la ultima transaccion hecha despues de que se oprime el btn de vender
+  public listarUltimaTransaccion(){
+      this.API.mostrarUltimaTransaccion().subscribe(
       (success:any)=>{
-        this.arregloTransacciones = success.respuesta;
-        //alert("arreglot: "+JSON.stringify(this.arregloTransacciones))
-        this.ultimaVenta = this.arregloTransacciones[this.arregloTransacciones.length - 1]
-       //alert("ultima venta: "+JSON.stringify(this.ultimaVenta))
+        console.log("ultima Venta: ",success.respuesta[0]);
+        this.ultimaVenta = success.respuesta[0];
         this.dsTransacciones = new MatTableDataSource([this.ultimaVenta]); //[prueba] convierto a array la variable prueba para que pueda ser iterada
         this.arregloTransacciones = [this.ultimaVenta];//aplico simbolo iterador para que pueda iterarlo en un loop
-        //alert("arreglo mostrado: "+JSON.stringify(this.arregloTransacciones));
       },
       (error)=>{
         console.log("algo ocurrio: ",error)

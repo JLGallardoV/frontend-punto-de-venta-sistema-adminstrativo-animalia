@@ -237,6 +237,9 @@ export class APIService {
   public mostrarTransacciones() {
     return this.http.get('http://localhost:3000/transaccionesWS/listarTransacciones', { headers: this.headers });
   }
+  public mostrarUltimaTransaccion() {
+    return this.http.get('http://localhost:3000/transaccionesWS/listarUltimaTransaccion', { headers: this.headers });
+  }
   public mostrarDetalleTransaccion(idTransaccion:number) {
     return this.http.get(`http://localhost:3000/transaccionesWS/listarDetalleTransaccion/${idTransaccion}`, { headers: this.headers });
   }
