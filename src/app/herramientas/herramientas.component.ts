@@ -28,12 +28,17 @@ quedaria 6 - 6 de 6 que es lo correcto).*/
   return `${startIndex + 1} - ${endIndex} de ${length}`;
 }
 
-
 @Component({
   selector: 'app-herramientas',
   templateUrl: './herramientas.component.html',
   styleUrls: ['./herramientas.component.scss']
 })
+@Component({
+  selector: 'app-accesos',
+  templateUrl: '../accesos/accesos.component.html',
+  styleUrls: ['../accesos/accesos.component.scss']
+})
+
 export class HerramientasComponent implements OnInit {
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal

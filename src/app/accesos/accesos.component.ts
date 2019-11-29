@@ -29,7 +29,12 @@ export class AccesosComponent implements OnInit {
       }
     );
   }
-
+  //FUNCIONALIDAD FILTRAR
+  public filtrarRegistros(filterValue: string) {
+    this.dsAccesos.filter = filterValue.trim().toLowerCase();
+    //si se usa el modulo tab de transacciones, entonces arroja los resultados buscados en la primer pagina: (if reducido)
+    this.dsAccesos.paginator ? this.dsAccesos.paginator.firstPage(): null;
+  }
   ngOnInit() {
     this.guardian.restringirAcceso();
     this.listarAccesos();
