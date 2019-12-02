@@ -36,7 +36,6 @@ export class AccesosComponent implements OnInit {
     this.dsAccesos.paginator ? this.dsAccesos.paginator.firstPage(): null;
   }
   ngOnInit() {
-    this.guardian.restringirAcceso();
     this.listarAccesos();
   }
 

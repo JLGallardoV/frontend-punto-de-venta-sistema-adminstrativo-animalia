@@ -1,7 +1,7 @@
 <br>
 <br>
 <br>
-<mat-tab-group id="contenido">
+<mat-tab-group id="contenido" (selectedTabChange)="tabChanged($event)">
 <!-- TAB 1 VENTAS -->
   <mat-tab label="Ventas">
     <br>
@@ -135,7 +135,7 @@
     </div>
   </mat-tab>
 <!-- TAB 2 COMPRAS -->
-  <mat-tab label="Compras">
+  <mat-tab [disabled]="denegarAccesoCompras()" label="Compras">
     <app-compras></app-compras>
   </mat-tab>
 </mat-tab-group>

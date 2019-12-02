@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,AfterViewInit} from '@angular/core';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
+import { MatTabChangeEvent } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import { APIService } from '../api.service';
 import { IProductos,IClientes,IVendedores } from '../api.service';
 import { ITransacciones } from '../api.service';
 import { ITiposDePagos } from '../api.service';
+
 
 @Component({
   selector: 'app-facturas',
@@ -98,7 +100,7 @@ export class FacturasComponent implements OnInit {
     this.API.buscarUsuarioPorNombre(localStorage.getItem("usuario")).subscribe(
       (success:any)=>{
           this.usuarioActual = success.respuesta[0].idUsuario;
-          console.log("esta en sesion: ",this.usuarioActual)
+          console.log("usario en sesion: ",this.usuarioActual)
       },
       (error)=>{
         console.log(error)
@@ -120,7 +122,7 @@ export class FacturasComponent implements OnInit {
 
         //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
         if (this.arregloProductosTabla.length >= 1) {
-          console.log("posicion en arreglo: ",this.arregloProductosTabla[0].cantidadProducto);
+          //console.log("posicion en arreglo: ",this.arregloProductosTabla[0].cantidadProducto);
           for (let i = 0; i < this.arregloProductosTabla.length; i++) {
             if (transaferirValorID == this.arregloProductosTabla[i].idProducto) {
               this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + transaferirValorCantidad;
@@ -271,13 +273,35 @@ export class FacturasComponent implements OnInit {
     this.arregloProductosTabla = [];
   }
 
+  //DENEGAR ACCESO A COMPRAS
+  public denegarAccesoCompras(){
+    /*deshabilitare el tab de compras en caso de que el vendedor este en sesion
+    si el disabled (en el html) detecta true deshabilita el tab*/
+    let nivel = localStorage.getItem('nivel');
+    if (nivel == 'vendedor') {
+        console.log("acceso denegado: v...");
+        return true;
+    }else{
+        console.log("acceso permitido: g...")
+        return false;
+    }
+  }
 
+  /*public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    console.log("pestaña numero: ", tabChangeEvent.index);
+    if (true) {
+
+    }
+    //this.guardian.restringirAcceso();
+
+  }*/
   ngOnInit() {
     this.mostrarUsuarioEnSesion();
     this.listarTiposDePagos();
     this.listarProductos();
     this.listarVendedores();
     this.listarClientes();
+
   }
 
 }

@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     document.getElementById("main").style.display = "none";
+    localStorage.clear();
     //this.cerrarMenu.closeNav();
 
   }

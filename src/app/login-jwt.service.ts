@@ -15,12 +15,12 @@ export class LoginJwtService {
       (resp: any) => {
         if (resp.estatus > 0) {
 
-          console.log("respueta", resp.estatus, " contenido: ", resp.respuesta);
+          //console.log("respueta", resp.estatus, " contenido: ", resp.respuesta);
           localStorage.setItem('token', resp.respuesta); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
           localStorage.setItem('usuario', nombreUsuario); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
-          this.router.navigate(['/facturas']);
           document.getElementById("main").style.display = "block";
           this.registrarAcceso(nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
+          this.router.navigate(['/facturas']);
 
         } else {
           alert("verifica tus datos");
@@ -50,13 +50,15 @@ export class LoginJwtService {
   public registrarAcceso(nombreUsuario: string) {
     this.API.buscarUsuarioPorNombre(nombreUsuario).subscribe(
       (success: any) => {
+        //console.log("fuente: ",success.respuesta)
         let idCapturado: number = 0;
+        let nivel:string = "";
+        nivel = success.respuesta[0].tipoUsuario;
+        localStorage.setItem('nivel', nivel);
         idCapturado = success.respuesta[0].idUsuario;
         this.agregarAcceso(idCapturado); //anexamos a la db el usuario en acceso
         //almaceno el nivel en ls para poder restringir accesos a modulos
-        let nivel: string = success.respuesta[0].tipoUsuario;
-        console.log("este sera tu nivel: ",nivel," fuente: ",success.respuesta);
-        localStorage.setItem('nivel', nivel);
+        //console.log("nivel de usuario: ",success.respuesta[0].tipoUsuario)
 
       },
       (error) => {
@@ -77,10 +79,10 @@ export class LoginJwtService {
     if (nivel != 'gerente') {
       this.logout();
       this.router.navigate(['/login']);
-      cerrarMenu.closeNav()
       setTimeout(
         ()=>{
-          alert('Verifica que eres gerente');
+          alert('Verifica que eres gerente :' + JSON.stringify(nivel));
+          cerrarMenu.closeNav()
         }
       );
     }

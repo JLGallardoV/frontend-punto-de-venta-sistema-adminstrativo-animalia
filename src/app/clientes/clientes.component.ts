@@ -170,7 +170,6 @@ export class ClientesComponent implements OnInit {
     this.dsClientes.paginator ? this.dsClientes.paginator.firstPage(): null;
   }
   ngOnInit() {
-    this.guardian.restringirAcceso();
     this.listarClientes();
     this.listarTiposDeClientes();
   }

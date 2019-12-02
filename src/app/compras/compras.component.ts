@@ -25,9 +25,11 @@ export class ComprasComponent implements OnInit {
   public ultimaCompra: any;
   public montoAcumulado: number;
   public usuarioActual: number;
+  public privilegios: boolean;
   constructor(public guardian: LoginJwtService, public formBuilder: FormBuilder, public API: APIService) {
     this.montoAcumulado = 0;
     this.usuarioActual = 0;
+    this.privilegios = false;
     this.frmCompra = this.formBuilder.group({
       idUsuario: localStorage.getItem("usuario"),
       idProveedor: ["", Validators.required],
@@ -64,7 +66,7 @@ export class ComprasComponent implements OnInit {
     this.API.buscarUsuarioPorNombre(localStorage.getItem("usuario")).subscribe(
       (success: any) => {
         this.usuarioActual = success.respuesta[0].idUsuario;
-        console.log("esta en sesion: ", this.usuarioActual)
+        console.log("usuario en sesion : ", this.usuarioActual)
       },
       (error) => {
         console.log(error)
@@ -96,7 +98,7 @@ export class ComprasComponent implements OnInit {
 
         //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
         if (this.arregloProductosTabla.length >= 1) {
-          console.log("posicion en arreglo: ", this.arregloProductosTabla[0].cantidadProducto);
+          //console.log("posicion en arreglo: ", this.arregloProductosTabla[0].cantidadProducto);
           for (let i = 0; i < this.arregloProductosTabla.length; i++) {
             if (transaferirValorID == this.arregloProductosTabla[i].idProducto) {
               this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + transaferirValorCantidad;
@@ -126,8 +128,8 @@ export class ComprasComponent implements OnInit {
 
   //eliminar productos de tabla (carrito)
   public eliminarProductosCarrito(objetoProducto: any, indice: number) {
-    console.log("producto a eliminar: ", indice - 1, );
-    console.log(this.arregloProductosTabla)
+    //console.log("producto a eliminar: ", indice - 1, );
+    //console.log(this.arregloProductosTabla)
     this.arregloProductosTabla.splice(indice, 1);
     this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
 
@@ -144,7 +146,7 @@ export class ComprasComponent implements OnInit {
 
   //agregar una compras
   public agregarCompra() {
-    console.log("montoAcumulado")
+    //console.log("montoAcumulado")
     let idUsuarioForm: number = 0, idProveedorForm: number = 0, montoCompraForm: number = 0;
     let arregloProductosForm: any[] = []
     idUsuarioForm = this.usuarioActual;
@@ -178,7 +180,7 @@ export class ComprasComponent implements OnInit {
   public listarUltimaCompra(){
       this.API.mostrarUltimaCompra().subscribe(
       (success:any)=>{
-        console.log("ultima compra: ",success.respuesta);
+        //console.log("ultima compra: ",success.respuesta);
         let ultimaCompraRegistro:number = 0;
         ultimaCompraRegistro = success.respuesta[0].idCompra;
         this.API.mostrarDetalleCompra(ultimaCompraRegistro).subscribe(
@@ -212,7 +214,6 @@ export class ComprasComponent implements OnInit {
     );
   }
 
-
   //limpiamos el formulario una vez e haya realizado uan venta.
   public limpiarFormulario() {
     this.frmCompra.reset();
@@ -225,7 +226,6 @@ export class ComprasComponent implements OnInit {
 
 
   ngOnInit() {
-    this.guardian.restringirAcceso();
     this.mostrarUsuarioEnSesion();
     this.listarProductos();
     this.listarProveedores();

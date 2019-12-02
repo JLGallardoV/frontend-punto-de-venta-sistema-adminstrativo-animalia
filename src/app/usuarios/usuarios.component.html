@@ -101,19 +101,19 @@
             <form [formGroup]= "frmUsuarios">
                <input formControlName="idUsuario" type="hidden">
               <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-                <input formControlName="nombreUsuario" type="text"  matInput placeholder="Nombre" style="text-align:center;color:#f6f2ebe3">
+                <input formControlName="nombreUsuario" type="text"  matInput placeholder="Nombre" style="text-align:center;color:#272727">
               </mat-form-field>
-              <label *ngIf="frmUsuarios.controls.nombreUsuario.invalid && frmUsuarios.controls.nombreUsuario.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
+              <label *ngIf="frmUsuarios.controls.nombreUsuario.invalid && frmUsuarios.controls.nombreUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
               <br>
               <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-                <input formControlName="emailUsuario"  type="text" matInput placeholder="Email" style="text-align:center;color:#f6f2ebe3;">
+                <input formControlName="emailUsuario"  type="text" matInput placeholder="Email" style="text-align:center;color:#272727;">
               </mat-form-field>
-              <label *ngIf="frmUsuarios.controls.emailUsuario.invalid && frmUsuarios.controls.emailUsuario.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
+              <label *ngIf="frmUsuarios.controls.emailUsuario.invalid && frmUsuarios.controls.emailUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
               <br>
               <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-                <input formControlName="contraseniaUsuario" type="password" matInput  placeholder="Contrasenia"  style="text-align:center;color:#f6f2ebe3;">
+                <input formControlName="contraseniaUsuario" type="password" matInput  placeholder="Contrasenia"  style="text-align:center;color:#272727;">
               </mat-form-field>
-              <label *ngIf="frmUsuarios.controls.contraseniaUsuario.invalid && frmUsuarios.controls.contraseniaUsuario.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
+              <label *ngIf="frmUsuarios.controls.contraseniaUsuario.invalid && frmUsuarios.controls.contraseniaUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
               <br>
               <mat-form-field class="fuenteCuerpos">
                 <mat-select formControlName="idVendedor" class="fuenteCuerpos" placeholder="ID Vendedor">
@@ -122,7 +122,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <label *ngIf="frmUsuarios.controls.idTipoUsuario.invalid && frmUsuarios.controls.idTipoUsuario.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
+              <label *ngIf="frmUsuarios.controls.idTipoUsuario.invalid && frmUsuarios.controls.idTipoUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
               <br>
               <mat-form-field class="fuenteCuerpos">
                 <mat-select formControlName="idTipoUsuario" class="fuenteCuerpos" placeholder="Tipo Usuario">
@@ -131,12 +131,12 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <label *ngIf="frmUsuarios.controls.idTipoUsuario.invalid && frmUsuarios.controls.idTipoUsuario.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
+              <label *ngIf="frmUsuarios.controls.idTipoUsuario.invalid && frmUsuarios.controls.idTipoUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
               <br>
             </form>
           </div>
-          <div class="modal-footer" style="background: #f6f2ebe3;">
-            <button mat-stroked-button class="btnEjecutar fuenteTitulos margenSuperior" [disabled]="frmUsuarios.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
+          <div class="modal-footer">
+            <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmUsuarios.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
           </div>
         </ng-template>
   </mat-tab>
