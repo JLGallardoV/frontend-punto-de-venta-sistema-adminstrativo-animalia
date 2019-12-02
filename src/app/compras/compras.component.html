@@ -20,7 +20,7 @@
 
               <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
                 <mat-select formControlName="idProducto" class="fuenteCuerpos" placeholder="producto">
-                  <mat-option class="fuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i.idProducto">
+                  <mat-option class="fuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i">
                     {{ i.nombreProducto }}
                   </mat-option>
                 </mat-select>
@@ -101,7 +101,7 @@
             </div>
           </div>
           <br>
-          <button mat-stroked-button class="btnComprar fuenteCuerpos" style="width:100%;" [disabled]="frmCompra.invalid" (click)="agregarCompra()">Agregar</button>
+          <button mat-stroked-button class="btnComprar fuenteCuerpos" style="width:100%;font-size:22px;" [disabled]="frmCompra.invalid" (click)="agregarCompra()">Comprar</button>
         </mat-card>
         <mat-card class="letreroModulo">
           <div style="margin-bottom: -14px;">

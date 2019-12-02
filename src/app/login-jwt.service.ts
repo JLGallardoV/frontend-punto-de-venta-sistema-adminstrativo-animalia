@@ -81,7 +81,7 @@ export class LoginJwtService {
       this.router.navigate(['/login']);
       setTimeout(
         ()=>{
-          alert('Verifica que eres gerente :' + JSON.stringify(nivel));
+          alert('Verifica que eres gerente');
           cerrarMenu.closeNav()
         }
       );
