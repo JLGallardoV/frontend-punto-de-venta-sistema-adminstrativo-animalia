@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild,AfterViewInit} from '@angular/core';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
-import { MatTabChangeEvent } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import { APIService } from '../api.service';
 import { IProductos,IClientes,IVendedores } from '../api.service';
@@ -100,7 +99,7 @@ export class FacturasComponent implements OnInit {
     this.API.buscarUsuarioPorNombre(localStorage.getItem("usuario")).subscribe(
       (success:any)=>{
           this.usuarioActual = success.respuesta[0].idUsuario;
-          console.log("usario en sesion: ",this.usuarioActual)
+          //console.log("usuario en sesion: ",this.usuarioActual)
       },
       (error)=>{
         console.log(error)
@@ -152,7 +151,7 @@ export class FacturasComponent implements OnInit {
   //eliminar productos de tabla (carrito)
   public eliminarProductosCarrito(objetoProducto:any,indice:number){
     console.log("producto a eliminar: ",indice-1,);
-    console.log(this.arregloProductosTabla)
+    //console.log(this.arregloProductosTabla)
     this.arregloProductosTabla.splice(indice,1);
     this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
 
@@ -171,14 +170,14 @@ export class FacturasComponent implements OnInit {
   public transfiereTiposDePagos(idTipoPago:number){
     this.API.mostrarTiposDePagos().subscribe(
       (success:any)=>{
-          let prueba = this.frmVenta.get('idTipoPago').value;
+          let tipoPago = this.frmVenta.get('idTipoPago').value;
           //si el checkbox esta marcado
-          if (prueba == true) {
+          if (tipoPago == true) {
             this.arregloTiposDePagosLista.push({idTipoPago:idTipoPago})
-          }else if(prueba == false){//elimina los elementos desmarcados
+          }else if(tipoPago == false){//elimina los elementos desmarcados
               this.arregloTiposDePagosLista.splice(idTipoPago-1,1)
           }
-          //console.log("tipo de pago seleccionado: ",this.arregloTiposDePagosLista);
+          //console.log("tipos de pagos ",this.arregloTiposDePagosLista);
       },
       (error)=>{
         console.log("algo ocurrio: ",error)
@@ -194,10 +193,11 @@ export class FacturasComponent implements OnInit {
     pagoTransaccionForm = this.frmVenta.get('pagoTransaccion').value;
     arregloProductosForm = this.arregloProductosTabla;
     arregloTiposDePagosForm = this.arregloTiposDePagosLista;
+
     if (arregloProductosForm.length == 0) {
         alert("no olvides presionar boton de agregar productos \n");
     }
-    if (arregloTiposDePagosForm[0].idTipoPago == 1) {
+    if (arregloTiposDePagosForm[0].tipoPago != "efectivo") {
         pagoTransaccionForm = this.montoAcumulado;
     }
     //console.log("tipo de pago en transaccion: ", arregloTiposDePagosForm);
@@ -279,22 +279,14 @@ export class FacturasComponent implements OnInit {
     si el disabled (en el html) detecta true deshabilita el tab*/
     let nivel = localStorage.getItem('nivel');
     if (nivel == 'vendedor') {
-        console.log("acceso denegado: v...");
+        //console.log("acceso denegado: v...");
         return true;
     }else{
-        console.log("acceso permitido: g...")
+        //console.log("acceso permitido: g...")
         return false;
     }
   }
 
-  /*public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-    console.log("pestaña numero: ", tabChangeEvent.index);
-    if (true) {
-
-    }
-    //this.guardian.restringirAcceso();
-
-  }*/
   ngOnInit() {
     this.mostrarUsuarioEnSesion();
     this.listarTiposDePagos();

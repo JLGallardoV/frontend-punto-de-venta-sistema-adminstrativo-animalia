@@ -58,9 +58,31 @@ export class AppComponent {
 
   }
 
+  public denegarVistaMenu(){
+    if(localStorage.getItem('nivel') == 'vendedor'){
+      document.getElementById("etiquetaTransacciones").style.display = "none";
+      document.getElementById("etiquetaProductos").style.display = "none";
+      document.getElementById("etiquetaDevoluciones").style.display = "none";
+      document.getElementById("etiquetaUsuarios").style.display = "none";
+      document.getElementById("etiquetaReportes").style.display = "none";
+    }else{
+      document.getElementById("etiquetaTransacciones").style.display = "block";
+      document.getElementById("etiquetaProductos").style.display = "block";
+      document.getElementById("etiquetaDevoluciones").style.display = "block";
+      document.getElementById("etiquetaUsuarios").style.display = "block";
+      document.getElementById("etiquetaReportes").style.display = "block";
+    }
+
+  }
+
   /*FIN REDIRECCION DE RUTAS*/
   public logout(){
     this.JWT.logout();
     this.closeNav();
+  }
+  ngOnInit(){
+    setTimeout(()=>{
+      this.denegarVistaMenu();
+    },1000);
   }
 }

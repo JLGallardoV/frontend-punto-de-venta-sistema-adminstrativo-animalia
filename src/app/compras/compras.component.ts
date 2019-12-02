@@ -66,7 +66,7 @@ export class ComprasComponent implements OnInit {
     this.API.buscarUsuarioPorNombre(localStorage.getItem("usuario")).subscribe(
       (success: any) => {
         this.usuarioActual = success.respuesta[0].idUsuario;
-        console.log("usuario en sesion : ", this.usuarioActual)
+        //console.log("usuario en sesion : ", this.usuarioActual)
       },
       (error) => {
         console.log(error)

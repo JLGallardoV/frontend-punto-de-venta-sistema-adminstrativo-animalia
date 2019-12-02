@@ -3,7 +3,7 @@
 <br>
     <mat-tab-group>
       <!--TAB 1 REPORTE ECONOMICO-->
-      <mat-tab label="Reporte Economico">
+      <mat-tab label="Utilidad">
         <br>
         <mat-card class="contenedorAcciones" style="width: 80%;">
           <div style="margin-top: -7px;">
@@ -65,14 +65,14 @@
         </div>
           <mat-card class="letreroModulo">
             <div style="margin-bottom: -14px;">
-              Reporte Económico <i class='fas fa-balance-scale' style='font-size: 20px;'></i>
+              Utilidad <i class='fas fa-balance-scale' style='font-size: 20px;'></i>
             </div>
           </mat-card>
       </mat-tab>
 
       <!--TAB 2 VIABILIDAD PRODUCTOS-->
 
-      <mat-tab label="Viabilidad Productos">
+      <mat-tab label="Ventas Productos">
         <br>
         <mat-card class="contenedorAcciones">
           <div style="margin-top: -7px;">
@@ -115,7 +115,7 @@
               </ng-container>
 
               <ng-container matColumnDef="vendidos">
-                <th mat-header-cell *matHeaderCellDef style="text-align:center"> Estatus </th>
+                <th mat-header-cell *matHeaderCellDef style="text-align:center"> Vendidos </th>
                 <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.vendidos}} </td>
               </ng-container>
 
@@ -123,12 +123,12 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumnsMP;"></tr>
             </table>
             </div>
-            <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator #MatPaginatorVentasProducto [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
           </mat-card>
         </div>
           <mat-card class="letreroModulo">
             <div style="margin-bottom: -14px;">
-              Viabilidad Productos <i class='fas fa-chart-line' style='font-size: 20px;'></i>
+              Ventas Productos <i class='fas fa-chart-line' style='font-size: 20px;'></i>
             </div>
           </mat-card>
       </mat-tab>
@@ -188,12 +188,12 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumnsRV;"></tr>
             </table>
             </div>
-            <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator #MatPaginatorVentasVendedores [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
           </mat-card>
         </div>
           <mat-card class="letreroModulo">
             <div style="margin-bottom: -14px;">
-              Rendimiento Vendedores <i class='fas fa-chart-pie' style='font-size: 20px;'></i>
+              Ventas Vendedores <i class='fas fa-chart-pie' style='font-size: 20px;'></i>
             </div>
           </mat-card>
       </mat-tab>
