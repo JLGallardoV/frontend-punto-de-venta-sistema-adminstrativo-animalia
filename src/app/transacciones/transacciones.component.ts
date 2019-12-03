@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import {ITransacciones,ICompras,APIService} from '../api.service';
 import {LoginJwtService} from '../login-jwt.service';
+import {GenerarPDFsService} from '../generar-pdfs.service';
 
 /*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
 ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
@@ -51,7 +52,8 @@ export class TransaccionesComponent implements OnInit {
   constructor(
     public guardian:LoginJwtService,
     private modalService: NgbModal,
-    public API: APIService
+    public API: APIService,
+    public PDF: GenerarPDFsService
   ) {}
 
   /*
@@ -184,6 +186,10 @@ export class TransaccionesComponent implements OnInit {
     //si se usa el modulo tab de compras, entonces arroja los resultados buscados en la primer pagina:
     this.dsCompras.paginator ? this.dsCompras.paginator.firstPage(): null;
 
+  }
+  //INVOCANDO SERVICIO PARA GENERAR PDF
+  public generarPDF(etiquetaPDF:string){
+    this.PDF.generarPDF(etiquetaPDF);
   }
   ngOnInit() {
     this.guardian.restringirAcceso();

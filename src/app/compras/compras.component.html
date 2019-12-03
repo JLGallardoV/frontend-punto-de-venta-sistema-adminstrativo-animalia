@@ -88,7 +88,7 @@
               <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#272727;"><i class='fas fa-clipboard'></i>&nbsp; Detalles de la Compra:</p>
               <hr>
               <div name="informacionCompra" class="fuenteCuerpos" style="text-align:center;font-size: 17px;" *ngFor="let i of arregloCompras">
-                <p>
+                <p class="fuenteCuerpos" style="font-size:22px;text-align:center;">
                   <b>ID Compra: </b> {{i.idCompra}}
                   <br><b>Monto $: </b> {{i.montoCompra}}
                   <br><b>Fecha : </b> {{i.fechaCompra | date: 'yyyy-MM-dd HH:mm:ss'}}

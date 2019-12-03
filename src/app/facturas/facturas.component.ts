@@ -5,6 +5,7 @@ import { APIService } from '../api.service';
 import { IProductos,IClientes,IVendedores } from '../api.service';
 import { ITransacciones } from '../api.service';
 import { ITiposDePagos } from '../api.service';
+import {GenerarPDFsService} from '../generar-pdfs.service';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class FacturasComponent implements OnInit {
   public montoAcumulado : number;
   public usuarioActual:number;
 
-  constructor(public formBuilder: FormBuilder, public API: APIService) {
+  constructor(public formBuilder: FormBuilder, public API: APIService,public PDF: GenerarPDFsService) {
     this.montoAcumulado = 0;
     this.usuarioActual = 0;
     this.frmVenta = this.formBuilder.group({
@@ -212,6 +213,7 @@ export class FacturasComponent implements OnInit {
             if(success.estatus > 0){
               alert(success.respuesta);
               this.listarUltimaTransaccion();
+              document.getElementById('idTicket').style.display = "block";
               this.limpiarFormulario();
             }else if(success.estatus < 0) {
                 alert("No cuentas con el dinero suficiente | verifica tu pago");
@@ -299,6 +301,10 @@ export class FacturasComponent implements OnInit {
         //console.log("acceso permitido: g...")
         return false;
     }
+  }
+  //INVOCANDO SERVICIO PARA GENERAR PDF
+  public generarPDF(etiquetaPDF:string){
+    this.PDF.generarPDF(etiquetaPDF);
   }
 
   ngOnInit() {

@@ -7,12 +7,16 @@
   margin-left: 10px;
 
 }
+//BTN IMPRIMIR TICKET
+.ticket{
+  top: -30px!important;
+  float: right;
+  left: -45px;
+}
 
 //BTN PARA REALIZAR UNA VENTA
 .btnVender{
   width: 40%;
-  color: #2a2d3b;
-  border: solid 1px;
   float: right;
   margin-top: -50px;
 }
