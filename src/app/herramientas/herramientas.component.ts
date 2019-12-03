@@ -7,11 +7,38 @@ import { IReportesEconomicos, IViabilidadProductos, IRendimientoVendedores, APIS
 import { DateFormatService } from '../date-format.service';
 import { LoginJwtService } from '../login-jwt.service';
 
+/*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
+ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
+
+const etiquetaRango = (page: number, pageSize: number, length: number) => {
+  if (length == 0 || pageSize == 0) { //caso paginador vacio
+    return `0 de ${length}`;
+  }
+  length = Math.max(length, 0);
+
+  const startIndex = page * pageSize; //indice de inicio
+
+/*if resumido; si el indice de inicio excede la logitud de la lista (6 - 5 de 6 por ejemplo) se veria: 6 - 10 de 6 gracias al
+[pageSizeOptions] lo cual es incorrecto pues solo hay 6 elementos en tal rango ENTONCES mejor coloca como indice final el indice inicial
+quedaria 6 - 6 de 6 que es lo correcto).*/
+  const endIndex = startIndex < length ?
+      Math.min(startIndex + pageSize, length) :
+      startIndex + pageSize;
+
+  return `${startIndex + 1} - ${endIndex} de ${length}`;
+}
+
 @Component({
   selector: 'app-herramientas',
   templateUrl: './herramientas.component.html',
   styleUrls: ['./herramientas.component.scss']
 })
+@Component({
+  selector: 'app-accesos',
+  templateUrl: '../accesos/accesos.component.html',
+  styleUrls: ['../accesos/accesos.component.scss']
+})
+
 export class HerramientasComponent implements OnInit {
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
@@ -28,7 +55,10 @@ export class HerramientasComponent implements OnInit {
   dsViabilidadProductos: MatTableDataSource<IViabilidadProductos>;
   dsRendimientoVendedores: MatTableDataSource<IRendimientoVendedores>;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild('MatPaginatorReporteEconomico',{static: true})MatPaginatorReporteEconomico: MatPaginator;
+  @ViewChild('MatPaginatorVentasProducto',{static: true})MatPaginatorVentasProducto: MatPaginator;
+  @ViewChild('MatPaginatorVentasVendedores',{static: true})MatPaginatorVentasVendedores: MatPaginator;
+
   constructor(public guardian: LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder, public API: APIService, public formateandoFecha: DateFormatService) {
     this.frmFiltrado = this.formBuilder.group({
       fechaInicio: ["", Validators.required],
@@ -72,6 +102,12 @@ export class HerramientasComponent implements OnInit {
         let arregloReportesEconomicos: IReportesEconomicos[] = [{ montoTransacciones: valorTransacciones, montoCompras: valorCompras, utilidad: valorUtilidad }];
 
         this.dsReporteEconomico = new MatTableDataSource(arregloReportesEconomicos);
+        if(!this.dsReporteEconomico.paginator){
+          this.dsReporteEconomico.paginator = this.MatPaginatorReporteEconomico;
+          this.dsReporteEconomico.paginator._intl.itemsPerPageLabel = 'items por pagina';
+          this.dsReporteEconomico.paginator._intl.getRangeLabel = etiquetaRango;
+
+        }
 
       },
       (error) => {
@@ -91,11 +127,15 @@ export class HerramientasComponent implements OnInit {
 
     this.API.mostrarViabilidadProductos(fechaInicioFormateada, fechaFinalFormateada).subscribe(
       (success: any) => {
-        if (success.respuesta == 1) {
+        if (success.estatus == 1) {
           this.dsViabilidadProductos = new MatTableDataSource(success.respuesta);
-        }
-        alert(JSON.stringify(success.respuesta));
+          if(!this.dsViabilidadProductos.paginator){
+            this.dsViabilidadProductos.paginator = this.MatPaginatorVentasProducto;
+            this.dsViabilidadProductos.paginator._intl.itemsPerPageLabel = 'items por pagina';
+            this.dsViabilidadProductos.paginator._intl.getRangeLabel = etiquetaRango;
 
+          }
+        }
       },
       (error) => {
         console.log("hubo un problema: ", error)
@@ -117,6 +157,12 @@ export class HerramientasComponent implements OnInit {
         //el ws regresa 0 en el numero de ventas en lugar de null y null el nombre del vendedor si no hay ventas por eso esta validacion.
         if (success.estatus == 1 && success.respuesta[0].nombreVendedor != null) {
           this.dsRendimientoVendedores = new MatTableDataSource(success.respuesta);
+          if(!this.dsRendimientoVendedores.paginator){
+            this.dsRendimientoVendedores.paginator = this.MatPaginatorVentasVendedores;
+            this.dsRendimientoVendedores.paginator._intl.itemsPerPageLabel = 'items por pagina';
+            this.dsRendimientoVendedores.paginator._intl.getRangeLabel = etiquetaRango;
+
+          }
         } else {
           alert("Al parecer no hay registro en estas fechas.")
         }
@@ -132,7 +178,6 @@ export class HerramientasComponent implements OnInit {
 
   ngOnInit() {
     this.guardian.restringirAcceso();
-
   }
 
 }

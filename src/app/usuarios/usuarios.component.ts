@@ -5,12 +5,29 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA B
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUsuarios, ITiposDeUsuarios, IVendedores, APIService } from '../api.service';
 import { LoginJwtService } from '../login-jwt.service';
+import { sha256} from 'js-sha256';
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.scss']
 })
+@Component({
+  selector: 'app-clientes',
+  templateUrl: '../clientes/clientes.component.html',
+  //styleUrls: ['../clientes/clientes.component.scss']
+})
+@Component({
+  selector: 'app-vendedores',
+  templateUrl: '../vendedores/vendedores.component.html',
+  //styleUrls: ['./vendedores.component.scss']
+})
+@Component({
+  selector: 'app-proveedores',
+  templateUrl: '../proveedores/proveedores.component.html',
+//  styleUrls: ['./proveedores.component.scss']
+})
+
 export class UsuariosComponent implements OnInit {
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
@@ -57,6 +74,7 @@ export class UsuariosComponent implements OnInit {
   public listarUsuarios() {
     this.API.mostrarUsuarios().subscribe(
       (success: any) => {
+        console.log("usuarios", success.respuesta)
         this.dsUsuarios = new MatTableDataSource(success.respuesta);
         this.dsUsuarios.paginator = this.paginator;
       },
@@ -102,8 +120,9 @@ export class UsuariosComponent implements OnInit {
     let idVendedorForm = this.frmUsuarios.get('idVendedor').value;
     let idTipoUsuarioForm = this.frmUsuarios.get('idTipoUsuario').value;
 
+    let contraseniaEncriptada = sha256(contraseniaUsuarioForm)//Encriptacion de constraña sha256
     if (this.titulo == "Agregar Usuario") {
-      this.API.aniadirUsuario(nombreUsuarioForm, emailUsuarioForm, contraseniaUsuarioForm, idVendedorForm, idTipoUsuarioForm).subscribe(
+      this.API.aniadirUsuario(nombreUsuarioForm, emailUsuarioForm, contraseniaEncriptada, idVendedorForm, idTipoUsuarioForm).subscribe(
         (success: any) => {
           alert(JSON.stringify(success.respuesta));
           this.listarUsuarios();

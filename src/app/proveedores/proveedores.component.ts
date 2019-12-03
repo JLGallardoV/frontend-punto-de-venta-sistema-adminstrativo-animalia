@@ -138,7 +138,6 @@ export class ProveedoresComponent implements OnInit {
     this.dsProveedores.paginator ? this.dsProveedores.paginator.firstPage(): null;
   }
   ngOnInit() {
-    this.guardian.restringirAcceso();
     this.listarProveedores();
   }
 

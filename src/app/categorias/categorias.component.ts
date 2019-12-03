@@ -147,7 +147,6 @@ export class CategoriasComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.guardian.restringirAcceso();
     this.listarCategorias();
   }
 

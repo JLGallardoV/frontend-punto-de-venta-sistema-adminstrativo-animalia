@@ -1,19 +1,11 @@
-//CONTENEDOR PRINCIPAL
-.cardPrincipal{
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
-}
-
 //CONTENDEDOR DE LOS INPUTS
-.contenedorInputs > * {
-  width: 80%;
-  display: block;
-}
-.bordeContenedorInputs{
-  border-radius: 6px;
-  padding-left: 6%;
-  background:#f9f9f9;
+.cardInputs{
+  height: 74vh;
+  width: 95%;
+  margin: auto;
+  display: inline-block;
+  margin-left: 10px;
+
 }
 
 //BTN PARA REALIZAR UNA VENTA
@@ -33,11 +25,11 @@
   top: 5px;
 }
 
+
 //FUENTE USADA PARA EL ENCABEZADO ARRIBA DE LA TABLA Y LISTA DE OUTPUTS
 .fuenteEncabezadosCentrada{
-  font-size: 22px;
+  font-size: 27px;
   text-align: center;
-  color: darkseagreen;
 }
 
 //BORDE PARA GRID DE OUTPUTS
@@ -98,56 +90,61 @@
   background-color:transparent;
 }
 
-//SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL:
-::ng-deep .mat-focused {
-  /*change color of label*/
-  color: darkseagreen !important;
+
+
+//SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
+//PERSONALIZAR EL COLOR DE INPUT
+::ng-deep .mat-focused {/*cambia el color del label cuando se enfoca*/
+  color: #272727 !important;
  }
-
-
-
-
- ::ng-deep.mat-form-field-underline {
-  /*change color of underline*/
-  background-color: darkseagreen !important;
-  border-color: darkseagreen !important;
+ ::ng-deep.mat-form-field-underline { /*cambia el color del subrayado*/
+  background-color: #272727 !important;
+  border-color: #272727 !important;
 }
-
-::ng-deep.mat-form-field-ripple {
- /*change color of underline when focused*/
- background-color: darkseagreen !important;
- border-color: darkseagreen !important;
+::ng-deep.mat-form-field-ripple {/*cambiar el color del subrayado cuando se enfoca*/
+ background-color: #272727 !important;
+ border-color: #272727 !important;
 
 }
-
-::ng-deep.mat-form-field-label{
-  color: darkseagreen !important;
+::ng-deep.mat-form-field-label{/*color del label*/
+  color: #272727 !important;
+}
+::ng-deep.mat-input-element {/*color del punto de insercion (parpadeo de barra vertical al escribir)*/
+    caret-color: #272727 !important;
 }
 
-::ng-deep.mat-mini-fab .mat-button-wrapper {
+
+//SOBREESCRIBIR TAB ANGULAR MATERIAL
+::ng-deep.mat-tab-label{ //fuente de cabeceras de tab
+  //background-color: #4b2b08 !important;
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 22px;
+}
+
+::ng-deep.mat-ink-bar{
+  background-color: #dfdcd4!important;
+
+}
+
+//SOBREESCRIBIR OPTIONS DEL SELECT PARA QUE SE VEAN ARRIBA DEL MODAL
+::ng-deep.cdk-overlay-container {
+  z-index: 10001!important;
+}
+//SOBREESCRIBIR COLOR DE FUENTE A SELECT
+::ng-deep.mat-select-value {
+color: #272727;
+}
+//AÑADIR PADDING AL TAB EN GENERAL PARA QUESE ALCANCE A DISTINGUIR LA SOMBRA INFERIOR DE LOS CARDS
+::ng-deep.cdk-focused .cdk-mouse-focuse{
+  color: #272727 !important;
+}
+//TAMAÑO CHECKBOX
+::ng-deep.mat-checkbox{
+  font-size: 20px!important;
+}
+// ACOMODAR EL "+" EN EL BOTON DE AÑADIR PRODUCTOS
+::ng-deep.mat-mini-fab{
     display: inherit !important;
     line-height: 18px !important;
     padding: 0!important;
-}
-
-::ng-deep.cdk-focused .cdk-mouse-focuse{
-  color: darkseagreen !important;
-
-}
-::ng-deep.mat-radio-outer-circle{
-  border-color: darkseagreen!important;
-}
-::ng-deep.mat-checkbox-background {
-  background-color: #516f5e!important;
-}
-::ng-deep.mat-ripple-element{
-  background-color: darkseagreen!important;
-
-}
-::ng-deep.mat-radio-persistent-ripple{
-  background-color: #14ff3e!important;
-}
-//CAMBIA COLOR AL TEXTO DE LOS SELECT DE MATERIAL
-::ng-deep.mat-select-value {
-  color: rgb(192, 191, 192);
 }

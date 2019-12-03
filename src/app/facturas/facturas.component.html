@@ -1,75 +1,80 @@
-  <mat-card class="cardPrincipal">
-    <div name="renglonPrincipal" class="row">
+<br>
+<br>
+<br>
+<mat-tab-group id="contenido">
+<!-- TAB 1 VENTAS -->
+  <mat-tab label="Ventas">
+    <br>
+    <div name="renglonPrincipal" class="row" style="width:100vw">
       <div name="columnaIzquierdaInputs" class="col-md-3">
-        <h2>
-          <form [formGroup]="frmVenta" class="darkerFuenteCuerpos">
-            <div class="contenedorInputs bordeContenedorInputs">
-              <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px; width: 100%;">
-                  <input formControlName="idVendedor" matInput placeholder="Vendedor"  style="color:#f6f2ebe3;" readonly>
+        <mat-card class="cardInputs">
+          <form [formGroup]="frmVenta" class="fuenteCuerpos">
+              <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+                <input formControlName="idVendedor" matInput placeholder="Vendedor" style="color:#272727;" readonly>
               </mat-form-field>
-              <label *ngIf="frmVenta.controls.idVendedor.invalid && frmVenta.controls.idVendedor.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
+              <label *ngIf="frmVenta.controls.idVendedor.invalid && frmVenta.controls.idVendedor.dirty" style="color:red;">Este campo es obligatorio</label>
               <br>
 
-              <mat-form-field class="darkerFuenteCuerpos" color="--yellow" style="font-size:20px;">
-                <mat-select formControlName="idCliente" class="darkerFuenteCuerpos" style="font-size:20px;" placeholder="cliente">
-                  <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloClientesSelect" [value]="i.idCliente">
+              <mat-form-field class="fuenteCuerpos" color="--yellow" style="font-size:20px;">
+                <mat-select formControlName="idCliente" class="fuenteCuerpos" style="font-size:20px;" placeholder="cliente">
+                  <mat-option class="fuenteCuerpos" *ngFor="let i of arregloClientesSelect" [value]="i.idCliente">
                     {{ i.nombreCliente }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <label *ngIf="frmVenta.controls.idCliente.invalid && frmVenta.controls.idCliente.dirty" style="color: #f6f2ebe3;">Este campo es obligatorio</label>
+              <label *ngIf="frmVenta.controls.idCliente.invalid && frmVenta.controls.idCliente.dirty" style="color: #red;">Este campo es obligatorio</label>
 
-              <mat-form-field class="darkerFuenteCuerpos" style="font-size:20px;">
-                <input formControlName="pagoTransaccion" type="number" min="1" matInput placeholder="pago" style="color: #f6f2ebe3;">
+              <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+                <input formControlName="pagoTransaccion" type="number" min="1" matInput placeholder="pago" style="color: #272727;">
               </mat-form-field>
-              <label *ngIf="frmVenta.controls.pagoTransaccion.invalid && frmVenta.controls.pagoTransaccion.dirty" style="color: #f6f2ebe3;">Este campo es obligatorio</label>
-
-              <div name="contenedorProductos" style="display:inline-block">
-
-                <mat-form-field class="darkerFuenteCuerpos" style="width: 50%;margin-right: 15px;">
-                  <mat-select formControlName="idProducto" class="darkerFuenteCuerpos" style="font-size:20px;" placeholder="producto">
-                    <mat-option  class="darkerFuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i.idProducto">
+              <label *ngIf="frmVenta.controls.pagoTransaccion.invalid && frmVenta.controls.pagoTransaccion.dirty" style="color: #red;">Este campo es obligatorio</label>
+                <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+                  <mat-select formControlName="idProducto" class="fuenteCuerpos" placeholder="producto">
+                    <mat-option class="fuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i">
                       {{ i.nombreProducto }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <mat-form-field class="darkerFuenteCuerpos" style="width:40%;">
-                  <div style="display: flex;">
-                    <input formControlName="cantidadProducto" type="number" min="1" matInput placeholder="cantidad" style="color: #f6f2ebe3;">
-                    <button mat-mini-fab matTooltip="Agrega el producto y su cantidad a la venta" class="btnAcciones btnAniadirEntidad" [disabled]="frmVenta.controls.idProducto.invalid || frmVenta.controls.cantidadProducto.invalid" (click)="transfiereProductos()" style="margin-right: -11px;">+</button>
-                  </div>
-                </mat-form-field>
-                <label *ngIf="(frmVenta.controls.idProducto.invalid && frmVenta.controls.idProducto.dirty) || (frmVenta.controls.cantidadProducto.invalid && frmVenta.controls.cantidadProducto.dirty)" style="color: #f6f2ebe3;">Este campo es obligatorio</label>
 
-              </div>
-              <div>
-              </div>
-                <mat-checkbox formControlName="idTipoPago" class="darkerFuenteCuerpos" *ngFor="let i of arregloTiposDePagosSelect" value="{{i.idTipoPago}}" style="color:darkseagreen;" (change)="transfiereTiposDePagos(i.idTipoPago)">{{i.tipoPago}}</mat-checkbox>
-              <label *ngIf="frmVenta.controls.idTipoPago.invalid && frmVenta.controls.idTipoPago.dirty" style="color: #f6f2ebe3;">Este campo es obligatorio</label>
+                <div style="display: inline-block;">
+                  <mat-form-field class="fuenteCuerpos" style="font-size:20px;width: 110px;">
+                    <div style="display: flex;">
+                      <input formControlName="cantidadProducto" type="number" min="1" matInput placeholder="cantidad" style="color: #272727;">
+                    </div>
+                  </mat-form-field>
+                  <button mat-mini-fab matTooltip="Agrega el producto y su cantidad a la venta" class="btnAcciones btnAniadirEntidad" [disabled]="frmVenta.controls.idProducto.invalid || frmVenta.controls.cantidadProducto.invalid"
+                  (click)="transfiereProductos()" style="top: 10px;margin-left: 16px;"><i class='fas fa-plus' style="margin-top: -24px;"></i></button>
+                  <label *ngIf="(frmVenta.controls.idProducto.invalid && frmVenta.controls.idProducto.dirty) || (frmVenta.controls.cantidadProducto.invalid && frmVenta.controls.cantidadProducto.dirty)" style="color: #red;">Este campo es
+                    obligatorio</label>
+                </div>
+                <div style="display: grid;">
+                  <mat-checkbox formControlName="idTipoPago" class="fuenteCuerpos" style="font-size: 20px;" *ngFor="let i of arregloTiposDePagosSelect" value="{{i.idTipoPago}}" style="" (change)="transfiereTiposDePagos(i.idTipoPago)">{{i.tipoPago}}
+                  </mat-checkbox>
+                </div>
+              <label *ngIf="frmVenta.controls.idTipoPago.invalid && frmVenta.controls.idTipoPago.dirty" style="color: #red;">Este campo es obligatorio</label>
               <br>
-            </div>
           </form>
-        </h2>
+        </mat-card>
       </div>
 
-
+      <!-- resultados  -->
       <div name="columnaDerechaOutpus" class="col-md-9">
         <mat-card style="background:#f9f9f9;">
           <br>
           <div name="renglonOutpus" class="row bordeOutputs">
             <div name="columnaIzquierdaOuputs" class="col-md-6">
 
-              <p class="darkerFuenteTitulos fuenteEncabezadosCentrada" style="color:#2a2d3b;">Productos:</p>
+              <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#272727;"><i class='fas fa-shopping-cart'></i>&nbsp; Productos:</p>
               <div name="tablaProductos" class="listaEntidad">
-                <table mat-table [dataSource]="dsProductos" class="darkerFuenteCuerpos" style="font-size:98px">
+                <table mat-table [dataSource]="dsProductos" class="fuenteCuerpos" style="font-size:98px">
                   <ng-container matColumnDef="nombreProducto">
                     <th mat-header-cell *matHeaderCellDef style="text-align:center"> Nombre </th>
-                    <td mat-cell *matCellDef="let elemento; let i = index"style="text-align:center"> {{elemento.nombreProducto}} </td>
+                    <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.nombreProducto}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="precioUnitarioProducto">
                     <th mat-header-cell *matHeaderCellDef style="text-align:center"> p.Unitario </th>
-                    <td mat-cell *matCellDef="let elemento; let i = index"style="text-align:center"> {{elemento.precioUnitarioProducto}} </td>
+                    <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.precioUnitarioProducto}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="cantidadProducto">
@@ -87,54 +92,50 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumnsProductos"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumnsProductos;"></tr>
                 </table>
+                <div id="tablaVentaConcluidaVacia" style="text-align: center;font-size: 20px;">
+                  <p class="fuenteCuerpos"><i>Tabla vacía</i></p>
+                </div>
+                <hr>
               </div>
-              <label class="darkerFuenteCuerpos">Monto $: <input class="outputMonto" type="text" readonly [(ngModel)]="montoAcumulado"></label>
+              <label class="fuenteCuerpos" style="font-size:24px;">Monto $: <input class="outputMonto" type="text" readonly [(ngModel)]="montoAcumulado"></label>
             </div>
+
             <div name="columnaDerechaOuputs" class="col-md-6">
-              <p class="darkerFuenteTitulos fuenteEncabezadosCentrada" style="color:#2a2d3b;">Información General:</p>
-              <div name="informacionVenta" class="">
-                <table name="tablaTransacciones" mat-table [dataSource]="dsTransacciones" class="darkerFuenteCuerpos" style="font-size:98px">
-                  <ng-container matColumnDef="idTransaccion">
-                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> Id Venta </th>
-                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.idTransaccion}} </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="fechaTransaccion">
-                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="numeroProductosEnTransaccion">
-                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> No.Productos </th>
-                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.numeroProductosEnTransaccion}} </td>
-                  </ng-container>
-
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
+              <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#272727;"><i class='fas fa-clipboard'></i>&nbsp; Detalles de la Venta:</p>
+              <hr>
+              <div name="informacionVenta" class="fuenteCuerpos" style="text-align:center;font-size: 17px;" *ngFor="let i of arregloTransacciones">
+                <p>
+                  <b>ID Transaccion: </b> {{i.idTransaccion}}
+                  <br><b>Cliente: </b> {{i.nombreCliente}}
+                  <br><b>Vendedor: </b> {{i.nombreVendedor}}
+                  <br><b>Fecha : </b> {{i.fechaTransaccion | date: 'yyyy-MM-dd HH:mm:ss'}}
+                  <br><b>Productos : </b> {{i.productos}}
+                  <br><b>N° Productos: </b> {{i.numeroProductosEnTransaccion}}
+                  <br><b>Monto $: </b> {{i.montoConIvaTransaccion}}
+                  <br><b>Iva $: </b> {{i.ivaTransaccion}}
+                  <br><b>Pago $: </b> {{i.pagoTransaccion}}
+                  <br><b>Cambio $: </b> {{i.cambioTransaccion}}
+                  <br><b>Tipo de Pago: </b> {{i.tipoPago}}
+                </p>
               </div>
               <br>
-                <hr>
-                <div *ngFor="let i of arregloTransacciones" style="display: inline-block;">
-                  <p class="darkerFuenteTitulos resultadoOperaciones" style="float:right;color:#2a2d3b;"> <i class='fas fa-dollar-sign' style='font-size:24px; margin-right: 33px;'></i>Pago: {{i.pagoTransaccion}} </p>
-                  <p class="darkerFuenteTitulos resultadoOperaciones" style="float:left;color:#2a2d3b;"> <i class='fas fa-shopping-cart' style='font-size:24px; margin-right: 19px;'></i>Monto Total: {{i.montoConIvaTransaccion}} </p>
-                  <p class="darkerFuenteTitulos resultadoOperaciones" style="float:right;color:#2a2d3b;"> <i class='fas fa-handshake' style='font-size:24px; margin-right: 19px;'></i>Cambio: {{i.cambioTransaccion}} </p>
-                </div>
             </div>
           </div>
           <br>
           <br>
           <br>
-          <button mat-stroked-button class="btnVender darkerFuenteTitulos" style="width:100%;" [disabled]="frmVenta.invalid" (click)="agregarTransaccion()">Vender</button>
+          <button mat-stroked-button class="btnVender fuenteCuerpos" style="width:100%;font-size:22px;" [disabled]="frmVenta.invalid" (click)="agregarTransaccion()">Vender</button>
+        </mat-card>
+        <mat-card class="letreroModulo" style="">
+          <div style="margin-bottom: -14px;">
+            Ventas <i class='fas fa-shopping-cart' style='font-size: 20px;'></i>
+          </div>
         </mat-card>
       </div>
     </div>
-    <mat-card class="letreroModulo">
-      <div style="margin-bottom: -14px;">
-        Ventas <i class='fas fa-shopping-cart' style='font-size: 20px;color: darkseagreen;'></i>
-      </div>
-    </mat-card>
-  </mat-card>
-  <div name="redirigirCompras">
-    <button mat-fab type="button" class="btnCompras" [routerLink]="[ '/compras']"><i class='fas fa-truck carritoIrCompras'></i></button>
-  </div>
+  </mat-tab>
+<!-- TAB 2 COMPRAS -->
+  <mat-tab [disabled]="denegarAccesoCompras()" label="Compras">
+    <app-compras></app-compras>
+  </mat-tab>
+</mat-tab-group>

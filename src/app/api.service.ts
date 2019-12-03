@@ -227,6 +227,9 @@ export class APIService {
   public mostrarCompras() {
     return this.http.get('http://localhost:3000/comprasWS/listarCompras', { headers: this.headers });
   }
+  public mostrarUltimaCompra() {
+    return this.http.get('http://localhost:3000/comprasWS/listarUltimaCompra', { headers: this.headers });
+  }
   public mostrarDetalleCompra(idCompra:number) {
     return this.http.get(`http://localhost:3000/comprasWS/listarDetalleCompra/${idCompra}`, { headers: this.headers });
   }
@@ -236,6 +239,9 @@ export class APIService {
 
   public mostrarTransacciones() {
     return this.http.get('http://localhost:3000/transaccionesWS/listarTransacciones', { headers: this.headers });
+  }
+  public mostrarUltimaTransaccion() {
+    return this.http.get('http://localhost:3000/transaccionesWS/listarUltimaTransaccion', { headers: this.headers });
   }
   public mostrarDetalleTransaccion(idTransaccion:number) {
     return this.http.get(`http://localhost:3000/transaccionesWS/listarDetalleTransaccion/${idTransaccion}`, { headers: this.headers });
@@ -342,6 +348,9 @@ export class APIService {
   //WS PARA TIPOS DE PAGOS
   public mostrarTiposDePagos() {
     return this.http.get('http://localhost:3000/tiposPagosWS/listarTiposPagos', { headers: this.headers });
+  }
+  public buscarTiposDePagosPorID(idTipoPago:number) {
+    return this.http.get(`http://localhost:3000/tiposPagosWS/buscarTipoPagoPorID/${idTipoPago}`, { headers: this.headers });
   }
   public aniadirTipoDePago(tipoPago: string, viaTipoPago: string, descripcionTipoPago: string) {
     return this.http.post('http://localhost:3000/tiposPagosWS/agregarTipoPago', {tipoPago, viaTipoPago, descripcionTipoPago }, { headers: this.headers });

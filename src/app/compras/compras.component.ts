@@ -21,13 +21,15 @@ export class ComprasComponent implements OnInit {
   public arregloProductosTabla: IProductos[] = [];
   public arregloUsuariosSelect: IUsuarios[] = [];
   public arregloProveedoresSelect: IProveedores[] = [];
-  public arregloCompras: ICompras[] = [];
+  public arregloCompras: any[] = [];
   public ultimaCompra: any;
   public montoAcumulado: number;
   public usuarioActual: number;
+  public privilegios: boolean;
   constructor(public guardian: LoginJwtService, public formBuilder: FormBuilder, public API: APIService) {
     this.montoAcumulado = 0;
     this.usuarioActual = 0;
+    this.privilegios = false;
     this.frmCompra = this.formBuilder.group({
       idUsuario: localStorage.getItem("usuario"),
       idProveedor: ["", Validators.required],
@@ -64,7 +66,7 @@ export class ComprasComponent implements OnInit {
     this.API.buscarUsuarioPorNombre(localStorage.getItem("usuario")).subscribe(
       (success: any) => {
         this.usuarioActual = success.respuesta[0].idUsuario;
-        console.log("esta en sesion: ", this.usuarioActual)
+        //console.log("usuario en sesion : ", this.usuarioActual)
       },
       (error) => {
         console.log(error)
@@ -84,48 +86,50 @@ export class ComprasComponent implements OnInit {
   }
 
   public transfiereProductos() {
-    let transaferirValorID: number = 0;
+    let transaferirValorID: any;
     let transaferirValorCantidad: number = 0;
 
-    this.API.mostrarProductos().subscribe(
-      (success: any) => {
-        transaferirValorID = this.frmCompra.get('idProducto').value;
-        transaferirValorCantidad = this.frmCompra.get('cantidadProducto').value;
-        //sumando monto cada que se agrega un producto
-        this.montoAcumulado = this.montoAcumulado + (success.respuesta[0].precioUnitarioProducto * transaferirValorCantidad);
+        this.API.mostrarProductos().subscribe(
+          (success:any)=>{
+            transaferirValorID = this.frmCompra.get('idProducto').value;
+            transaferirValorCantidad = this.frmCompra.get('cantidadProducto').value;
+            //sumando monto cada que se agrega un producto
+            this.montoAcumulado = this.montoAcumulado + (success.respuesta[0].precioUnitarioProducto * transaferirValorCantidad);
 
-        //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
-        if (this.arregloProductosTabla.length >= 1) {
-          console.log("posicion en arreglo: ", this.arregloProductosTabla[0].cantidadProducto);
-          for (let i = 0; i < this.arregloProductosTabla.length; i++) {
-            if (transaferirValorID == this.arregloProductosTabla[i].idProducto) {
-              this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + transaferirValorCantidad;
-              this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
-            } else {
-              if (i == this.arregloProductosTabla.length - 1) {
-                this.arregloProductosTabla.push({ idProducto: transaferirValorID, cantidadProducto: transaferirValorCantidad, nombreProducto: success.respuesta[transaferirValorID - 1].nombreProducto, precioUnitarioProducto: success.respuesta[transaferirValorID - 1].precioUnitarioProducto });
-                this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
-                break;
+            //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
+            if (this.arregloProductosTabla.length >= 1) {
+              //console.log("posicion en arreglo: ",this.arregloProductosTabla[0].cantidadProducto);
+              for (let i = 0; i < this.arregloProductosTabla.length; i++) {
+                if (transaferirValorID.idProducto == this.arregloProductosTabla[i].idProducto) {
+                  this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + transaferirValorCantidad;
+                  this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+                }else{
+                  if(i == this.arregloProductosTabla.length -1){
+                    this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioUnitarioProducto:transaferirValorID.precioUnitarioProducto});
+                    this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+                    break;
+                  }
+
+                }
               }
-            }
-          }
 
-        } else {
-          this.arregloProductosTabla.push({ idProducto: transaferirValorID, cantidadProducto: transaferirValorCantidad, nombreProducto: success.respuesta[transaferirValorID - 1].nombreProducto, precioUnitarioProducto: success.respuesta[transaferirValorID - 1].precioUnitarioProducto });
-          this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
-        }
-      },
-      (error) => {
-        console.log("algo ocurrio", error)
-      }
-    );
+            }else{
+              this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioUnitarioProducto:transaferirValorID.precioUnitarioProducto});
+              this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
+              document.getElementById('tablaVentaConcluidaVacia').style.display = "none";
+            }
+          },
+          (error)=>{
+            console.log("algo ocurrio",error)
+          }
+        );
   }
 
 
   //eliminar productos de tabla (carrito)
   public eliminarProductosCarrito(objetoProducto: any, indice: number) {
-    console.log("producto a eliminar: ", indice - 1, );
-    console.log(this.arregloProductosTabla)
+    //console.log("producto a eliminar: ", indice - 1, );
+    //console.log(this.arregloProductosTabla)
     this.arregloProductosTabla.splice(indice, 1);
     this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
 
@@ -142,7 +146,7 @@ export class ComprasComponent implements OnInit {
 
   //agregar una compras
   public agregarCompra() {
-    console.log("montoAcumulado")
+    //console.log("montoAcumulado")
     let idUsuarioForm: number = 0, idProveedorForm: number = 0, montoCompraForm: number = 0;
     let arregloProductosForm: any[] = []
     idUsuarioForm = this.usuarioActual;
@@ -157,7 +161,7 @@ export class ComprasComponent implements OnInit {
       (success: any) => {
         if (success.estatus > 0) {
           alert(success.respuesta);
-          this.listarCompras();
+          this.listarUltimaCompra();
           this.limpiarFormulario();
         } else if (success.estatus < 0) {
           alert(JSON.stringify(success.respuesta));
@@ -172,20 +176,40 @@ export class ComprasComponent implements OnInit {
     );
   }
 
-  //muestra la transaccion hecha despues de que se oprime el btn de vender
-  public listarCompras() {
-    this.API.mostrarCompras().subscribe(
-      (success: any) => {
-        this.arregloCompras = success.respuesta;
-        //alert("arreglot: "+JSON.stringify(this.arregloCompras))
-        this.ultimaCompra = this.arregloCompras[this.arregloCompras.length - 1]
-        //alert("ultima venta: "+JSON.stringify(this.ultimaCompra))
-        this.dsCompras = new MatTableDataSource([this.ultimaCompra]); //[prueba] convierto a array la variable prueba para que pueda ser iterada
-        this.arregloCompras = [this.ultimaCompra];//aplico simbolo iterador para que pueda iterarlo en un loop
-        //alert("arreglo mostrado: "+JSON.stringify(this.arregloTransacciones));
+  //muestra la ultima transaccion hecha despues de que se oprime el btn de vender
+  public listarUltimaCompra(){
+      this.API.mostrarUltimaCompra().subscribe(
+      (success:any)=>{
+        //console.log("ultima compra: ",success.respuesta);
+        let ultimaCompraRegistro:number = 0;
+        ultimaCompraRegistro = success.respuesta[0].idCompra;
+        this.API.mostrarDetalleCompra(ultimaCompraRegistro).subscribe(
+          (success:any)=>{
+            let arregloTemporalProductos:any[] = [];
+            let productos: string[] = [];
+
+            for (let i = 0; i < success.respuesta.length; i++) {
+              //atrapamos cada uno de los productos en un array
+              arregloTemporalProductos.push(success.respuesta[i].nombreProducto);
+            }
+            productos = arregloTemporalProductos
+            //arreglo de objetos listo para iterar
+            this.arregloCompras = [{
+              idCompra: success.respuesta[0].idCompra,
+              montoCompra: success.respuesta[0].montoCompra,
+              fechaCompra: success.respuesta[0].fechaCompra,
+              nombreProveedor: success.respuesta[0].nombreProveedor,
+              nombreUsuario: success.respuesta[0].nombreUsuario,
+              productos: productos
+            }];
+          },
+          (error)=>{
+            console.log("algo ocurrio: ",error);
+          }
+        );
       },
-      (error) => {
-        console.log("algo ocurrio: ", error)
+      (error)=>{
+        console.log("algo ocurrio: ",error);
       }
     );
   }
@@ -202,7 +226,6 @@ export class ComprasComponent implements OnInit {
 
 
   ngOnInit() {
-    this.guardian.restringirAcceso();
     this.mostrarUsuarioEnSesion();
     this.listarProductos();
     this.listarProveedores();

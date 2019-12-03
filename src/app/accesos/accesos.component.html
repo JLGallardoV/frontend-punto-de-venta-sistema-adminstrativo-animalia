@@ -1,32 +1,23 @@
-<div class="imagenFondo">
-  <mat-toolbar class="estiloToolbar animacionCambioColor" style="transition:0.5s;" (click)="openBottomSheet()">
-    <div class="margenMenu">
-      <i class='fas fa-bars' style='font-size: 18px;color: darkseagreen'></i> Menu
-    </div>
-  </mat-toolbar>
-  <br>
-
+<br>
   <mat-card class="contenedorAcciones" style="width:80%;height: 14%;">
     <div class="row">
       <div class="col-1">
         <i class='fas fa-search lupa'></i>
       </div>
       <div class="col-11" style="margin-top: -5px;">
-        <mat-form-field class="darkerFuenteCuerpos inputBuscar" style="color: darkseagreen;">
-          <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
+        <mat-form-field class="fuenteCuerpos inputBuscar" style="">
+          <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="">
         </mat-form-field>
       </div>
     </div>
   </mat-card>
   <br>
 
-  <!-- card donde se encuentra la tabla de datos  -->
-
-
-  <mat-card class="cardPrincipal row">
-    <br>
-    <div class="tablaElastica">
-      <table mat-table [dataSource]="dsAccesos" class="darkerFuenteCuerpos" style="font-size:98px">
+  <!-- informacion tabla -->
+  <div name="cardTablaRegistros">
+    <mat-card style="width: 98%;margin: auto;">
+      <div class="tablaElastica">
+        <table mat-table [dataSource]="dsAccesos" class="fuenteCuerpos" style="font-size:98px">
 
         <ng-container matColumnDef="idAcceso">
           <th mat-header-cell *matHeaderCellDef> ID Registro</th>
@@ -51,13 +42,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-    </div>
-    <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background:#eae4dda1;"></mat-paginator>
+      </div>
+      <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
+    </mat-card>
+  </div>
     <mat-card class="letreroModulo">
       <div style="margin-bottom: -14px;">
-        Accesos <i class='fas fa-user-clock' style='font-size: 20px;color: darkseagreen;'></i>
+        Accesos <i class='fas fa-user-clock' style='font-size: 20px;'></i>
       </div>
     </mat-card>
-  </mat-card>
-
-</div>

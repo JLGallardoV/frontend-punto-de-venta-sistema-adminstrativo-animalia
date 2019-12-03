@@ -147,7 +147,6 @@ export class VendedoresComponent implements OnInit {
     this.dsVendedores.paginator ? this.dsVendedores.paginator.firstPage(): null;
   }
   ngOnInit() {
-    this.guardian.restringirAcceso();
     this.listarVendedores();
 
   }
