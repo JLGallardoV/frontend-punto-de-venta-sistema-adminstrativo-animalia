@@ -349,6 +349,9 @@ export class APIService {
   public mostrarTiposDePagos() {
     return this.http.get('http://localhost:3000/tiposPagosWS/listarTiposPagos', { headers: this.headers });
   }
+  public buscarTiposDePagosPorID(idTipoPago:number) {
+    return this.http.get(`http://localhost:3000/tiposPagosWS/buscarTipoPagoPorID/${idTipoPago}`, { headers: this.headers });
+  }
   public aniadirTipoDePago(tipoPago: string, viaTipoPago: string, descripcionTipoPago: string) {
     return this.http.post('http://localhost:3000/tiposPagosWS/agregarTipoPago', {tipoPago, viaTipoPago, descripcionTipoPago }, { headers: this.headers });
   }

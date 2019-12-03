@@ -171,6 +171,7 @@ export class FacturasComponent implements OnInit {
     this.API.mostrarTiposDePagos().subscribe(
       (success:any)=>{
           let tipoPago = this.frmVenta.get('idTipoPago').value;
+          this.frmVenta.controls['pagoTransaccion'].setValue(null);
           //si el checkbox esta marcado
           if (tipoPago == true) {
             this.arregloTiposDePagosLista.push({idTipoPago:idTipoPago})
@@ -196,27 +197,37 @@ export class FacturasComponent implements OnInit {
 
     if (arregloProductosForm.length == 0) {
         alert("no olvides presionar boton de agregar productos \n");
+        return;
     }
-    if (arregloTiposDePagosForm[0].tipoPago != "efectivo") {
-        pagoTransaccionForm = this.montoAcumulado;
-    }
-    //console.log("tipo de pago en transaccion: ", arregloTiposDePagosForm);
-    this.API.aniadirTransaccion(idClienteForm,idVendedorForm,pagoTransaccionForm,arregloProductosForm,arregloTiposDePagosForm).subscribe(
-      (success:any)=>{
-        if(success.estatus > 0){
-          alert(success.respuesta);
-          this.listarUltimaTransaccion();
-          this.limpiarFormulario();
-        }else if(success.estatus < 0) {
-            alert("No cuentas con el dinero suficiente | verifica tu pago");
-            console.log("verdadero error: ",success.respuesta)
-        }else{
-          alert(JSON.stringify(success.respuesta));
-        }
 
+    console.log("tipo de pago en transaccion: ", arregloTiposDePagosForm);
+    this.API.buscarTiposDePagosPorID(arregloTiposDePagosForm[0].idTipoPago).subscribe(
+      (success:any)=>{
+        if (success.respuesta[0].tipoPago != "efectivo") {
+            pagoTransaccionForm = this.montoAcumulado;
+            console.log("no pagaste en efectivo")
+        }
+        this.API.aniadirTransaccion(idClienteForm,idVendedorForm,pagoTransaccionForm,arregloProductosForm,arregloTiposDePagosForm).subscribe(
+          (success:any)=>{
+            if(success.estatus > 0){
+              alert(success.respuesta);
+              this.listarUltimaTransaccion();
+              this.limpiarFormulario();
+            }else if(success.estatus < 0) {
+                alert("No cuentas con el dinero suficiente | verifica tu pago");
+                console.log("verdadero error: ",success.respuesta)
+            }else{
+              alert(JSON.stringify(success.respuesta));
+            }
+
+          },
+          (error)=>{
+            alert("algo anda mal | "+ JSON.stringify(error));
+          }
+        );
       },
-      (error)=>{
-        alert("algo anda mal | "+ JSON.stringify(error));
+      (error:any)=>{
+
       }
     );
   }
@@ -263,14 +274,17 @@ export class FacturasComponent implements OnInit {
     );
   }
 
-  //limpiamos el formulario una vez e haya realizado uan venta.
+  //LIMPIO EL FORMULARIO UNA VEZ QUE SE HA REALIZADO UNA COMPRA.
   public limpiarFormulario(){
     this.frmVenta.reset();
     this.frmVenta.controls['idVendedor'].setValue(localStorage.getItem("usuario"));
     this.montoAcumulado = 0;
 
     this.dsProductos.data=[];
-    this.arregloProductosTabla = [];
+    this.arregloProductosTabla = []
+    this.arregloTiposDePagosLista = [];
+    document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
+
   }
 
   //DENEGAR ACCESO A COMPRAS
