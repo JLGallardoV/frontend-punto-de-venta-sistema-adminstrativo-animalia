@@ -147,8 +147,8 @@
         <i class='fas fa-file-alt' style='font-size:24px'></i>
       </h3>
     </div>
-    <div class="modal-body" *ngFor="let i of arregloDetalleVenta">
-      <p class="fuenteCuerpos" style="font-size:22px;">
+    <div id="etiquetaPDF" class="modal-body" *ngFor="let i of arregloDetalleVenta">
+      <p class="fuenteCuerpos" style="font-size:22px;text-align:center;">
         <b>Id Venta:</b> {{i.idVenta}}<br>
         <b>Nombre cliente:</b> {{i.nombreCliente}}<br>
         <b>Productos:</b> {{i.productos}}<br>
@@ -162,6 +162,7 @@
       </p>
     </div>
     <div class="modal-footer">
+      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF')" style="font-size: 19px;">Imprimir</button>
       <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
     </div>
   </ng-template>
@@ -174,8 +175,8 @@
         <i class='fas fa-file-alt' style='font-size:24px'></i>
       </h3>
     </div>
-    <div class="modal-body" *ngFor="let i of arregloDetalleCompra">
-      <p class="fuenteCuerpos" style="font-size:22px;">
+    <div id="etiquetaPDF2" class="modal-body" *ngFor="let i of arregloDetalleCompra">
+      <p class="fuenteCuerpos" style="font-size:22px;text-align:center">
         <b>Id Compra:</b> {{i.idCompra}}<br>
         <b>Monto $:</b> {{i.monto}}<br>
         <b>Productos:</b> {{i.productos}}<br>
@@ -186,6 +187,7 @@
       </p>
     </div>
     <div class="modal-footer">
+      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF2')" style="font-size: 19px;">Imprimir</button>
       <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
     </div>
   </ng-template>

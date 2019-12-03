@@ -41,6 +41,8 @@ import { HerramientasComponent} from './herramientas/herramientas.component';
 import { HttpClientModule} from '@angular/common/http';
 import { ComprasComponent} from './compras/compras.component';
 import{AuthGuard} from './auth.guard';
+import {GenerarPDFsService} from './generar-pdfs.service';
+
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 @NgModule({
@@ -81,7 +83,8 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
   ],
   entryComponents: [],
   providers: [
-    AuthGuard
+    AuthGuard,
+    GenerarPDFsService
   ],
   bootstrap: [AppComponent]
 })
