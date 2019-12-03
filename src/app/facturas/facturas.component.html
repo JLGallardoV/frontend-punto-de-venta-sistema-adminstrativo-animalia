@@ -13,7 +13,6 @@
                 <input formControlName="idVendedor" matInput placeholder="Vendedor" style="color:#272727;" readonly>
               </mat-form-field>
               <label *ngIf="frmVenta.controls.idVendedor.invalid && frmVenta.controls.idVendedor.dirty" style="color:red;">Este campo es obligatorio</label>
-              <br>
 
               <mat-form-field class="fuenteCuerpos" color="--yellow" style="font-size:20px;">
                 <mat-select formControlName="idCliente" class="fuenteCuerpos" style="font-size:20px;" placeholder="cliente">
@@ -24,10 +23,6 @@
               </mat-form-field>
               <label *ngIf="frmVenta.controls.idCliente.invalid && frmVenta.controls.idCliente.dirty" style="color: #red;">Este campo es obligatorio</label>
 
-              <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
-                <input formControlName="pagoTransaccion" type="number" min="1" matInput placeholder="pago" style="color: #272727;">
-              </mat-form-field>
-              <label *ngIf="frmVenta.controls.pagoTransaccion.invalid && frmVenta.controls.pagoTransaccion.dirty" style="color: #red;">Este campo es obligatorio</label>
                 <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
                   <mat-select formControlName="idProducto" class="fuenteCuerpos" placeholder="producto">
                     <mat-option class="fuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i">
@@ -52,7 +47,10 @@
                   </mat-checkbox>
                 </div>
               <label *ngIf="frmVenta.controls.idTipoPago.invalid && frmVenta.controls.idTipoPago.dirty" style="color: #red;">Este campo es obligatorio</label>
-              <br>
+              <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+                <input formControlName="pagoTransaccion" type="number" min="1" matInput placeholder="pago" style="color: #272727;">
+              </mat-form-field>
+              <label *ngIf="frmVenta.controls.pagoTransaccion.invalid && frmVenta.controls.pagoTransaccion.dirty" style="color: #red;">Este campo es obligatorio</label>
           </form>
         </mat-card>
       </div>
@@ -103,7 +101,7 @@
             <div name="columnaDerechaOuputs" class="col-md-6">
               <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#272727;"><i class='fas fa-clipboard'></i>&nbsp; Detalles de la Venta:</p>
               <hr>
-              <div name="informacionVenta" class="fuenteCuerpos" style="text-align:center;font-size: 17px;" *ngFor="let i of arregloTransacciones">
+              <div id="etiquetaPDF" name="informacionVenta" class="fuenteCuerpos" style="text-align:center;font-size: 17px;" *ngFor="let i of arregloTransacciones">
                 <p>
                   <b>ID Transaccion: </b> {{i.idTransaccion}}
                   <br><b>Cliente: </b> {{i.nombreCliente}}
@@ -118,6 +116,7 @@
                   <br><b>Tipo de Pago: </b> {{i.tipoPago}}
                 </p>
               </div>
+              <button id="idTicket" mat-mini-fab matTooltip="Imprimir ticket" class="ticket btnAcciones btnAniadirEntidad" (click)="generarPDF('etiquetaPDF')" style="display:none !important;"><i class='fas fa-print' style="margin-top: -24px;"></i></button>
               <br>
             </div>
           </div>
