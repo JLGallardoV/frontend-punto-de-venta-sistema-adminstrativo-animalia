@@ -161,13 +161,15 @@ export interface IViabilidadProductos {
   providedIn: 'root'
 })
 export class APIService {
-  public headers = new HttpHeaders({
-    'Authorization': 'Bearer ' + localStorage.getItem('token'), //token almacenado en LS
-    'Content-Type': 'application/json',//tipo de contenido JSON
-    'Accept': 'application/json' //acepta el cuerpo de la peticion JSON
-  });
+  public headers: any;
 
   constructor(public http: HttpClient) {
+      this.headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('token'), //token almacenado en LS
+        'Content-Type': 'application/json',//tipo de contenido JSON
+        'Accept': 'application/json' //acepta el cuerpo de la peticion JSON
+      });
+      console.log("tkn ::::> ",localStorage.getItem('token'))
   }
 
 

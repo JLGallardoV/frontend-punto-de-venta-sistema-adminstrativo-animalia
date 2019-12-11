@@ -57,32 +57,51 @@ export class AppComponent {
     this.closeNav();
 
   }
-
+  //BLOQUEAMOS ALGUNOS MODULOS PARA EVITAR ACCESO PERMITIDO A VENDEDORES
   public denegarVistaMenu(){
-    if(localStorage.getItem('nivel') == 'vendedor'){
+    let memoriaNavegador: string = "";
+    memoriaNavegador = localStorage.getItem('nivel');
+    console.log("memoria: ",memoriaNavegador);
+    //este if es para cuando inicia la aplicacion, oculta el menu.
+    if( memoriaNavegador == null){
+      console.log("memoria vacia")
+      document.getElementById("idToolbar").style.display = "none";
+      return;
+    }
+    //este if es para ocultar modulos al vendedor
+    if(memoriaNavegador == 'vendedor'){
       document.getElementById("etiquetaTransacciones").style.display = "none";
       document.getElementById("etiquetaProductos").style.display = "none";
       document.getElementById("etiquetaDevoluciones").style.display = "none";
       document.getElementById("etiquetaUsuarios").style.display = "none";
       document.getElementById("etiquetaReportes").style.display = "none";
-    }else{
+      return;
+    }
+    //si nada de lo anterior se cumple pues muestra el menu como tal
       document.getElementById("etiquetaTransacciones").style.display = "block";
       document.getElementById("etiquetaProductos").style.display = "block";
       document.getElementById("etiquetaDevoluciones").style.display = "block";
       document.getElementById("etiquetaUsuarios").style.display = "block";
       document.getElementById("etiquetaReportes").style.display = "block";
-    }
-
   }
 
   /*FIN REDIRECCION DE RUTAS*/
+
+
+  //BOTON PARA SALIR DE LA APP DESDE EL MENU
   public logout(){
+    document.getElementById("idToolbar").style.display = "none";
     this.JWT.logout();
     this.closeNav();
   }
   ngOnInit(){
     setTimeout(()=>{
+      /*lo meto en un settimeout para que deje
+      cargar primero el login (en su caso) y alcance a borrar el ls
+      y no muestre el menu por detectar valores en el ls
+      esto esta planeado para la primera vez que la app es lanzada
+      o en el caso de cerra la app si borrar el ls*/
       this.denegarVistaMenu();
-    },1000);
+    },500);
   }
 }

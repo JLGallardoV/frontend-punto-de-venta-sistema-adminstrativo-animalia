@@ -7,7 +7,8 @@ import html2canvas from 'html2canvas';
 })
 export class GenerarPDFsService {
 
-  constructor() { }
+  constructor() {
+  }
   public generarPDF(etiquetaPDF:string){
   //document.getElementById('LogoPDF').style.display = "block";
   var data = document.getElementById(etiquetaPDF);

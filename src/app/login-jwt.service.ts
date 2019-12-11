@@ -1,26 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { APIService } from './api.service';
+//import { APIService } from './api.service';
 import {AppComponent} from './app.component';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginJwtService {
   public headers = new HttpHeaders();
-  constructor(private http: HttpClient, private router: Router, public API: APIService) { }
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   public login(nombreUsuario: string, contraseniaUsuario: string) {
     this.http.post('http://localhost:3000/loginWS/autenticarUsuarios', { nombreUsuario, contraseniaUsuario}, { headers: this.headers }).subscribe(
       (resp: any) => {
         if (resp.estatus > 0) {
-
-          //console.log("respueta", resp.estatus, " contenido: ", resp.respuesta);
           localStorage.setItem('token', resp.respuesta); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
+          console.log("tkn2 (generado desde login) ::::> ", localStorage.getItem('token'));
           localStorage.setItem('usuario', nombreUsuario); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
-          document.getElementById("main").style.display = "block";
-          this.registrarAcceso(nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
-          this.router.navigate(['/facturas']);
+          //this.registrarAcceso(nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
+          setTimeout(()=>{
+            this.router.navigate(['/facturas']);
+            document.getElementById("idToolbar").style.display = "block";
+            /*en este lapso puedes poner un spinner*/
+          },3000);
 
         } else {
           alert("verifica tus datos");
@@ -32,8 +35,8 @@ export class LoginJwtService {
   }
 
 
-
-  //INCIO - REGISTRAR ACCESO
+/*ENCONTRAR OTRA MANERA DE REGISTRAR EN LA BITACORA*/
+  /*INCIO - REGISTRAR ACCESO
   //esta funcion es invocada una vez se detecta el usuario a añadir
   public agregarAcceso(idUsuario: number) {
     this.API.aniadirAcceso('acceso', idUsuario).subscribe(
@@ -66,7 +69,7 @@ export class LoginJwtService {
       }
     );
   }
-  //FIN - REGISTRAR ACCESO
+  //FIN - REGISTRAR ACCESO*/
 
 
 
@@ -92,8 +95,12 @@ export class LoginJwtService {
 
   //SALIR DE LA CUENTA ACTUAL
   public logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    localStorage.clear();
+    setTimeout(()=>{
+      console.log("sesion cerrada");
+      this.router.navigate(['/login']);
+    },3000);
+
   }
 
 }

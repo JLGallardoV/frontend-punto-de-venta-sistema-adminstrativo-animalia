@@ -14,7 +14,7 @@
               </mat-form-field>
               <label *ngIf="frmVenta.controls.idVendedor.invalid && frmVenta.controls.idVendedor.dirty" style="color:red;">Este campo es obligatorio</label>
 
-              <mat-form-field class="fuenteCuerpos" color="--yellow" style="font-size:20px;">
+              <mat-form-field class="fuenteCuerpos" color="--yellow" style="font-size:20px;width: 100%;">
                 <mat-select formControlName="idCliente" class="fuenteCuerpos" style="font-size:20px;" placeholder="cliente">
                   <mat-option class="fuenteCuerpos" *ngFor="let i of arregloClientesSelect" [value]="i.idCliente">
                     {{ i.nombreCliente }}
@@ -23,7 +23,7 @@
               </mat-form-field>
               <label *ngIf="frmVenta.controls.idCliente.invalid && frmVenta.controls.idCliente.dirty" style="color: #red;">Este campo es obligatorio</label>
 
-                <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+                <mat-form-field class="fuenteCuerpos" style="font-size:20px;width: 100%;">
                   <mat-select formControlName="idProducto" class="fuenteCuerpos" placeholder="producto">
                     <mat-option class="fuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i">
                       {{ i.nombreProducto }}
@@ -31,8 +31,8 @@
                   </mat-select>
                 </mat-form-field>
 
-                <div style="display: inline-block;">
-                  <mat-form-field class="fuenteCuerpos" style="font-size:20px;width: 110px;">
+                <div style="display: contents">
+                  <mat-form-field class="fuenteCuerpos" style="font-size:20px;width:90%;">
                     <div style="display: flex;">
                       <input formControlName="cantidadProducto" type="number" min="1" matInput placeholder="cantidad" style="color: #272727;">
                     </div>
@@ -47,7 +47,7 @@
                   </mat-checkbox>
                 </div>
               <label *ngIf="frmVenta.controls.idTipoPago.invalid && frmVenta.controls.idTipoPago.dirty" style="color: #red;">Este campo es obligatorio</label>
-              <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+              <mat-form-field class="fuenteCuerpos" style="font-size:20px;width: 100%;">
                 <input formControlName="pagoTransaccion" type="number" min="1" matInput placeholder="pago" style="color: #272727;">
               </mat-form-field>
               <label *ngIf="frmVenta.controls.pagoTransaccion.invalid && frmVenta.controls.pagoTransaccion.dirty" style="color: #red;">Este campo es obligatorio</label>
