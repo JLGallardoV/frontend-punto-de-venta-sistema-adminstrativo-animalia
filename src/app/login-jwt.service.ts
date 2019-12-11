@@ -12,14 +12,20 @@ export class LoginJwtService {
   }
 
   public login(nombreUsuario: string, contraseniaUsuario: string) {
+    let accion:string = "acceso";
     this.http.post('http://localhost:3000/loginWS/autenticarUsuarios', { nombreUsuario, contraseniaUsuario}, { headers: this.headers }).subscribe(
       (resp: any) => {
         if (resp.estatus > 0) {
           localStorage.setItem('token', resp.respuesta); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
-          console.log("tkn2 (generado desde login) ::::> ", localStorage.getItem('token'));
           localStorage.setItem('usuario', nombreUsuario); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
-          //this.registrarAcceso(nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
+          console.log("sesion iniciada");
           setTimeout(()=>{
+            this.headers = new HttpHeaders({
+              'Authorization': 'Bearer ' + localStorage.getItem('token'), //token almacenado en LS
+              'Content-Type': 'application/json',//tipo de contenido JSON
+              'Accept': 'application/json' //acepta el cuerpo de la peticion JSON
+            });
+            this.registrarAcceso(accion,nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
             this.router.navigate(['/facturas']);
             document.getElementById("idToolbar").style.display = "block";
             /*en este lapso puedes poner un spinner*/
@@ -36,40 +42,37 @@ export class LoginJwtService {
 
 
 /*ENCONTRAR OTRA MANERA DE REGISTRAR EN LA BITACORA*/
-  /*INCIO - REGISTRAR ACCESO
+  //INCIO - REGISTRAR ACCESO
   //esta funcion es invocada una vez se detecta el usuario a añadir
-  public agregarAcceso(idUsuario: number) {
-    this.API.aniadirAcceso('acceso', idUsuario).subscribe(
-      () => {
-        console.log("se capturo correctamente al usuario")
+  public agregarAcceso(accionAcceso:string,idUsuario: number) {
+    console.log("accion: ",accionAcceso)
+    this.http.post('http://localhost:3000/accesosWS/agregarAcceso', {accionAcceso,idUsuario}, { headers: this.headers }).subscribe(
+      (success:any)=>{
+        console.log("usuario/accion capturados exitosamente");
       },
-      (error) => {
-        console.log("No se capturo usuario", error)
+      (error)=>{
+        console.log("hubo un problema: ",error)
       }
     );
   }
 
   //buscamos el usuario segun su nombre para asi registrar su accesos en la bd
-  public registrarAcceso(nombreUsuario: string) {
-    this.API.buscarUsuarioPorNombre(nombreUsuario).subscribe(
+  public registrarAcceso(accion:string,nombreUsuario: string) {
+    this.http.get(`http://localhost:3000/usuariosWS/buscarUsuarioPorNombre/${nombreUsuario}`, { headers: this.headers }).subscribe(
       (success: any) => {
-        //console.log("fuente: ",success.respuesta)
         let idCapturado: number = 0;
         let nivel:string = "";
-        nivel = success.respuesta[0].tipoUsuario;
+        nivel = success.respuesta[0].tipoUsuario;//obtengo el nivel de acceso del usuario para el uso conveniente posteriormente
         localStorage.setItem('nivel', nivel);
         idCapturado = success.respuesta[0].idUsuario;
-        this.agregarAcceso(idCapturado); //anexamos a la db el usuario en acceso
-        //almaceno el nivel en ls para poder restringir accesos a modulos
-        //console.log("nivel de usuario: ",success.respuesta[0].tipoUsuario)
-
+        this.agregarAcceso(accion,idCapturado); //anexamos a la db el usuario en acceso invocando tal metodo
       },
       (error) => {
         console.log("hubo un problema", error);
       }
     );
   }
-  //FIN - REGISTRAR ACCESO*/
+  //FIN - REGISTRAR ACCESO
 
 
 
@@ -95,6 +98,8 @@ export class LoginJwtService {
 
   //SALIR DE LA CUENTA ACTUAL
   public logout() {
+    let accion: string = "salida"
+    this.registrarAcceso(accion,localStorage.getItem('usuario'));
     localStorage.clear();
     setTimeout(()=>{
       console.log("sesion cerrada");
