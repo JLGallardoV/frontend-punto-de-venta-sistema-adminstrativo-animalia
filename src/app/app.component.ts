@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 //import { LoginJwtService } from './login-jwt.service';
 import { Router } from '@angular/router'
+import { FuncionamientoBitacoraService } from './funcionamiento-bitacora.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private router: Router) {
+  constructor(private router: Router, public bitacora: FuncionamientoBitacoraService) {
   }
   title = 'puntoVentaMascotas';
   public openNav() {
@@ -59,23 +60,24 @@ export class AppComponent {
   }
 
   //BLOQUEAMOS ALGUNOS MODULOS PARA EVITAR ACCESO PERMITIDO A VENDEDORES
-  public static denegarModulosVendedores(){
-    let memoriaNavegador: string = "";
-    memoriaNavegador = localStorage.getItem('nivel');
-    //este if es para ocultar modulos al vendedor
-    if (memoriaNavegador == 'vendedor') {
-      console.log("vendedor en sesion");
-      document.getElementById("main").style.display = "block";
-      document.getElementById("idToolbar").style.display = "block";
-      document.getElementById("etiquetaTransacciones").style.display = "none";
-      document.getElementById("etiquetaProductos").style.display = "none";
-      document.getElementById("etiquetaDevoluciones").style.display = "none";
-      document.getElementById("etiquetaUsuarios").style.display = "none";
-      document.getElementById("etiquetaReportes").style.display = "none";
-      return;
-    }
+  public static denegarModulosVendedores() {
+    setTimeout(() => {
+      //esperamos a que se alcance a plasmar en el ls el nivel de acceso
+      let memoriaNavegador: string = "";
+      memoriaNavegador = localStorage.getItem('nivel');
+      if (memoriaNavegador == 'vendedor') {
+        console.log("vendedor en sesion");
+        document.getElementById("main").style.display = "block";
+        document.getElementById("idToolbar").style.display = "block";
+        document.getElementById("etiquetaTransacciones").style.display = "none";
+        document.getElementById("etiquetaProductos").style.display = "none";
+        document.getElementById("etiquetaDevoluciones").style.display = "none";
+        document.getElementById("etiquetaUsuarios").style.display = "none";
+        document.getElementById("etiquetaReportes").style.display = "none";
+      }
+    }, 1000);
   }
-
+  //ESTE METODO SE EJECUTA CADA QUE SE INICIA LA APLICACION POR PRIMERA VEZ
   public denegarVistaMenu() {
     console.log("reestructurando menu");
     let memoriaNavegador: string = "";
@@ -85,6 +87,9 @@ export class AppComponent {
       document.getElementById("idToolbar").style.display = "none";
       return;
     }
+    //por si el vendedor no cierra la sesion y vuelve a abrir el modulo de operaciones no muestre los demas modulos en el menu
+    AppComponent.denegarModulosVendedores();
+
     //si nada de lo anterior se cumple pues muestra el menu como tal
     document.getElementById("etiquetaTransacciones").style.display = "block";
     document.getElementById("etiquetaProductos").style.display = "block";
@@ -100,6 +105,15 @@ export class AppComponent {
   public logout() {
     document.getElementById("idToolbar").style.display = "none";
     //this.JWT.logout();
+    let accion: string = "salida"
+    this.bitacora.registrarAcceso(accion, localStorage.getItem('usuario'));
+    localStorage.clear();
+    setTimeout(() => {
+      /*lo meto en un setTimeout para evitar que redirija al login y borre el ls
+      ya que de tal manera no se registraria el usuario en la bitacora*/
+      console.log("sesion cerrada");
+      this.router.navigate(['/login']);
+    }, 3000);
     this.closeNav();
   }
   ngOnInit() {
