@@ -6,6 +6,7 @@ import { IProductos,IClientes,IVendedores } from '../api.service';
 import { ITransacciones } from '../api.service';
 import { ITiposDePagos } from '../api.service';
 import {GenerarPDFsService} from '../generar-pdfs.service';
+import {AppComponent} from '../app.component';
 
 
 @Component({
@@ -308,6 +309,7 @@ export class FacturasComponent implements OnInit {
   }
 
   ngOnInit() {
+    //AppComponent.denegarVistaMenu();
     this.mostrarUsuarioEnSesion();
     this.listarTiposDePagos();
     this.listarProductos();

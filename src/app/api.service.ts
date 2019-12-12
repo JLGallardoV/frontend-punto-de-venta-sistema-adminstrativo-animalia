@@ -169,7 +169,7 @@ export class APIService {
         'Content-Type': 'application/json',//tipo de contenido JSON
         'Accept': 'application/json' //acepta el cuerpo de la peticion JSON
       });
-      console.log("tkn ::::> ",localStorage.getItem('token'))
+      console.log("tkn en cabecera ::::> ",localStorage.getItem('token'))
   }
 
 

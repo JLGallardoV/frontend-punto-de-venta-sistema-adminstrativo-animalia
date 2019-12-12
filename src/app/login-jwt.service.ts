@@ -20,6 +20,7 @@ export class LoginJwtService {
           localStorage.setItem('usuario', nombreUsuario); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
           console.log("sesion iniciada");
           setTimeout(()=>{
+            //pongo un setTimeout para que en el navegador se alcance a plasmar el localStorage
             this.headers = new HttpHeaders({
               'Authorization': 'Bearer ' + localStorage.getItem('token'), //token almacenado en LS
               'Content-Type': 'application/json',//tipo de contenido JSON
@@ -30,7 +31,6 @@ export class LoginJwtService {
             document.getElementById("idToolbar").style.display = "block";
             /*en este lapso puedes poner un spinner*/
           },3000);
-
         } else {
           alert("verifica tus datos");
         }
@@ -47,8 +47,9 @@ export class LoginJwtService {
   public agregarAcceso(accionAcceso:string,idUsuario: number) {
     console.log("accion: ",accionAcceso)
     this.http.post('http://localhost:3000/accesosWS/agregarAcceso', {accionAcceso,idUsuario}, { headers: this.headers }).subscribe(
-      (success:any)=>{
+      ()=>{
         console.log("usuario/accion capturados exitosamente");
+        AppComponent.denegarModulosVendedores();
       },
       (error)=>{
         console.log("hubo un problema: ",error)
@@ -78,19 +79,22 @@ export class LoginJwtService {
 
   //EVITAR ACCESO DE VENDEDORES A MODULOS DEL GERENTE
   public restringirAcceso() {
-    let cerrarMenu:AppComponent;
+    //let cerrarMenu:AppComponent;
     let nivel: string = "";
     nivel = localStorage.getItem('nivel');
 
     if (nivel != 'gerente') {
       this.logout();
+      /*apesar de que el metodo logout redirige a login,
+      redirijo yo primero ya que mencionado metodo contiene un setTimeout
+      y por un momento se alcanza a notar el modulo a tratar de acceder*/
       this.router.navigate(['/login']);
       setTimeout(
+        //este setTimeout se pone para que se cargue bien al login antes de enviar este msj y exista el idToolbar
         ()=>{
+          document.getElementById("idToolbar").style.display = "none";
           alert('Verifica que eres gerente');
-          cerrarMenu.closeNav()
-        }
-      );
+        },500);
     }
   }
 
@@ -102,6 +106,8 @@ export class LoginJwtService {
     this.registrarAcceso(accion,localStorage.getItem('usuario'));
     localStorage.clear();
     setTimeout(()=>{
+      /*lo meto en un setTimeout para evitar que redirija al login y borre el ls
+      ya que de tal manera no se registraria el usuario en la bitacora*/
       console.log("sesion cerrada");
       this.router.navigate(['/login']);
     },3000);

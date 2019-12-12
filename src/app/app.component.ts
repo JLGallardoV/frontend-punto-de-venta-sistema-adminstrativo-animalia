@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {LoginJwtService} from './login-jwt.service';
+//import { LoginJwtService } from './login-jwt.service';
 import { Router } from '@angular/router'
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private JWT:LoginJwtService,private router: Router){
+  constructor(private router: Router) {
   }
   title = 'puntoVentaMascotas';
   public openNav() {
@@ -21,55 +21,52 @@ export class AppComponent {
 
   public closeNav() {
     document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft= "0";
+    document.getElementById("main").style.marginLeft = "0";
     document.getElementById("contenido").style.opacity = 'initial';
     document.getElementById("contenido").style.pointerEvents = "unset";
 
   }
   /*INICIO REDIRECCION DE RUTAS*/
-  public irTransacciones(){
+  public irTransacciones() {
     this.router.navigate(['/transacciones']);
     this.closeNav();
 
   }
-  public irOperaciones(){
+  public irOperaciones() {
     this.router.navigate(['/facturas']);
     this.closeNav();
 
   }
-  public irProductos(){
+  public irProductos() {
     this.router.navigate(['/productos']);
     this.closeNav();
 
   }
-  public irDevoluciones(){
+  public irDevoluciones() {
     this.router.navigate(['/devoluciones']);
     this.closeNav();
 
   }
-  public irUsuarios(){
+  public irUsuarios() {
     this.router.navigate(['/usuarios']);
     this.closeNav();
 
   }
-  public irReportes(){
+  public irReportes() {
     this.router.navigate(['/herramientas']);
     this.closeNav();
 
   }
+
   //BLOQUEAMOS ALGUNOS MODULOS PARA EVITAR ACCESO PERMITIDO A VENDEDORES
-  public denegarVistaMenu(){
+  public static denegarModulosVendedores(){
     let memoriaNavegador: string = "";
     memoriaNavegador = localStorage.getItem('nivel');
-    console.log("memoria: ",memoriaNavegador);
-    //este if es para cuando inicia la aplicacion, oculta el menu.
-    if( memoriaNavegador == null){
-      console.log("memoria vacia")
-      document.getElementById("idToolbar").style.display = "none";
-      return;
-    }
     //este if es para ocultar modulos al vendedor
-    if(memoriaNavegador == 'vendedor'){
+    if (memoriaNavegador == 'vendedor') {
+      console.log("vendedor en sesion");
+      document.getElementById("main").style.display = "block";
+      document.getElementById("idToolbar").style.display = "block";
       document.getElementById("etiquetaTransacciones").style.display = "none";
       document.getElementById("etiquetaProductos").style.display = "none";
       document.getElementById("etiquetaDevoluciones").style.display = "none";
@@ -77,31 +74,42 @@ export class AppComponent {
       document.getElementById("etiquetaReportes").style.display = "none";
       return;
     }
+  }
+
+  public denegarVistaMenu() {
+    console.log("reestructurando menu");
+    let memoriaNavegador: string = "";
+    memoriaNavegador = localStorage.getItem('nivel');
+    //este if es para cuando inicia la aplicacion, oculta el menu.
+    if (memoriaNavegador == null) {
+      document.getElementById("idToolbar").style.display = "none";
+      return;
+    }
     //si nada de lo anterior se cumple pues muestra el menu como tal
-      document.getElementById("etiquetaTransacciones").style.display = "block";
-      document.getElementById("etiquetaProductos").style.display = "block";
-      document.getElementById("etiquetaDevoluciones").style.display = "block";
-      document.getElementById("etiquetaUsuarios").style.display = "block";
-      document.getElementById("etiquetaReportes").style.display = "block";
+    document.getElementById("etiquetaTransacciones").style.display = "block";
+    document.getElementById("etiquetaProductos").style.display = "block";
+    document.getElementById("etiquetaDevoluciones").style.display = "block";
+    document.getElementById("etiquetaUsuarios").style.display = "block";
+    document.getElementById("etiquetaReportes").style.display = "block";
   }
 
   /*FIN REDIRECCION DE RUTAS*/
 
 
   //BOTON PARA SALIR DE LA APP DESDE EL MENU
-  public logout(){
+  public logout() {
     document.getElementById("idToolbar").style.display = "none";
-    this.JWT.logout();
+    //this.JWT.logout();
     this.closeNav();
   }
-  ngOnInit(){
-    setTimeout(()=>{
+  ngOnInit() {
+    setTimeout(() => {
       /*lo meto en un settimeout para que deje
       cargar primero el login (en su caso) y alcance a borrar el ls
       y no muestre el menu por detectar valores en el ls
       esto esta planeado para la primera vez que la app es lanzada
       o en el caso de cerra la app si borrar el ls*/
       this.denegarVistaMenu();
-    },500);
+    }, 500);
   }
 }
