@@ -88,7 +88,7 @@ export class ProductosComponent implements OnInit {
   //ABRIR MODAL CON LOS DATOS A EDITAR
   public openEditarProducto(contentProducto:any,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number){
     console.log("id: ",idProducto," nombre: ",nombreProducto," caducidad: ",fechaCaducidadProducto);
-    this.modal= this.modalService.open(contentProducto, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(contentProducto, {size:'lg'});
     this.titulo = "Editar Producto";
     //pintando los valores en el modal listos para editarlos
     this.frmProductos.controls['idProducto'].setValue(idProducto); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
@@ -111,6 +111,14 @@ export class ProductosComponent implements OnInit {
     this.frmProductos.controls['idCategoria'].setValue(idCategoria);
     this.frmProductos.controls['idAlmacen'].setValue(idAlmacen);
   }
+
+  //FUNCION PARA ABRIR EL MODAL VENTAS, CONFIGURACIONES DE BOOTSTRAP
+  public openScrollableContentProductos(longContentVentas:any, idVenta:number) {
+    console.log("idTransaccion",idVenta);
+    this.modalService.open(longContentVentas, {scrollable: true });
+    this.listarDetalleProducto(idVenta);
+  }
+
   //LISTAR DETALLES PRODUCTOS
   public listarDetalleProducto(idProducto:number){
     this.API.mostrarDetalleProducto(idProducto).subscribe(
@@ -121,13 +129,6 @@ export class ProductosComponent implements OnInit {
         console.log(error);
       }
     );
-  }
-
-  //FUNCION PARA ABRIR EL MODAL VENTAS, CONFIGURACIONES DE BOOTSTRAP
-  public openScrollableContentProductos(longContentVentas:any, idVenta:number) {
-    console.log("idTransaccion",idVenta);
-    this.modalService.open(longContentVentas, { size: 'lg', scrollable: true });
-    this.listarDetalleProducto(idVenta);
   }
 
   //LISTAR PRODUCTOS
