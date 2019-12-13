@@ -19,6 +19,7 @@ export class ProveedoresComponent implements OnInit {
   public titulo = ""; //para el modal
   public frmProveedores: FormGroup;
   public formValid:Boolean=false;
+  public arregloDetalleProveedor:any[] = [];
 
   displayedColumnsProveedores: string[] = ['idProveedor', 'nombreProveedor', 'ciudadProveedor', 'estadoProveedor', 'telefonoProveedor','acciones'];
   dsProveedores: MatTableDataSource<IProveedores>;
@@ -39,15 +40,15 @@ export class ProveedoresComponent implements OnInit {
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
-  public openAlta(content) {
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  public openAlta(content:any) {
+    this.modal= this.modalService.open(content, {size:'lg'});
     this.titulo = "Agregar Proveedor";
   }
 
   //ABRIR MODAL CON LOS DATOS A EDITAR
-  public openEditar(content,idProveedor: number, nombreProveedor: string, ciudadProveedor: string, estadoProveedor: string, paisProveedor: string, direccionProveedor: string, telefonoProveedor: string, emailProveedor: string, descripcionProveedor: string){
+  public openEditar(content:any,idProveedor: number, nombreProveedor: string, ciudadProveedor: string, estadoProveedor: string, paisProveedor: string, direccionProveedor: string, telefonoProveedor: string, emailProveedor: string, descripcionProveedor: string){
     console.log("id: ",idProveedor," nombre: ",nombreProveedor," ciudad: ",ciudadProveedor," email: ",emailProveedor);
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(content, {size:'lg'});
     this.titulo = "Editar Proveedor";
     //pintando los valores en el modal listos para editarlos
     this.frmProveedores.controls['idProveedor'].setValue(idProveedor); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
@@ -61,6 +62,13 @@ export class ProveedoresComponent implements OnInit {
     this.frmProveedores.controls['descripcionProveedor'].setValue(descripcionProveedor);
   }
 
+  //MOSTRAR LOS DETALLES DEL PROVEEDOR EN EL MODAL
+  public openScrollableContentProveedor(longContentProveedor:any, idProveedor:number) {
+    console.log("idTransaccion",idProveedor);
+    this.modalService.open(longContentProveedor, {scrollable: true });
+    this.listarDetalleProveedor(idProveedor);
+  }
+
 
   //LISTAR PROVEEDOR
   public listarProveedores(){
@@ -71,6 +79,17 @@ export class ProveedoresComponent implements OnInit {
       },
       (error)=>{
         console.log("hubo un problema: ",error)
+      }
+    );
+  }
+  //LISTAR DETALLES PRODUCTOS
+  public listarDetalleProveedor(idProveedor:number){
+    this.API.mostrarDetalleProveedor(idProveedor).subscribe(
+      (success:any)=>{
+        this.arregloDetalleProveedor = success.respuesta;
+      },
+      (error)=>{
+        console.log(error);
       }
     );
   }

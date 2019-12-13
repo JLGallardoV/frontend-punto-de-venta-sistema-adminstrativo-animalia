@@ -20,6 +20,7 @@ export class ClientesComponent implements OnInit {
   public frmClientes: FormGroup;
   public formValid:Boolean=false;
   public arregloTiposDeClientes: any[];
+  public arregloDetalleCliente: any[];
   displayedColumnsClientes: string[] = ['idCliente','nombreCliente', 'apellidoPaternoCliente', 'ciudadCliente', 'estadoCliente','tipoCliente','acciones'];
   dsClientes: MatTableDataSource<IClientes>
 
@@ -47,13 +48,13 @@ export class ClientesComponent implements OnInit {
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
   public openAlta(content) {
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(content,{size:'lg'});
     this.titulo = "Agregar Cliente";
   }//------fin open--------------------------------------------------
   //ABRIR MODAL CON LOS DATOS A EDITAR
   public openEditar(content,idCliente: number, nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string, puntuajeCliente: number, tipoCliente: number){
     console.log("id: ",idCliente," nombre: ",nombreCliente," ciudad: ",ciudadCliente," tipo: ",tipoCliente);
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(content,{size:'lg'});
     this.titulo = "Editar Cliente";
     //pintando los valores en el modal listos para editarlos
     this.frmClientes.controls['idCliente'].setValue(idCliente); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
@@ -72,6 +73,11 @@ export class ClientesComponent implements OnInit {
     this.frmClientes.controls['puntuajeCliente'].setValue(puntuajeCliente);
     //this.frmClientes.controls['tipoCliente'].setValue(tipoCliente);
   }
+  //FUNCION PARA ABRIR EL MODAL DE INFORMACION CLIENTE, CONFIGURACIONES DE BOOTSTRAP
+  public openScrollableContentCliente(longContentCliente:any, idCliente:number) {
+    this.modalService.open(longContentCliente, {scrollable: true });
+    this.listarDetalleCliente(idCliente);
+  }
 
 
   //LISTAR CLIENTES
@@ -83,6 +89,17 @@ export class ClientesComponent implements OnInit {
       },
       (error)=>{
         console.log("hubo un problema: ",error)
+      }
+    );
+  }
+  //LISTAR DETALLES CLIENTES
+  public listarDetalleCliente(idCliente:number){
+    this.API.mostrarDetalleCliente(idCliente).subscribe(
+      (success:any)=>{
+        this.arregloDetalleCliente = success.respuesta;
+      },
+      (error)=>{
+        console.log(error);
       }
     );
   }
