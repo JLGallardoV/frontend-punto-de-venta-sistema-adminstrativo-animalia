@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
           nombreUsuario:["",Validators.required],
           passwordUsuario:["",Validators.required],
         });
+        localStorage.clear(); //limpiamos ls lo antes posible
+        console.log("::::: app limpia :::::::");
   }
 
   openSnackBar() {
@@ -39,7 +41,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    localStorage.clear();
   }
 
 }

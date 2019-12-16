@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-//import { LoginJwtService } from './login-jwt.service';
 import { Router } from '@angular/router'
 import { FuncionamientoBitacoraService } from './funcionamiento-bitacora.service';
 
@@ -9,7 +8,9 @@ import { FuncionamientoBitacoraService } from './funcionamiento-bitacora.service
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  public etiquetaNivelUsuario:any;
   constructor(private router: Router, public bitacora: FuncionamientoBitacoraService) {
+    this.etiquetaNivelUsuario = "";
   }
   title = 'puntoVentaMascotas';
   public openNav() {
@@ -58,28 +59,36 @@ export class AppComponent {
     this.closeNav();
 
   }
+  /*FIN REDIRECCION DE RUTAS*/
 
-  //BLOQUEAMOS ALGUNOS MODULOS PARA EVITAR ACCESO PERMITIDO A VENDEDORES
+
+  //BLOQUEAMOS ALGUNOS MODULOS PARA EVITAR ACCESO PERMITIDO A VENDEDORES: ESTE METODO SE EJECUTA AL LOGUEARSE PARA PINTAR EL MENU
   public static denegarModulosVendedores() {
     setTimeout(() => {
-      //esperamos a que se alcance a plasmar en el ls el nivel de acceso
+      //esperamos a que se alcance a plasmar en el localstorage el nivel de acceso
       let memoriaNavegador: string = "";
       memoriaNavegador = localStorage.getItem('nivel');
+
       if (memoriaNavegador == 'vendedor') {
         console.log("vendedor en sesion");
         document.getElementById("main").style.display = "block";
-        document.getElementById("idToolbar").style.display = "block";
+        document.getElementById("idToolbar").style.display = "flex";
         document.getElementById("etiquetaTransacciones").style.display = "none";
         document.getElementById("etiquetaProductos").style.display = "none";
         document.getElementById("etiquetaDevoluciones").style.display = "none";
         document.getElementById("etiquetaUsuarios").style.display = "none";
         document.getElementById("etiquetaReportes").style.display = "none";
+      }else{
+        document.getElementById("main").style.display = "block";
+        document.getElementById("idToolbar").style.display = "flex";
       }
     }, 1000);
   }
+
+
   //ESTE METODO SE EJECUTA CADA QUE SE INICIA LA APLICACION POR PRIMERA VEZ
   public denegarVistaMenu() {
-    console.log("reestructurando menu");
+    console.log("creando menu...");
     let memoriaNavegador: string = "";
     memoriaNavegador = localStorage.getItem('nivel');
     //este if es para cuando inicia la aplicacion, oculta el menu.
@@ -98,24 +107,50 @@ export class AppComponent {
     document.getElementById("etiquetaReportes").style.display = "block";
   }
 
-  /*FIN REDIRECCION DE RUTAS*/
-
 
   //BOTON PARA SALIR DE LA APP DESDE EL MENU
   public logout() {
     document.getElementById("idToolbar").style.display = "none";
-    //this.JWT.logout();
     let accion: string = "salida"
     this.bitacora.registrarAcceso(accion, localStorage.getItem('usuario'));
-    localStorage.clear();
+    this.etiquetaNivelUsuario = "";
+
     setTimeout(() => {
-      /*lo meto en un setTimeout para evitar que redirija al login y borre el ls
-      ya que de tal manera no se registraria el usuario en la bitacora*/
+      /*lo meto en un setTimeout para que se alcance a registrar la salida del usuario antes
+      de que reedirija al login*/
+      localStorage.clear();
+      location.reload();//para que se puedan invocar los guards
       console.log("sesion cerrada");
-      this.router.navigate(['/login']);
+      //this.router.navigate(['/login']); no necesito reedirigir pues al no exitir el token los guards redirigen automaticamente
     }, 3000);
+
     this.closeNav();
   }
+
+
+  //CAMBIAR ETIQUETA NIVEL CUANDO EL USUARIO SE HA LOGUEADO
+  public cambiarEtiqueta(){
+//      this.etiquetaNivelUsuario = localStorage.getItem('nivel');
+
+      this.etiquetaNivelUsuario = "";
+      this.etiquetaNivelUsuario = "prueba";
+      console.log("etiqueta cambiada a :",this.etiquetaNivelUsuario)
+  }
+
+  //METODO TEMPORAL PARA VERIFICAR EL NIVEL DE USUARIO EN SESION
+  public verificarNivelUsuario(){
+    let variableControl: number = 0;
+    let nivelUser = setInterval(()=>{
+      this.etiquetaNivelUsuario = localStorage.getItem('nivel');
+      console.log("nivel user: ",this.etiquetaNivelUsuario);
+      variableControl++;
+
+      if (variableControl == 50) {
+          clearInterval(nivelUser);
+      }
+    },2000);
+  }
+
   ngOnInit() {
     setTimeout(() => {
       /*lo meto en un settimeout para que deje
@@ -125,5 +160,7 @@ export class AppComponent {
       o en el caso de cerra la app si borrar el ls*/
       this.denegarVistaMenu();
     }, 500);
+    //añade en la etiqueta el nivel UNICAMENTE cuando inicia la app o refresca... solucion temporal
+    this.verificarNivelUsuario();
   }
 }

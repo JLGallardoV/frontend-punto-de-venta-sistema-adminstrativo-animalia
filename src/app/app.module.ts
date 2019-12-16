@@ -84,7 +84,8 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
   entryComponents: [],
   providers: [
     AuthGuard,
-    GenerarPDFsService
+    GenerarPDFsService,
+    AppComponent
   ],
   bootstrap: [AppComponent]
 })

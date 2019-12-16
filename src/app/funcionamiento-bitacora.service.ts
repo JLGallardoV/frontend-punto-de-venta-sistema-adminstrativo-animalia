@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class FuncionamientoBitacoraService {
   public headers = new HttpHeaders();
   constructor(public http:HttpClient) { }
-  /*ENCONTRAR OTRA MANERA DE REGISTRAR EN LA BITACORA*/
+
     //INCIO - REGISTRAR ACCESO
     //esta funcion es invocada una vez se detecta el usuario a añadir
     public agregarAcceso(accionAcceso:string,idUsuario: number) {
@@ -21,6 +21,7 @@ export class FuncionamientoBitacoraService {
         }
       );
     }
+
 
     //buscamos el usuario segun su nombre para asi registrar su accesos en la bd
     public registrarAcceso(accion:string,nombreUsuario: string) {

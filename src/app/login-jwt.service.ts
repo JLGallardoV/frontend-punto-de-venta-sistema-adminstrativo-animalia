@@ -9,7 +9,7 @@ import {AppComponent} from './app.component';
 })
 export class LoginJwtService {
   public headers = new HttpHeaders();
-  constructor(private http: HttpClient, private router: Router,public bitacora:FuncionamientoBitacoraService) {
+  constructor(private http: HttpClient, private router: Router,public bitacora:FuncionamientoBitacoraService, public menu:AppComponent) {
   }
 
   public login(nombreUsuario: string, contraseniaUsuario: string) {
@@ -19,6 +19,7 @@ export class LoginJwtService {
         if (resp.estatus > 0) {
           localStorage.setItem('token', resp.respuesta); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
           localStorage.setItem('usuario', nombreUsuario); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
+          this.bitacora.registrarAcceso(accion,nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
           console.log("sesion iniciada");
           setTimeout(()=>{
             //pongo un setTimeout para que en el navegador se alcance a plasmar el localStorage
@@ -27,10 +28,9 @@ export class LoginJwtService {
               'Content-Type': 'application/json',//tipo de contenido JSON
               'Accept': 'application/json' //acepta el cuerpo de la peticion JSON
             });
-            this.bitacora.registrarAcceso(accion,nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
-            this.router.navigate(['/facturas']);
-            document.getElementById("idToolbar").style.display = "block";
-            AppComponent.denegarModulosVendedores();
+              this.menu.cambiarEtiqueta();
+              this.router.navigate(['/facturas']);
+              AppComponent.denegarModulosVendedores();
             /*en este lapso puedes poner un spinner*/
           },3000);
         } else {
