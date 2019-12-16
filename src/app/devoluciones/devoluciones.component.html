@@ -264,11 +264,11 @@
     </div>
   </ng-template>
 
-  <!-- modal agregar tipos de pagos-->
+  <!-- modal agregar tipos de problemas-->
 
   <ng-template #contentTiposProblemas let-modal>
     <div class="modal-header">
-      <h3 class="modal-title fuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left:27%;">{{titulo}}&nbsp;<i class='fas fa-exclamation' style='font-size: 20px;'></i></h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -292,7 +292,7 @@
 
   <ng-template #contentCompensaciones let-modal>
     <div class="modal-header">
-      <h3 class="modal-title fuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left:18%;">{{titulo}}&nbsp;<i class='fas fa-gifts' style='font-size: 20px'></i></h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -326,7 +326,7 @@
       </h3>
     </div>
     <div class="modal-body" *ngFor="let i of arregloDetalleDevolucion">
-      <p class="fuenteCuerpos" style="font-size:22px;">
+      <p class="fuenteCuerpos" style="font-size:22px;text-align:center;">
         <b>ID Devolución:</b> {{i.idDevolucion}}
         <br><b>Producto:</b> {{i.nombreProducto}}
         <br><b>Cliente:</b> {{i.nombreCliente}}
@@ -338,6 +338,6 @@
       </p>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
+      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
     </div>
   </ng-template>

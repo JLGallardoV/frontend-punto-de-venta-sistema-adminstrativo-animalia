@@ -1,42 +1,46 @@
 <div name="fondoDeLaPlataforma" style="background:#f4f4f4;height:99vh">
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-    <div name="logo" class="logoMenu">
-      <img src="../assets/img/logoAnimalia2.png" alt="Animalia" style="height:150px;width:150px;">
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+      <div name="logo" class="logoMenu">
+        <img src="../assets/img/logoAnimalia2.png" alt="Animalia" style="height:150px;width:150px;">
+      </div>
+      <a (click)="irTransacciones()" mat-list-item class="fuenteCuerpos" id="etiquetaTransacciones">
+        <span mat-line style="cursor: pointer;"><i class='fas fa-exchange-alt' style='font-size: 20px;color: #f9f9f9;'></i> Transacciones</span>
+      </a>
+
+      <a (click)="irOperaciones()" mat-list-item class="fuenteCuerpos" id="etiquetaOperaciones">
+        <span mat-line style="cursor: pointer;"><i class='fas fa-box-open' style='font-size: 20px;color: #f9f9f9;'></i> Operaciones</span>
+      </a>
+
+      <a (click)="irProductos()" mat-list-item class="fuenteCuerpos" id="etiquetaProductos">
+        <span mat-line style="cursor: pointer;"><i class='fas fa-paw' style='font-size: 20px;color: #f9f9f9;'></i> Productos</span>
+      </a>
+
+      <a (click)="irDevoluciones()" mat-list-item class="fuenteCuerpos" id="etiquetaDevoluciones">
+        <span mat-line style="cursor: pointer;"><i class='fas fa-handshake' style='font-size: 20px;color: #f9f9f9;'></i> Devoluciones</span>
+      </a>
+
+      <a (click)="irUsuarios()" mat-list-item class="fuenteCuerpos" id="etiquetaUsuarios">
+        <span mat-line style="cursor: pointer;"><i class='fas fa-user-lock' style='font-size: 20px;color: #f9f9f9;'></i> Usuarios</span>
+      </a>
+
+      <a (click)="irReportes()" mat-list-item class="fuenteCuerpos" id="etiquetaReportes">
+        <span mat-line style="cursor: pointer;"><i class='fas fa-toolbox' style='font-size: 20px;color: #f9f9f9;'></i> Reportes</span>
+      </a>
+
+      <a (click)="logout();" mat-list-item class="fuenteCuerpos">
+        <span mat-line style="cursor: pointer;"> <i class='fas fa-door-open' style='font-size: 20px;color: #f9f9f9;'></i> Salir</span>
+      </a>
+
     </div>
-    <a (click)="irTransacciones()" mat-list-item class="fuenteCuerpos" id="etiquetaTransacciones">
-      <span mat-line>Transacciones <i class='fas fa-exchange-alt' style='font-size: 20px;color: #f9f9f9;'></i></span>
-    </a>
-
-    <a (click)="irOperaciones()" mat-list-item class="fuenteCuerpos" id="etiquetaOperaciones">
-      <span mat-line>Operaciones  <i class='fas fa-box-open' style='font-size: 20px;color: #f9f9f9;'></i></span>
-    </a>
-
-    <a (click)="irProductos()" mat-list-item class="fuenteCuerpos" id="etiquetaProductos">
-      <span mat-line>Productos <i class='fas fa-paw' style='font-size: 20px;color: #f9f9f9;'></i></span>
-    </a>
-
-    <a (click)="irDevoluciones()" mat-list-item class="fuenteCuerpos" id="etiquetaDevoluciones">
-      <span mat-line>Devoluciones <i class='fas fa-handshake' style='font-size: 20px;color: #f9f9f9;'></i></span>
-    </a>
-
-    <a (click)="irUsuarios()" mat-list-item class="fuenteCuerpos" id="etiquetaUsuarios">
-      <span mat-line>Usuarios <i class='fas fa-user-lock' style='font-size: 20px;color: #f9f9f9;'></i></span>
-    </a>
-
-    <a (click)="irReportes()" mat-list-item class="fuenteCuerpos" id="etiquetaReportes">
-      <span mat-line>Reportes <i class='fas fa-toolbox' style='font-size: 20px;color: #f9f9f9;'></i></span>
-    </a>
-
-    <a (click)="logout();" mat-list-item class="fuenteCuerpos">
-      <span mat-line>Salir <i class='fas fa-door-open' style='font-size: 20px;color: #f9f9f9;'></i></span>
-    </a>
-
-  </div>
-  <div id="main" style="position: fixed;z-index: 10;">
-    <div class="hamburguesa">
-      <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
+    <mat-toolbar class="toolbar" id="idToolbar">
+    <div id="main" style="z-index: 10;">
+      <div class="hamburguesa" style="padding: 5px;">
+        <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
+      </div>
     </div>
-  </div>
+    <!--input [(ngModel)]="etiquetaNivelUsuario"-->
+    <div id="idEtiquetaNivelUsuario" class="fuenteCuerpos" style="margin-left: 80%;font-size: 24px;">Nivel: {{etiquetaNivelUsuario}}</div>
+  </mat-toolbar>
   <router-outlet id="componenteEnUso"></router-outlet>
 </div>

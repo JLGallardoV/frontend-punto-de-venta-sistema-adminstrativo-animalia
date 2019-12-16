@@ -1,27 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { APIService } from './api.service';
+import { FuncionamientoBitacoraService } from './funcionamiento-bitacora.service';
 import {AppComponent} from './app.component';
+
 @Injectable({
   providedIn: 'root'
 })
 export class LoginJwtService {
   public headers = new HttpHeaders();
-  constructor(private http: HttpClient, private router: Router, public API: APIService) { }
+  constructor(private http: HttpClient, private router: Router,public bitacora:FuncionamientoBitacoraService, public menu:AppComponent) {
+  }
 
   public login(nombreUsuario: string, contraseniaUsuario: string) {
+    let accion:string = "acceso";
     this.http.post('http://localhost:3000/loginWS/autenticarUsuarios', { nombreUsuario, contraseniaUsuario}, { headers: this.headers }).subscribe(
       (resp: any) => {
         if (resp.estatus > 0) {
-
-          //console.log("respueta", resp.estatus, " contenido: ", resp.respuesta);
           localStorage.setItem('token', resp.respuesta); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
           localStorage.setItem('usuario', nombreUsuario); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
-          document.getElementById("main").style.display = "block";
-          this.registrarAcceso(nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
-          this.router.navigate(['/facturas']);
-
+          this.bitacora.registrarAcceso(accion,nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
+          console.log("sesion iniciada");
+          setTimeout(()=>{
+            //pongo un setTimeout para que en el navegador se alcance a plasmar el localStorage
+            this.headers = new HttpHeaders({
+              'Authorization': 'Bearer ' + localStorage.getItem('token'), //token almacenado en LS
+              'Content-Type': 'application/json',//tipo de contenido JSON
+              'Accept': 'application/json' //acepta el cuerpo de la peticion JSON
+            });
+              this.menu.cambiarEtiqueta();
+              this.router.navigate(['/facturas']);
+              AppComponent.denegarModulosVendedores();
+            /*en este lapso puedes poner un spinner*/
+          },3000);
         } else {
           alert("verifica tus datos");
         }
@@ -32,68 +43,24 @@ export class LoginJwtService {
   }
 
 
-
-  //INCIO - REGISTRAR ACCESO
-  //esta funcion es invocada una vez se detecta el usuario a añadir
-  public agregarAcceso(idUsuario: number) {
-    this.API.aniadirAcceso('acceso', idUsuario).subscribe(
-      () => {
-        console.log("se capturo correctamente al usuario")
-      },
-      (error) => {
-        console.log("No se capturo usuario", error)
-      }
-    );
-  }
-
-  //buscamos el usuario segun su nombre para asi registrar su accesos en la bd
-  public registrarAcceso(nombreUsuario: string) {
-    this.API.buscarUsuarioPorNombre(nombreUsuario).subscribe(
-      (success: any) => {
-        //console.log("fuente: ",success.respuesta)
-        let idCapturado: number = 0;
-        let nivel:string = "";
-        nivel = success.respuesta[0].tipoUsuario;
-        localStorage.setItem('nivel', nivel);
-        idCapturado = success.respuesta[0].idUsuario;
-        this.agregarAcceso(idCapturado); //anexamos a la db el usuario en acceso
-        //almaceno el nivel en ls para poder restringir accesos a modulos
-        //console.log("nivel de usuario: ",success.respuesta[0].tipoUsuario)
-
-      },
-      (error) => {
-        console.log("hubo un problema", error);
-      }
-    );
-  }
-  //FIN - REGISTRAR ACCESO
-
-
-
   //EVITAR ACCESO DE VENDEDORES A MODULOS DEL GERENTE
   public restringirAcceso() {
-    let cerrarMenu:AppComponent;
+    //let cerrarMenu:AppComponent;
     let nivel: string = "";
     nivel = localStorage.getItem('nivel');
 
     if (nivel != 'gerente') {
-      this.logout();
+      /*apesar de que el metodo logout redirige a login,
+      redirijo yo primero ya que mencionado metodo contiene un setTimeout
+      y por un momento se alcanza a notar el modulo a tratar de acceder*/
       this.router.navigate(['/login']);
       setTimeout(
+        //este setTimeout se pone para que se cargue bien al login antes de enviar este msj y exista el idToolbar
         ()=>{
+          document.getElementById("idToolbar").style.display = "none";
           alert('Verifica que eres gerente');
-          cerrarMenu.closeNav()
-        }
-      );
+        },500);
     }
-  }
-
-
-
-  //SALIR DE LA CUENTA ACTUAL
-  public logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
   }
 
 }

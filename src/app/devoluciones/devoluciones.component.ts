@@ -78,7 +78,7 @@ export class DevolucionesComponent implements OnInit {
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
   public openAltaDevolucion(contentDevolucion:any) {
     this.modal= this.modalService.open(contentDevolucion, {ariaLabelledBy: 'modal-basic-title'});
-    this.titulo = "Agregar Devolucion";
+    this.titulo = "Agregar Devolución";
   }
   public openAltaTipoProblema(contentProblema:any) {
     this.modal= this.modalService.open(contentProblema, {ariaLabelledBy: 'modal-basic-title'});
@@ -86,7 +86,7 @@ export class DevolucionesComponent implements OnInit {
   }
   public openAltaCompensacion(contentCompensacion:any) {
     this.modal= this.modalService.open(contentCompensacion, {ariaLabelledBy: 'modal-basic-title'});
-    this.titulo = "Agregar Compensacion";
+    this.titulo = "Agregar Compensación";
   }
 
   //ABRIR EL MODAL CON LOS DATOS EN LOS INPUTS LISTOS PARA LA MODIFICACION
@@ -109,7 +109,7 @@ export class DevolucionesComponent implements OnInit {
   }
   //FUNCION PARA ABRIR EL MODAL DE INFORMACION DEVOLUCIONES, CONFIGURACIONES DE BOOTSTRAP
   public openScrollableContentDevoluciones(longContentDevolucion:any, idDevolucion:number) {
-    this.modalService.open(longContentDevolucion, { size: 'lg', scrollable: true });
+    this.modalService.open(longContentDevolucion, {scrollable: true });
     this.listarDetalleDevolucion(idDevolucion);
   }
 

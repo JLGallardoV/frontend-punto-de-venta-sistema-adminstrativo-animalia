@@ -92,7 +92,7 @@
 
         <ng-template #content let-modal>
           <div class="modal-header">
-            <h3 class="modal-title fuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
+            <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left:23%;">{{titulo}}&nbsp;<i class='fas fa-user-lock' style='font-size: 20px;'></i></h3>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -115,24 +115,26 @@
               </mat-form-field>
               <label *ngIf="frmUsuarios.controls.contraseniaUsuario.invalid && frmUsuarios.controls.contraseniaUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
               <br>
-              <mat-form-field class="fuenteCuerpos">
-                <mat-select formControlName="idVendedor" class="fuenteCuerpos" placeholder="ID Vendedor">
-                  <mat-option class="fuenteCuerpos" *ngFor="let i of arregloVendedores" [value]="i.idVendedor">
-                    {{ i.idVendedor }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <label *ngIf="frmUsuarios.controls.idTipoUsuario.invalid && frmUsuarios.controls.idTipoUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
-              <br>
-              <mat-form-field class="fuenteCuerpos">
-                <mat-select formControlName="idTipoUsuario" class="fuenteCuerpos" placeholder="Tipo Usuario">
-                  <mat-option  class="fuenteCuerpos" *ngFor="let i of arregloTiposDeUsuarios" [value]="i.idTipoUsuario">
-                    {{ i.tipoUsuario }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <label *ngIf="frmUsuarios.controls.idTipoUsuario.invalid && frmUsuarios.controls.idTipoUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
-              <br>
+              <div name="selects" style="display:flex;">
+                <mat-form-field class="fuenteCuerpos" style="margin-right: auto;">
+                  <mat-select formControlName="idVendedor" class="fuenteCuerpos" placeholder="ID Vendedor">
+                    <mat-option class="fuenteCuerpos" *ngFor="let i of arregloVendedores" [value]="i.idVendedor">
+                      {{ i.idVendedor }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <label *ngIf="frmUsuarios.controls.idTipoUsuario.invalid && frmUsuarios.controls.idTipoUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
+                <br>
+                <mat-form-field class="fuenteCuerpos">
+                  <mat-select formControlName="idTipoUsuario" class="fuenteCuerpos" placeholder="Tipo Usuario">
+                    <mat-option  class="fuenteCuerpos" *ngFor="let i of arregloTiposDeUsuarios" [value]="i.idTipoUsuario">
+                      {{ i.tipoUsuario }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <label *ngIf="frmUsuarios.controls.idTipoUsuario.invalid && frmUsuarios.controls.idTipoUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
+                <br>
+              </div>
             </form>
           </div>
           <div class="modal-footer">

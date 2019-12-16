@@ -97,7 +97,7 @@
 
                 <ng-container matColumnDef="fechaCompra">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> Fecha </th>
-                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.fechaCompra  | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
+                  <td mat-cell *matCellDef="let elemento" style="text-align:center"> {{elemento.fechaCompra | date: 'yyyy-MM-dd HH:mm:ss'}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="nombreUsuario">
@@ -136,58 +136,58 @@
       </mat-tab>
     </mat-tab-group>
 
-<!-- SECCION DE MODALELES -->
+    <!-- SECCION DE MODALELES -->
 
 
-  <!-- codigo modal Ventas -->
-  <ng-template #longContentVentas let-modal>
-    <div class="modal-header">
-      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
-        Detalles de Venta
-        <i class='fas fa-file-alt' style='font-size:24px'></i>
-      </h3>
-    </div>
-    <div id="etiquetaPDF" class="modal-body" *ngFor="let i of arregloDetalleVenta">
-      <p class="fuenteCuerpos" style="font-size:22px;text-align:center;">
-        <b>Id Venta:</b> {{i.idVenta}}<br>
-        <b>Nombre cliente:</b> {{i.nombreCliente}}<br>
-        <b>Productos:</b> {{i.productos}}<br>
-        <b>Monto $:</b> {{i.monto}}<br>
-        <b>Iva total $:</b> {{i.iva}}<br>
-        <b>Fecha:</b> {{i.fecha | date: 'yyyy-MM-dd HH:mm:ss'}}<br>
-        <b>N°Productos:</b> {{i.numeroProductosTransaccion}}<br>
-        <b>Vendedor:</b> {{i.vendedor}}<br>
-        <b>Cliente:</b> {{i.cliente}}<br>
-        <b>TipoPago:</b> {{i.tipoPago}}<br>
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF')" style="font-size: 19px;">Imprimir</button>
-      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
-    </div>
-  </ng-template>
+    <!-- codigo modal Ventas -->
+    <ng-template #longContentVentas let-modal>
+      <div class="modal-header">
+        <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
+          Detalles de Venta
+          <i class='fas fa-file-alt' style='font-size:24px'></i>
+        </h3>
+      </div>
+      <div id="etiquetaPDF" class="modal-body" *ngFor="let i of arregloDetalleVenta">
+        <p class="fuenteCuerpos" style="font-size:22px;text-align:center;">
+          <b>Id Venta:</b> {{i.idVenta}}<br>
+          <b>Nombre cliente:</b> {{i.nombreCliente}}<br>
+          <b>Productos:</b> {{i.productos}}<br>
+          <b>Monto $:</b> {{i.monto}}<br>
+          <b>Iva total $:</b> {{i.iva}}<br>
+          <b>Fecha:</b> {{i.fecha | date: 'yyyy-MM-dd HH:mm:ss'}}<br>
+          <b>N°Productos:</b> {{i.numeroProductosTransaccion}}<br>
+          <b>Vendedor:</b> {{i.vendedor}}<br>
+          <b>Cliente:</b> {{i.cliente}}<br>
+          <b>TipoPago:</b> {{i.tipoPago}}<br>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF')" style="font-size: 19px;">Imprimir</button>
+        <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
+      </div>
+    </ng-template>
 
-  <!-- codigo modal compras -->
-  <ng-template #longContentCompras let-modal>
-    <div class="modal-header">
-      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
-        Detalles de Compras
-        <i class='fas fa-file-alt' style='font-size:24px'></i>
-      </h3>
-    </div>
-    <div id="etiquetaPDF2" class="modal-body" *ngFor="let i of arregloDetalleCompra">
-      <p class="fuenteCuerpos" style="font-size:22px;text-align:center">
-        <b>Id Compra:</b> {{i.idCompra}}<br>
-        <b>Monto $:</b> {{i.monto}}<br>
-        <b>Productos:</b> {{i.productos}}<br>
-        <b>Fecha:</b> {{i.fecha | date: 'yyyy-MM-dd HH:mm:ss'}}<br>
-        <b>N°Productos:</b> {{i.numeroProductosCompra}}<br>
-        <b>Comprador:</b> {{i.nombreUsuario}}<br>
-        <b>Proveedor:</b> {{i.nombreProveedor}}<br>
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF2')" style="font-size: 19px;">Imprimir</button>
-      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Aceptar</button>
-    </div>
-  </ng-template>
+    <!-- codigo modal compras -->
+    <ng-template #longContentCompras let-modal>
+      <div class="modal-header">
+        <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
+          Detalles de Compras
+          <i class='fas fa-file-alt' style='font-size:24px'></i>
+        </h3>
+      </div>
+      <div id="etiquetaPDF2" class="modal-body" *ngFor="let i of arregloDetalleCompra">
+        <p class="fuenteCuerpos" style="font-size:22px;text-align:center">
+          <b>Id Compra:</b> {{i.idCompra}}<br>
+          <b>Monto $:</b> {{i.monto}}<br>
+          <b>Productos:</b> {{i.productos}}<br>
+          <b>Fecha:</b> {{i.fecha | date: 'yyyy-MM-dd HH:mm:ss'}}<br>
+          <b>N°Productos:</b> {{i.numeroProductosCompra}}<br>
+          <b>Comprador:</b> {{i.nombreUsuario}}<br>
+          <b>Proveedor:</b> {{i.nombreProveedor}}<br>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF2')" style="font-size: 19px;">Imprimir</button>
+        <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
+      </div>
+    </ng-template>

@@ -20,6 +20,7 @@ export class VendedoresComponent implements OnInit {
   public titulo = ""; //para el modal
   public frmVendedores: FormGroup;
   public formValid:Boolean=false;
+  public arregloDetalleVendedor: any[];
   //propiedades tabla
   displayedColumnsVendedores: string[] = ['idVendedor', 'nombreVendedor', 'ciudadVendedor', 'estadoVendedor', 'telefonoVendedor', 'acciones'];
   dsVendedores:MatTableDataSource<IVendedores>;
@@ -43,14 +44,14 @@ export class VendedoresComponent implements OnInit {
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
   public openAlta(content) {
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(content, {size:'lg'});
     this.titulo = "Agregar Vendedor";
   }
 
   //ABRIR MODAL CON LOS DATOS A EDITAR
   public openEditar(content,idVendedor:number,nombreVendedor: string, ciudadVendedor: string, estadoVendedor: string, direccionVendedor: string, telefonoVendedor: string, emailVendedor: string, fechaNacimientoVendedor: string, rfcVendedor: string, numeroSeguroSocialVendedor: number, antiguedadVendedor: number){
     console.log("id: ",idVendedor," nombre: ",nombreVendedor," ciudad: ",ciudadVendedor," email: ",emailVendedor);
-    this.modal= this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal= this.modalService.open(content, {size:'lg'});
     this.titulo = "Editar Vendedor";
     //pintando los valores en el modal listos para editarlos
     this.frmVendedores.controls['idVendedor'].setValue(idVendedor); // si checamos el DOM veremos que el input es hide para evitar su modificacion posteriormente
@@ -65,6 +66,12 @@ export class VendedoresComponent implements OnInit {
     this.frmVendedores.controls['numeroSeguroSocialVendedor'].setValue(numeroSeguroSocialVendedor);
     this.frmVendedores.controls['antiguedadVendedor'].setValue(antiguedadVendedor);
   }
+  //FUNCION PARA ABRIR EL MODAL DE INFORMACION VENDEDOR, CONFIGURACIONES DE BOOTSTRAP
+  public openScrollableContentVendedor(longContentVendedor:any, idVendedor:number) {
+    this.modalService.open(longContentVendedor, {scrollable: true });
+    this.listarDetalleVendedor(idVendedor);
+  }
+
 
   //LISTAR VENDEDORES
   public listarVendedores(){
@@ -75,6 +82,17 @@ export class VendedoresComponent implements OnInit {
       },
       (error)=>{
         console.log("hubo un problema: ",error)
+      }
+    );
+  }
+  //LISTAR DETALLES CLIENTES
+  public listarDetalleVendedor(idCliente:number){
+    this.API.mostrarDetalleVendedor(idCliente).subscribe(
+      (success:any)=>{
+        this.arregloDetalleVendedor = success.respuesta;
+      },
+      (error)=>{
+        console.log(error);
       }
     );
   }
