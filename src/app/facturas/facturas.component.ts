@@ -35,6 +35,7 @@ export class FacturasComponent implements OnInit {
   public ultimaVenta:any;
   public montoAcumulado : number;
   public usuarioActual:number;
+  public numeroTiposPagoSeleccionados:number = 0; // variable de control en metodo transfiereTiposDePagos
 
   constructor(public formBuilder: FormBuilder, public API: APIService,public PDF: GenerarPDFsService) {
     this.montoAcumulado = 0;
@@ -47,6 +48,7 @@ export class FacturasComponent implements OnInit {
           cantidadProducto:["",Validators.required],
           idTipoPago:["",Validators.required]
         });
+    this.frmVenta.get('pagoTransaccion').disable();
   }
 
   //llena el select de tipos de pagos
@@ -176,11 +178,22 @@ export class FacturasComponent implements OnInit {
           this.frmVenta.controls['pagoTransaccion'].setValue(null);
           //si el checkbox esta marcado
           if (tipoPago == true) {
+            this.numeroTiposPagoSeleccionados++;
+            this.frmVenta.get('pagoTransaccion').enable();
             this.arregloTiposDePagosLista.push({idTipoPago:idTipoPago})
+            //tipoPago = false;//prueba
+            console.log("tipos de pago seleccionados: ",tipoPago)
           }else if(tipoPago == false){//elimina los elementos desmarcados
+              this.numeroTiposPagoSeleccionados--;
               this.arregloTiposDePagosLista.splice(idTipoPago-1,1)
           }
-          //console.log("tipos de pagos ",this.arregloTiposDePagosLista);
+          /*numeroTiposPagoSeleccionados es una variable de control
+          para asegurarme que se deshabilite el input de pago si no
+          hay checkbox seleccionados*/
+          if(this.numeroTiposPagoSeleccionados == 0){
+            console.log("ningun tipo de pago seleccionado");
+            this.frmVenta.get('pagoTransaccion').disable();
+          }
       },
       (error)=>{
         console.log("algo ocurrio: ",error)
@@ -207,6 +220,7 @@ export class FacturasComponent implements OnInit {
       (success:any)=>{
         if (success.respuesta[0].tipoPago != "efectivo") {
             pagoTransaccionForm = this.montoAcumulado;
+
             console.log("no pagaste en efectivo")
         }
         this.API.aniadirTransaccion(idClienteForm,idVendedorForm,pagoTransaccionForm,arregloProductosForm,arregloTiposDePagosForm).subscribe(

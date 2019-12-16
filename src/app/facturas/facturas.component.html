@@ -47,9 +47,9 @@
                   </mat-checkbox>
                 </div>
               <label *ngIf="frmVenta.controls.idTipoPago.invalid && frmVenta.controls.idTipoPago.dirty" style="color: #red;">Este campo es obligatorio</label>
-              <mat-form-field class="fuenteCuerpos" style="font-size:20px;width: 100%;">
-                <input formControlName="pagoTransaccion" type="number" min="1" matInput placeholder="pago" style="color: #272727;">
-              </mat-form-field>
+                <mat-form-field class="fuenteCuerpos" style="font-size:20px;width: 100%;">
+                  <input formControlName="pagoTransaccion" type="number" min="1" matInput placeholder="pago" style="color: #272727;">
+                </mat-form-field>
               <label *ngIf="frmVenta.controls.pagoTransaccion.invalid && frmVenta.controls.pagoTransaccion.dirty" style="color: #red;">Este campo es obligatorio</label>
           </form>
         </mat-card>
