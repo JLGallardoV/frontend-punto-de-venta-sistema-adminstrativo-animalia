@@ -131,7 +131,7 @@ export class AppComponent {
   //CAMBIAR ETIQUETA NIVEL CUANDO EL USUARIO SE HA LOGUEADO
   public cambiarEtiqueta(){
 //      this.etiquetaNivelUsuario = localStorage.getItem('nivel');
-
+      /*para que esto pudiera funcionar tendria que pasar los valores por referencia, asi se modificaria la variable global*/
       this.etiquetaNivelUsuario = "";
       this.etiquetaNivelUsuario = "prueba";
       console.log("etiqueta cambiada a :",this.etiquetaNivelUsuario)
@@ -145,7 +145,7 @@ export class AppComponent {
       console.log("nivel user: ",this.etiquetaNivelUsuario);
       variableControl++;
 
-      if (variableControl == 50) {
+      if (variableControl == 100) {
           clearInterval(nivelUser);
       }
     },2000);
