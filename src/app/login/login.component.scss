@@ -25,6 +25,13 @@
 .btLogin{
   width: 100%;
 }
+//ESPINER QUE APARECE CADA QUE SE LOGUEA EL USUARIO
+.spinner{
+		position: absolute;
+		z-index: 2;
+    margin-top: 35vh;
+    margin-left: 47%;
+}
 
 //SEPARA EL BOTON DE INGRESAR DE LOS INPUTS
 .margenSuperior{

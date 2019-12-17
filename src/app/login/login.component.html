@@ -1,34 +1,35 @@
-<div class="background">
-  <br>
-  <mat-card class="cardFormulario">
-    <form [formGroup]= "frmLogin"  class="fuenteTitulos">
-      <div style="text-align: center;">
-        <br>
-        <img src="../../assets/img/logoAnimalia2.png" alt="logo" style="height: 145px;width: 150px;">
-      </div>
-      <br>
-      <div class="contenedorInputs">
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
-          <input formControlName="nombreUsuario" matInput placeholder="Usuario">
-        </mat-form-field>
-        <label *ngIf="frmLogin.controls.nombreUsuario.invalid && frmLogin.controls.nombreUsuario.dirty" style="color: #43b1b9;">Este campo es obligatorio</label>
-
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
-          <input formControlName="passwordUsuario" matInput placeholder="Contraseña" type="password">
-        </mat-form-field>
-        <label *ngIf="frmLogin.controls.passwordUsuario.invalid && frmLogin.controls.passwordUsuario.dirty" style="color: #43b1b9;">Este campo es obligatorio</label>
-        <br>
-      </div>
-    </form>
+  <mat-spinner id="idSpinner" class="spinner" style="display:none;"></mat-spinner>
+  <div class="background" id="idLogin">
     <br>
-    <div name="contenidoAbajoDeInputs" class="margenSuperior">
-      <u>
-        <p class="fuenteCuerpos textoProblemasAcceder"(click)="openSnackBar()">
-          ¿Problemas para acceder?
-        </p>
-      </u>
-      <hr>
-      <button mat-stroked-button class="btLogin fuenteCuerpos" style="font-size:22px;" [disabled]="frmLogin.invalid" (click)="login()">Ingresar</button>
-    </div>
-  </mat-card>
-</div>
+    <mat-card class="cardFormulario">
+      <form [formGroup]= "frmLogin"  class="fuenteTitulos">
+        <div style="text-align: center;">
+          <br>
+          <img src="../../assets/img/logoAnimalia2.png" alt="logo" style="height: 145px;width: 150px;">
+        </div>
+        <br>
+        <div class="contenedorInputs">
+          <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+            <input formControlName="nombreUsuario" matInput placeholder="Usuario">
+          </mat-form-field>
+          <label *ngIf="frmLogin.controls.nombreUsuario.invalid && frmLogin.controls.nombreUsuario.dirty" style="color: #43b1b9;">Este campo es obligatorio</label>
+
+          <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+            <input formControlName="passwordUsuario" matInput placeholder="Contraseña" type="password">
+          </mat-form-field>
+          <label *ngIf="frmLogin.controls.passwordUsuario.invalid && frmLogin.controls.passwordUsuario.dirty" style="color: #43b1b9;">Este campo es obligatorio</label>
+          <br>
+        </div>
+      </form>
+      <br>
+      <div name="contenidoAbajoDeInputs" class="margenSuperior">
+        <u>
+          <p class="fuenteCuerpos textoProblemasAcceder"(click)="openSnackBar()">
+            ¿Problemas para acceder?
+          </p>
+        </u>
+        <hr>
+        <button mat-stroked-button class="btLogin fuenteCuerpos" style="font-size:22px;" [disabled]="frmLogin.invalid" (click)="login()">Ingresar</button>
+      </div>
+    </mat-card>
+  </div>

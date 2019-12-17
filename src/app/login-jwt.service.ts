@@ -21,6 +21,13 @@ export class LoginJwtService {
           localStorage.setItem('usuario', nombreUsuario); //almacenamos el token en localstorage NOTA respuesta viene del servidor y contiene el token
           this.bitacora.registrarAcceso(accion,nombreUsuario); //añadimos el usuario en sesion a la bitacora de accesos
           console.log("sesion iniciada");
+
+          document.getElementById('idLogin').style.pointerEvents = "none"; //bloquea el evento click en el login
+          document.getElementById('idLogin').style.opacity = "0.5";
+          document.getElementById('idSpinner').style.display = "block"; //libera el spinner que simula la carga de la app
+          document.getElementById('idSpinner').style.opacity = "1.0"; //libera el spinner que simula la carga de la app
+
+
           setTimeout(()=>{
             //pongo un setTimeout para que en el navegador se alcance a plasmar el localStorage
             this.headers = new HttpHeaders({
