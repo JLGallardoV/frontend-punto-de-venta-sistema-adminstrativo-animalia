@@ -8,13 +8,13 @@ export class ConfirmarEliminarService {
   constructor() { }
 
   //MODIFICA EL ALERT AL ELIMINAR ALGUN PRODUCTO
-  public confirmarEliminacion(){
-    let mensaje: string = "";
-      let opcion = confirm("Clicka en Aceptar o Cancelar");
-      if (opcion == true) {
-          console.log(mensaje = "Has clickado OK");
-  	} else {
-          console.log(mensaje = "Has clickado Cancelar");
-  	}
+  public confirmarEliminacion(): boolean {
+    let opcion = confirm("¿Estas seguro que deseas eliminar el elemento?");
+    if (opcion == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
+
 }

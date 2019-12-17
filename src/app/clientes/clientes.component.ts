@@ -6,6 +6,8 @@ import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IClientes,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 import {LoginJwtService} from '../login-jwt.service';
+import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
+
 
 @Component({
   selector: 'app-clientes',
@@ -25,7 +27,14 @@ export class ClientesComponent implements OnInit {
   dsClientes: MatTableDataSource<IClientes>
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(public guardian:LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(
+    public guardian:LoginJwtService,
+    private modalService: NgbModal,
+    public formBuilder: FormBuilder,
+    public API:APIService,
+    public formateandoFecha:DateFormatService,
+    public eliminacionSegura: ConfirmarEliminarService
+) {
     this.arregloTiposDeClientes = [];
     this.frmClientes = this.formBuilder.group({
       idCliente:[""],
@@ -168,16 +177,23 @@ export class ClientesComponent implements OnInit {
 
   //ELIMINAR CLIENTE
   public eliminarCliente(idCliente:number){
-    this.API.borrarCliente(idCliente).subscribe(
-      (success:any)=>{
-        alert(success.respuesta);
-        this.listarClientes();
+    let respuesta: boolean = false;
+    respuesta = this.eliminacionSegura.confirmarEliminacion();
 
-      },
-      (error)=>{
-        console.log("hubo un problema: ", error);
-      }
-    );
+    if (respuesta == true) {
+      this.API.borrarCliente(idCliente).subscribe(
+        (success:any)=>{
+          alert(success.respuesta);
+          this.listarClientes();
+
+        },
+        (error)=>{
+          console.log("hubo un problema: ", error);
+        }
+      );
+    } else {
+      console.log("eliminacion cancelada");
+    }
   }
 
   //FUNCIONALIDAD FILTRAR

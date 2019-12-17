@@ -5,6 +5,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOO
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IDevoluciones,ITiposDeProblemas,ICompensaciones,IClientes,IProductos,APIService} from '../api.service';
 import {LoginJwtService} from '../login-jwt.service';
+import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
 
 
 @Component({
@@ -53,7 +54,13 @@ export class DevolucionesComponent implements OnInit {
   @ViewChild('MatPaginatorTiposProblemas',{static: true})paginatorTiposProblemas: MatPaginator;
   @ViewChild('MatPaginatorCompensaciones',{static: true})paginatorCompensaciones: MatPaginator;
 
-  constructor(public guardian:LoginJwtService,private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService) {
+  constructor(
+    public guardian:LoginJwtService,
+    private modalService: NgbModal,
+    public formBuilder: FormBuilder,
+    public API:APIService,
+    public eliminacionSegura: ConfirmarEliminarService
+) {
     this.frmDevoluciones = this.formBuilder.group({
       montoConIvaDevolucion:["",Validators.required],
       motivoDevolucion:["",Validators.required],
@@ -288,32 +295,49 @@ export class DevolucionesComponent implements OnInit {
     }
   }
 
+
   //ELIMINAR TIPO DE PROBLEMA
   public eliminarTipoProblema(idCliente:number){
-    this.API.borrarTipoDeProblema(idCliente).subscribe(
-      (success:any)=>{
-        alert(success.respuesta);
-        this.listarTiposProblemas();
+    let respuesta: boolean = false;
+    respuesta = this.eliminacionSegura.confirmarEliminacion();
+    if (respuesta == true) {
+      this.API.borrarTipoDeProblema(idCliente).subscribe(
+        (success:any)=>{
+          alert(success.respuesta);
+          this.listarTiposProblemas();
 
-      },
-      (error)=>{
-        console.log("hubo un problema: ", error);
-      }
-    );
+        },
+        (error)=>{
+          console.log("hubo un problema: ", error);
+        }
+      );
+    } else {
+      console.log("eliminacion cancelada");
+    }
   }
+
+
   //ELIMINAR COMPENSACCION
   public eliminarCompensacion(idCliente:number){
-    this.API.borrarCompensacion(idCliente).subscribe(
-      (success:any)=>{
-        alert(success.respuesta);
-        this.listarCompensaciones();
+    let respuesta: boolean = false;
+    respuesta = this.eliminacionSegura.confirmarEliminacion();
 
-      },
-      (error)=>{
-        console.log("hubo un problema: ", error);
-      }
-    );
+    if (respuesta == true) {
+      this.API.borrarCompensacion(idCliente).subscribe(
+        (success:any)=>{
+          alert(success.respuesta);
+          this.listarCompensaciones();
+
+        },
+        (error)=>{
+          console.log("hubo un problema: ", error);
+        }
+      );
+    } else {
+      console.log("eliminacion cancelada");
+    }
   }
+
 
   //FUNCIONALIDAD FILTRAR
   public filtrarRegistros(filterValue: string) {

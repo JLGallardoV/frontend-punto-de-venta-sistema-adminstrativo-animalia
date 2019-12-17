@@ -5,6 +5,8 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOO
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {ICategorias,APIService} from '../api.service';
 import {LoginJwtService} from '../login-jwt.service';
+import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
+
 
 /*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
 ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
@@ -45,7 +47,13 @@ export class CategoriasComponent implements OnInit {
   dsCategorias: MatTableDataSource<ICategorias>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(public guardian:LoginJwtService,private modalService: NgbModal, public formBuilder: FormBuilder, public API:APIService) {
+  constructor(
+    public guardian:LoginJwtService,
+    private modalService: NgbModal,
+    public formBuilder: FormBuilder,
+    public API:APIService,
+    public eliminacionSegura: ConfirmarEliminarService
+  ) {
     this.titulo = "";
     this.frmCategorias = this.formBuilder.group({
       idCategoria:[""],
@@ -128,16 +136,23 @@ export class CategoriasComponent implements OnInit {
 
   //ELIMINAR CATEGORIA
   public eliminarCategoria(idCategoria:number){
-    this.API.borrarCategoria(idCategoria).subscribe(
-      (success:any)=>{
-        alert(success.respuesta);
-        this.listarCategorias();
+    let respuesta: boolean = false;
+    respuesta = this.eliminacionSegura.confirmarEliminacion();
+    if (respuesta == true) {
+      this.API.borrarCategoria(idCategoria).subscribe(
+        (success:any)=>{
+          alert(success.respuesta);
+          this.listarCategorias();
 
-      },
-      (error)=>{
-        console.log("hubo un problema: ", error);
-      }
-    );
+        },
+        (error)=>{
+          console.log("hubo un problema: ", error);
+        }
+      );
+    } else {
+      console.log("eliminacion cancelada");
+
+    }
   }
   //FUNCIONALIDAD FILTRAR
   public filtrarRegistros(filterValue: string) {

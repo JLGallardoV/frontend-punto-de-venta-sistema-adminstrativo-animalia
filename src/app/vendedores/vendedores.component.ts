@@ -6,6 +6,7 @@ import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IVendedores,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 import {LoginJwtService} from '../login-jwt.service';
+import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
 
 
 @Component({
@@ -26,7 +27,14 @@ export class VendedoresComponent implements OnInit {
   dsVendedores:MatTableDataSource<IVendedores>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(public guardian:LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(
+    public guardian:LoginJwtService,
+    private modalService: NgbModal,
+    public formBuilder: FormBuilder,
+    public API:APIService,
+    public formateandoFecha:DateFormatService,
+    public eliminacionSegura: ConfirmarEliminarService
+) {
     this.frmVendedores = this.formBuilder.group({
       idVendedor:[""],
       nombreVendedor:["",Validators.required],
@@ -146,16 +154,23 @@ export class VendedoresComponent implements OnInit {
 
   //ELIMINAR VENDEDOR
   public eliminarVendedor(idVendedor:number){
-    this.API.borrarVendedor(idVendedor).subscribe(
-      (success:any)=>{
-        alert(success.respuesta);
-        this.listarVendedores();
+    let respuesta: boolean = false;
+    respuesta = this.eliminacionSegura.confirmarEliminacion();
 
-      },
-      (error)=>{
-        console.log("hubo un problema: ", error);
-      }
-    );
+    if (respuesta == true) {
+      this.API.borrarVendedor(idVendedor).subscribe(
+        (success:any)=>{
+          alert(success.respuesta);
+          this.listarVendedores();
+
+        },
+        (error)=>{
+          console.log("hubo un problema: ", error);
+        }
+      );
+    } else {
+      console.log("eliminacion cancelada");
+    }
   }
 
   //FUNCIONALIDAD FILTRAR
