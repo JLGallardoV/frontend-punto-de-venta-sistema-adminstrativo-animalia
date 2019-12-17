@@ -42,7 +42,7 @@ import { HttpClientModule} from '@angular/common/http';
 import { ComprasComponent} from './compras/compras.component';
 import{AuthGuard} from './auth.guard';
 import {GenerarPDFsService} from './generar-pdfs.service';
-
+import {ConfirmarEliminarService} from './confirmar-eliminar.service';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 @NgModule({
@@ -85,7 +85,8 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
   providers: [
     AuthGuard,
     GenerarPDFsService,
-    AppComponent
+    AppComponent,
+    ConfirmarEliminarService  
   ],
   bootstrap: [AppComponent]
 })

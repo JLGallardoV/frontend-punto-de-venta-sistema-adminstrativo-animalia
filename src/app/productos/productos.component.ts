@@ -6,7 +6,7 @@ import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IProductos,ICategorias,IAlmacenes,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 import {LoginJwtService} from '../login-jwt.service';
-
+import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
 
 /*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
 ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
@@ -62,7 +62,14 @@ export class ProductosComponent implements OnInit {
   dsProductos:MatTableDataSource<IProductos>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(public guardian:LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder,public API:APIService, public formateandoFecha:DateFormatService) {
+  constructor(
+    public guardian:LoginJwtService,
+    private modalService: NgbModal,
+    public formBuilder: FormBuilder,
+    public API:APIService,
+    public formateandoFecha:DateFormatService,
+    public eliminacionSegura: ConfirmarEliminarService
+  ) {
     this.frmProductos = this.formBuilder.group({
       idProducto:[""],
       nombreProducto:["",Validators.required],
@@ -79,11 +86,13 @@ export class ProductosComponent implements OnInit {
     });
   }
 
+
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
   public openAltaProducto(contentProducto:any) {
     this.modal= this.modalService.open(contentProducto,{size:'lg'});
     this.titulo = "Agregar Producto";
   }
+
 
   //ABRIR MODAL CON LOS DATOS A EDITAR
   public openEditarProducto(contentProducto:any,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number){
@@ -112,12 +121,14 @@ export class ProductosComponent implements OnInit {
     this.frmProductos.controls['idAlmacen'].setValue(idAlmacen);
   }
 
+
   //MOSTRAR LOS DETALLES DEL PRODUCTO EN EL MODAL
   public openScrollableContentProductos(longContentProductos:any, idProducto:number) {
     console.log("idTransaccion",idProducto);
     this.modalService.open(longContentProductos, {scrollable: true });
     this.listarDetalleProducto(idProducto);
   }
+
 
   //LISTAR DETALLES PRODUCTOS
   public listarDetalleProducto(idProducto:number){
@@ -130,6 +141,7 @@ export class ProductosComponent implements OnInit {
       }
     );
   }
+
 
   //LISTAR PRODUCTOS
   public listarProductos(){
@@ -145,6 +157,7 @@ export class ProductosComponent implements OnInit {
       }
     );
   }
+
 
   //LISTAR CATEGORIA PARA EL SELECT DEL FORMULARIO
   public listarCategorias(){
@@ -170,6 +183,7 @@ export class ProductosComponent implements OnInit {
       }
     );
   }
+
 
   //AGREGAR CLIENTE Y ACTUALIZAR CLIENTE: EVITO CREAR 2 MODALES
   public ejecutarPeticion(){
@@ -226,19 +240,28 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-  //ELIMINAR CLIENTE
+  //ELIMINAR PRODUCTO
   public eliminarProducto(idProducto:number){
-    this.API.borrarProducto(idProducto).subscribe(
-      (success:any)=>{
-        alert(success.respuesta);
-        this.listarProductos();
+    let respuesta: boolean = false;
 
-      },
-      (error)=>{
-        console.log("hubo un problema: ", error);
-      }
-    );
+    respuesta = this.eliminacionSegura.confirmarEliminacion();
+    if (respuesta == true) {
+      this.API.borrarProducto(idProducto).subscribe(
+        (success:any)=>{
+          alert(success.respuesta);
+          this.listarProductos();
+
+        },
+        (error)=>{
+          console.log("hubo un problema: ", error);
+        }
+      );
+    } else {
+      console.log("eliminacion cancelada");
+    }
+
   }
+
 
   //FUNCIONALIDAD FILTRAR
   public filtrarRegistros(filterValue: string) {

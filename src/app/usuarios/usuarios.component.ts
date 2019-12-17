@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUsuarios, ITiposDeUsuarios, IVendedores, APIService } from '../api.service';
 import { LoginJwtService } from '../login-jwt.service';
 import { sha256} from 'js-sha256';
+import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
+
 
 @Component({
   selector: 'app-usuarios',
@@ -40,7 +42,13 @@ export class UsuariosComponent implements OnInit {
   dsUsuarios: MatTableDataSource<IUsuarios>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(public guardian: LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder, public API: APIService) {
+  constructor(
+    public guardian: LoginJwtService,
+    private modalService: NgbModal,
+    public formBuilder: FormBuilder,
+    public API: APIService,
+    public eliminacionSegura: ConfirmarEliminarService
+) {
     this.frmUsuarios = this.formBuilder.group({
       idUsuario: [""],
       nombreUsuario: ["", Validators.required],
@@ -153,16 +161,23 @@ export class UsuariosComponent implements OnInit {
 
   //ELIMINAR CLIENTE
   public eliminarUsuario(idUsuario: number) {
-    this.API.borrarUsuario(idUsuario).subscribe(
-      (success: any) => {
-        alert(success.respuesta);
-        this.listarUsuarios();
+    let respuesta: boolean = false;
+    respuesta = this.eliminacionSegura.confirmarEliminacion();
 
-      },
-      (error) => {
-        console.log("hubo un problema: ", error);
-      }
-    );
+    if (respuesta == true) {
+      this.API.borrarUsuario(idUsuario).subscribe(
+        (success: any) => {
+          alert(success.respuesta);
+          this.listarUsuarios();
+
+        },
+        (error) => {
+          console.log("hubo un problema: ", error);
+        }
+      );
+    } else {
+      console.log("eliminacion cancelada");
+    }
   }
 
   //FUNCIONALIDAD FILTRAR

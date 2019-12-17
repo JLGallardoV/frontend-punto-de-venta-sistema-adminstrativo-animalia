@@ -38,7 +38,26 @@ export class ComprasComponent implements OnInit {
     });
   }
 
-  //llena el select de productos
+
+  /*VALIDAMOS QUE SE PUEDAN INGRESAR UNICAMENTE PUROS NUMEROS EN LOS INPUTS, CORTESIA:
+  https://stackblitz.com/edit/numeric-only?file=app%2Fapp.component.html*/
+  public soloNumeros(event:any): boolean {
+      //atrapamos la tecla ingresada en este if ternario
+      const charCode = (event.which) ? event.which : event.keyCode;
+
+      /*si se detecta un caracter especial (en ascii los caracteres especiales son menores a 48)
+       o letras (en ascii las letras empiezan apartir del 57), del 31 al 48 en ascii tambien hay caracteres
+       especiales, si las anteriores condiciones se cumplen no deja escribir en el input, en su defecto
+       si acepta valores*/
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+      return true;
+
+    }
+
+
+  //LLENA SELECT DE PRODUCTOS
   public listarProductos() {
     this.API.mostrarProductos().subscribe(
       (success: any) => {
@@ -50,7 +69,8 @@ export class ComprasComponent implements OnInit {
     );
   }
 
-  //llena el select de proveedores
+
+  //LLENA SELECT DE PROVEEDORES
   public listarProveedores() {
     this.API.mostrarProveedores().subscribe(
       (success: any) => {
@@ -61,7 +81,9 @@ export class ComprasComponent implements OnInit {
       }
     );
   }
-  //llena el input del nombre de usuario, este usuario es el de la sesion
+
+
+  //LLENA EL INPUT DE USUARIO, ESTE ES EL DEL USUARIO EN SESIÓN
   public mostrarUsuarioEnSesion() {
     this.API.buscarUsuarioPorNombre(localStorage.getItem("usuario")).subscribe(
       (success: any) => {
@@ -73,7 +95,9 @@ export class ComprasComponent implements OnInit {
       }
     );
   }
-  //llena el select de usuarios
+
+
+  //LLENA SELECT DE USUARIOS
   public listarUsuarios() {
     this.API.mostrarUsuarios().subscribe(
       (success: any) => {
@@ -85,6 +109,7 @@ export class ComprasComponent implements OnInit {
     );
   }
 
+//TRASFIERE LOS PRODUCTOS DEL FORMULARIOS AL CARRITO
   public transfiereProductos() {
     let transaferirValorID: any;
     let transaferirValorCantidad: number = 0;
@@ -126,7 +151,7 @@ export class ComprasComponent implements OnInit {
   }
 
 
-  //eliminar productos de tabla (carrito)
+  //ELIMINA PRODUCTOS DEL CARRITO
   public eliminarProductosCarrito(objetoProducto: any, indice: number) {
     //console.log("producto a eliminar: ", indice - 1, );
     //console.log(this.arregloProductosTabla)
@@ -144,7 +169,8 @@ export class ComprasComponent implements OnInit {
     );
   }
 
-  //agregar una compras
+
+  //AGREGA UNA COMPRA
   public agregarCompra() {
     //console.log("montoAcumulado")
     let idUsuarioForm: number = 0, idProveedorForm: number = 0, montoCompraForm: number = 0;
@@ -176,7 +202,8 @@ export class ComprasComponent implements OnInit {
     );
   }
 
-  //muestra la ultima transaccion hecha despues de que se oprime el btn de vender
+
+  //MUESTRA LA ULTIMA TRANSACCION HECHA DESPUES DE QUE SE HACE UNA COMPRA
   public listarUltimaCompra(){
       this.API.mostrarUltimaCompra().subscribe(
       (success:any)=>{
@@ -214,7 +241,8 @@ export class ComprasComponent implements OnInit {
     );
   }
 
-  //limpiamos el formulario una vez e haya realizado uan venta.
+
+  //LIMPIAMOS FORMULARIOS CADA VEZ QUE SE CONCLUYE UNA COMPRA
   public limpiarFormulario() {
     this.frmCompra.reset();
     this.frmCompra.controls['idUsuario'].setValue(localStorage.getItem("usuario"));
