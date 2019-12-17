@@ -51,7 +51,26 @@ export class FacturasComponent implements OnInit {
     this.frmVenta.get('pagoTransaccion').disable();
   }
 
-  //llena el select de tipos de pagos
+
+  /*VALIDAMOS QUE SE PUEDAN INGRESAR UNICAMENTE PUROS NUMEROS EN LOS INPUTS, CORTESIA:
+  https://stackblitz.com/edit/numeric-only?file=app%2Fapp.component.html*/
+  public soloNumeros(event:any): boolean {
+      //atrapamos la tecla ingresada en este if ternario
+      const charCode = (event.which) ? event.which : event.keyCode;
+
+      /*si se detecta un caracter especial (en ascii los caracteres especiales son menores a 48)
+       o letras (en ascii las letras empiezan apartir del 57), del 31 al 48 en ascii tambien hay caracteres
+       especiales, si las anteriores condiciones se cumplen no deja escribir en el input, en su defecto
+       si acepta valores*/
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+      return true;
+
+    }
+
+
+  //LLENA EL SELECT DE TIPOS DE PAGOS
   public listarTiposDePagos(){
     this.API.mostrarTiposDePagos().subscribe(
       (success:any)=>{
@@ -63,7 +82,8 @@ export class FacturasComponent implements OnInit {
     );
   }
 
-  //llena el select de productos
+
+  //LLENA EL SELECT DE PRODUCTOS
   public listarProductos(){
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
@@ -75,7 +95,8 @@ export class FacturasComponent implements OnInit {
     );
   }
 
-  //llena el select de clientes
+
+  //LLENA EL SELECT DE CLIENTES
   public listarClientes(){
     this.API.mostrarClientes().subscribe(
       (success:any)=>{
@@ -87,7 +108,7 @@ export class FacturasComponent implements OnInit {
     );
   }
 
-  //llena el select de vendedores
+  //LLENA EL SELECT DE VENDEDORES
   public listarVendedores(){
     this.API.mostrarVendedores().subscribe(
       (success:any)=>{
@@ -98,7 +119,9 @@ export class FacturasComponent implements OnInit {
       }
     );
   }
-  //llena el input del nombre de usuario, este usuario es el de la sesion
+
+
+  //LLENA EL INPUT DEL NOMBRE DE USUARIO, ESTE ES EL DEL USUARIO EN SESIÓN
   public mostrarUsuarioEnSesion(){
     this.API.buscarUsuarioPorNombre(localStorage.getItem("usuario")).subscribe(
       (success:any)=>{
@@ -111,7 +134,8 @@ export class FacturasComponent implements OnInit {
     );
   }
 
-//agrego los productos del formulario a su tabla de productos
+
+//AGREGO PRODUCTOS DEL FORMULARIO A LA TABLA CARRITO
   public transfiereProductos(){
     let transaferirValorID: any;//idProducto
     let transaferirValorCantidad: number = 0;
@@ -152,7 +176,8 @@ export class FacturasComponent implements OnInit {
     );
   }
 
-  //eliminar productos de tabla (carrito)
+
+  //ELIMINAR PRODUCTOS DE LA TABLA (CARRITO)
   public eliminarProductosCarrito(objetoProducto:any,indice:number){
     console.log("producto a eliminar: ",indice-1,);
     //console.log(this.arregloProductosTabla)
@@ -170,7 +195,8 @@ export class FacturasComponent implements OnInit {
     );
   }
 
-  //almacena los tipos de pago selecionados del checkbox en un arreglo para su posterior uso.
+
+//ALMACENA LOS TIPOS DE PAGO SELECCIONADOS DEL CHECKBOX EN UN ARREGLO PARA SU USO POSTERIOR
   public transfiereTiposDePagos(idTipoPago:number){
     this.API.mostrarTiposDePagos().subscribe(
       (success:any)=>{
@@ -200,7 +226,9 @@ export class FacturasComponent implements OnInit {
       }
     );
   }
-  //agregar una transaccion
+
+
+  //AGREGAR UNA TRANSACCION
   public agregarTransaccion(){
    let idClienteForm:number = 0,idVendedorForm:number = 0,pagoTransaccionForm: number = 0;
     let arregloProductosForm:any[] = [],arregloTiposDePagosForm:any[] = [];
@@ -249,6 +277,7 @@ export class FacturasComponent implements OnInit {
     );
   }
 
+
   //muestra la ultima transaccion hecha despues de que se oprime el btn de vender
   public listarUltimaTransaccion(){
       this.API.mostrarUltimaTransaccion().subscribe(
@@ -291,6 +320,7 @@ export class FacturasComponent implements OnInit {
     );
   }
 
+
   //LIMPIO EL FORMULARIO UNA VEZ QUE SE HA REALIZADO UNA COMPRA.
   public limpiarFormulario(){
     this.frmVenta.reset();
@@ -303,6 +333,7 @@ export class FacturasComponent implements OnInit {
     document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
 
   }
+
 
   //DENEGAR ACCESO A COMPRAS
   public denegarAccesoCompras(){
@@ -317,10 +348,13 @@ export class FacturasComponent implements OnInit {
         return false;
     }
   }
+
+
   //INVOCANDO SERVICIO PARA GENERAR PDF
   public generarPDF(etiquetaPDF:string){
     this.PDF.generarPDF(etiquetaPDF);
   }
+
 
   ngOnInit() {
     //AppComponent.denegarVistaMenu();

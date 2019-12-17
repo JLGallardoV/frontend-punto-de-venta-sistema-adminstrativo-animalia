@@ -29,7 +29,7 @@
               <div style="display: inline-block;">
                 <mat-form-field class="fuenteCuerpos" style="font-size:20px;width: 110px;">
                   <div style="display: flex;">
-                    <input formControlName="cantidadProducto" type="number" min="1" matInput placeholder="cantidad" style="color: #272727;">
+                    <input formControlName="cantidadProducto" type="number" min="1" matInput placeholder="cantidad" style="color: #272727;" (keypress)="soloNumeros($event)">
                   </div>
                 </mat-form-field>
                 <button mat-mini-fab matTooltip="Agrega el producto y su cantidad a la venta" class="btnAcciones btnAniadirEntidad" [disabled]="frmCompra.controls.idProducto.invalid || frmCompra.controls.cantidadProducto.invalid"
