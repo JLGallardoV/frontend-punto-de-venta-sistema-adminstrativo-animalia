@@ -171,6 +171,8 @@ export class ProductosComponent implements OnInit {
       }
     );
   }
+
+
   //LISTAR ALMACEN PARA EL SELECT DEL FORMULARIO
   public listarAlmacenes(){
     this.API.mostrarAlmacenes().subscribe(

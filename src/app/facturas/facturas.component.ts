@@ -55,8 +55,9 @@ export class FacturasComponent implements OnInit {
   /*VALIDAMOS QUE SE PUEDAN INGRESAR UNICAMENTE PUROS NUMEROS EN LOS INPUTS, CORTESIA:
   https://stackblitz.com/edit/numeric-only?file=app%2Fapp.component.html*/
   public soloNumeros(event:any): boolean {
-      //atrapamos la tecla ingresada en este if ternario
-      const charCode = (event.which) ? event.which : event.keyCode;
+      //atrapamos la tecla ingresada en este if ternario la propiedad which contiene el unicode de la tecla presionada
+
+      const charCode = (event.which) ? event.which : event.keyCode;//se usa which o keycode dependiendo el soporte de nuestro browser
 
       /*si se detecta un caracter especial (en ascii los caracteres especiales son menores a 48)
        o letras (en ascii las letras empiezan apartir del 57), del 31 al 48 en ascii tambien hay caracteres
