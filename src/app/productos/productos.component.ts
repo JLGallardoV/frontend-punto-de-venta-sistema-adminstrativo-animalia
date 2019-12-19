@@ -77,8 +77,7 @@ export class ProductosComponent implements OnInit {
       contenidoProducto:["",Validators.required],
       fechaCaducidadProducto:[""],
       paisOrigenProducto:["",Validators.required],
-      stockProducto:[""],
-      puntosProducto:["",Validators.required],
+      stockProducto:["",Validators.required],
       precioUnitarioProducto:["",Validators.required],
       precioCompraProducto:["",Validators.required],
       idCategoria:["",Validators.required],
@@ -95,8 +94,7 @@ export class ProductosComponent implements OnInit {
 
 
   //ABRIR MODAL CON LOS DATOS A EDITAR
-  public openEditarProducto(contentProducto:any,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number, puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number){
-    console.log("id: ",idProducto," nombre: ",nombreProducto," caducidad: ",fechaCaducidadProducto);
+  public openEditarProducto(contentProducto:any,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number,precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number){
     this.modal= this.modalService.open(contentProducto,{size:'lg'});
     this.titulo = "Editar Producto";
     //pintando los valores en el modal listos para editarlos
@@ -114,7 +112,6 @@ export class ProductosComponent implements OnInit {
 
     this.frmProductos.controls['paisOrigenProducto'].setValue(paisOrigenProducto);
     this.frmProductos.controls['stockProducto'].setValue(stockProducto);
-    this.frmProductos.controls['puntosProducto'].setValue(puntosProducto);
     this.frmProductos.controls['precioUnitarioProducto'].setValue(precioUnitarioProducto);
     this.frmProductos.controls['precioCompraProducto'].setValue(precioCompraProducto);
     this.frmProductos.controls['idCategoria'].setValue(idCategoria);
@@ -124,7 +121,6 @@ export class ProductosComponent implements OnInit {
 
   //MOSTRAR LOS DETALLES DEL PRODUCTO EN EL MODAL
   public openScrollableContentProductos(longContentProductos:any, idProducto:number) {
-    console.log("idTransaccion",idProducto);
     this.modalService.open(longContentProductos, {scrollable: true });
     this.listarDetalleProducto(idProducto);
   }
@@ -164,7 +160,6 @@ export class ProductosComponent implements OnInit {
     this.API.mostrarCategorias().subscribe(
       (success: any)=>{
         this.arregloCategoria = success.respuesta;
-        console.log("listando tipos de clientes")
       },
       (error)=>{
         console.log("hubo un problema: ",error)
@@ -178,7 +173,6 @@ export class ProductosComponent implements OnInit {
     this.API.mostrarAlmacenes().subscribe(
       (success: any)=>{
         this.arregloAlmacenes = success.respuesta;
-        console.log("listando tipos de clientes")
       },
       (error)=>{
         console.log("hubo un problema: ",error)
@@ -197,7 +191,6 @@ export class ProductosComponent implements OnInit {
     let fechaCaducidadProductoForm = this.frmProductos.get('fechaCaducidadProducto').value;
     let paisOrigenProductoForm = this.frmProductos.get('paisOrigenProducto').value;
     let stockProductoForm = this.frmProductos.get('stockProducto').value;
-    let puntosProductoForm = this.frmProductos.get('puntosProducto').value;
     let precioUnitarioProductoForm = this.frmProductos.get('precioUnitarioProducto').value;
     let precioCompraProductoForm = this.frmProductos.get('precioCompraProducto').value;
     let idCategoriaForm = this.frmProductos.get('idCategoria').value;
@@ -213,7 +206,7 @@ export class ProductosComponent implements OnInit {
       fechaCaducidadProductoForm = this.formateandoFecha.formatearFecha(fechaCaducidadProductoForm);//le quito el formato raro que manda el picker para que sea aceptado por mi sgbd
     }
     if (this.titulo == "Agregar Producto") {
-      this.API.aniadirProducto(nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoForm, paisOrigenProductoForm, stockProductoForm, puntosProductoForm, precioUnitarioProductoForm, precioCompraProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
+      this.API.aniadirProducto(nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoForm, paisOrigenProductoForm, stockProductoForm, precioUnitarioProductoForm, precioCompraProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
         (success: any)=>{
           alert(JSON.stringify(success.respuesta));
           this.listarProductos();
@@ -227,7 +220,7 @@ export class ProductosComponent implements OnInit {
       );
     }
     if(this.titulo == "Editar Producto"){
-      this.API.actualizarProducto(idProductoForm,nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoForm, paisOrigenProductoForm, stockProductoForm, puntosProductoForm, precioUnitarioProductoForm, precioCompraProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
+      this.API.actualizarProducto(idProductoForm,nombreProductoForm, detalleProductoForm, contenidoProductoForm, fechaCaducidadProductoForm, paisOrigenProductoForm, stockProductoForm,precioUnitarioProductoForm, precioCompraProductoForm, idCategoriaForm, idAlmacenForm).subscribe(
         (success: any)=>{
           alert(JSON.stringify(success.respuesta));
           this.listarProductos();

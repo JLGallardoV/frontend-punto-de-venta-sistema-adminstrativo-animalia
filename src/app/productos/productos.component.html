@@ -57,7 +57,7 @@
               <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
               <td mat-cell *matCellDef="let i" style="text-align:center">
                   <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentProductos(longContentProductos,i.idProducto)">Informacion</button>
-                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openEditarProducto(contentProductos,i.idProducto, i.nombreProducto, i.detalleProducto, i.contenidoProducto, i.fechaCaducidadProducto, i.paisOrigenProducto,i.stockProducto,i.puntosProducto, i.precioUnitarioProducto, i.precioCompraProducto, i.idCategoria, i.idAlmacen)">Modificar</button>
+                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openEditarProducto(contentProductos,i.idProducto, i.nombreProducto, i.detalleProducto, i.contenidoProducto, i.fechaCaducidadProducto, i.paisOrigenProducto,i.stockProducto,i.precioUnitarioProducto, i.precioCompraProducto, i.idCategoria, i.idAlmacen)">Modificar</button>
                   <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="eliminarProducto(i.idProducto)">Eliminar</button>
               </td>
             </ng-container>
@@ -146,11 +146,6 @@
         <label *ngIf="frmProductos.controls.precioCompraProducto.invalid && frmProductos.controls.precioCompraProducto.dirty" style="color:red;">Este campo es obligatorio</label>
         <br>
       </div>
-      <!--mat-form-field class="fuenteCuerpos inputModal" >
-        <input formControlName="puntosProducto" matInput type="number" min="1" placeholder="puntosProducto" style="text-align:center;">
-      </mat-form-field>
-      <label *ngIf="frmProductos.controls.puntosProducto.invalid && frmProductos.controls.puntosProducto.dirty" style="color:red;">Este campo es obligatorio</label>
-      <br-->
       <div name="par5CategoriaAlmacen" style="display:flex;">
         <mat-form-field class="fuenteCuerpos inputModal" style="margin-right:15px;">
           <mat-select formControlName="idCategoria" class="fuenteCuerpos" placeholder="Categoria">
@@ -197,7 +192,6 @@
       <br><b>Precio Compra:</b> {{i.precioCompraProducto}}
       <br><b>Stock:</b> {{i.stockProducto}}
       <br><b>Categoria:</b> {{i.nombreCategoria}}
-      <br><b>Puntos:</b> {{i.puntosProducto}}
       <br><b>Pais Origen:</b> {{i.paisOrigenProducto}}
       <br><b>Almacen:</b> {{i.ciudadAlmacen}}
       <br><b>Tel. Almacen:</b> {{i.telefonoAlmacen}}

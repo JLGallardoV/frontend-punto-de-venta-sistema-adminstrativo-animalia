@@ -31,14 +31,14 @@
                   </mat-select>
                 </mat-form-field>
 
-                <div style="display: contents">
+                <div style="display: flex;">
                   <mat-form-field class="fuenteCuerpos" style="font-size:20px;width:90%;">
                     <div style="display: flex;">
                       <input formControlName="cantidadProducto" type="number" min="1" matInput placeholder="cantidad" style="color: #272727;" (keypress)="soloNumeros($event)">
                     </div>
                   </mat-form-field>
                   <button mat-mini-fab matTooltip="Agrega el producto y su cantidad a la venta" class="btnAcciones btnAniadirEntidad" [disabled]="frmVenta.controls.idProducto.invalid || frmVenta.controls.cantidadProducto.invalid"
-                  (click)="transfiereProductos()" style="top: 10px;margin-left: 16px;"><i class='fas fa-plus' style="margin-top: -24px;"></i></button>
+                  (click)="transfiereProductos()" style="top: 25px;margin-left: 0px;"><i class='fas fa-plus' style="margin-top: -24px;margin-left:3px;"></i></button>
                   <label *ngIf="(frmVenta.controls.idProducto.invalid && frmVenta.controls.idProducto.dirty) || (frmVenta.controls.cantidadProducto.invalid && frmVenta.controls.cantidadProducto.dirty)" style="color: #red;">Este campo es
                     obligatorio</label>
                 </div>

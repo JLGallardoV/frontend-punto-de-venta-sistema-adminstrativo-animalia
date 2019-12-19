@@ -215,11 +215,12 @@ export class APIService {
   public mostrarDetalleCliente(idCliente:number) {
     return this.http.get(`http://localhost:3000/clientesWS/listarDetalleCliente/${idCliente}`, { headers: this.headers });
   }
-  public aniadirCliente(nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string, puntuajeCliente: number, idTipoCliente: number) {
-    return this.http.post('http://localhost:3000/clientesWS/agregarCliente', { nombreCliente, apellidoPaternoCliente, apellidoMaternoCliente, ciudadCliente, estadoCliente, paisCliente, direccionCliente, coloniaCliente, cpCliente, telefonoCliente, emailCliente,  puntuajeCliente, idTipoCliente }, { headers: this.headers });
+  public aniadirCliente(nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string,idTipoCliente:number) {
+    return this.http.post('http://localhost:3000/clientesWS/agregarCliente', { nombreCliente, apellidoPaternoCliente, apellidoMaternoCliente, ciudadCliente, estadoCliente, paisCliente, direccionCliente, coloniaCliente, cpCliente, telefonoCliente, emailCliente,idTipoCliente }, { headers: this.headers });
   }
-  public actualizarCliente(idCliente: number, nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string, puntuajeCliente: number, idTipoCliente: number) {
-    return this.http.put(`http://localhost:3000/clientesWS/actualizarCliente/${idCliente}`, { nombreCliente, apellidoPaternoCliente, apellidoMaternoCliente, ciudadCliente, estadoCliente, paisCliente, direccionCliente, coloniaCliente, cpCliente, telefonoCliente, emailCliente, puntuajeCliente, idTipoCliente }, { headers: this.headers });
+  public actualizarCliente(idCliente: number, nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string,idTipoCliente:number) {
+    let contraseniaCliente:any = null,puntuajeCliente:any = 0;//idea tienda online.
+    return this.http.put(`http://localhost:3000/clientesWS/actualizarCliente/${idCliente}`, { nombreCliente, apellidoPaternoCliente, apellidoMaternoCliente, ciudadCliente, estadoCliente, paisCliente, direccionCliente, coloniaCliente, cpCliente, telefonoCliente, emailCliente,contraseniaCliente,puntuajeCliente,idTipoCliente }, { headers: this.headers });
   }
   public borrarCliente(idCliente: number) {
     return this.http.delete(`http://localhost:3000/clientesWS/eliminarCliente/${idCliente}`, { headers: this.headers });
@@ -297,11 +298,11 @@ export class APIService {
   public mostrarDetalleProducto(idProducto:number) {
     return this.http.get(`http://localhost:3000/productosWS/listarDetalleProducto/${idProducto}`, { headers: this.headers });
   }
-  public aniadirProducto(nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto: string,puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number) {
-    return this.http.post('http://localhost:3000/productosWS/agregarProducto', { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto,stockProducto,puntosProducto, precioUnitarioProducto,precioCompraProducto,idCategoria, idAlmacen }, { headers: this.headers });
+  public aniadirProducto(nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto: string, precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number) {
+    return this.http.post('http://localhost:3000/productosWS/agregarProducto', { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto,stockProducto,precioUnitarioProducto,precioCompraProducto,idCategoria, idAlmacen }, { headers: this.headers });
   }
-  public actualizarProducto(idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto: string, puntosProducto: number, precioUnitarioProducto: number, precioCompraProducto:number, idCategoria: number, idAlmacen: number) {
-    return this.http.put(`http://localhost:3000/productosWS/actualizarProducto/${idProducto}`, { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, stockProducto, puntosProducto, precioUnitarioProducto, precioCompraProducto, idCategoria, idAlmacen }, { headers: this.headers });
+  public actualizarProducto(idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto: string,precioUnitarioProducto: number, precioCompraProducto:number, idCategoria: number, idAlmacen: number) {
+    return this.http.put(`http://localhost:3000/productosWS/actualizarProducto/${idProducto}`, { nombreProducto, detalleProducto, contenidoProducto, fechaCaducidadProducto, paisOrigenProducto, stockProducto,precioUnitarioProducto, precioCompraProducto, idCategoria, idAlmacen }, { headers: this.headers });
   }
   public borrarProducto(idProducto: number) {
     return this.http.delete(`http://localhost:3000/productosWS/eliminarProducto/${idProducto}`, { headers: this.headers });
