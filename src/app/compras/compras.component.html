@@ -1,5 +1,5 @@
   <br>
-    <div name="renglonPrincipal" class="row" style="width:100vw">
+    <div name="renglonPrincipal" class="row" style="width:100vw;height: 75vh;"  (window:keydown)="limpiarFormularioAtajoC($event)">
       <div name="columnaIzquierdaInputs" class="col-md-3">
         <mat-card class="cardInputs">
           <form [formGroup]="frmCompra" class="fuenteCuerpos">
@@ -9,7 +9,7 @@
               <label *ngIf="frmCompra.controls.idUsuario.invalid && frmCompra.controls.idUsuario.dirty" style="color:red;">Este campo es obligatorio</label>
               <br>
 
-              <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+              <mat-form-field class="fuenteCuerpos" style="font-size:20px;width:100%;">
                 <mat-select formControlName="idProveedor" class="fuenteCuerpos" style="font-size:20px;" placeholder="proveedor">
                   <mat-option  class="fuenteCuerpos" *ngFor="let i of arregloProveedoresSelect" [value]="i.idProveedor">
                     {{ i.nombreProveedor }}
@@ -18,7 +18,7 @@
               </mat-form-field>
               <label *ngIf="frmCompra.controls.idProveedor.invalid && frmCompra.controls.idProveedor.dirty" style="color: red;">Este campo es obligatorio</label>
 
-              <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+              <mat-form-field class="fuenteCuerpos" style="font-size:20px;width:100%;">
                 <mat-select formControlName="idProducto" class="fuenteCuerpos" placeholder="producto">
                   <mat-option class="fuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i">
                     {{ i.nombreProducto }}
@@ -26,14 +26,14 @@
                 </mat-select>
               </mat-form-field>
 
-              <div style="display: inline-block;">
-                <mat-form-field class="fuenteCuerpos" style="font-size:20px;width: 110px;">
+              <div style="display: flex;">
+                <mat-form-field class="fuenteCuerpos" style="font-size:20px;width:90%;">
                   <div style="display: flex;">
                     <input formControlName="cantidadProducto" type="number" min="1" matInput placeholder="cantidad" style="color: #272727;" (keypress)="soloNumeros($event)">
                   </div>
                 </mat-form-field>
                 <button mat-mini-fab matTooltip="Agrega el producto y su cantidad a la venta" class="btnAcciones btnAniadirEntidad" [disabled]="frmCompra.controls.idProducto.invalid || frmCompra.controls.cantidadProducto.invalid"
-                (click)="transfiereProductos()" style="top: 10px;margin-left: 16px;"><i class='fas fa-plus' style="margin-top: -24px;"></i></button>
+                (click)="transfiereProductos()" style="top: 25px;margin-left: 0px;"><i class='fas fa-plus' style="margin-top: -24px;margin-left:3px;"></i></button>
                 <label *ngIf="(frmCompra.controls.idProducto.invalid && frmCompra.controls.idProducto.dirty) || (frmCompra.controls.cantidadProducto.invalid && frmCompra.controls.cantidadProducto.dirty)" style="color: #red;">Este campo es
                   obligatorio</label>
               </div>
@@ -43,7 +43,7 @@
         </mat-card>
       </div>
       <div name="columnaDerechaOutpus" class="col-md-9">
-        <mat-card style="background:#f9f9f9;">
+        <mat-card style="background:#f9f9f9;height:99%">
           <br>
           <div name="renglonOutpus" class="row bordeOutputs">
             <div name="columnaIzquierdaOuputs" class="col-md-6">
@@ -57,8 +57,8 @@
                   </ng-container>
 
                   <ng-container matColumnDef="precioUnitarioProducto">
-                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> p.Unitario </th>
-                    <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.precioUnitarioProducto}} </td>
+                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> p.Compra </th>
+                    <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.precioCompraProducto}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="cantidadProducto">
@@ -87,7 +87,7 @@
             <div name="columnaDerechaOuputs" class="col-md-6">
               <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#272727;"><i class='fas fa-clipboard'></i>&nbsp; Detalles de la Compra:</p>
               <hr>
-              <div name="informacionCompra" class="fuenteCuerpos" style="text-align:center;font-size: 17px;" *ngFor="let i of arregloCompras">
+              <div id="idDetallesCompras" name="informacionCompra" class="fuenteCuerpos" style="text-align:center;font-size: 17px;" *ngFor="let i of arregloCompras">
                 <p class="fuenteCuerpos" style="font-size:22px;text-align:center;">
                   <b>ID Compra: </b> {{i.idCompra}}
                   <br><b>Monto $: </b> {{i.montoCompra}}
@@ -98,10 +98,11 @@
                 </p>
               </div>
               <br>
+              <button id="idLimpiarPantallaCompras" mat-stroked-button class="fuenteCuerpos nvaCompra" (click)="limpiarFormularioC()">Limpiar Pantalla [F4] </button>
             </div>
           </div>
           <br>
-          <button mat-stroked-button class="btnComprar fuenteCuerpos" style="width:100%;font-size:22px;" [disabled]="frmCompra.invalid" (click)="agregarCompra()">Comprar</button>
+          <button id="idComprar" mat-stroked-button class="btnComprar fuenteCuerpos" style="width:100%;font-size:22px;" [disabled]="frmCompra.invalid" (click)="agregarCompra()">Comprar</button>
         </mat-card>
       </div>
     </div>

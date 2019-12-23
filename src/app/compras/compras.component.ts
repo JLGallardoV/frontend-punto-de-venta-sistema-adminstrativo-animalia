@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { APIService, IUsuarios, IProveedores } from '../api.service';
-import { IProductos } from '../api.service';
 import { ICompras } from '../api.service';
 import { LoginJwtService } from '../login-jwt.service';
 
@@ -15,10 +14,10 @@ export class ComprasComponent implements OnInit {
   displayedColumns: string[] = ['idCompra', 'fechaCompra', 'numeroProductosEnCompra'];//columnas tabla transacciones
   displayedColumnsProductos: string[] = ['nombreProducto', 'precioUnitarioProducto', 'cantidadProducto', 'descartar'];//columnas tabla transacciones
   public dsCompras: MatTableDataSource<ICompras>; //datasource para transacciones
-  public dsProductos: MatTableDataSource<IProductos>; //dataSource para productos
+  public dsProductos: MatTableDataSource<any>; //dataSource para productos
   public frmCompra: FormGroup;
-  public arregloProductosSelect: IProductos[] = [];
-  public arregloProductosTabla: IProductos[] = [];
+  public arregloProductosSelect: any[] = [];
+  public arregloProductosTabla: any[] = [];
   public arregloUsuariosSelect: IUsuarios[] = [];
   public arregloProveedoresSelect: IProveedores[] = [];
   public arregloCompras: any[] = [];
@@ -119,7 +118,7 @@ export class ComprasComponent implements OnInit {
             transaferirValorID = this.frmCompra.get('idProducto').value;
             transaferirValorCantidad = this.frmCompra.get('cantidadProducto').value;
             //sumando monto cada que se agrega un producto
-            this.montoAcumulado = this.montoAcumulado + (success.respuesta[0].precioUnitarioProducto * transaferirValorCantidad);
+            this.montoAcumulado = this.montoAcumulado + (success.respuesta[0].precioCompraProducto * transaferirValorCantidad);
 
             //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
             if (this.arregloProductosTabla.length >= 1) {
@@ -130,7 +129,7 @@ export class ComprasComponent implements OnInit {
                   this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
                 }else{
                   if(i == this.arregloProductosTabla.length -1){
-                    this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioUnitarioProducto:transaferirValorID.precioUnitarioProducto});
+                    this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioCompraProducto:transaferirValorID.precioCompraProducto});
                     this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
                     break;
                   }
@@ -139,7 +138,7 @@ export class ComprasComponent implements OnInit {
               }
 
             }else{
-              this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioUnitarioProducto:transaferirValorID.precioUnitarioProducto});
+              this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioCompraProducto:transaferirValorID.precioCompraProducto});
               this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
               document.getElementById('tablaVentaConcluidaVacia').style.display = "none";
             }
@@ -181,6 +180,8 @@ export class ComprasComponent implements OnInit {
     arregloProductosForm = this.arregloProductosTabla;
     if (arregloProductosForm.length == 0) {
       alert("no olvides presionar boton de agregar productos \n");
+      return;
+
     }
     //alert("cte: "+idClienteForm+" vdor: "+idVendedorForm+" pago: "+pagoTransaccionForm+" arrpdtos: "+JSON.stringify(arregloProductosForm)+" arrtipag: "+JSON.stringify(arregloTiposDePagosForm));
     this.API.aniadirCompra(idUsuarioForm, idProveedorForm, montoCompraForm, arregloProductosForm).subscribe(
@@ -188,7 +189,7 @@ export class ComprasComponent implements OnInit {
         if (success.estatus > 0) {
           alert(success.respuesta);
           this.listarUltimaCompra();
-          this.limpiarFormulario();
+          document.getElementById('idLimpiarPantallaCompras').style.display = "block";
         } else if (success.estatus < 0) {
           alert(JSON.stringify(success.respuesta));
         } else {
@@ -242,16 +243,45 @@ export class ComprasComponent implements OnInit {
   }
 
 
-  //LIMPIAMOS FORMULARIOS CADA VEZ QUE SE CONCLUYE UNA COMPRA
-  public limpiarFormulario() {
-    this.frmCompra.reset();
-    this.frmCompra.controls['idUsuario'].setValue(localStorage.getItem("usuario"));
-    this.montoAcumulado = 0;
+  //LIMPIO EL FORMULARIO UNA VEZ QUE SE HA REALIZADO UNA VENTA Y SE PRESIONE LA TECLA F4.
+  public limpiarFormularioAtajoC(event:any){
+    const charCode = (event.which) ? event.which : event.keyCode;//se usa which o keycode dependiendo el soporte de nuestro browser
 
-    this.dsProductos.data = [];
-    this.arregloProductosTabla = [];
+    if (charCode == 115) {
+      this.frmCompra.reset();
+      this.frmCompra.controls['idUsuario'].setValue(localStorage.getItem("usuario"));
+      this.montoAcumulado = 0;
+
+      this.dsProductos.data=[];
+      this.arregloProductosTabla = []
+      document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
+      document.getElementById('idComprar').style.pointerEvents = "unset";
+      document.getElementById('idLimpiarPantallaCompras').style.display = "none";
+      document.getElementById('idDetallesCompras').style.display = "none";
+
+    }
+
   }
 
+  //LIMPIO EL FORMULARIO UNA VEZ QUE SE HA REALIZADO UNA VENTA Y SE PRESIONE EL BOTON.
+  public limpiarFormularioC(){
+    let usuarioSesion:string = "";
+    usuarioSesion = localStorage.getItem('usuario');
+    console.log("colocando usuario: ",usuarioSesion);
+
+    this.frmCompra.reset();
+    this.frmCompra.controls['idUsuario'].setValue(usuarioSesion);
+    this.montoAcumulado = 0;
+
+    this.dsProductos.data=[];
+    this.arregloProductosTabla = []
+    document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
+    document.getElementById('idComprar').style.pointerEvents = "unset";
+    document.getElementById('idLimpiarPantallaCompras').style.display = "none";
+    document.getElementById('idDetallesCompras').style.display = "none";
+
+
+  }
 
   ngOnInit() {
     this.mostrarUsuarioEnSesion();

@@ -1,6 +1,6 @@
 //CONTENDEDOR DE LOS INPUTS
 .cardInputs{
-  height: 74vh;
+  height: 99%;
   width: 95%;
   margin: auto;
   display: inline-block;
@@ -41,6 +41,8 @@
   border: solid 1px #a5a39d;
   border-radius: 6px;
   margin: auto;
+  height: 80%;
+
 }
 
 //BTN PARA ELIMINAR PRODUCTOS DEL CARRITO (TABLA PRODUCTOS) BASURERO
@@ -64,6 +66,13 @@
   color: #2a2d3b;
   margin-bottom: 0px;
   font-size: 22px!important;
+}
+
+//BOTON NUEVA COMPRA (LIMPIAR PANTALLA)
+.nvaCompra{
+  font-size: 20px;
+  float: right;
+  display: none;
 }
 
 

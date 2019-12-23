@@ -258,6 +258,7 @@ export class FacturasComponent implements OnInit {
             if(success.estatus > 0){
               alert(success.respuesta);
               document.getElementById('idVender').style.pointerEvents = "none";
+              document.getElementById('idLimpiarPantallaVentas').style.display = "block";
               this.listarUltimaTransaccion();
             }else if(success.estatus < 0) {
                 alert("No cuentas con el dinero suficiente | verifica tu pago");
@@ -328,7 +329,7 @@ export class FacturasComponent implements OnInit {
   }
 
 
-  //LIMPIO EL FORMULARIO UNA VEZ QUE SE HA REALIZADO UNA VENTA Y SE PRESIONE LA TECLA F1.
+  //LIMPIO EL FORMULARIO UNA VEZ QUE SE HA REALIZADO UNA VENTA Y SE PRESIONE LA TECLA ESC.
   public limpiarFormularioAtajo(event:any){
     const charCode = (event.which) ? event.which : event.keyCode;//se usa which o keycode dependiendo el soporte de nuestro browser
 
@@ -336,6 +337,7 @@ export class FacturasComponent implements OnInit {
       this.frmVenta.reset();
       this.frmVenta.controls['idVendedor'].setValue(localStorage.getItem("usuario"));
       this.montoAcumulado = 0;
+      this.frmVenta.get('pagoTransaccion').disable();
 
       this.dsProductos.data=[];
       this.arregloProductosTabla = []
@@ -343,6 +345,8 @@ export class FacturasComponent implements OnInit {
       document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
       document.getElementById('idCambio').style.display = "none";
       document.getElementById('idVender').style.pointerEvents = "unset";
+      document.getElementById('idLimpiarPantallaVentas').style.display = "none";
+
     }
 
   }
@@ -352,6 +356,7 @@ export class FacturasComponent implements OnInit {
     this.frmVenta.reset();
     this.frmVenta.controls['idVendedor'].setValue(localStorage.getItem("usuario"));
     this.montoAcumulado = 0;
+    this.frmVenta.get('pagoTransaccion').disable();
 
     this.dsProductos.data=[];
     this.arregloProductosTabla = []
@@ -359,6 +364,8 @@ export class FacturasComponent implements OnInit {
     document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
     document.getElementById('idCambio').style.display = "none";
     document.getElementById('idVender').style.pointerEvents = "unset";
+    document.getElementById('idLimpiarPantallaVentas').style.display = "none";
+
 
 
   }
@@ -385,7 +392,7 @@ export class FacturasComponent implements OnInit {
     this.PDF.generarPDF(etiquetaPDF);
     setTimeout(()=>{
       document.getElementById('etiquetaPDF').style.display = "none";
-    },0);
+    },100000);
 
   }
 

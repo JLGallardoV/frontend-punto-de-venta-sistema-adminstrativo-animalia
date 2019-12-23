@@ -79,7 +79,7 @@ export interface IProductos {
   idProducto: number;
   cantidadProducto: number;
   nombreProducto: string
-  precioUnitarioProducto: string
+  precioUnitarioProducto: number,
 }
 
 export interface IProveedores {

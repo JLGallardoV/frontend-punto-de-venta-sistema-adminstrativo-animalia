@@ -1,9 +1,9 @@
 <br>
 <br>
 <br>
-<mat-tab-group id="contenido" (window:keydown)="limpiarFormularioAtajo($event)">
+<mat-tab-group id="contenido">
 <!-- TAB 1 VENTAS -->
-  <mat-tab label="Ventas">
+  <mat-tab label="Ventas" (window:keydown)="limpiarFormularioAtajo($event)">
     <br>
     <div name="renglonPrincipal" class="row" style="width:100vw">
       <div name="columnaIzquierdaInputs" class="col-md-3">
@@ -97,7 +97,7 @@
               </div>
                 <label class="fuenteCuerpos labelOutput">Monto $: <input class="outputMonto" type="text" readonly [(ngModel)]="montoAcumulado"></label>
                 <label id="idCambio" class="fuenteCuerpos labelOutput" style="display:none;">Cambio $: <input class="outputMonto" type="text" readonly value="{{cambio}}"></label>
-              <button mat-stroked-button class="fuenteCuerpos nvaVenta" (click)="limpiarFormulario()">Limpiar Pantalla [Esc] </button>
+                <button id="idLimpiarPantallaVentas" mat-stroked-button class="fuenteCuerpos nvaVenta" (click)="limpiarFormulario()">Limpiar Pantalla [Esc] </button>
             </div>
 
             <!--div name="columnaDerechaOuputs" class="col-md-6">

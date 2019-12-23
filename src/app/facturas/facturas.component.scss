@@ -109,10 +109,11 @@
   font-size: 14px;
   height: auto;width: 200px;
   margin-left: 200px;
-  margin-top: -120%;
+  margin-top: -150%;
+  position: fixed;
 }
 
-//BOTON NUEVA VENTA
+//BOTON NUEVA VENTA (LIMPIAR PANTALLA)
 .nvaVenta{
   float: right;
   margin-top: 25px;
