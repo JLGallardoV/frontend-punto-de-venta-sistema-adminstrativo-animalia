@@ -110,26 +110,26 @@ export class ComprasComponent implements OnInit {
 
 //TRASFIERE LOS PRODUCTOS DEL FORMULARIOS AL CARRITO
   public transfiereProductos() {
-    let transaferirValorID: any;
-    let transaferirValorCantidad: number = 0;
+    let productoSeleccionado: any;
+    let cantidadSeleccionada: number = 0;
 
         this.API.mostrarProductos().subscribe(
           (success:any)=>{
-            transaferirValorID = this.frmCompra.get('idProducto').value;
-            transaferirValorCantidad = this.frmCompra.get('cantidadProducto').value;
+            productoSeleccionado = this.frmCompra.get('idProducto').value;
+            cantidadSeleccionada = this.frmCompra.get('cantidadProducto').value;
             //sumando monto cada que se agrega un producto
-            this.montoAcumulado = this.montoAcumulado + (success.respuesta[0].precioCompraProducto * transaferirValorCantidad);
+            this.montoAcumulado = this.montoAcumulado + (productoSeleccionado.precioCompraProducto * cantidadSeleccionada);
 
             //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
             if (this.arregloProductosTabla.length >= 1) {
               //console.log("posicion en arreglo: ",this.arregloProductosTabla[0].cantidadProducto);
               for (let i = 0; i < this.arregloProductosTabla.length; i++) {
-                if (transaferirValorID.idProducto == this.arregloProductosTabla[i].idProducto) {
-                  this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + transaferirValorCantidad;
+                if (productoSeleccionado.idProducto == this.arregloProductosTabla[i].idProducto) {
+                  this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + cantidadSeleccionada;
                   this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
                 }else{
                   if(i == this.arregloProductosTabla.length -1){
-                    this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioCompraProducto:transaferirValorID.precioCompraProducto});
+                    this.arregloProductosTabla.push({idProducto:productoSeleccionado.idProducto,cantidadProducto:cantidadSeleccionada,nombreProducto:productoSeleccionado.nombreProducto,precioCompraProducto:productoSeleccionado.precioCompraProducto});
                     this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
                     break;
                   }
@@ -138,7 +138,7 @@ export class ComprasComponent implements OnInit {
               }
 
             }else{
-              this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioCompraProducto:transaferirValorID.precioCompraProducto});
+              this.arregloProductosTabla.push({idProducto:productoSeleccionado.idProducto,cantidadProducto:cantidadSeleccionada,nombreProducto:productoSeleccionado.nombreProducto,precioCompraProducto:productoSeleccionado.precioCompraProducto});
               this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
               document.getElementById('tablaVentaConcluidaVacia').style.display = "none";
             }
@@ -150,20 +150,20 @@ export class ComprasComponent implements OnInit {
   }
 
 
-  //ELIMINA PRODUCTOS DEL CARRITO
-  public eliminarProductosCarrito(objetoProducto: any, indice: number) {
-    //console.log("producto a eliminar: ", indice - 1, );
+  //ELIMINAR PRODUCTOS DE LA TABLA (CARRITO)
+  public eliminarProductosCarrito(objetoProducto:any,indice:number){
+    console.log("producto a eliminar: ",objetoProducto);
     //console.log(this.arregloProductosTabla)
-    this.arregloProductosTabla.splice(indice, 1);
+    this.arregloProductosTabla.splice(indice,1);
     this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
 
     //hacemos que la eliminacion de un producto afecte tambien al monto $
     this.API.mostrarProductos().subscribe(
-      (success: any) => {
-        this.montoAcumulado = this.montoAcumulado - (success.respuesta[0].precioUnitarioProducto * objetoProducto.cantidadProducto);
+      (success:any)=>{
+            this.montoAcumulado = this.montoAcumulado - (objetoProducto.precioCompraProducto  *  objetoProducto.cantidadProducto);
       },
-      (error) => {
-        console.log("algo ocurrio", error)
+      (error)=>{
+        console.log("algo ocurrio",error)
       }
     );
   }
@@ -189,6 +189,7 @@ export class ComprasComponent implements OnInit {
         if (success.estatus > 0) {
           alert(success.respuesta);
           this.listarUltimaCompra();
+          document.getElementById('idComprar').style.pointerEvents = "none";
           document.getElementById('idLimpiarPantallaCompras').style.display = "block";
         } else if (success.estatus < 0) {
           alert(JSON.stringify(success.respuesta));
@@ -215,6 +216,7 @@ export class ComprasComponent implements OnInit {
           (success:any)=>{
             let arregloTemporalProductos:any[] = [];
             let productos: string[] = [];
+            document.getElementById('idTablaDetalles').style.display = "none";
 
             for (let i = 0; i < success.respuesta.length; i++) {
               //atrapamos cada uno de los productos en un array
@@ -258,6 +260,8 @@ export class ComprasComponent implements OnInit {
       document.getElementById('idComprar').style.pointerEvents = "unset";
       document.getElementById('idLimpiarPantallaCompras').style.display = "none";
       document.getElementById('idDetallesCompras').style.display = "none";
+      document.getElementById('idTablaDetalles').style.display = "block";
+
 
     }
 
@@ -279,6 +283,7 @@ export class ComprasComponent implements OnInit {
     document.getElementById('idComprar').style.pointerEvents = "unset";
     document.getElementById('idLimpiarPantallaCompras').style.display = "none";
     document.getElementById('idDetallesCompras').style.display = "none";
+    document.getElementById('idTablaDetalles').style.display = "block";
 
 
   }

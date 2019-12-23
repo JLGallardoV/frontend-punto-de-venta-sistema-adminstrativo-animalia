@@ -53,17 +53,17 @@
                 <table mat-table [dataSource]="dsProductos" class="fuenteCuerpos" style="font-size:98px">
                   <ng-container matColumnDef="nombreProducto">
                     <th mat-header-cell *matHeaderCellDef style="text-align:center"> Nombre </th>
-                    <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.nombreProducto}} </td>
+                    <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.nombreProducto}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="precioUnitarioProducto">
-                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> p.Compra </th>
-                    <td mat-cell *matCellDef="let i"style="text-align:center"> {{i.precioCompraProducto}} </td>
+                    <th mat-header-cell *matHeaderCellDef style="text-align:center"> p.Unitario </th>
+                    <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.precioCompraProducto}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="cantidadProducto">
                     <th mat-header-cell *matHeaderCellDef style="text-align:center"> Cantidad </th>
-                    <td mat-cell *matCellDef="let i" style="text-align:center"> {{i.cantidadProducto}} </td>
+                    <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center"> {{elemento.cantidadProducto}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="descartar">
@@ -97,6 +97,10 @@
                   <br><b>Productos: </b> {{i.productos}}
                 </p>
               </div>
+              <div id="idTablaDetalles" style="text-align: center;font-size: 20px;">
+                <p class="fuenteCuerpos"><i>Sin detalles</i></p>
+              </div>
+              <hr>
               <br>
               <button id="idLimpiarPantallaCompras" mat-stroked-button class="fuenteCuerpos nvaCompra" (click)="limpiarFormularioC()">Limpiar Pantalla [F4] </button>
             </div>

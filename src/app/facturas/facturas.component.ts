@@ -139,26 +139,26 @@ export class FacturasComponent implements OnInit {
 
 //AGREGO PRODUCTOS DEL FORMULARIO A LA TABLA CARRITO
   public transfiereProductos(){
-    let transaferirValorID: any;//idProducto
-    let transaferirValorCantidad: number = 0;
+    let productoSeleccionado: any;//idProducto
+    let cantidadSeleccionada: number = 0;
 
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
-        transaferirValorID = this.frmVenta.get('idProducto').value;
-        transaferirValorCantidad = this.frmVenta.get('cantidadProducto').value;
+        productoSeleccionado = this.frmVenta.get('idProducto').value;
+        cantidadSeleccionada = this.frmVenta.get('cantidadProducto').value;
         //sumando monto cada que se agrega un producto
-        this.montoAcumulado = this.montoAcumulado + (success.respuesta[0].precioUnitarioProducto * transaferirValorCantidad);
+        this.montoAcumulado = this.montoAcumulado + (productoSeleccionado.precioUnitarioProducto * cantidadSeleccionada);
 
         //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
         if (this.arregloProductosTabla.length >= 1) {
           //console.log("posicion en arreglo: ",this.arregloProductosTabla[0].cantidadProducto);
           for (let i = 0; i < this.arregloProductosTabla.length; i++) {
-            if (transaferirValorID.idProducto == this.arregloProductosTabla[i].idProducto) {
-              this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + transaferirValorCantidad;
+            if (productoSeleccionado.idProducto == this.arregloProductosTabla[i].idProducto) {
+              this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + cantidadSeleccionada;
               this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
             }else{
               if(i == this.arregloProductosTabla.length -1){
-                this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioUnitarioProducto:transaferirValorID.precioUnitarioProducto});
+                this.arregloProductosTabla.push({idProducto:productoSeleccionado.idProducto,cantidadProducto:cantidadSeleccionada,nombreProducto:productoSeleccionado.nombreProducto,precioUnitarioProducto:productoSeleccionado.precioUnitarioProducto});
                 this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
                 break;
               }
@@ -167,7 +167,7 @@ export class FacturasComponent implements OnInit {
           }
 
         }else{
-          this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioUnitarioProducto:transaferirValorID.precioUnitarioProducto});
+          this.arregloProductosTabla.push({idProducto:productoSeleccionado.idProducto,cantidadProducto:cantidadSeleccionada,nombreProducto:productoSeleccionado.nombreProducto,precioUnitarioProducto:productoSeleccionado.precioUnitarioProducto});
           this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
           document.getElementById('tablaVentaConcluidaVacia').style.display = "none";
         }
@@ -189,7 +189,7 @@ export class FacturasComponent implements OnInit {
     //hacemos que la eliminacion de un producto afecte tambien al monto $
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
-            this.montoAcumulado = this.montoAcumulado - (success.respuesta[0].precioUnitarioProducto  *  objetoProducto.cantidadProducto);
+            this.montoAcumulado = this.montoAcumulado - (objetoProducto.precioUnitarioProducto  *  objetoProducto.cantidadProducto);
       },
       (error)=>{
         console.log("algo ocurrio",error)
