@@ -2,22 +2,22 @@
   <div class="background" id="idLogin">
     <br>
     <mat-card class="cardFormulario">
-      <form [formGroup]= "frmLogin"  class="fuenteTitulos">
+      <form [formGroup]= "frmLogin"  class="fuenteCuerpos">
         <div style="text-align: center;">
           <br>
-          <img src="../../assets/img/logoAnimalia2.png" alt="logo" style="height: 145px;width: 150px;">
+          <img src="../../assets/img/logoAnimaliaV2.png" alt="logo" style="height: 145px;width: 150px;">
         </div>
         <br>
         <div class="contenedorInputs">
           <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
             <input formControlName="nombreUsuario" matInput placeholder="Usuario">
           </mat-form-field>
-          <label *ngIf="frmLogin.controls.nombreUsuario.invalid && frmLogin.controls.nombreUsuario.dirty" style="color: #43b1b9;">Este campo es obligatorio</label>
+          <label *ngIf="frmLogin.controls.nombreUsuario.invalid && frmLogin.controls.nombreUsuario.dirty" style="color: #e6832d;font-size: 20px;">Este campo es obligatorio</label>
 
           <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
             <input formControlName="passwordUsuario" matInput placeholder="Contraseña" type="password">
           </mat-form-field>
-          <label *ngIf="frmLogin.controls.passwordUsuario.invalid && frmLogin.controls.passwordUsuario.dirty" style="color: #43b1b9;">Este campo es obligatorio</label>
+          <label *ngIf="frmLogin.controls.passwordUsuario.invalid && frmLogin.controls.passwordUsuario.dirty" style="color: #e6832d;font-size: 20px;">Este campo es obligatorio</label>
           <br>
         </div>
       </form>
@@ -29,7 +29,7 @@
           </p>
         </u>
         <hr>
-        <button mat-stroked-button class="btLogin fuenteCuerpos" style="font-size:22px;" [disabled]="frmLogin.invalid" (click)="login()">Ingresar</button>
+        <button mat-flat-button color="accent" class="btLogin fuenteCuerpos" style="font-size:22px;" [disabled]="frmLogin.invalid" (click)="login()">Ingresar</button>
       </div>
     </mat-card>
   </div>

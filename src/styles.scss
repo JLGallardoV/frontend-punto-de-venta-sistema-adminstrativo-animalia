@@ -1,7 +1,19 @@
 //TEMA ANGULAR MATERIAL:
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@angular/material/theming'; //personalizando tema (en esa ruta se encuentra la paleta)
 @import url('https://fonts.googleapis.com/css?family=Darker+Grotesque|Marcellus+SC&display=swap');
 
+/*CREANDO MI TEMA PERSONALIZADO*/
+@include mat-core();
+
+$primary: mat-palette($md-primary, 500);
+$accent:  mat-palette($md-accent, 500, A200, A400);
+$warn:    mat-palette($md-warn, 500);
+
+
+$theme: mat-light-theme($primary, $accent, $warn);
+
+
+@include angular-material-theme($theme);
 
 //FUENTES PARA LA PLATAFORMA
 .fuenteTitulos{
@@ -15,7 +27,7 @@
 .icono{
   font-size: 15px!important;
   margin-top: -25px!important;
-  color: #272727!important;
+  color:white!important;
 }
 
 //ESTILOS PARA MODULOS CRUD:
@@ -26,7 +38,6 @@
 }
 
 .btnAcciones{
-  background: #f6f2ebe3!important;
   width: 40px!important;
   height: 40px!important;
 }
@@ -39,16 +50,16 @@
 //ESTILOS PARA TABLA CRUD:
 table {
   width: 100%;
-  background: #eae4dd45!important;
+  background: #2d618c!important;
 }
 
 .mat-header-cell{ //contenido de cabeceras
   font-size: 20px !important;
-  color: #191818 !important;
+  color: white !important;
 }
 .mat-cell{ //contenido celda
   font-size: 18px !important;
-  color: #191818;
+  color: white;
 }
 
 .btnAccionesColumna{
@@ -70,9 +81,9 @@ table {
   animation-duration: 0.5s;
 }
 
-
-//SOBREESCRIBIR TEMAS DE ANGULAR MATERIAL
-//TABLA
-.mat-table {
-    background: #fff !important;
+//Cambiamos el encabezado del tab group
+::ng-deep.mat-tab-label{
+  font-family: 'Darker Grotesque', sans-serif!important;
+  font-size: 22px!important;
+  color: #012440!important;
 }
