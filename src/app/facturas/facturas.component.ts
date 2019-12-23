@@ -404,7 +404,6 @@ export class FacturasComponent implements OnInit {
     this.listarProductos();
     this.listarVendedores();
     this.listarClientes();
-
   }
 
 }

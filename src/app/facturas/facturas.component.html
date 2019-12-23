@@ -97,7 +97,7 @@
               </div>
                 <label class="fuenteCuerpos labelOutput" style="color: #012440;">Monto $: <input class="outputMonto" type="text" readonly [(ngModel)]="montoAcumulado" style="color:#012440"></label>
                 <label id="idCambio" class="fuenteCuerpos labelOutput" style="display:none;color:#012440">Cambio $: <input class="outputMonto" type="text" readonly value="{{cambio}}"></label>
-                <button id="idLimpiarPantallaVentas" mat-flat-button color="accent" class="fuenteCuerpos nvaVenta" (click)="limpiarFormulario()">Limpiar Pantalla [Esc] </button>
+                <button id="idLimpiarPantallaVentas" mat-flat-button color="accent" class="fuenteCuerpos nvaVenta" (click)="limpiarFormulario()" style="display:none;">Limpiar Pantalla [Esc] </button>
             </div>
 
             <!--div name="columnaDerechaOuputs" class="col-md-6">
