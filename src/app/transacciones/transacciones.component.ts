@@ -164,14 +164,14 @@ export class TransaccionesComponent implements OnInit {
   //FUNCION PARA ABRIR EL MODAL VENTAS, CONFIGURACIONES DE BOOTSTRAP
   public openScrollableContentVentas(longContentVentas:any, idVenta:number) {
     console.log("idTransaccion",idVenta);
-    this.modalService.open(longContentVentas, { size: 'lg', scrollable: true });
+    this.modalService.open(longContentVentas, {scrollable: true });
     this.listarDetalleTransaccion(idVenta);
   }
 
   //FUNCION PARA ABRIR EL MODAL COMPRAS, CONFIGURACIONES DE BOOTSTRAP
   public openScrollableContentCompras(longContentCompras:any, idCompra:number) {
     console.log("idTransaccion",idCompra);
-    this.modalService.open(longContentCompras, { size: 'lg', scrollable: true });
+    this.modalService.open(longContentCompras, {scrollable: true });
     this.listarDetalleCompra(idCompra);
   }
 

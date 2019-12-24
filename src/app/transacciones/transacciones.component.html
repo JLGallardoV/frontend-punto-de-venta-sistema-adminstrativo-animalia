@@ -4,7 +4,7 @@
     <mat-tab-group id="contenido">
       <!-- primer tab -->
 
-      <mat-tab label="Historial Ventas">
+      <mat-tab label="Historial Ventas" style="padding: 2px">
         <br>
         <mat-card class="contenedorAcciones">
           <div class="row">
@@ -19,7 +19,7 @@
           </div>
         </mat-card>
         <br>
-        <div name="cardTablaRegistros">
+        <div name="cardTablaRegistros" style="padding:2px;">
           <mat-card style="width: 98%;margin: auto;">
             <div class="tablaElastica">
               <table mat-table [dataSource]="dsTransacciones" class="fuenteCuerpos">
@@ -46,7 +46,7 @@
                 <ng-container matColumnDef="acciones">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
                   <td mat-cell *matCellDef="let elemento; let i = index" style="text-align:center">
-                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentVentas(longContentVentas,elemento.idTransaccion)">Información</button>
+                    <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentVentas(longContentVentas,elemento.idTransaccion)">Información</button>
                   </td>
                 </ng-container>
 
@@ -55,7 +55,7 @@
               </table>
 
             </div>
-            <mat-paginator #MatPaginatorTransacciones [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;">
+            <mat-paginator #MatPaginatorTransacciones [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" class="colorPaginador">
             </mat-paginator>
           </mat-card>
         </div>
@@ -67,14 +67,14 @@
 
       <mat-tab label="Historial Compras">
         <br>
-        <mat-card class="contenedorAcciones" style="height: 14%;">
+        <mat-card class="contenedorAcciones" style="height: auto;">
           <div class="row">
             <div class="col-1">
               <i class='fas fa-search lupa'></i>
             </div>
             <div class="col-11" style="margin-top: -5px;">
               <mat-form-field class="fuenteCuerpos inputBuscar">
-                <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar" style="color: darkseagreen;">
+                <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar">
               </mat-form-field>
             </div>
           </div>
@@ -108,7 +108,7 @@
                 <ng-container matColumnDef="acciones">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
                   <td mat-cell *matCellDef="let elemento" style="text-align:center">
-                    <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentCompras(longContentCompras,elemento.idCompra)">Información</button>
+                    <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentCompras(longContentCompras,elemento.idCompra)">Información</button>
                   </td>
                 </ng-container>
 
@@ -118,7 +118,7 @@
               </table>
 
             </div>
-            <mat-paginator #MatPaginatorCompras [pageSize]="4" [pageSizeOptions]="[10, 20, 30]" style="width: 99.99%;background-color: white!important;">
+            <mat-paginator #MatPaginatorCompras [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" class="colorPaginador">
             </mat-paginator>
           </mat-card>
         </div>
@@ -130,7 +130,7 @@
 
     <!-- codigo modal Ventas -->
     <ng-template #longContentVentas let-modal>
-      <div class="modal-header">
+      <div class="modal-header" style="background: #2d618c;color: white;">
         <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
           Detalles de Venta
           <i class='fas fa-file-alt' style='font-size:24px'></i>
@@ -151,14 +151,14 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF')" style="font-size: 19px;">Imprimir</button>
-        <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
+        <button mat-flat-button color="accent" class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF')" style="font-size: 19px;">Imprimir</button>
+        <button mat-flat-button color="accent" class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
       </div>
     </ng-template>
 
     <!-- codigo modal compras -->
     <ng-template #longContentCompras let-modal>
-      <div class="modal-header">
+      <div class="modal-header" style="background: #2d618c;color: white;">
         <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
           Detalles de Compras
           <i class='fas fa-file-alt' style='font-size:24px'></i>
@@ -176,7 +176,7 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF2')" style="font-size: 19px;">Imprimir</button>
-        <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
+        <button mat-flat-button color="accent" class="btnAgregar fuenteCuerpos margenSuperior" (click)="generarPDF('etiquetaPDF2')" style="font-size: 19px;">Imprimir</button>
+        <button mat-flat-button color="accent" class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
       </div>
     </ng-template>
