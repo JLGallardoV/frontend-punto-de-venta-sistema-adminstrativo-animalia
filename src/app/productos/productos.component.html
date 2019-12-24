@@ -56,9 +56,9 @@
             <ng-container matColumnDef="acciones">
               <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
               <td mat-cell *matCellDef="let i" style="text-align:center">
-                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentProductos(longContentProductos,i.idProducto)">Informacion</button>
-                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openEditarProducto(contentProductos,i.idProducto, i.nombreProducto, i.detalleProducto, i.contenidoProducto, i.fechaCaducidadProducto, i.paisOrigenProducto,i.stockProducto,i.precioUnitarioProducto, i.precioCompraProducto, i.idCategoria, i.idAlmacen)">Modificar</button>
-                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="eliminarProducto(i.idProducto)">Eliminar</button>
+                  <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentProductos(longContentProductos,i.idProducto)">Informacion</button>
+                  <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna" style="margin-left: 2px;" (click)="openEditarProducto(contentProductos,i.idProducto, i.nombreProducto, i.detalleProducto, i.contenidoProducto, i.fechaCaducidadProducto, i.paisOrigenProducto,i.stockProducto,i.precioUnitarioProducto, i.precioCompraProducto, i.idCategoria, i.idAlmacen)">Modificar</button>
+                  <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna" style="margin-left: 2px;" (click)="eliminarProducto(i.idProducto)">Eliminar</button>
               </td>
             </ng-container>
 
@@ -66,7 +66,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
-        <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+        <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons class="colorPaginador"></mat-paginator>
       </mat-card>
     </div>
   </mat-tab>
@@ -84,25 +84,25 @@
 
 <!-- modal productos - agregar/editar -->
 <ng-template #contentProductos let-modal>
-  <div class="modal-header">
+  <div class="modal-header" style="background: #2d618c;color: white;">
     <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left:32%;">{{titulo}}&nbsp;<i class='fas fa-box' style='font-size: 20px;'></i></h3>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="frmProductos">
+    <form [formGroup]="frmProductos" style="font-size: 20px; color:#012440;">
       <input formControlName="idProducto" type="hidden">
       <div name="par1NombreMarca" style="display:flex;">
         <mat-form-field class="fuenteCuerpos inputModal" style="margin-right:15px;">
           <input formControlName="nombreProducto" type="text" matInput placeholder="Nombre" style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.nombreProducto.invalid && frmProductos.controls.nombreProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.nombreProducto.invalid && frmProductos.controls.nombreProducto.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
         <mat-form-field class="fuenteCuerpos inputModal">
           <input formControlName="detalleProducto" type="text" matInput placeholder="Marca " style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.detalleProducto.invalid && frmProductos.controls.detalleProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.detalleProducto.invalid && frmProductos.controls.detalleProducto.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
       </div>
 
@@ -110,14 +110,14 @@
         <mat-form-field class="fuenteCuerpos inputModal" style="margin-right:15px;">
           <input formControlName="contenidoProducto" type="text" matInput placeholder="Contenido" style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.contenidoProducto.invalid && frmProductos.controls.contenidoProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.contenidoProducto.invalid && frmProductos.controls.contenidoProducto.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
         <mat-form-field class="fuenteCuerpos inputModal">
           <input formControlName="fechaCaducidadProducto" matInput [matDatepicker]="picker" placeholder="Caducidad" style="text-align:center;;">
           <mat-datepicker-toggle matSuffix [for]="picker" style="color: #dddad3;"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.fechaCaducidadProducto.invalid && frmProductos.controls.fechaCaducidadProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.fechaCaducidadProducto.invalid && frmProductos.controls.fechaCaducidadProducto.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
       </div>
 
@@ -125,12 +125,12 @@
         <mat-form-field class="fuenteCuerpos inputModal" style="margin-right:15px;">
           <input formControlName="paisOrigenProducto" type="text" matInput placeholder="Pais Origen" style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.paisOrigenProducto.invalid && frmProductos.controls.paisOrigenProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.paisOrigenProducto.invalid && frmProductos.controls.paisOrigenProducto.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
         <mat-form-field class="fuenteCuerpos inputModal">
           <input formControlName="stockProducto" type="number" matInput placeholder="Stock" style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.stockProducto.invalid && frmProductos.controls.stockProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.stockProducto.invalid && frmProductos.controls.stockProducto.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
       </div>
 
@@ -138,12 +138,12 @@
         <mat-form-field class="fuenteCuerpos inputModal" style="margin-right:15px;">
           <input formControlName="precioUnitarioProducto" type="number" min="1" matInput placeholder="Precio Venta" style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.precioUnitarioProducto.invalid && frmProductos.controls.precioUnitarioProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.precioUnitarioProducto.invalid && frmProductos.controls.precioUnitarioProducto.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
         <mat-form-field class="fuenteCuerpos inputModal">
           <input formControlName="precioCompraProducto" type="number" min="1" matInput placeholder="Precio Compra" style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.precioCompraProducto.invalid && frmProductos.controls.precioCompraProducto.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.precioCompraProducto.invalid && frmProductos.controls.precioCompraProducto.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
       </div>
       <div name="par5CategoriaAlmacen" style="display:flex;">
@@ -154,7 +154,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.idCategoria.invalid && frmProductos.controls.idCategoria.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.idCategoria.invalid && frmProductos.controls.idCategoria.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
         <mat-form-field class="fuenteCuerpos inputModal">
           <mat-select formControlName="idAlmacen" class="fuenteCuerpos" placeholder="Tel. Almacen">
@@ -163,20 +163,20 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <label *ngIf="frmProductos.controls.idAlmacen.invalid && frmProductos.controls.idAlmacen.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label class="fuenteCuerpos" *ngIf="frmProductos.controls.idAlmacen.invalid && frmProductos.controls.idAlmacen.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
       </div>
     </form>
   </div>
   <div class="modal-footer" style="background: #f6f2ebe3;">
-    <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmProductos.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
+    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos margenSuperior" [disabled]="frmProductos.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
   </div>
 </ng-template>
 
 <!-- modal informacion productos -->
 
 <ng-template #longContentProductos let-modal>
-  <div class="modal-header">
+  <div class="modal-header" style="background: #2d618c;color: white;">
     <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
       Detalles del Producto
       <i class='fas fa-file-alt' style='font-size:24px'></i>
@@ -198,6 +198,6 @@
     </p>
   </div>
   <div class="modal-footer">
-    <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
+    <button mat-flat-button color="accent" class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
   </div>
 </ng-template>

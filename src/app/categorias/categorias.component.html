@@ -45,8 +45,8 @@
               <th mat-header-cell *matHeaderCellDef> Acciones </th>
               <td mat-cell *matCellDef="let i">
                 <div class="">
-                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna"(click)="openEditarCategoria(contentCategoria,i.idCategoria,i.nombreCategoria,i.subCategoria,i.descripcionCategoria)">Modificar</button>
-                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna"(click)="eliminarCategoria(i.idCategoria)">Eliminar</button>
+                  <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna"(click)="openEditarCategoria(contentCategoria,i.idCategoria,i.nombreCategoria,i.subCategoria,i.descripcionCategoria)">Modificar</button>
+                  <button mat-flat-button color="accent" style="margin-left: 2px;" class="fuenteCuerpos btnAccionesColumna"(click)="eliminarCategoria(i.idCategoria)">Eliminar</button>
                 </div>
               </td>
             </ng-container>
@@ -55,41 +55,41 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumnsCategorias;"></tr>
           </table>
       </div>
-      <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+      <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons class="colorPaginador"></mat-paginator>
     </mat-card>
   </div>
-  
+
 <!-- AREA MODALES -->
 
   <!-- modal para llenado de datos  -->
   <ng-template #contentCategoria let-modal>
-    <div class="modal-header">
+    <div class="modal-header" style="background: #2d618c;color: white;">
       <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left:25%;">{{titulo}}&nbsp;<i class='fas fa-bezier-curve' style='font-size: 20px;'></i></h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]= "frmCategorias">
+      <form [formGroup]= "frmCategorias" style="font-size: 20px; color:#012440;">
          <input formControlName="idCategoria" type="hidden">
         <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
           <input formControlName="nombreCategoria" type="text"  matInput placeholder="Nombre Categoria" style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmCategorias.controls.nombreCategoria.invalid && frmCategorias.controls.nombreCategoria.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label *ngIf="frmCategorias.controls.nombreCategoria.invalid && frmCategorias.controls.nombreCategoria.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
         <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
           <input formControlName="subCategoria"  type="text" matInput placeholder="SubCategoria" style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmCategorias.controls.subCategoria.invalid && frmCategorias.controls.subCategoria.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label *ngIf="frmCategorias.controls.subCategoria.invalid && frmCategorias.controls.subCategoria.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
         <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
           <input formControlName="descripcionCategoria" type="text" matInput step="0.01" placeholder="descripcionCategoria"  style="text-align:center;">
         </mat-form-field>
-        <label *ngIf="frmCategorias.controls.descripcionCategoria.invalid && frmCategorias.controls.descripcionCategoria.dirty" style="color:red;">Este campo es obligatorio</label>
+        <label *ngIf="frmCategorias.controls.descripcionCategoria.invalid && frmCategorias.controls.descripcionCategoria.dirty" style="color:#e6832d;">Este campo es obligatorio</label>
         <br>
       </form>
     </div>
     <div class="modal-footer" style="background: #f6f2ebe3;">
-      <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmCategorias.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
+      <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos margenSuperior" [disabled]="frmCategorias.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
     </div>
   </ng-template>

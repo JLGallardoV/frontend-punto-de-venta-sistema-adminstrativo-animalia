@@ -29,6 +29,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   margin-top: -25px!important;
   color:white!important;
 }
+//COLOR DE LOS PAGINADORES DE LAS TABLAS
+.colorPaginador{
+  width: 99.99%;
+  background:#2d618c!important;
+  color:white
+}
 
 //ESTILOS PARA MODULOS CRUD:
 .contenedorAcciones{
@@ -50,16 +56,16 @@ $theme: mat-light-theme($primary, $accent, $warn);
 //ESTILOS PARA TABLA CRUD:
 table {
   width: 100%;
-  background: #2d618c!important;
 }
-
 .mat-header-cell{ //contenido de cabeceras
   font-size: 20px !important;
   color: white !important;
+  background: #2d618c!important;
 }
 .mat-cell{ //contenido celda
   font-size: 18px !important;
-  color: white;
+  color: #012440!important;
+  background-color: white!important;
 }
 
 .btnAccionesColumna{
