@@ -127,3 +127,15 @@ QUE GLOBALMENTE (STYLES.CSS) NO ME RESPETA LA IMPORTANCIA*/
   font-family: 'Darker Grotesque', sans-serif!important;
   font-size: 22px!important;
 }
+
+//SOBREESCRIBIMOS TEMA UNICAMENTE PARA ESTE COMPONENTE
+//modificamos el cuerpo de la tabla unicamente
+::ng-deep.mat-cell{
+  font-size: 18px !important;
+  color: #012440!important;
+  background-color: white!important;
+}
+
+::ng-deep.mat-select-value {
+  color:#012440!important;
+}
