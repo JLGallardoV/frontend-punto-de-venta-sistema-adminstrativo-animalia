@@ -66,10 +66,10 @@
                       <b>idVendedor:</b> {{i.idVendedor}}
                     </div>
                   </ng-template>
-                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" placement="left"
+                  <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna" placement="left"
                    [ngbPopover]="popContent" [popoverTitle]="popTitle">Informacion</button>
-                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna"  (click)="openEditar(content,i.idUsuario,i.nombreUsuario,i.emailUsuario,i.contraseniaUsuario,i.idVendedor,i.idTipoUsuario)">Modificar</button>
-                  <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna"  (click)="eliminarUsuario(i.idUsuario)">Eliminar</button>
+                  <button mat-flat-button color="accent" style="margin-left: 2px;" class="fuenteCuerpos btnAccionesColumna"  (click)="openEditar(content,i.idUsuario,i.nombreUsuario,i.emailUsuario,i.contraseniaUsuario,i.idVendedor,i.idTipoUsuario)">Modificar</button>
+                  <button mat-flat-button color="accent" style="margin-left: 2px;" class="fuenteCuerpos btnAccionesColumna"  (click)="eliminarUsuario(i.idUsuario)">Eliminar</button>
                 </div>
               </td>
             </ng-container>
@@ -78,14 +78,14 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
           </div>
-          <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+          <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons class="colorPaginador"></mat-paginator>
         </mat-card>
       </div>
 
       <!-- modal para el llenado de datos -->
 
         <ng-template #content let-modal>
-          <div class="modal-header">
+          <div class="modal-header" style="background: #2d618c;color: white;">
             <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left:23%;">{{titulo}}&nbsp;<i class='fas fa-user-lock' style='font-size: 20px;'></i></h3>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
               <span aria-hidden="true">&times;</span>
@@ -132,7 +132,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmUsuarios.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
+            <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos margenSuperior" [disabled]="frmUsuarios.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
           </div>
         </ng-template>
   </mat-tab>

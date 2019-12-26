@@ -49,9 +49,9 @@
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
           <td mat-cell *matCellDef="let i" style="text-align:center">
-              <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentCliente(longContentCliente,i.idCliente)">Informacion</button>
-              <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna"  (click)="openEditar(content,i.idCliente,i.nombreCliente,i.apellidoPaternoCliente,i.apellidoMaternoCliente,i.ciudadCliente,i.estadoCliente,i.paisCliente,i.direccionCliente,i.coloniaCliente,i.cpCliente,i.telefonoCliente,i.emailCliente)">Modificar</button>
-              <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna"  (click)="eliminarCliente(i.idCliente)">Eliminar</button>
+              <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentCliente(longContentCliente,i.idCliente)">Informacion</button>
+              <button mat-flat-button color="accent" style="margin-left: 2px;" class="fuenteCuerpos btnAccionesColumna"  (click)="openEditar(content,i.idCliente,i.nombreCliente,i.apellidoPaternoCliente,i.apellidoMaternoCliente,i.ciudadCliente,i.estadoCliente,i.paisCliente,i.direccionCliente,i.coloniaCliente,i.cpCliente,i.telefonoCliente,i.emailCliente)">Modificar</button>
+              <button mat-flat-button color="accent" style="margin-left: 2px;" class="fuenteCuerpos btnAccionesColumna"  (click)="eliminarCliente(i.idCliente)">Eliminar</button>
           </td>
         </ng-container>
 
@@ -60,13 +60,13 @@
       </table>
 
       </div>
-      <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+      <mat-paginator [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador"></mat-paginator>
     </mat-card>
   </div>
   <!-- modal para el llenado de datos -->
 
     <ng-template #content let-modal>
-      <div class="modal-header">
+      <div class="modal-header" style="background: #2d618c;color: white;">
         <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left:27%;">{{titulo}}&nbsp;<i class='fas fa-id-card' style='font-size: 20px;'></i></h3>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
@@ -150,13 +150,13 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmClientes.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
+        <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos margenSuperior" [disabled]="frmClientes.invalid" (click)="ejecutarPeticion()">Ejecutar</button>
       </div>
     </ng-template>
 
     <!-- modal para mostrar Informacion detallada del cliente -->
     <ng-template #longContentCliente let-modal>
-      <div class="modal-header">
+      <div class="modal-header" style="background: #2d618c;color: white;">
         <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
           Detalles del Cliente
           <i class='fas fa-id-card' style='font-size: 20px;'></i>
@@ -179,6 +179,6 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
+        <button mat-flat-button color="accent" class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
       </div>
     </ng-template>
