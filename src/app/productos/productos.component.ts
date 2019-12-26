@@ -7,6 +7,8 @@ import {IProductos,ICategorias,IAlmacenes,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 import {LoginJwtService} from '../login-jwt.service';
 import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
+import {GenerarPDFsService} from '../generar-pdfs.service';
+
 
 /*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
 ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
@@ -68,7 +70,8 @@ export class ProductosComponent implements OnInit {
     public formBuilder: FormBuilder,
     public API:APIService,
     public formateandoFecha:DateFormatService,
-    public eliminacionSegura: ConfirmarEliminarService
+    public eliminacionSegura: ConfirmarEliminarService,
+    public PDF: GenerarPDFsService
   ) {
     this.frmProductos = this.formBuilder.group({
       idProducto:[""],
@@ -257,13 +260,47 @@ export class ProductosComponent implements OnInit {
 
   }
 
-
   //FUNCIONALIDAD FILTRAR
   public filtrarRegistros(filterValue: string) {
     this.dsProductos.filter = filterValue.trim().toLowerCase();
     //si se usa el modulo tab de transacciones, entonces arroja los resultados buscados en la primer pagina: (if reducido)
     this.dsProductos.paginator ? this.dsProductos.paginator.firstPage(): null;
   }
+
+
+  //INVOCANDO SERVICIO PARA GENERAR PDF DE TODA LA VISTA DE LA TABLA
+  public generarPDF(etiquetaPDF:string){
+    this.API.mostrarProductos().subscribe(
+      (success:any)=>{
+        //REPITE EL PROCESO TANTOS REGISTROS EXISTAN EN EL ARREGLO
+        for (let i = 0; i < success.respuesta.length; i++) {
+            document.getElementById('botones'+success.respuesta[i].idProducto).style.display = "none"; //esto trabaja concatenando el id de cada registro
+            document.getElementById('encabezadoBotones').style.display = "none";
+        }
+        this.PDF.generarPDF(etiquetaPDF);
+
+        setTimeout(()=>{
+          for (let i = 0; i < success.respuesta.length; i++) {
+            document.getElementById('botones'+success.respuesta[i].idProducto).style.display = "table-cell";
+            document.getElementById('encabezadoBotones').style.display = "table-cell";
+          }
+        },0);
+
+
+      },
+      (error:any)=>{
+        console.log("hubo un error: ",error);
+      }
+    );
+  }
+
+
+  //INVOCANDO SERVICIO PARA GENERAR PDF
+  public generarPdfParticular(etiquetaPDF:string){
+    this.PDF.generarPDF(etiquetaPDF);
+  }
+
+
   ngOnInit() {
     this.guardian.restringirAcceso();
     this.listarProductos();
