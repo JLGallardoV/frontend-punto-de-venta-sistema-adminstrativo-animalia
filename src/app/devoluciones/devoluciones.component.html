@@ -52,7 +52,7 @@
                 <ng-container matColumnDef="acciones">
                   <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
                   <td mat-cell *matCellDef="let i" style="text-align:center">
-                      <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentDevoluciones(longContentDevolucion,i.idDevolucion)">Informacion</button>
+                      <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna" (click)="openScrollableContentDevoluciones(longContentDevolucion,i.idDevolucion)">Informacion</button>
                   </td>
                 </ng-container>
 
@@ -60,7 +60,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsDevoluciones;"></tr>
               </table>
             </div>
-            <mat-paginator #MatPaginatorDevoluciones [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator #MatPaginatorDevoluciones [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador"></mat-paginator>
           </mat-card>
         </div>
         </mat-tab>
@@ -106,8 +106,8 @@
             <ng-container matColumnDef="acciones">
               <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
               <td mat-cell *matCellDef="let i" style="text-align:center">
-                <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="openEditarTipoProblema(contentTiposProblemas,i.idTipoProblema,i.tipoProblema)">Modificar</button>
-                <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="eliminarTipoProblema(i.idTipoProblema)">Eliminar</button>
+                <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna" (click)="openEditarTipoProblema(contentTiposProblemas,i.idTipoProblema,i.tipoProblema)">Modificar</button>
+                <button mat-flat-button color="accent" style="margin-left: 2px;" class="fuenteCuerpos btnAccionesColumna" (click)="eliminarTipoProblema(i.idTipoProblema)">Eliminar</button>
               </td>
             </ng-container>
 
@@ -116,7 +116,7 @@
           </table>
 
             </div>
-            <mat-paginator #MatPaginatorTiposProblemas [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator #MatPaginatorTiposProblemas [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador"></mat-paginator>
           </mat-card>
         </div>
         </mat-tab>
@@ -164,9 +164,9 @@
             <ng-container matColumnDef="acciones">
               <th mat-header-cell *matHeaderCellDef style="text-align:center"> Acciones </th>
               <td mat-cell *matCellDef="let i" style="text-align:center">
-                <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna"
+                <button mat-flat-button color="accent" class="fuenteCuerpos btnAccionesColumna"
                   (click)="openEditarCompensacion(contentCompensaciones,i.idCompensacion,i.tipoCompensacion,i.descripcionCompensacion)">Modificar</button>
-                <button mat-stroked-button class="fuenteCuerpos btnAccionesColumna" (click)="eliminarCompensacion(i.idCompensacion)">Eliminar</button>
+                <button mat-flat-button color="accent" style="margin-left: 2px;" class="fuenteCuerpos btnAccionesColumna" (click)="eliminarCompensacion(i.idCompensacion)">Eliminar</button>
               </td>
             </ng-container>
 
@@ -176,7 +176,7 @@
 
 
             </div>
-            <mat-paginator #MatPaginatorCompensaciones [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator #MatPaginatorCompensaciones [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador"></mat-paginator>
           </mat-card>
         </div>
       </mat-tab>
@@ -188,8 +188,8 @@
   <!-- modal agregar devolucion-->
 
   <ng-template #contentDevolucion let-modal>
-    <div class="modal-header">
-      <h3 class="modal-title fuenteTitulos" id="modal-basic-title">{{titulo}}</h3>
+    <div class="modal-header" style="background: #2d618c;color: white;">
+      <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left: 19%;">{{titulo}}&nbsp;<i class='fas fa-handshake' style='font-size: 23px;'></i></h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -245,14 +245,14 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmDevoluciones.invalid" (click)="ejecutarPeticionDevolucion()">Ejecutar</button>
+      <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos margenSuperior" [disabled]="frmDevoluciones.invalid" (click)="ejecutarPeticionDevolucion()">Ejecutar</button>
     </div>
   </ng-template>
 
   <!-- modal agregar tipos de problemas-->
 
   <ng-template #contentTiposProblemas let-modal>
-    <div class="modal-header">
+    <div class="modal-header" style="background: #2d618c;color: white;">
       <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left:27%;">{{titulo}}&nbsp;<i class='fas fa-exclamation' style='font-size: 20px;'></i></h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
@@ -269,14 +269,14 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmTiposProblemas.invalid" (click)="ejecutarPeticionTipoProblema()">Ejecutar</button>
+      <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos margenSuperior" [disabled]="frmTiposProblemas.invalid" (click)="ejecutarPeticionTipoProblema()">Ejecutar</button>
     </div>
   </ng-template>
 
   <!-- modal agregar compensaciones-->
 
   <ng-template #contentCompensaciones let-modal>
-    <div class="modal-header">
+    <div class="modal-header" style="background: #2d618c;color: white;">
       <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin-left:18%;">{{titulo}}&nbsp;<i class='fas fa-gifts' style='font-size: 20px'></i></h3>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
@@ -298,13 +298,13 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnEjecutar fuenteCuerpos margenSuperior" [disabled]="frmCompensaciones.invalid" (click)="ejecutarPeticionCompensacion()">Ejecutar</button>
+      <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos margenSuperior" [disabled]="frmCompensaciones.invalid" (click)="ejecutarPeticionCompensacion()">Ejecutar</button>
     </div>
   </ng-template>
 
   <!-- modal informacion devoluciones  -->
   <ng-template #longContentDevolucion let-modal>
-    <div class="modal-header">
+    <div class="modal-header" style="background: #2d618c;color: white;">
       <h3 class="modal-title fuenteTitulos" id="modal-basic-title" style="margin:auto;">
         Detalles de la Devolución
         <i class='fas fa-file-alt' style='font-size:24px'></i>
@@ -323,6 +323,6 @@
       </p>
     </div>
     <div class="modal-footer">
-      <button mat-stroked-button class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
+      <button mat-flat-button color="accent" class="btnAgregar fuenteCuerpos margenSuperior" (click)="modal.dismiss('Cross click')" style="font-size: 19px;">Cerrar</button>
     </div>
   </ng-template>
