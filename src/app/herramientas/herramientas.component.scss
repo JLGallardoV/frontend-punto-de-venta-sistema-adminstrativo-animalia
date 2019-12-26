@@ -87,10 +87,6 @@ th.mat-header-cell {
   font-size: 22px;
 }
 
-::ng-deep.mat-ink-bar{
-  background-color: #dfdcd4!important;
-
-}
 //AÑADIR PADDING AL TAB EN GENERAL PARA QUESE ALCANCE A DISTINGUIR LA SOMBRA INFERIOR DE LOS CARDS
 ::ng-deep.mat-tab-body-content {
   padding: 2px!important;
