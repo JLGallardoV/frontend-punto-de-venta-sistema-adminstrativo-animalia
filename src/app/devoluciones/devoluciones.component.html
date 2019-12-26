@@ -196,17 +196,7 @@
     </div>
     <div class="modal-body">
       <form [formGroup]="frmDevoluciones">
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="montoConIvaDevolucion" type="text" matInput placeholder="Monto ($)" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmDevoluciones.controls.montoConIvaDevolucion.invalid && frmDevoluciones.controls.montoConIvaDevolucion.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
-          <input formControlName="motivoDevolucion" type="text" matInput placeholder="Motivo" style="text-align: center;">
-        </mat-form-field>
-        <label *ngIf="frmDevoluciones.controls.motivoDevolucion.invalid && frmDevoluciones.controls.motivoDevolucion.dirty">Este campo es obligatorio</label>
-        <br>
-        <mat-form-field class="fuenteCuerpos">
+        <mat-form-field class="fuenteCuerpos" style="width:100%;">
           <mat-select formControlName="idCliente" class="fuenteCuerpos" placeholder="Cliente">
             <mat-option class="fuenteCuerpos" *ngFor="let i of arregloClientesSelect" [value]="i.idCliente">
               {{ i.nombreCliente }}
@@ -215,16 +205,16 @@
         </mat-form-field>
         <label *ngIf="frmDevoluciones.controls.idCliente.invalid && frmDevoluciones.controls.idCliente.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="fuenteCuerpos">
-          <mat-select formControlName="idTipoProblema" class="fuenteCuerpos" placeholder="Clasificacion Problema">
-            <mat-option class="fuenteCuerpos" *ngFor="let i of arregloTiposProblemasSelect" [value]="i.idTipoProblema">
-              {{ i.tipoProblema }}
+        <mat-form-field class="fuenteCuerpos" style="width:100%;">
+          <mat-select formControlName="idTransaccion" class="fuenteCuerpos" placeholder="Id Venta">
+            <mat-option class="fuenteCuerpos" *ngFor="let i of arregloTransaccionesSelect" [value]="i.idTransaccion">
+              {{ i.idTransaccion }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <label *ngIf="frmDevoluciones.controls.idTipoProblema.invalid && frmDevoluciones.controls.idTipoProblema.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
+        <label *ngIf="frmDevoluciones.controls.idTransaccion.invalid && frmDevoluciones.controls.idTransaccion.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="fuenteCuerpos">
+        <mat-form-field class="fuenteCuerpos" style="width:100%;">
           <mat-select formControlName="idProducto" class="fuenteCuerpos" placeholder="Producto">
             <mat-option class="fuenteCuerpos" *ngFor="let i of arregloProductosSelect" [value]="i.idProducto">
               {{ i.nombreProducto }}
@@ -233,7 +223,21 @@
         </mat-form-field>
         <label *ngIf="frmDevoluciones.controls.idProducto.invalid && frmDevoluciones.controls.idProducto.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="fuenteCuerpos">
+        <mat-form-field class="fuenteCuerpos" style="width:100%;">
+          <mat-select formControlName="idTipoProblema" class="fuenteCuerpos" placeholder="Clasificacion Problema">
+            <mat-option class="fuenteCuerpos" *ngFor="let i of arregloTiposProblemasSelect" [value]="i.idTipoProblema">
+              {{ i.tipoProblema }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <label *ngIf="frmDevoluciones.controls.idTipoProblema.invalid && frmDevoluciones.controls.idTipoProblema.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
+        <br>
+        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+          <input formControlName="motivoDevolucion" type="text" matInput placeholder="Detalles" style="text-align: center;">
+        </mat-form-field>
+        <label *ngIf="frmDevoluciones.controls.motivoDevolucion.invalid && frmDevoluciones.controls.motivoDevolucion.dirty">Este campo es obligatorio</label>
+        <br>
+        <mat-form-field class="fuenteCuerpos" style="width:100%;">
           <mat-select formControlName="idCompensacion" class="fuenteCuerpos" placeholder="Compensacion">
             <mat-option class="fuenteCuerpos" *ngFor="let i of arregloCompensacionesSelect" [value]="i.idCompensacion">
               {{ i.tipoCompensacion }}
@@ -313,10 +317,10 @@
     <div class="modal-body" *ngFor="let i of arregloDetalleDevolucion">
       <p class="fuenteCuerpos" style="font-size:22px;text-align:center;">
         <b>ID Devolución:</b> {{i.idDevolucion}}
+        <br><b>Id Ventas:</b> {{i.idTransaccion}}
         <br><b>Producto:</b> {{i.nombreProducto}}
         <br><b>Cliente:</b> {{i.nombreCliente}}
         <br><b>Categoria Problema:</b> {{i.tipoProblema}}
-        <br><b>Monto $:</b> {{i.montoConIvaDevolucion}}
         <br><b>Detalle:</b> {{i.motivoDevolucion}}
         <br><b>Fecha:</b> {{i.fechaDevolucion | date: 'yyyy-MM-dd HH:mm:ss'}}
         <br><b>Tipo Compensacion:</b> {{i.tipoCompensacion}}

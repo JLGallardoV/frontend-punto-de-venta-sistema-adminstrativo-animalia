@@ -275,8 +275,8 @@ export class APIService {
   public mostrarDetalleDevolucion(idDevolucion:number) {
     return this.http.get(`http://localhost:3000/devolucionesWS/listarDetalleDevolucion/${idDevolucion}`, { headers: this.headers });
   }
-  public aniadirDevolucion(montoConIvaDevolucion:number,motivoDevolucion:string,idCliente:number,idTipoProblema:number,idProducto:number,idCompensacion:number) {
-    return this.http.post('http://localhost:3000/devolucionesWS/agregarDevolucion', {montoConIvaDevolucion,motivoDevolucion,idCliente,idTipoProblema,idProducto,idCompensacion}, { headers: this.headers });
+  public aniadirDevolucion(motivoDevolucion:string,idCliente:number,idTipoProblema:number,idProducto:number,idCompensacion:number,idTransaccion:number) {
+    return this.http.post('http://localhost:3000/devolucionesWS/agregarDevolucion', {motivoDevolucion,idCliente,idTipoProblema,idProducto,idCompensacion,idTransaccion}, { headers: this.headers });
   }
 
   //WS ENTIDAD ENVIO

@@ -3,7 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'; //LIBRERIA BOOTSTRAP
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
-import {IDevoluciones,ITiposDeProblemas,ICompensaciones,IClientes,IProductos,APIService} from '../api.service';
+import {IDevoluciones,ITiposDeProblemas,ITransacciones,ICompensaciones,IClientes,IProductos,APIService} from '../api.service';
 import {LoginJwtService} from '../login-jwt.service';
 import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
 
@@ -26,6 +26,7 @@ export class DevolucionesComponent implements OnInit {
   public arregloProductosSelect:IProductos[];
   public arregloTiposProblemasSelect:ITiposDeProblemas[];
   public arregloCompensacionesSelect:ICompensaciones[];
+  public arregloTransaccionesSelect:ITransacciones[];
   public arregloDetalleDevolucion:any[] = [];
 
   //propiedades para tabla
@@ -62,12 +63,12 @@ export class DevolucionesComponent implements OnInit {
     public eliminacionSegura: ConfirmarEliminarService
 ) {
     this.frmDevoluciones = this.formBuilder.group({
-      montoConIvaDevolucion:["",Validators.required],
       motivoDevolucion:["",Validators.required],
       idCliente:["",Validators.required],
       idTipoProblema:["",Validators.required],
       idProducto:["",Validators.required],
-      idCompensacion:["",Validators.required]
+      idCompensacion:["",Validators.required],
+      idTransaccion:["",Validators.required]
     });
 
     this.frmTiposProblemas = this.formBuilder.group({
@@ -184,6 +185,17 @@ export class DevolucionesComponent implements OnInit {
       }
     );
   }
+  //para el select
+  public listarTransacciones(){
+    this.API.mostrarTransacciones().subscribe(
+      (success:any)=>{
+        return this.arregloTransaccionesSelect = success.respuesta;
+      },
+      (error)=>{
+        console.log("algo ocurrio: ",error)
+      }
+    );
+  }
   //llena el select
   public listarProductos(){
     this.API.mostrarProductos().subscribe(
@@ -199,14 +211,14 @@ export class DevolucionesComponent implements OnInit {
 
   //AGREGAR DEVOLUCION
   public ejecutarPeticionDevolucion(){
-    let montoConIvaDevolucionForm = this.frmDevoluciones.get('montoConIvaDevolucion').value;
     let motivoDevolucionForm = this.frmDevoluciones.get('motivoDevolucion').value;
     let idClienteForm = this.frmDevoluciones.get('idCliente').value;
     let idTipoProblemaForm = this.frmDevoluciones.get('idTipoProblema').value;
     let idProductoForm = this.frmDevoluciones.get('idProducto').value;
     let idCompensacionForm = this.frmDevoluciones.get('idCompensacion').value;
+    let idTransaccionForm = this.frmDevoluciones.get('idTransaccion').value;
 
-    this.API.aniadirDevolucion(montoConIvaDevolucionForm,motivoDevolucionForm,idClienteForm,idTipoProblemaForm,idProductoForm,idCompensacionForm).subscribe(
+    this.API.aniadirDevolucion(motivoDevolucionForm,idClienteForm,idTipoProblemaForm,idProductoForm,idCompensacionForm,idTransaccionForm).subscribe(
       (success: any)=>{
         alert(JSON.stringify(success.respuesta));
         this.listarDevoluciones();
@@ -359,6 +371,7 @@ export class DevolucionesComponent implements OnInit {
     this.listarCompensaciones();
     this.listarProductos();
     this.listarClientes();
+    this.listarTransacciones();
   }
 
 }
