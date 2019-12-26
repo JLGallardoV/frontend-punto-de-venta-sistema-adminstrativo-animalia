@@ -6,6 +6,7 @@ import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {IDevoluciones,ITiposDeProblemas,ITransacciones,ICompensaciones,IClientes,IProductos,APIService} from '../api.service';
 import {LoginJwtService} from '../login-jwt.service';
 import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
+import {GenerarPDFsService} from '../generar-pdfs.service';
 
 
 @Component({
@@ -60,7 +61,9 @@ export class DevolucionesComponent implements OnInit {
     private modalService: NgbModal,
     public formBuilder: FormBuilder,
     public API:APIService,
-    public eliminacionSegura: ConfirmarEliminarService
+    public eliminacionSegura: ConfirmarEliminarService,
+    public PDF: GenerarPDFsService
+
 ) {
     this.frmDevoluciones = this.formBuilder.group({
       motivoDevolucion:["",Validators.required],
@@ -364,6 +367,10 @@ export class DevolucionesComponent implements OnInit {
     this.dsCompensaciones.paginator ? this.dsCompensaciones.paginator.firstPage(): null;
   }
 
+  //INVOCANDO SERVICIO PARA GENERAR PDF
+  public generarPDF(etiquetaPDF:string){
+    this.PDF.generarPDF(etiquetaPDF);
+  }
   ngOnInit() {
     this.guardian.restringirAcceso();
     this.listarDevoluciones();
