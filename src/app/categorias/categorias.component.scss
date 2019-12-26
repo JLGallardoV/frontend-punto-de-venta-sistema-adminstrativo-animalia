@@ -8,15 +8,6 @@
   transition: 0.5s;
 }
 
-//BTN PARA EJECUTAR UNA PETICION POST O PUT DEL MODAL
-.btnEjecutar{
-    color: #191818;
-    border: solid 1px #676767;
-    margin: auto;
-    width: 65%;
-    font-size: 20px;
-}
-
 //LONGITUDES DE LA TABLA, EVITA QUE SE DESBORDEN LOS DATOS DE LA TABLA
 .tablaElastica{
   overflow-y: auto;

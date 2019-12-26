@@ -34,6 +34,7 @@ export class FacturasComponent implements OnInit {
   public arregloTransacciones:any[] = [];
   public ultimaVenta:any;
   public montoAcumulado : number;
+  public cambio:number;
   public usuarioActual:number;
   public numeroTiposPagoSeleccionados:number = 0; // variable de control en metodo transfiereTiposDePagos
 
@@ -55,8 +56,9 @@ export class FacturasComponent implements OnInit {
   /*VALIDAMOS QUE SE PUEDAN INGRESAR UNICAMENTE PUROS NUMEROS EN LOS INPUTS, CORTESIA:
   https://stackblitz.com/edit/numeric-only?file=app%2Fapp.component.html*/
   public soloNumeros(event:any): boolean {
-      //atrapamos la tecla ingresada en este if ternario
-      const charCode = (event.which) ? event.which : event.keyCode;
+      //atrapamos la tecla ingresada en este if ternario la propiedad which contiene el unicode de la tecla presionada
+
+      const charCode = (event.which) ? event.which : event.keyCode;//se usa which o keycode dependiendo el soporte de nuestro browser
 
       /*si se detecta un caracter especial (en ascii los caracteres especiales son menores a 48)
        o letras (en ascii las letras empiezan apartir del 57), del 31 al 48 en ascii tambien hay caracteres
@@ -137,26 +139,26 @@ export class FacturasComponent implements OnInit {
 
 //AGREGO PRODUCTOS DEL FORMULARIO A LA TABLA CARRITO
   public transfiereProductos(){
-    let transaferirValorID: any;//idProducto
-    let transaferirValorCantidad: number = 0;
+    let productoSeleccionado: any;//idProducto
+    let cantidadSeleccionada: number = 0;
 
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
-        transaferirValorID = this.frmVenta.get('idProducto').value;
-        transaferirValorCantidad = this.frmVenta.get('cantidadProducto').value;
+        productoSeleccionado = this.frmVenta.get('idProducto').value;
+        cantidadSeleccionada = this.frmVenta.get('cantidadProducto').value;
         //sumando monto cada que se agrega un producto
-        this.montoAcumulado = this.montoAcumulado + (success.respuesta[0].precioUnitarioProducto * transaferirValorCantidad);
+        this.montoAcumulado = this.montoAcumulado + (productoSeleccionado.precioUnitarioProducto * cantidadSeleccionada);
 
         //verificamos si al querer dar de alta un producto no existe ya en el carrito (tabla de productos)
         if (this.arregloProductosTabla.length >= 1) {
           //console.log("posicion en arreglo: ",this.arregloProductosTabla[0].cantidadProducto);
           for (let i = 0; i < this.arregloProductosTabla.length; i++) {
-            if (transaferirValorID.idProducto == this.arregloProductosTabla[i].idProducto) {
-              this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + transaferirValorCantidad;
+            if (productoSeleccionado.idProducto == this.arregloProductosTabla[i].idProducto) {
+              this.arregloProductosTabla[i].cantidadProducto = this.arregloProductosTabla[i].cantidadProducto + cantidadSeleccionada;
               this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
             }else{
               if(i == this.arregloProductosTabla.length -1){
-                this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioUnitarioProducto:transaferirValorID.precioUnitarioProducto});
+                this.arregloProductosTabla.push({idProducto:productoSeleccionado.idProducto,cantidadProducto:cantidadSeleccionada,nombreProducto:productoSeleccionado.nombreProducto,precioUnitarioProducto:productoSeleccionado.precioUnitarioProducto});
                 this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
                 break;
               }
@@ -165,7 +167,7 @@ export class FacturasComponent implements OnInit {
           }
 
         }else{
-          this.arregloProductosTabla.push({idProducto:transaferirValorID.idProducto,cantidadProducto:transaferirValorCantidad,nombreProducto:transaferirValorID.nombreProducto,precioUnitarioProducto:transaferirValorID.precioUnitarioProducto});
+          this.arregloProductosTabla.push({idProducto:productoSeleccionado.idProducto,cantidadProducto:cantidadSeleccionada,nombreProducto:productoSeleccionado.nombreProducto,precioUnitarioProducto:productoSeleccionado.precioUnitarioProducto});
           this.dsProductos = new MatTableDataSource(this.arregloProductosTabla);//paso la info del arreglo al dataSource de la tabla para mostrarlos cada que se agregue un nuevo registro
           document.getElementById('tablaVentaConcluidaVacia').style.display = "none";
         }
@@ -187,7 +189,7 @@ export class FacturasComponent implements OnInit {
     //hacemos que la eliminacion de un producto afecte tambien al monto $
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
-            this.montoAcumulado = this.montoAcumulado - (success.respuesta[0].precioUnitarioProducto  *  objetoProducto.cantidadProducto);
+            this.montoAcumulado = this.montoAcumulado - (objetoProducto.precioUnitarioProducto  *  objetoProducto.cantidadProducto);
       },
       (error)=>{
         console.log("algo ocurrio",error)
@@ -255,9 +257,9 @@ export class FacturasComponent implements OnInit {
           (success:any)=>{
             if(success.estatus > 0){
               alert(success.respuesta);
+              document.getElementById('idVender').style.pointerEvents = "none";
+              document.getElementById('idLimpiarPantallaVentas').style.display = "block";
               this.listarUltimaTransaccion();
-              document.getElementById('idTicket').style.display = "block";
-              this.limpiarFormulario();
             }else if(success.estatus < 0) {
                 alert("No cuentas con el dinero suficiente | verifica tu pago");
                 console.log("verdadero error: ",success.respuesta)
@@ -308,6 +310,12 @@ export class FacturasComponent implements OnInit {
               cambioTransaccion:success.respuesta[0].cambioTransaccion,
               tipoPago:success.respuesta[0].tipoPago
             }];
+            setTimeout(()=>{
+              this.generarPDF('etiquetaPDF');
+              this.cambio = this.arregloTransacciones[0].cambioTransaccion;
+              document.getElementById('idCambio').style.display = "contents";
+            },0);
+
           },
           (error)=>{
             console.log("algo ocurrio: ",error);
@@ -321,16 +329,44 @@ export class FacturasComponent implements OnInit {
   }
 
 
-  //LIMPIO EL FORMULARIO UNA VEZ QUE SE HA REALIZADO UNA COMPRA.
+  //LIMPIO EL FORMULARIO UNA VEZ QUE SE HA REALIZADO UNA VENTA Y SE PRESIONE LA TECLA ESC.
+  public limpiarFormularioAtajo(event:any){
+    const charCode = (event.which) ? event.which : event.keyCode;//se usa which o keycode dependiendo el soporte de nuestro browser
+
+    if (charCode == 27) {
+      this.frmVenta.reset();
+      this.frmVenta.controls['idVendedor'].setValue(localStorage.getItem("usuario"));
+      this.montoAcumulado = 0;
+      this.frmVenta.get('pagoTransaccion').disable();
+
+      this.dsProductos.data=[];
+      this.arregloProductosTabla = []
+      this.arregloTiposDePagosLista = [];
+      document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
+      document.getElementById('idCambio').style.display = "none";
+      document.getElementById('idVender').style.pointerEvents = "unset";
+      document.getElementById('idLimpiarPantallaVentas').style.display = "none";
+
+    }
+
+  }
+
+  //LIMPIO EL FORMULARIO UNA VEZ QUE SE HA REALIZADO UNA VENTA Y SE PRESIONE EL BOTON.
   public limpiarFormulario(){
     this.frmVenta.reset();
     this.frmVenta.controls['idVendedor'].setValue(localStorage.getItem("usuario"));
     this.montoAcumulado = 0;
+    this.frmVenta.get('pagoTransaccion').disable();
 
     this.dsProductos.data=[];
     this.arregloProductosTabla = []
     this.arregloTiposDePagosLista = [];
     document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
+    document.getElementById('idCambio').style.display = "none";
+    document.getElementById('idVender').style.pointerEvents = "unset";
+    document.getElementById('idLimpiarPantallaVentas').style.display = "none";
+
+
 
   }
 
@@ -352,7 +388,12 @@ export class FacturasComponent implements OnInit {
 
   //INVOCANDO SERVICIO PARA GENERAR PDF
   public generarPDF(etiquetaPDF:string){
+    console.log("este es el parametro de tu pdf: ",etiquetaPDF);
     this.PDF.generarPDF(etiquetaPDF);
+    setTimeout(()=>{
+      document.getElementById('etiquetaPDF').style.display = "none";
+    },100000);
+
   }
 
 
@@ -363,7 +404,6 @@ export class FacturasComponent implements OnInit {
     this.listarProductos();
     this.listarVendedores();
     this.listarClientes();
-
   }
 
 }

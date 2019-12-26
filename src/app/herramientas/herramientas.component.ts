@@ -47,6 +47,10 @@ export class HerramientasComponent implements OnInit {
   public frmViabilidadProductos: FormGroup;
   public frmRendimientoVendedores: FormGroup;
   public formValid: Boolean = false;
+  public fechaMinimaFormateadaUtilidad:any;
+  public fechaMinimaFormateadaProductos:any;
+  public fechaMinimaFormateadaVendedores:any;
+
   //propiedades de la table
   displayedColumns: string[] = ['montoTransacciones', 'montoCompras', 'utilidad'];
   displayedColumnsMP: string[] = ['nombreProducto', 'vendidos'];
@@ -60,21 +64,30 @@ export class HerramientasComponent implements OnInit {
   @ViewChild('MatPaginatorVentasVendedores',{static: true})MatPaginatorVentasVendedores: MatPaginator;
 
   constructor(public guardian: LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder, public API: APIService, public formateandoFecha: DateFormatService) {
+    /*tab utilidad*/
     this.frmFiltrado = this.formBuilder.group({
       fechaInicio: ["", Validators.required],
       fechaFinal: ["", Validators.required]
     });
 
+    /*tab venta productos*/
     this.frmViabilidadProductos = this.formBuilder.group({
       fechaInicio: ["", Validators.required],
       fechaFinal: ["", Validators.required]
     });
 
+    /*tab ventas vendedores*/
     this.frmRendimientoVendedores = this.formBuilder.group({
       fechaInicio: ["", Validators.required],
       fechaFinal: ["", Validators.required]
     });
 
+    this.fechaMinimaFormateadaUtilidad = "";
+    this.fechaMinimaFormateadaProductos = "";
+    this.fechaMinimaFormateadaVendedores = "";
+    this.frmFiltrado.get('fechaFinal').disable();
+    this.frmViabilidadProductos.get('fechaFinal').disable();
+    this.frmRendimientoVendedores.get('fechaFinal').disable();
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -88,6 +101,8 @@ export class HerramientasComponent implements OnInit {
     let fechaInicioForm: string = "";
     let fechaFinalForm: string = "";
     fechaInicioForm = this.frmFiltrado.get('fechaInicio').value;
+    console.log("fecha de inicio: ",fechaInicioForm)
+
     fechaFinalForm = this.frmFiltrado.get('fechaFinal').value;
     let fechaInicioFormateada = this.formateandoFecha.formatearFecha(fechaInicioForm);
     let fechaFinalFormateada = this.formateandoFecha.formatearFecha(fechaFinalForm);
@@ -100,14 +115,14 @@ export class HerramientasComponent implements OnInit {
         let valorUtilidad = success.respuesta[2][0].utilidad;
 
         let arregloReportesEconomicos: IReportesEconomicos[] = [{ montoTransacciones: valorTransacciones, montoCompras: valorCompras, utilidad: valorUtilidad }];
-
         this.dsReporteEconomico = new MatTableDataSource(arregloReportesEconomicos);
-        if(!this.dsReporteEconomico.paginator){
-          this.dsReporteEconomico.paginator = this.MatPaginatorReporteEconomico;
-          this.dsReporteEconomico.paginator._intl.itemsPerPageLabel = 'items por pagina';
-          this.dsReporteEconomico.paginator._intl.getRangeLabel = etiquetaRango;
 
-        }
+        /*(!this.dsReporteEconomico.paginator){
+          this.dsReporteEconomico.paginator = this.MatPaginatorReporteEconomico;
+          //this.dsReporteEconomico.paginator._intl.itemsPerPageLabel = 'items por pagina';
+          //this.dsReporteEconomico.paginator._intl.getRangeLabel = etiquetaRango;
+
+        }*/
 
       },
       (error) => {
@@ -135,6 +150,8 @@ export class HerramientasComponent implements OnInit {
             this.dsViabilidadProductos.paginator._intl.getRangeLabel = etiquetaRango;
 
           }
+        }else{
+          alert("Al parecer no hay registros en estas fechas")
         }
       },
       (error) => {
@@ -142,6 +159,7 @@ export class HerramientasComponent implements OnInit {
       }
     );
   }
+
 
   //MOSTRAR RENDIMIENTO VENDEDORES
   public generarRendimientoVendedores() {
@@ -175,6 +193,65 @@ export class HerramientasComponent implements OnInit {
     );
   }
 
+
+  //VALIDACION MIN DE INPUTS DE FILTRADO: TAB UTILIDAD
+  public validarInputsFechaUtilidad(event:any){
+    let fechaMaxima:string ="";
+    this.fechaMinimaFormateadaUtilidad = new Date();
+      fechaMaxima = this.frmFiltrado.get('fechaInicio').value;
+      let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMaxima);
+      let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
+
+      //raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min
+      this.fechaMinimaFormateadaUtilidad = new Date(parseInt(fechaMinimaFormateadaSplit[0]),parseInt(fechaMinimaFormateadaSplit[1]),parseInt(fechaMinimaFormateadaSplit[2]));
+      this.frmFiltrado.get('fechaFinal').enable();
+
+  }
+
+
+  //VALIDACION MIN DE INPUTS DE FILTRADO: TAB PRODUCTOS
+  public validarInputsFechaProductos(event:any){
+    let fechaMaxima:string ="";
+    this.fechaMinimaFormateadaProductos = new Date();
+      fechaMaxima = this.frmViabilidadProductos.get('fechaInicio').value;
+      let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMaxima);
+      let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
+
+      //raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min
+      this.fechaMinimaFormateadaProductos = new Date(parseInt(fechaMinimaFormateadaSplit[0]),parseInt(fechaMinimaFormateadaSplit[1]),parseInt(fechaMinimaFormateadaSplit[2]));
+      this.frmViabilidadProductos.get('fechaFinal').enable();
+
+  }
+
+
+  //VALIDACION MIN DE INPUTS DE FILTRADO: TAB VENDEDORES
+  public validarInputsFechaVendedores(event:any){
+    let fechaMaxima:string ="";
+    this.fechaMinimaFormateadaVendedores = new Date();
+      fechaMaxima = this.frmRendimientoVendedores.get('fechaInicio').value;
+      let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMaxima);
+      let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
+
+      //raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min
+      this.fechaMinimaFormateadaVendedores = new Date(parseInt(fechaMinimaFormateadaSplit[0]),parseInt(fechaMinimaFormateadaSplit[1]),parseInt(fechaMinimaFormateadaSplit[2]));
+      this.frmRendimientoVendedores.get('fechaFinal').enable();
+
+  }
+
+
+  //EVITAMOS QUE EL USUARIO TRATE DE ESCRIBIR EN EL INPUT Y MANDE UNA FECHA NO VALIDA
+  public restringirEscritura(event:any): boolean {
+      /*atrapamos la tecla ingresada en este if ternario, la propiedad which contiene el unicode de la tecla presionada*/
+      const charCode = (event.which) ? event.which : event.keycode; //se usa which o keycode dependiendo el soporte de nuestro browser
+
+      /*el keycode de un caracter empiezan en 0 entonces bloqueamos todos para que no
+      se pueda escribir en el input*/
+      if (charCode >= 0) {
+        return false;
+      }
+      return true;
+
+    }
 
   ngOnInit() {
     this.guardian.restringirAcceso();

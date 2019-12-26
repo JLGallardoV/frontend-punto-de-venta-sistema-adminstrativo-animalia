@@ -1,5 +1,5 @@
 .background{
-	background: url('../../assets/img/tapizLogin1.jpg');
+	background: url('../../assets/img/tapizLogin2.jpg');
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center;
@@ -25,6 +25,13 @@
 .btLogin{
   width: 100%;
 }
+//ESPINER QUE APARECE CADA QUE SE LOGUEA EL USUARIO
+.spinner{
+		position: absolute;
+		z-index: 2;
+    margin-top: 35vh;
+    margin-left: 47%;
+}
 
 //SEPARA EL BOTON DE INGRESAR DE LOS INPUTS
 .margenSuperior{
@@ -39,26 +46,26 @@
 }
 //SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL:
 
-//PERSONALIZAR EL COLOR DE INPUT
-::ng-deep .mat-focused {/*cambia el color del label cuando se enfoca*/
+/*PERSONALIZAR EL COLOR DE INPUT
+::ng-deep .mat-focused {//cambia el color del label cuando se enfoca
   color: #272727 !important;
  }
- ::ng-deep.mat-form-field-underline { /*cambia el color del subrayado*/
+ ::ng-deep.mat-form-field-underline { //cambia el color del subrayado
   background-color: #272727 !important;
   border-color: #272727 !important;
 }
-::ng-deep.mat-form-field-ripple {/*cambiar el color del subrayado cuando se enfoca*/
+::ng-deep.mat-form-field-ripple {//cambiar el color del subrayado cuando se enfoca
  background-color: #272727 !important;
  border-color: #272727 !important;
 
 }
-::ng-deep.mat-form-field-label{/*color del label*/
+::ng-deep.mat-form-field-label{//color del label
   color: #272727 !important;
 }
-::ng-deep.mat-input-element {/*color del punto de insercion (parpadeo de barra vertical al escribir)*/
+::ng-deep.mat-input-element {//color del punto de insercion (parpadeo de barra vertical al escribir)
     caret-color: #272727 !important;
 }
-
+*/
 
 //PERSONALIZAR SNACK BAR
 ::ng-deep.mat-snack-bar-container {//todo el snack que se despliega

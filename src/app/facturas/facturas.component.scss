@@ -1,11 +1,10 @@
 //CONTENDEDOR DE LOS INPUTS
 .cardInputs{
-  height: 74vh;
+  height: 99%;
   width: 95%;
   margin: auto;
   display: inline-block;
   margin-left: 10px;
-
 }
 //BTN IMPRIMIR TICKET
 .ticket{
@@ -23,9 +22,9 @@
 
 //BTN PARA AÑADIR PRODUCTOS AL CARRITO (TABLA PRODUCTOS)
 .btnAniadirEntidad{
-  color: #2f2e2e;
-  width: 18px !important;
-  height: 18px !important;
+  color: white;
+  width: 23px !important;
+  height: 23px !important;
   top: 5px;
 }
 
@@ -38,9 +37,10 @@
 
 //BORDE PARA GRID DE OUTPUTS
 .bordeOutputs{
-  border: solid 1px #a5a39d;
+  border: solid 1px #012440;
   border-radius: 6px;
   margin: auto;
+  height: 80%;
 }
 
 //ESTILO PARA LISTA DE PRODUCTOS Y TIPOS DE PAGOS
@@ -49,13 +49,22 @@
   overflow-y: auto;
   margin-bottom: 12px;
   width: 100%;
+  min-height: 60%;
+  max-height: 63%;
 }
 
 //MONTO, QUITAR BORDE AL INPUT READONLY DONDE SE MUESTRA EL MONTO
 .outputMonto{
-  width: 50%;
+  width: 25%;
   background:#f9f9f9;
   border: none;
+}
+
+//MONTO, MODIFICA EL LABEL EN GENERAL
+.labelOutput{
+  font-size:24px;
+  margin-top: 25px;
+  width:25%
 }
 
 //ESTILO PARA ETIQUETAS DE MONTO,CAMBIO,PAGO
@@ -94,61 +103,39 @@
   background-color:transparent;
 }
 
-
-
-//SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
-//PERSONALIZAR EL COLOR DE INPUT
-::ng-deep .mat-focused {/*cambia el color del label cuando se enfoca*/
-  color: #272727 !important;
- }
- ::ng-deep.mat-form-field-underline { /*cambia el color del subrayado*/
-  background-color: #272727 !important;
-  border-color: #272727 !important;
-}
-::ng-deep.mat-form-field-ripple {/*cambiar el color del subrayado cuando se enfoca*/
- background-color: #272727 !important;
- border-color: #272727 !important;
-
-}
-::ng-deep.mat-form-field-label{/*color del label*/
-  color: #272727 !important;
-}
-::ng-deep.mat-input-element {/*color del punto de insercion (parpadeo de barra vertical al escribir)*/
-    caret-color: #272727 !important;
+//OCULTA EL TICKET DE LA VENTA (LO ESCONDE DEL MODULO POR MILISEGUNDOS CUANDO APARECE)
+.ocultarTicket{
+  font-size: 14px;
+  height: auto;width: 200px;
+  margin-left: 200px;
+  margin-top: -150%;
+  position: fixed;
 }
 
-
-//SOBREESCRIBIR TAB ANGULAR MATERIAL
-::ng-deep.mat-tab-label{ //fuente de cabeceras de tab
-  //background-color: #4b2b08 !important;
-  font-family: 'Darker Grotesque', sans-serif;
-  font-size: 22px;
+//BOTON NUEVA VENTA (LIMPIAR PANTALLA)
+.nvaVenta{
+  float: right;
+  margin-top: 25px;
+  font-size: 20px
 }
 
-::ng-deep.mat-ink-bar{
-  background-color: #dfdcd4!important;
+/*SOBREESCRIBIENDO CLASES DEL TEMA CREADO LO COLOCO COMO PARTE DE CADA COMPONENTE YA
+QUE GLOBALMENTE (STYLES.CSS) NO ME RESPETA LA IMPORTANCIA*/
 
+//Cambiamos el encabezado del tab group
+::ng-deep.mat-tab-label{
+  font-family: 'Darker Grotesque', sans-serif!important;
+  font-size: 22px!important;
 }
 
-//SOBREESCRIBIR OPTIONS DEL SELECT PARA QUE SE VEAN ARRIBA DEL MODAL
-::ng-deep.cdk-overlay-container {
-  z-index: 10001!important;
+//SOBREESCRIBIMOS TEMA UNICAMENTE PARA ESTE COMPONENTE
+//modificamos el cuerpo de la tabla unicamente
+::ng-deep.mat-cell{
+  font-size: 18px !important;
+  color: #012440!important;
+  background-color: white!important;
 }
-//SOBREESCRIBIR COLOR DE FUENTE A SELECT
+
 ::ng-deep.mat-select-value {
-color: #272727;
-}
-//AÑADIR PADDING AL TAB EN GENERAL PARA QUESE ALCANCE A DISTINGUIR LA SOMBRA INFERIOR DE LOS CARDS
-::ng-deep.cdk-focused .cdk-mouse-focuse{
-  color: #272727 !important;
-}
-//TAMAÑO CHECKBOX
-::ng-deep.mat-checkbox{
-  font-size: 20px!important;
-}
-// ACOMODAR EL "+" EN EL BOTON DE AÑADIR PRODUCTOS
-::ng-deep.mat-mini-fab{
-    display: inherit !important;
-    line-height: 18px !important;
-    padding: 0!important;
+  color:#012440!important;
 }

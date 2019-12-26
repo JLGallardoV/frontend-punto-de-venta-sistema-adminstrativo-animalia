@@ -11,14 +11,14 @@
                 <div class="col-9" style="top: 6px;">
                   <form name="formularioFiltrarReportes" [formGroup]="frmFiltrado">
                     <mat-form-field class="fuenteCuerpos inputFiltrarxFecha" style="">
-                      <input formControlName="fechaInicio" matInput [matDatepicker]="picker" placeholder="Fecha Inicio" style="">
+                      <input formControlName="fechaInicio" matInput [matDatepicker]="picker" placeholder="Fecha Inicio" (keypress)="restringirEscritura($event)" (ngModelChange)="validarInputsFechaUtilidad($event)">
                       <mat-datepicker-toggle matSuffix [for]="picker" style="color: #dddad3;"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                     <label *ngIf="frmFiltrado.controls.fechaInicio.invalid && frmFiltrado.controls.fechaInicio.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
 
                     <mat-form-field  class="fuenteCuerpos inputFiltrarxFecha" style="">
-                      <input formControlName="fechaFinal" matInput [matDatepicker]="picker1" placeholder="Fecha Final">
+                      <input formControlName="fechaFinal" matInput [matDatepicker]="picker1" placeholder="Fecha Final" [min]="fechaMinimaFormateadaUtilidad">
                       <mat-datepicker-toggle matSuffix [for]="picker1" style="color: #dddad3;"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-stroked-button class="btnFiltrar fuenteCuerpos" [disabled]="frmFiltrado.invalid" (click)="generarReportes()" style="font-size: 20px;">Filtrar</button>
+                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos" [disabled]="frmFiltrado.invalid" (click)="generarReportes()">Filtrar</button>
                   </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
             </div>
-            <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador" style="width: auto;"></mat-paginator>
           </mat-card>
         </div>
       </mat-tab>
@@ -75,14 +75,14 @@
                 <div class="col-9" style="top: 6px;">
                   <form name="filtradoViabilidadProductos" [formGroup]="frmViabilidadProductos">
                     <mat-form-field class="fuenteCuerpos inputFiltrarxFecha" style="">
-                      <input formControlName="fechaInicio" matInput [matDatepicker]="picker2" placeholder="Fecha Inicio" style="">
+                      <input formControlName="fechaInicio" matInput [matDatepicker]="picker2" placeholder="Fecha Inicio" (keypress)="restringirEscritura($event)" (ngModelChange)="validarInputsFechaProductos($event)">
                       <mat-datepicker-toggle matSuffix [for]="picker2" style="color: #dddad3;"></mat-datepicker-toggle>
                       <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
                     <label *ngIf="frmViabilidadProductos.controls.fechaInicio.invalid && frmViabilidadProductos.controls.fechaInicio.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
 
                     <mat-form-field  class="fuenteCuerpos inputFiltrarxFecha" style="">
-                      <input formControlName="fechaFinal" matInput [matDatepicker]="picker3" placeholder="Fecha Final">
+                      <input formControlName="fechaFinal" matInput [matDatepicker]="picker3" placeholder="Fecha Final" [min]="fechaMinimaFormateadaProductos">
                       <mat-datepicker-toggle matSuffix [for]="picker3" style="color: #dddad3;"></mat-datepicker-toggle>
                       <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-stroked-button class="btnFiltrar fuenteCuerpos" [disabled]="frmViabilidadProductos.invalid" (click)="generarViabilidad()" style="font-size: 20px;">Filtrar</button>
+                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="btnFiltrar fuenteCuerpos" [disabled]="frmViabilidadProductos.invalid" (click)="generarViabilidad()">Filtrar</button>
                   </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumnsMP;"></tr>
             </table>
             </div>
-            <mat-paginator #MatPaginatorVentasProducto [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator #MatPaginatorVentasProducto [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador" style="width: auto;"></mat-paginator>
           </mat-card>
         </div>
       </mat-tab>
@@ -134,7 +134,7 @@
                 <div class="col-9" style="top: 6px;">
                   <form name="filtradoRendimientoVendedores" [formGroup]="frmRendimientoVendedores">
                     <mat-form-field class="fuenteCuerpos inputFiltrarxFecha" style="">
-                      <input formControlName="fechaInicio" matInput [matDatepicker]="picker4" placeholder="Fecha Inicio" style="">
+                      <input formControlName="fechaInicio" matInput [matDatepicker]="picker4" placeholder="Fecha Inicio" (keypress)="restringirEscritura($event)" (ngModelChange)="validarInputsFechaVendedores($event)">
                       <mat-datepicker-toggle matSuffix [for]="picker4" style="color: #dddad3;"></mat-datepicker-toggle>
                       <mat-datepicker #picker4></mat-datepicker>
                     </mat-form-field>
@@ -142,7 +142,7 @@
 
 
                     <mat-form-field  class="fuenteCuerpos inputFiltrarxFecha" style="">
-                      <input formControlName="fechaFinal" matInput [matDatepicker]="picker5" placeholder="Fecha Final">
+                      <input formControlName="fechaFinal" matInput [matDatepicker]="picker5" placeholder="Fecha Final" [min]="fechaMinimaFormateadaVendedores">
                       <mat-datepicker-toggle matSuffix [for]="picker5" style="color: #dddad3;"></mat-datepicker-toggle>
                       <mat-datepicker #picker5></mat-datepicker>
                     </mat-form-field>
@@ -152,7 +152,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-stroked-button class="btnFiltrar fuenteCuerpos" [disabled]="frmRendimientoVendedores.invalid" (click)="generarRendimientoVendedores()" style="font-size: 20px;">Filtrar</button>
+                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="btnFiltrar fuenteCuerpos" [disabled]="frmRendimientoVendedores.invalid" (click)="generarRendimientoVendedores()">Filtrar</button>
                   </div>
                 </div>
             </div>
@@ -178,7 +178,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumnsRV;"></tr>
             </table>
             </div>
-            <mat-paginator #MatPaginatorVentasVendedores [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator #MatPaginatorVentasVendedores [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador" style="width: auto;"></mat-paginator>
           </mat-card>
         </div>
       </mat-tab>

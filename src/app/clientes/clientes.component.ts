@@ -23,7 +23,8 @@ export class ClientesComponent implements OnInit {
   public formValid:Boolean=false;
   public arregloTiposDeClientes: any[];
   public arregloDetalleCliente: any[];
-  displayedColumnsClientes: string[] = ['idCliente','nombreCliente', 'apellidoPaternoCliente', 'ciudadCliente', 'estadoCliente','tipoCliente','acciones'];
+  public tipoCliente:number;
+  displayedColumnsClientes: string[] = ['idCliente','nombreCliente', 'apellidoPaternoCliente', 'ciudadCliente', 'estadoCliente','acciones'];
   dsClientes: MatTableDataSource<IClientes>
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -35,6 +36,7 @@ export class ClientesComponent implements OnInit {
     public formateandoFecha:DateFormatService,
     public eliminacionSegura: ConfirmarEliminarService
 ) {
+    this.tipoCliente = 3; //representa un cliente ordinario
     this.arregloTiposDeClientes = [];
     this.frmClientes = this.formBuilder.group({
       idCliente:[""],
@@ -49,20 +51,17 @@ export class ClientesComponent implements OnInit {
       cpCliente:["",Validators.required],
       telefonoCliente:["",Validators.required],
       emailCliente:["",Validators.required],
-    //  contraseniaCliente:["",Validators.required],
-      puntuajeCliente:["",Validators.required],
-      tipoCliente:["",Validators.required],
+      //contraseniaCliente:["",Validators.required],
     });
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
-  public openAlta(content) {
+  public openAlta(content:any) {
     this.modal= this.modalService.open(content,{size:'lg'});
     this.titulo = "Agregar Cliente";
   }//------fin open--------------------------------------------------
   //ABRIR MODAL CON LOS DATOS A EDITAR
-  public openEditar(content,idCliente: number, nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string, puntuajeCliente: number, tipoCliente: number){
-    console.log("id: ",idCliente," nombre: ",nombreCliente," ciudad: ",ciudadCliente," tipo: ",tipoCliente);
+  public openEditar(content:any,idCliente: number, nombreCliente: string, apellidoPaternoCliente: string, apellidoMaternoCliente: string, ciudadCliente: string, estadoCliente: string, paisCliente: string, direccionCliente: string, coloniaCliente: string, cpCliente: number, telefonoCliente: string, emailCliente: string){
     this.modal= this.modalService.open(content,{size:'lg'});
     this.titulo = "Editar Cliente";
     //pintando los valores en el modal listos para editarlos
@@ -79,8 +78,6 @@ export class ClientesComponent implements OnInit {
     this.frmClientes.controls['telefonoCliente'].setValue(telefonoCliente);
     this.frmClientes.controls['emailCliente'].setValue(emailCliente);
     //this.frmClientes.controls['contraseniaCliente'].setValue(contraseniaCliente);
-    this.frmClientes.controls['puntuajeCliente'].setValue(puntuajeCliente);
-    //this.frmClientes.controls['tipoCliente'].setValue(tipoCliente);
   }
   //FUNCION PARA ABRIR EL MODAL DE INFORMACION CLIENTE, CONFIGURACIONES DE BOOTSTRAP
   public openScrollableContentCliente(longContentCliente:any, idCliente:number) {
@@ -113,7 +110,7 @@ export class ClientesComponent implements OnInit {
     );
   }
 
-  //LISTAR TIPOS DE CLIENTES PARA EL SELECT DEL FORMULARIO
+  /*LISTAR TIPOS DE CLIENTES PARA EL SELECT DEL FORMULARIO: IDEA TIENDA ONLINE
   public listarTiposDeClientes(){
     this.API.mostrarTiposDeClientes().subscribe(
       (success: any)=>{
@@ -124,7 +121,7 @@ export class ClientesComponent implements OnInit {
         console.log("hubo un problema: ",error)
       }
     );
-  }
+  }*/
 
   //AGREGAR CLIENTE Y ACTUALIZAR CLIENTE: EVITO CREAR 2 MODALES
   public ejecutarPeticion(){
@@ -142,11 +139,9 @@ export class ClientesComponent implements OnInit {
     let telefonoClienteForm = this.frmClientes.get('telefonoCliente').value
     let emailClienteForm = this.frmClientes.get('emailCliente').value
     //let contraseniaClienteForm = this.frmClientes.get('contraseniaCliente').value;
-    let puntuajeClienteForm = this.frmClientes.get('puntuajeCliente').value;
-    let tipoClienteForm = this.frmClientes.get('tipoCliente').value;
 
     if (this.titulo == "Agregar Cliente") {
-      this.API.aniadirCliente(nombreClienteForm,apellidoPaternoClienteForm,apellidoMaternoClienteForm,ciudadClienteForm,estadoClienteForm,paisClienteForm,direccionClienteForm,coloniaClienteForm,cpClienteForm,telefonoClienteForm,emailClienteForm,puntuajeClienteForm,tipoClienteForm).subscribe(
+      this.API.aniadirCliente(nombreClienteForm,apellidoPaternoClienteForm,apellidoMaternoClienteForm,ciudadClienteForm,estadoClienteForm,paisClienteForm,direccionClienteForm,coloniaClienteForm,cpClienteForm,telefonoClienteForm,emailClienteForm,this.tipoCliente).subscribe(
         (success: any)=>{
           alert(JSON.stringify(success.respuesta));
           this.listarClientes();
@@ -160,7 +155,7 @@ export class ClientesComponent implements OnInit {
       );
     }
     if(this.titulo == "Editar Cliente"){
-      this.API.actualizarCliente(idClienteForm,nombreClienteForm,apellidoPaternoClienteForm,apellidoMaternoClienteForm,ciudadClienteForm,estadoClienteForm,paisClienteForm,direccionClienteForm,coloniaClienteForm,cpClienteForm,telefonoClienteForm,emailClienteForm,puntuajeClienteForm,tipoClienteForm).subscribe(
+      this.API.actualizarCliente(idClienteForm,nombreClienteForm,apellidoPaternoClienteForm,apellidoMaternoClienteForm,ciudadClienteForm,estadoClienteForm,paisClienteForm,direccionClienteForm,coloniaClienteForm,cpClienteForm,telefonoClienteForm,emailClienteForm,this.tipoCliente).subscribe(
         (success: any)=>{
           alert(JSON.stringify(success.respuesta));
           this.listarClientes();
@@ -204,7 +199,6 @@ export class ClientesComponent implements OnInit {
   }
   ngOnInit() {
     this.listarClientes();
-    this.listarTiposDeClientes();
   }
 
 }

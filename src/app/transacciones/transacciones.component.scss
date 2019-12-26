@@ -17,38 +17,23 @@
 .lupa{
   font-size: 20px;
   margin: 10px 0px 0px 10px;
+  color:#012440;
 }
 
-//SOBREESCRIBIR EL TEMA DE ANGULAR MATERIAL PARA EL INPUT DE BUSCAR:
-//PERSONALIZAR EL COLOR DE INPUT
-::ng-deep .mat-focused {/*cambia el color del label cuando se enfoca*/
-  color: #272727 !important;
- }
- ::ng-deep.mat-form-field-underline { /*cambia el color del subrayado*/
-  background-color: #272727 !important;
-  border-color: #272727 !important;
-}
-::ng-deep.mat-form-field-ripple {/*cambiar el color del subrayado cuando se enfoca*/
- background-color: #272727 !important;
- border-color: #272727 !important;
-
-}
-::ng-deep.mat-form-field-label{/*color del label*/
-  color: #272727 !important;
-}
-::ng-deep.mat-input-element {/*color del punto de insercion (parpadeo de barra vertical al escribir)*/
-    caret-color: #272727 !important;
+.colorPaginador{
+  width: 99.99%;
+  background:#2d618c!important;
+  color:white
 }
 
-
-//SOBREESCRIBIR TAB ANGULAR MATERIAL
-::ng-deep.mat-tab-label{ //fuente de cabeceras de tab
-  //background-color: #4b2b08 !important;
-  font-family: 'Darker Grotesque', sans-serif;
-  font-size: 22px;
+//SOBREESCRIBIMOS TEMA UNICAMENTE PARA ESTE COMPONENTE
+//modificamos el cuerpo de la tabla unicamente
+::ng-deep.mat-cell{
+  font-size: 18px !important;
+  color: #012440!important;
+  background-color: white!important;
 }
 
-::ng-deep.mat-ink-bar{
-  background-color: #dfdcd4!important;
-
+::ng-deep.mat-select-value {
+  color: white!important;
 }
