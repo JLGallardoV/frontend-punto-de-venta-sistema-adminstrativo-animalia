@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-stroked-button class="btnFiltrar fuenteCuerpos" [disabled]="frmFiltrado.invalid" (click)="generarReportes()" style="font-size: 20px;">Filtrar</button>
+                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos" [disabled]="frmFiltrado.invalid" (click)="generarReportes()">Filtrar</button>
                   </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
             </div>
-            <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador" style="width: auto;"></mat-paginator>
           </mat-card>
         </div>
       </mat-tab>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-stroked-button class="btnFiltrar fuenteCuerpos" [disabled]="frmViabilidadProductos.invalid" (click)="generarViabilidad()" style="font-size: 20px;">Filtrar</button>
+                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="btnFiltrar fuenteCuerpos" [disabled]="frmViabilidadProductos.invalid" (click)="generarViabilidad()">Filtrar</button>
                   </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumnsMP;"></tr>
             </table>
             </div>
-            <mat-paginator #MatPaginatorVentasProducto [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator #MatPaginatorVentasProducto [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador" style="width: auto;"></mat-paginator>
           </mat-card>
         </div>
       </mat-tab>
@@ -152,7 +152,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-stroked-button class="btnFiltrar fuenteCuerpos" [disabled]="frmRendimientoVendedores.invalid" (click)="generarRendimientoVendedores()" style="font-size: 20px;">Filtrar</button>
+                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="btnFiltrar fuenteCuerpos" [disabled]="frmRendimientoVendedores.invalid" (click)="generarRendimientoVendedores()">Filtrar</button>
                   </div>
                 </div>
             </div>
@@ -178,7 +178,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumnsRV;"></tr>
             </table>
             </div>
-            <mat-paginator #MatPaginatorVentasVendedores [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" style="width: 99.99%;background-color: white!important;"></mat-paginator>
+            <mat-paginator #MatPaginatorVentasVendedores [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador" style="width: auto;"></mat-paginator>
           </mat-card>
         </div>
       </mat-tab>
