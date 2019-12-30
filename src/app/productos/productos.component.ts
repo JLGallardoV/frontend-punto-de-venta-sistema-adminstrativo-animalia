@@ -9,7 +9,6 @@ import {LoginJwtService} from '../login-jwt.service';
 import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
 import {GenerarPDFsService} from '../generar-pdfs.service';
 
-
 /*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
 ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
 
