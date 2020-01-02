@@ -66,6 +66,9 @@ export class TransaccionesComponent implements OnInit {
   public listarTransacciones(){
     this.API.mostrarTransacciones().subscribe(
       (success:any)=>{
+        if (success.estatus == 1) {
+          document.getElementById('tablaVaciaVentas').style.display = "none";
+        }
         this.dsTransacciones = new MatTableDataSource(success.respuesta);
         if(!this.dsTransacciones.paginator){
           this.dsTransacciones.paginator = this.paginatorTransacciones;
@@ -120,6 +123,9 @@ export class TransaccionesComponent implements OnInit {
   public listarCompras(){
     this.API.mostrarCompras().subscribe(
       (success:any)=>{
+        if (success.estatus == 1) {
+          document.getElementById('tablaVaciaCompras').style.display = "none";
+        }
         this.dsCompras = new MatTableDataSource(success.respuesta);
         if(!this.dsCompras.paginator){
           this.dsCompras.paginator = this.paginatorCompras;

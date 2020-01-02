@@ -60,7 +60,7 @@ export class FacturasComponent implements OnInit {
 
       const charCode = (event.which) ? event.which : event.keyCode;//se usa which o keycode dependiendo el soporte de nuestro browser
 
-      /*si se detecta un caracter especial (en ascii los caracteres especiales son menores a 48)
+      /*si se detecta un caracter especial (en keycode los caracteres especiales son menores a 48)
        o letras (en ascii las letras empiezan apartir del 57), del 31 al 48 en ascii tambien hay caracteres
        especiales, si las anteriores condiciones se cumplen no deja escribir en el input, en su defecto
        si acepta valores*/
@@ -146,6 +146,12 @@ export class FacturasComponent implements OnInit {
       (success:any)=>{
         productoSeleccionado = this.frmVenta.get('idProducto').value;
         cantidadSeleccionada = this.frmVenta.get('cantidadProducto').value;
+
+        //si unicamente se selecciona 0, que no mande nada a la tabla
+        if (cantidadSeleccionada == 0) {
+            return;
+        }
+
         //sumando monto cada que se agrega un producto
         this.montoAcumulado = this.montoAcumulado + (productoSeleccionado.precioUnitarioProducto * cantidadSeleccionada);
 
@@ -190,6 +196,9 @@ export class FacturasComponent implements OnInit {
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
             this.montoAcumulado = this.montoAcumulado - (objetoProducto.precioUnitarioProducto  *  objetoProducto.cantidadProducto);
+            if (this.arregloProductosTabla.length == 0) {
+              document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
+            }
       },
       (error)=>{
         console.log("algo ocurrio",error)
