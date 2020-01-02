@@ -1,12 +1,10 @@
 <br>
 <mat-card class="contenedorAcciones" style="width: 80%;">
   <div class="row">
-    <div class="col-3" style="margin-right: -10%;">
+    <div class="col-2" style="margin-right: -10%;">
       <button mat-fab class="btnAcciones fuenteTitulos" (click)="openAltaCategoria(contentCategoria)"><i class='fas fa-user-plus icono'></i></button>
-      &nbsp;
-      <button mat-fab class="btnAcciones fuenteTitulos"><i class='fas fa-print icono'></i></button>
     </div>
-    <div class="col-9" style="margin-top: -5px;">
+    <div class="col-10" style="margin-top: -5px;margin-left:10px;">
       <mat-form-field class="fuenteCuerpos inputBuscar">
         <input matInput (keyup)="filtrarRegistros($event.target.value)" placeholder="Buscar">
       </mat-form-field>

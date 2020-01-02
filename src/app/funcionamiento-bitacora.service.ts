@@ -13,8 +13,8 @@ export class FuncionamientoBitacoraService {
     public agregarAcceso(accionAcceso:string,idUsuario: number) {
       console.log("accion: ",accionAcceso)
       this.http.post('http://localhost:3000/accesosWS/agregarAcceso', {accionAcceso,idUsuario}, { headers: this.headers }).subscribe(
-        ()=>{
-          console.log("usuario/accion capturados exitosamente");
+        (success:any)=>{
+          console.log("usuario/accion capturados exitosamente [ ",success.respuesta," ]");
         },
         (error)=>{
           console.log("hubo un problema: ",error)

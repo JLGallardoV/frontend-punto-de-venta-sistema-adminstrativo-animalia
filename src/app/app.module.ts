@@ -26,7 +26,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TransaccionesComponent} from './transacciones/transacciones.component';
 import { ClientesComponent} from './clientes/clientes.component';
@@ -84,9 +84,10 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
   entryComponents: [],
   providers: [
     AuthGuard,
+    {provide: MAT_DATE_LOCALE, useValue: 'es-MX'}, //cambiamos los datapicker de la app a español mexico
     GenerarPDFsService,
     AppComponent,
-    ConfirmarEliminarService  
+    ConfirmarEliminarService
   ],
   bootstrap: [AppComponent]
 })

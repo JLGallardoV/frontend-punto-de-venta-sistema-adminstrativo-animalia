@@ -7,6 +7,7 @@ import {IVendedores,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 import {LoginJwtService} from '../login-jwt.service';
 import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
+import {GenerarPDFsService} from '../generar-pdfs.service';
 
 
 @Component({
@@ -33,7 +34,9 @@ export class VendedoresComponent implements OnInit {
     public formBuilder: FormBuilder,
     public API:APIService,
     public formateandoFecha:DateFormatService,
-    public eliminacionSegura: ConfirmarEliminarService
+    public eliminacionSegura: ConfirmarEliminarService,
+    public PDF: GenerarPDFsService
+
 ) {
     this.frmVendedores = this.formBuilder.group({
       idVendedor:[""],
@@ -179,6 +182,13 @@ export class VendedoresComponent implements OnInit {
     //si se usa el modulo tab de transacciones, entonces arroja los resultados buscados en la primer pagina: (if reducido)
     this.dsVendedores.paginator ? this.dsVendedores.paginator.firstPage(): null;
   }
+
+
+  //INVOCANDO SERVICIO PARA GENERAR PDF
+  public generarPDF(etiquetaPDF:string){
+    this.PDF.generarPDF(etiquetaPDF);
+  }
+
   ngOnInit() {
     this.listarVendedores();
 

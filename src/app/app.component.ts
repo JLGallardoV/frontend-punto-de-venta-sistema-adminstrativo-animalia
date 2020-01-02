@@ -142,10 +142,10 @@ export class AppComponent {
     let variableControl: number = 0;
     let nivelUser = setInterval(()=>{
       this.etiquetaNivelUsuario = localStorage.getItem('nivel');
-      console.log("nivel user: ",this.etiquetaNivelUsuario);
+      //console.log("nivel user: ",this.etiquetaNivelUsuario);
       variableControl++;
 
-      if (variableControl == 100) {
+      if (variableControl == 600) {
           clearInterval(nivelUser);
       }
     },2000);

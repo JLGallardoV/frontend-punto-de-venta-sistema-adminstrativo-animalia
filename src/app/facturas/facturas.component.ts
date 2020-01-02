@@ -396,14 +396,21 @@ export class FacturasComponent implements OnInit {
 
   }
 
+  //EVITO QUE NO SE PUEDA UTLIZAR EL BOTON ATRAS DEL NAVEGADOR Y ME MUESTRE EL MENU,
+  //FUENTE: https://es.stackoverflow.com/questions/2092/c%C3%B3mo-detectar-el-evento-o-deshabilitar-el-bot%C3%B3n-atr%C3%A1s-del-navegador-con-angular
+  public deshabilitaRetroceso(){
+    window.location.hash="no-back-button";
+    window.location.hash="Again-No-back-button" //chrome
+    window.onhashchange=function(){window.location.hash="no-back-button";}
+  }
 
   ngOnInit() {
-    //AppComponent.denegarVistaMenu();
     this.mostrarUsuarioEnSesion();
     this.listarTiposDePagos();
     this.listarProductos();
     this.listarVendedores();
     this.listarClientes();
+    this.deshabilitaRetroceso();
   }
 
 }

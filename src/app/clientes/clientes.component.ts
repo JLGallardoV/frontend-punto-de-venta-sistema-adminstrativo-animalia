@@ -7,6 +7,7 @@ import {IClientes,APIService} from '../api.service';
 import {DateFormatService} from '../date-format.service';
 import {LoginJwtService} from '../login-jwt.service';
 import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
+import {GenerarPDFsService} from '../generar-pdfs.service';
 
 
 @Component({
@@ -34,7 +35,9 @@ export class ClientesComponent implements OnInit {
     public formBuilder: FormBuilder,
     public API:APIService,
     public formateandoFecha:DateFormatService,
-    public eliminacionSegura: ConfirmarEliminarService
+    public eliminacionSegura: ConfirmarEliminarService,
+    public PDF: GenerarPDFsService
+
 ) {
     this.tipoCliente = 3; //representa un cliente ordinario
     this.arregloTiposDeClientes = [];
@@ -197,6 +200,11 @@ export class ClientesComponent implements OnInit {
     //si se usa el modulo tab de transacciones, entonces arroja los resultados buscados en la primer pagina: (if reducido)
     this.dsClientes.paginator ? this.dsClientes.paginator.firstPage(): null;
   }
+  //INVOCANDO SERVICIO PARA GENERAR PDF
+  public generarPDF(etiquetaPDF:string){
+    this.PDF.generarPDF(etiquetaPDF);
+  }
+
   ngOnInit() {
     this.listarClientes();
   }
