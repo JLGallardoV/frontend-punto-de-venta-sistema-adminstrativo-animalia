@@ -219,7 +219,7 @@ export class FacturasComponent implements OnInit {
             this.frmVenta.get('pagoTransaccion').enable();
             this.arregloTiposDePagosLista.push({idTipoPago:idTipoPago})
             //tipoPago = false;//prueba
-            console.log("tipos de pago seleccionados: ",tipoPago)
+            //console.log("tipos de pago seleccionados: ",tipoPago)
           }else if(tipoPago == false){//elimina los elementos desmarcados
               this.numeroTiposPagoSeleccionados--;
               this.arregloTiposDePagosLista.splice(idTipoPago-1,1)
