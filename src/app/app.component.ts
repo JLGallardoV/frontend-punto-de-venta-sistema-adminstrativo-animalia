@@ -134,7 +134,7 @@ export class AppComponent {
       /*para que esto pudiera funcionar tendria que pasar los valores por referencia, asi se modificaria la variable global*/
       this.etiquetaNivelUsuario = "";
       this.etiquetaNivelUsuario = "prueba";
-      console.log("etiqueta cambiada a :",this.etiquetaNivelUsuario)
+      //console.log("etiqueta cambiada a :",this.etiquetaNivelUsuario)
   }
 
   //METODO TEMPORAL PARA VERIFICAR EL NIVEL DE USUARIO EN SESION

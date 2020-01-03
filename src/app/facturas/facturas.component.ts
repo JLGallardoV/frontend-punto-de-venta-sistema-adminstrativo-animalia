@@ -401,7 +401,7 @@ export class FacturasComponent implements OnInit {
     this.PDF.generarPDF(etiquetaPDF);
     setTimeout(()=>{
       document.getElementById('etiquetaPDF').style.display = "none";
-    },100000);
+    },3000);
 
   }
 

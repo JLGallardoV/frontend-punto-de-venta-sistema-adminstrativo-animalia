@@ -66,7 +66,7 @@ export class UsuariosComponent implements OnInit {
   }//------fin open--------------------------------------------------
   //ABRIR MODAL CON LOS DATOS A EDITAR
   public openEditar(content, idUsuario: number, nombreUsuario: string, emailUsuario: string, idVendedor: number, idTipoUsuario: number) {
-    console.log("id: ", idUsuario, " nombre: ", nombreUsuario, " email: ", emailUsuario, " tipo: ", idTipoUsuario);
+    //console.log("id: ", idUsuario, " nombre: ", nombreUsuario, " email: ", emailUsuario, " tipo: ", idTipoUsuario);
     this.modal = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
     this.titulo = "Editar Usuario";
     //pintando los valores en el modal listos para editarlos
@@ -82,7 +82,7 @@ export class UsuariosComponent implements OnInit {
   public listarUsuarios() {
     this.API.mostrarUsuarios().subscribe(
       (success: any) => {
-        console.log("usuarios", success.respuesta)
+        //console.log("usuarios", success.respuesta)
         this.dsUsuarios = new MatTableDataSource(success.respuesta);
         this.dsUsuarios.paginator = this.paginator;
       },
@@ -97,7 +97,7 @@ export class UsuariosComponent implements OnInit {
     this.API.mostrarTiposDeUsuarios().subscribe(
       (success: any) => {
         this.arregloTiposDeUsuarios = success.respuesta;
-        console.log("listando tipos de usuarios")
+        //console.log("listando tipos de usuarios")
       },
       (error) => {
         console.log("hubo un problema: ", error)
@@ -110,7 +110,7 @@ export class UsuariosComponent implements OnInit {
     this.API.mostrarVendedores().subscribe(
       (success: any) => {
         this.arregloVendedores = success.respuesta;
-        console.log("listando vendedores")
+        //console.log("listando vendedores")
       },
       (error) => {
         console.log("hubo un problema: ", error)
