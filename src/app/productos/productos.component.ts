@@ -85,6 +85,7 @@ export class ProductosComponent implements OnInit {
       idCategoria:["",Validators.required],
       idAlmacen:["",Validators.required]
     });
+    this.arregloCategoria = [];
   }
 
 
@@ -298,6 +299,14 @@ export class ProductosComponent implements OnInit {
   public generarPdfParticular(etiquetaPDF:string){
     this.PDF.generarPDF(etiquetaPDF);
   }
+
+
+  /*ELIMINA LA LEYENDA DE TABLA VACIA UNA VEZ QUESE DETECTAN DATOS EN LA TABLA
+  public removerLeyendaTablaVacia(){
+      if (this.dsProductos  != null) {
+          console.log("prueba contenido ds");
+      }
+  }*/
 
 
   ngOnInit() {

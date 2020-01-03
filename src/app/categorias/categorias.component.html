@@ -52,6 +52,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumnsCategorias"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumnsCategorias;"></tr>
           </table>
+          <div id="tablaVaciaProductos" style="text-align: center;font-size: 20px;" *ngIf="!this.tablaConDatos">
+            <p class="fuenteCuerpos" style="color:#012440"><i>Tabla vacía</i></p>
+          </div>
       </div>
       <mat-paginator [pageSize]="4" [pageSizeOptions]="[4, 16, 32]" showFirstLastButtons class="colorPaginador"></mat-paginator>
     </mat-card>
