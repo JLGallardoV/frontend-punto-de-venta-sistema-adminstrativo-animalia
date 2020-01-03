@@ -86,6 +86,7 @@ export class CategoriasComponent implements OnInit {
   public listarCategorias(){
     this.API.mostrarCategorias().subscribe(
       (success:any)=>{
+        //manipulamos esta variable para dar uso a un ngif que se uso en la vista en un label
         if (success.estatus > 0) {
             this.tablaConDatos = true;
         }

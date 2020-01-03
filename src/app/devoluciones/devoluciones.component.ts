@@ -16,6 +16,7 @@ import {GenerarPDFsService} from '../generar-pdfs.service';
 })
 export class DevolucionesComponent implements OnInit {
 
+  public tablaConDatos: boolean;
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
@@ -84,6 +85,8 @@ export class DevolucionesComponent implements OnInit {
       tipoCompensacion:["",Validators.required],
       descripcionCompensacion:["",Validators.required]
     });
+    this.tablaConDatos = false;
+
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -129,6 +132,13 @@ export class DevolucionesComponent implements OnInit {
   public listarDevoluciones(){
     this.API.mostrarDevoluciones().subscribe(
       (success:any)=>{
+        //manipulamos esta variable para dar uso a un ngif que se uso en la vista en un label
+        if (success.estatus > 0) {
+            this.tablaConDatos = true;
+        }
+        if (success.estatus == 0){
+            this.tablaConDatos = false;
+        }
         this.dsDevoluciones = new MatTableDataSource(success.respuesta);
         this.dsDevoluciones.paginator = this.paginatorDevoluciones;
       },

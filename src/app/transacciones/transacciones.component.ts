@@ -36,6 +36,8 @@ quedaria 6 - 6 de 6 que es lo correcto).*/
 
 
 export class TransaccionesComponent implements OnInit {
+  public tablaConDatosVentas: boolean; //para ventas
+  public tablaConDatosCompras: boolean; //para compras
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
@@ -54,7 +56,11 @@ export class TransaccionesComponent implements OnInit {
     private modalService: NgbModal,
     public API: APIService,
     public PDF: GenerarPDFsService
-  ) {}
+  ) {
+    this.tablaConDatosVentas = false;
+    this.tablaConDatosCompras = false;
+
+  }
 
   /*
     la primera vez que cargue su componente, el MatPaginator de la pestaña oculta no se renderiza,
@@ -66,8 +72,11 @@ export class TransaccionesComponent implements OnInit {
   public listarTransacciones(){
     this.API.mostrarTransacciones().subscribe(
       (success:any)=>{
-        if (success.estatus == 1) {
-          document.getElementById('tablaVaciaVentas').style.display = "none";
+        if (success.estatus > 0) {
+            this.tablaConDatosVentas = true;
+        }
+        if (success.estatus == 0){
+            this.tablaConDatosVentas = false;
         }
         this.dsTransacciones = new MatTableDataSource(success.respuesta);
         if(!this.dsTransacciones.paginator){
@@ -123,8 +132,11 @@ export class TransaccionesComponent implements OnInit {
   public listarCompras(){
     this.API.mostrarCompras().subscribe(
       (success:any)=>{
-        if (success.estatus == 1) {
-          document.getElementById('tablaVaciaCompras').style.display = "none";
+        if (success.estatus > 0) {
+            this.tablaConDatosCompras = true;
+        }
+        if (success.estatus == 0){
+            this.tablaConDatosCompras = false;
         }
         this.dsCompras = new MatTableDataSource(success.respuesta);
         if(!this.dsCompras.paginator){

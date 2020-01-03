@@ -44,6 +44,7 @@ quedaria 6 - 6 de 6 que es lo correcto).*/
 
 export class ProductosComponent implements OnInit {
 
+  public tablaConDatosProductos: boolean;
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
@@ -86,6 +87,8 @@ export class ProductosComponent implements OnInit {
       idAlmacen:["",Validators.required]
     });
     this.arregloCategoria = [];
+    this.tablaConDatosProductos = false;
+
   }
 
 
@@ -146,6 +149,13 @@ export class ProductosComponent implements OnInit {
   public listarProductos(){
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
+        //manipulamos esta variable para dar uso a un ngif que se uso en la vista en un label
+        if (success.estatus > 0) {
+            this.tablaConDatosProductos = true;
+        }
+        if (success.estatus == 0){
+            this.tablaConDatosProductos = false;
+        }
         this.dsProductos = new MatTableDataSource(success.respuesta);
         this.dsProductos.paginator = this.paginator;
         this.dsProductos.paginator._intl.itemsPerPageLabel = 'items por pagina';
