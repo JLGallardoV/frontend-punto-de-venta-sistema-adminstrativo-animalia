@@ -18,7 +18,7 @@ const etiquetaRango = (page: number, pageSize: number, length: number) => {
 
   const startIndex = page * pageSize; //indice de inicio
 
-  /*if resumido; si el indice de inicio excede la logitud de la lista (6 - 5 de 6 por ejemplo) se veria: 6 - 10 de 6 gracias al
+  /*if resumido (terneario); si el indice de inicio excede la logitud de la lista (6 - 5 de 6 por ejemplo) se veria: 6 - 10 de 6 gracias al
   [pageSizeOptions] lo cual es incorrecto pues solo hay 6 elementos en tal rango ENTONCES mejor coloca como indice final el indice inicial
   quedaria 6 - 6 de 6 que es lo correcto).*/
   const endIndex = startIndex < length ?
@@ -200,29 +200,32 @@ export class HerramientasComponent implements OnInit {
 
   //VALIDACION MIN DE INPUTS DE FILTRADO: TAB UTILIDAD
   public validarInputsFechaUtilidad(event: any) {
-    let fechaMaxima: string = "";
+    let fechaMinima: string = "";
     this.fechaMinimaFormateadaUtilidad = new Date();
-    fechaMaxima = this.frmFiltrado.get('fechaInicio').value;
-    let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMaxima);
+    fechaMinima = this.frmFiltrado.get('fechaInicio').value;
+    let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMinima);
     let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
 
-    //raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min
-    this.fechaMinimaFormateadaUtilidad = new Date(parseInt(fechaMinimaFormateadaSplit[0]), parseInt(fechaMinimaFormateadaSplit[1]), parseInt(fechaMinimaFormateadaSplit[2]));
+    /*raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min,
+    pd: el objeto date empieza el mes de 0 a 11*/
+    this.fechaMinimaFormateadaUtilidad = new Date(parseInt(fechaMinimaFormateadaSplit[0]), parseInt(fechaMinimaFormateadaSplit[1]) - 1, parseInt(fechaMinimaFormateadaSplit[2]));
     this.frmFiltrado.get('fechaFinal').enable();
+    console.log("esta es la fecha recibida: ",fechaMinima)
 
   }
 
 
   //VALIDACION MIN DE INPUTS DE FILTRADO: TAB PRODUCTOS
   public validarInputsFechaProductos(event: any) {
-    let fechaMaxima: string = "";
+    let fechaMinima: string = "";
     this.fechaMinimaFormateadaProductos = new Date();
-    fechaMaxima = this.frmViabilidadProductos.get('fechaInicio').value;
-    let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMaxima);
+    fechaMinima = this.frmViabilidadProductos.get('fechaInicio').value;
+    let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMinima);
     let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
 
-    //raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min
-    this.fechaMinimaFormateadaProductos = new Date(parseInt(fechaMinimaFormateadaSplit[0]), parseInt(fechaMinimaFormateadaSplit[1]), parseInt(fechaMinimaFormateadaSplit[2]));
+    /*raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min,
+    pd: el objeto date empieza el mes de 0 a 11*/
+    this.fechaMinimaFormateadaProductos = new Date(parseInt(fechaMinimaFormateadaSplit[0]), parseInt(fechaMinimaFormateadaSplit[1]) - 1, parseInt(fechaMinimaFormateadaSplit[2]));
     this.frmViabilidadProductos.get('fechaFinal').enable();
 
   }
@@ -230,14 +233,15 @@ export class HerramientasComponent implements OnInit {
 
   //VALIDACION MIN DE INPUTS DE FILTRADO: TAB VENDEDORES
   public validarInputsFechaVendedores(event: any) {
-    let fechaMaxima: string = "";
+    let fechaMinima: string = "";
     this.fechaMinimaFormateadaVendedores = new Date();
-    fechaMaxima = this.frmRendimientoVendedores.get('fechaInicio').value;
-    let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMaxima);
+    fechaMinima = this.frmRendimientoVendedores.get('fechaInicio').value;
+    let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMinima);
     let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
 
-    //raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min
-    this.fechaMinimaFormateadaVendedores = new Date(parseInt(fechaMinimaFormateadaSplit[0]), parseInt(fechaMinimaFormateadaSplit[1]), parseInt(fechaMinimaFormateadaSplit[2]));
+    /*raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min,
+    pd: el objeto date empieza el mes de 0 a 11*/
+    this.fechaMinimaFormateadaVendedores = new Date(parseInt(fechaMinimaFormateadaSplit[0]), parseInt(fechaMinimaFormateadaSplit[1]) - 1, parseInt(fechaMinimaFormateadaSplit[2]));
     this.frmRendimientoVendedores.get('fechaFinal').enable();
 
   }

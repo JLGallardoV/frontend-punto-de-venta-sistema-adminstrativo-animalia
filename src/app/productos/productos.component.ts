@@ -101,6 +101,7 @@ export class ProductosComponent implements OnInit {
 
   //ABRIR MODAL CON LOS DATOS A EDITAR
   public openEditarProducto(contentProducto:any,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number,precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number){
+    console.log("esto pasa por id cate: ",idCategoria);
     this.modal= this.modalService.open(contentProducto,{size:'lg'});
     this.titulo = "Editar Producto";
     //pintando los valores en el modal listos para editarlos
@@ -173,6 +174,7 @@ export class ProductosComponent implements OnInit {
     this.API.mostrarCategorias().subscribe(
       (success: any)=>{
         this.arregloCategoria = success.respuesta;
+        console.log("arreglo categorias: ",this.arregloCategoria);
       },
       (error)=>{
         console.log("hubo un problema: ",error)
