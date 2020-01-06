@@ -18,12 +18,12 @@ const etiquetaRango = (page: number, pageSize: number, length: number) => {
 
   const startIndex = page * pageSize; //indice de inicio
 
-/*if resumido; si el indice de inicio excede la logitud de la lista (6 - 5 de 6 por ejemplo) se veria: 6 - 10 de 6 gracias al
-[pageSizeOptions] lo cual es incorrecto pues solo hay 6 elementos en tal rango ENTONCES mejor coloca como indice final el indice inicial
-quedaria 6 - 6 de 6 que es lo correcto).*/
+  /*if resumido (terneario); si el indice de inicio excede la logitud de la lista (6 - 5 de 6 por ejemplo) se veria: 6 - 10 de 6 gracias al
+  [pageSizeOptions] lo cual es incorrecto pues solo hay 6 elementos en tal rango ENTONCES mejor coloca como indice final el indice inicial
+  quedaria 6 - 6 de 6 que es lo correcto).*/
   const endIndex = startIndex < length ?
-      Math.min(startIndex + pageSize, length) :
-      startIndex + pageSize;
+    Math.min(startIndex + pageSize, length) :
+    startIndex + pageSize;
 
   return `${startIndex + 1} - ${endIndex} de ${length}`;
 }
@@ -47,9 +47,9 @@ export class HerramientasComponent implements OnInit {
   public frmViabilidadProductos: FormGroup;
   public frmRendimientoVendedores: FormGroup;
   public formValid: Boolean = false;
-  public fechaMinimaFormateadaUtilidad:any;
-  public fechaMinimaFormateadaProductos:any;
-  public fechaMinimaFormateadaVendedores:any;
+  public fechaMinimaFormateadaUtilidad: any;
+  public fechaMinimaFormateadaProductos: any;
+  public fechaMinimaFormateadaVendedores: any;
 
   //propiedades de la table
   displayedColumns: string[] = ['montoTransacciones', 'montoCompras', 'utilidad'];
@@ -59,9 +59,9 @@ export class HerramientasComponent implements OnInit {
   dsViabilidadProductos: MatTableDataSource<IViabilidadProductos>;
   dsRendimientoVendedores: MatTableDataSource<IRendimientoVendedores>;
 
-  @ViewChild('MatPaginatorReporteEconomico',{static: true})MatPaginatorReporteEconomico: MatPaginator;
-  @ViewChild('MatPaginatorVentasProducto',{static: true})MatPaginatorVentasProducto: MatPaginator;
-  @ViewChild('MatPaginatorVentasVendedores',{static: true})MatPaginatorVentasVendedores: MatPaginator;
+  @ViewChild('MatPaginatorReporteEconomico', { static: true }) MatPaginatorReporteEconomico: MatPaginator;
+  @ViewChild('MatPaginatorVentasProducto', { static: true }) MatPaginatorVentasProducto: MatPaginator;
+  @ViewChild('MatPaginatorVentasVendedores', { static: true }) MatPaginatorVentasVendedores: MatPaginator;
 
   constructor(public guardian: LoginJwtService, private modalService: NgbModal, public formBuilder: FormBuilder, public API: APIService, public formateandoFecha: DateFormatService) {
     /*tab utilidad*/
@@ -101,7 +101,7 @@ export class HerramientasComponent implements OnInit {
     let fechaInicioForm: string = "";
     let fechaFinalForm: string = "";
     fechaInicioForm = this.frmFiltrado.get('fechaInicio').value;
-    console.log("fecha de inicio: ",fechaInicioForm)
+    console.log("fecha de inicio: ", fechaInicioForm)
 
     fechaFinalForm = this.frmFiltrado.get('fechaFinal').value;
     let fechaInicioFormateada = this.formateandoFecha.formatearFecha(fechaInicioForm);
@@ -116,6 +116,7 @@ export class HerramientasComponent implements OnInit {
 
         let arregloReportesEconomicos: IReportesEconomicos[] = [{ montoTransacciones: valorTransacciones, montoCompras: valorCompras, utilidad: valorUtilidad }];
         this.dsReporteEconomico = new MatTableDataSource(arregloReportesEconomicos);
+        document.getElementById('tablaVentaConcluidaVaciaUtilidad').style.display = "none";
 
         /*(!this.dsReporteEconomico.paginator){
           this.dsReporteEconomico.paginator = this.MatPaginatorReporteEconomico;
@@ -144,13 +145,15 @@ export class HerramientasComponent implements OnInit {
       (success: any) => {
         if (success.estatus == 1) {
           this.dsViabilidadProductos = new MatTableDataSource(success.respuesta);
-          if(!this.dsViabilidadProductos.paginator){
+          if (!this.dsViabilidadProductos.paginator) {
             this.dsViabilidadProductos.paginator = this.MatPaginatorVentasProducto;
             this.dsViabilidadProductos.paginator._intl.itemsPerPageLabel = 'items por pagina';
             this.dsViabilidadProductos.paginator._intl.getRangeLabel = etiquetaRango;
+            document.getElementById('tablaVentaConcluidaVaciaProductos').style.display = "none";
+
 
           }
-        }else{
+        } else {
           alert("Al parecer no hay registros en estas fechas")
         }
       },
@@ -175,10 +178,11 @@ export class HerramientasComponent implements OnInit {
         //el ws regresa 0 en el numero de ventas en lugar de null y null el nombre del vendedor si no hay ventas por eso esta validacion.
         if (success.estatus == 1 && success.respuesta[0].nombreVendedor != null) {
           this.dsRendimientoVendedores = new MatTableDataSource(success.respuesta);
-          if(!this.dsRendimientoVendedores.paginator){
+          if (!this.dsRendimientoVendedores.paginator) {
             this.dsRendimientoVendedores.paginator = this.MatPaginatorVentasVendedores;
             this.dsRendimientoVendedores.paginator._intl.itemsPerPageLabel = 'items por pagina';
             this.dsRendimientoVendedores.paginator._intl.getRangeLabel = etiquetaRango;
+            document.getElementById('tablaVentaConcluidaVaciaVendedores').style.display = "none";
 
           }
         } else {
@@ -195,66 +199,69 @@ export class HerramientasComponent implements OnInit {
 
 
   //VALIDACION MIN DE INPUTS DE FILTRADO: TAB UTILIDAD
-  public validarInputsFechaUtilidad(event:any){
-    let fechaMaxima:string ="";
+  public validarInputsFechaUtilidad(event: any) {
+    let fechaMinima: string = "";
     this.fechaMinimaFormateadaUtilidad = new Date();
-      fechaMaxima = this.frmFiltrado.get('fechaInicio').value;
-      let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMaxima);
-      let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
+    fechaMinima = this.frmFiltrado.get('fechaInicio').value;
+    let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMinima);
+    let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
 
-      //raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min
-      this.fechaMinimaFormateadaUtilidad = new Date(parseInt(fechaMinimaFormateadaSplit[0]),parseInt(fechaMinimaFormateadaSplit[1]),parseInt(fechaMinimaFormateadaSplit[2]));
-      this.frmFiltrado.get('fechaFinal').enable();
+    /*raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min,
+    pd: el objeto date empieza el mes de 0 a 11*/
+    this.fechaMinimaFormateadaUtilidad = new Date(parseInt(fechaMinimaFormateadaSplit[0]), parseInt(fechaMinimaFormateadaSplit[1]) - 1, parseInt(fechaMinimaFormateadaSplit[2]));
+    this.frmFiltrado.get('fechaFinal').enable();
+    console.log("esta es la fecha recibida: ",fechaMinima)
 
   }
 
 
   //VALIDACION MIN DE INPUTS DE FILTRADO: TAB PRODUCTOS
-  public validarInputsFechaProductos(event:any){
-    let fechaMaxima:string ="";
+  public validarInputsFechaProductos(event: any) {
+    let fechaMinima: string = "";
     this.fechaMinimaFormateadaProductos = new Date();
-      fechaMaxima = this.frmViabilidadProductos.get('fechaInicio').value;
-      let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMaxima);
-      let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
+    fechaMinima = this.frmViabilidadProductos.get('fechaInicio').value;
+    let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMinima);
+    let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
 
-      //raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min
-      this.fechaMinimaFormateadaProductos = new Date(parseInt(fechaMinimaFormateadaSplit[0]),parseInt(fechaMinimaFormateadaSplit[1]),parseInt(fechaMinimaFormateadaSplit[2]));
-      this.frmViabilidadProductos.get('fechaFinal').enable();
+    /*raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min,
+    pd: el objeto date empieza el mes de 0 a 11*/
+    this.fechaMinimaFormateadaProductos = new Date(parseInt(fechaMinimaFormateadaSplit[0]), parseInt(fechaMinimaFormateadaSplit[1]) - 1, parseInt(fechaMinimaFormateadaSplit[2]));
+    this.frmViabilidadProductos.get('fechaFinal').enable();
 
   }
 
 
   //VALIDACION MIN DE INPUTS DE FILTRADO: TAB VENDEDORES
-  public validarInputsFechaVendedores(event:any){
-    let fechaMaxima:string ="";
+  public validarInputsFechaVendedores(event: any) {
+    let fechaMinima: string = "";
     this.fechaMinimaFormateadaVendedores = new Date();
-      fechaMaxima = this.frmRendimientoVendedores.get('fechaInicio').value;
-      let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMaxima);
-      let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
+    fechaMinima = this.frmRendimientoVendedores.get('fechaInicio').value;
+    let fechaMinimaFormateadaServicio = this.formateandoFecha.formatearFecha(fechaMinima);
+    let fechaMinimaFormateadaSplit = fechaMinimaFormateadaServicio.split('-')//viene el el formato 0000-00-00 separo los elementos para pasarlos a la clase date
 
-      //raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min
-      this.fechaMinimaFormateadaVendedores = new Date(parseInt(fechaMinimaFormateadaSplit[0]),parseInt(fechaMinimaFormateadaSplit[1]),parseInt(fechaMinimaFormateadaSplit[2]));
-      this.frmRendimientoVendedores.get('fechaFinal').enable();
+    /*raramente no me respeta el min (permite un dia antes del min) si unicamente lo paso con el formato de la fecha formateada, de esta manera si respeta el min,
+    pd: el objeto date empieza el mes de 0 a 11*/
+    this.fechaMinimaFormateadaVendedores = new Date(parseInt(fechaMinimaFormateadaSplit[0]), parseInt(fechaMinimaFormateadaSplit[1]) - 1, parseInt(fechaMinimaFormateadaSplit[2]));
+    this.frmRendimientoVendedores.get('fechaFinal').enable();
 
   }
 
 
   //EVITAMOS QUE EL USUARIO TRATE DE ESCRIBIR EN EL INPUT Y MANDE UNA FECHA NO VALIDA
-  public restringirEscritura(event:any): boolean {
-      /*atrapamos la tecla ingresada en este if ternario, la propiedad which contiene el unicode de la tecla presionada*/
-      const charCode = (event.which) ? event.which : event.keycode; //se usa which o keycode dependiendo el soporte de nuestro browser
+  public restringirEscritura(event: any): boolean {
+    /*atrapamos la tecla ingresada en este if ternario, la propiedad which contiene el unicode de la tecla presionada*/
+    const charCode = (event.which) ? event.which : event.keycode; //se usa which o keycode dependiendo el soporte de nuestro browser
 
-      /*el keycode de un caracter empiezan en 0 entonces bloqueamos todos para que no
-      se pueda escribir en el input*/
-      if (charCode >= 0) {
-        return false;
-      }
-      return true;
-
+    /*el keycode de un caracter empiezan en 0 entonces bloqueamos todos para que no
+    se pueda escribir en el input*/
+    if (charCode >= 0) {
+      return false;
     }
+    return true;
+
+  }
 
   ngOnInit() {
     this.guardian.restringirAcceso();
   }
-
 }

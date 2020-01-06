@@ -39,14 +39,13 @@
                   </mat-form-field>
                   <button mat-mini-fab matTooltip="Agrega el producto y su cantidad a la venta" class="btnAcciones btnAniadirEntidad" [disabled]="frmVenta.controls.idProducto.invalid || frmVenta.controls.cantidadProducto.invalid"
                   (click)="transfiereProductos()" style="top: 25px;margin-left: 0px;" color="accent"><i class='fas fa-plus' style="margin-top: -19px;margin-left:0px;"></i></button>
-                  <label *ngIf="(frmVenta.controls.idProducto.invalid && frmVenta.controls.idProducto.dirty) || (frmVenta.controls.cantidadProducto.invalid && frmVenta.controls.cantidadProducto.dirty)" style="color: #red;">Este campo es
-                    obligatorio</label>
                 </div>
+                  <label *ngIf="(frmVenta.controls.idProducto.invalid && frmVenta.controls.idProducto.dirty) || (frmVenta.controls.cantidadProducto.invalid && frmVenta.controls.cantidadProducto.dirty)" style="font-size:19px;">Este campo es obligatorio</label>
                 <div style="display: grid;">
                   <mat-checkbox formControlName="idTipoPago" class="fuenteCuerpos" style="font-size: 20px;" *ngFor="let i of arregloTiposDePagosSelect" value="{{i.idTipoPago}}" style="" (change)="transfiereTiposDePagos(i.idTipoPago)">{{i.tipoPago}}
                   </mat-checkbox>
                 </div>
-              <label *ngIf="frmVenta.controls.idTipoPago.invalid && frmVenta.controls.idTipoPago.dirty" style="color: #red;">Este campo es obligatorio</label>
+              <label *ngIf="frmVenta.controls.idTipoPago.invalid && frmVenta.controls.idTipoPago.dirty">Este campo es obligatorio</label>
                 <mat-form-field class="fuenteCuerpos" style="font-size:20px;width: 100%;">
                   <input formControlName="pagoTransaccion" type="number" min="1" matInput placeholder="pago"  (keypress)="soloNumeros($event)">
                 </mat-form-field>

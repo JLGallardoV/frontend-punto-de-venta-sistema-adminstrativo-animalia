@@ -16,6 +16,9 @@ import {GenerarPDFsService} from '../generar-pdfs.service';
 })
 export class DevolucionesComponent implements OnInit {
 
+  public tablaConDatosDevoluciones: boolean;
+  public tablaConDatosProblemas: boolean;
+  public tablaConDatosCompensaciones: boolean;
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
@@ -84,6 +87,10 @@ export class DevolucionesComponent implements OnInit {
       tipoCompensacion:["",Validators.required],
       descripcionCompensacion:["",Validators.required]
     });
+    this.tablaConDatosDevoluciones = false;
+    this.tablaConDatosProblemas = false;
+    this.tablaConDatosCompensaciones = false;
+
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -129,6 +136,13 @@ export class DevolucionesComponent implements OnInit {
   public listarDevoluciones(){
     this.API.mostrarDevoluciones().subscribe(
       (success:any)=>{
+        //manipulamos esta variable para dar uso a un ngif que se uso en la vista en un label
+        if (success.estatus > 0) {
+            this.tablaConDatosDevoluciones = true;
+        }
+        if (success.estatus == 0){
+            this.tablaConDatosDevoluciones = false;
+        }
         this.dsDevoluciones = new MatTableDataSource(success.respuesta);
         this.dsDevoluciones.paginator = this.paginatorDevoluciones;
       },
@@ -153,6 +167,13 @@ export class DevolucionesComponent implements OnInit {
   public listarTiposProblemas(){
     this.API.mostrarTiposDeProblemas().subscribe(
       (success:any)=>{
+        //manipulamos esta variable para dar uso a un ngif que se uso en la vista en un label
+        if (success.estatus > 0) {
+            this.tablaConDatosProblemas = true;
+        }
+        if (success.estatus == 0){
+            this.tablaConDatosProblemas = false;
+        }
         this.dsTiposProblemas = new MatTableDataSource(success.respuesta);
         this.dsTiposProblemas.paginator = this.paginatorTiposProblemas;
         //llenado select
@@ -166,6 +187,13 @@ export class DevolucionesComponent implements OnInit {
   public listarCompensaciones(){
     this.API.mostrarCompensaciones().subscribe(
       (success:any)=>{
+        //manipulamos esta variable para dar uso a un ngif que se uso en la vista en un label
+        if (success.estatus > 0) {
+            this.tablaConDatosCompensaciones = true;
+        }
+        if (success.estatus == 0){
+            this.tablaConDatosCompensaciones = false;
+        }
         this.dsCompensaciones = new MatTableDataSource(success.respuesta);
         this.dsCompensaciones.paginator = this.paginatorCompensaciones;
 

@@ -188,7 +188,7 @@ export class ComprasComponent implements OnInit {
       (success: any) => {
         if (success.estatus > 0) {
           alert(success.respuesta);
-          this.listarUltimaCompra();
+//          this.listarUltimaCompra();
           document.getElementById('idComprar').style.pointerEvents = "none";
           document.getElementById('idLimpiarPantallaCompras').style.display = "block";
         } else if (success.estatus < 0) {
@@ -259,8 +259,6 @@ export class ComprasComponent implements OnInit {
       document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
       document.getElementById('idComprar').style.pointerEvents = "unset";
       document.getElementById('idLimpiarPantallaCompras').style.display = "none";
-      document.getElementById('idDetallesCompras').style.display = "none";
-      document.getElementById('idTablaDetalles').style.display = "block";
 
 
     }
@@ -271,7 +269,7 @@ export class ComprasComponent implements OnInit {
   public limpiarFormularioC(){
     let usuarioSesion:string = "";
     usuarioSesion = localStorage.getItem('usuario');
-    console.log("colocando usuario: ",usuarioSesion);
+    //console.log("colocando usuario: ",usuarioSesion);
 
     this.frmCompra.reset();
     this.frmCompra.controls['idUsuario'].setValue(usuarioSesion);
@@ -282,8 +280,6 @@ export class ComprasComponent implements OnInit {
     document.getElementById('tablaVentaConcluidaVacia').style.display = "block";
     document.getElementById('idComprar').style.pointerEvents = "unset";
     document.getElementById('idLimpiarPantallaCompras').style.display = "none";
-    document.getElementById('idDetallesCompras').style.display = "none";
-    document.getElementById('idTablaDetalles').style.display = "block";
 
 
   }

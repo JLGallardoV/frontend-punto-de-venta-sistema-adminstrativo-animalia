@@ -44,6 +44,7 @@ quedaria 6 - 6 de 6 que es lo correcto).*/
 
 export class ProductosComponent implements OnInit {
 
+  public tablaConDatosProductos: boolean;
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo = ""; //para el modal
@@ -85,6 +86,9 @@ export class ProductosComponent implements OnInit {
       idCategoria:["",Validators.required],
       idAlmacen:["",Validators.required]
     });
+    this.arregloCategoria = [];
+    this.tablaConDatosProductos = false;
+
   }
 
 
@@ -97,6 +101,7 @@ export class ProductosComponent implements OnInit {
 
   //ABRIR MODAL CON LOS DATOS A EDITAR
   public openEditarProducto(contentProducto:any,idProducto: number, nombreProducto: string, detalleProducto: string, contenidoProducto: string, fechaCaducidadProducto: string, paisOrigenProducto: string, stockProducto:number,precioUnitarioProducto: number, precioCompraProducto: number, idCategoria: number, idAlmacen: number){
+    console.log("esto pasa por id cate: ",idCategoria);
     this.modal= this.modalService.open(contentProducto,{size:'lg'});
     this.titulo = "Editar Producto";
     //pintando los valores en el modal listos para editarlos
@@ -145,6 +150,13 @@ export class ProductosComponent implements OnInit {
   public listarProductos(){
     this.API.mostrarProductos().subscribe(
       (success:any)=>{
+        //manipulamos esta variable para dar uso a un ngif que se uso en la vista en un label
+        if (success.estatus > 0) {
+            this.tablaConDatosProductos = true;
+        }
+        if (success.estatus == 0){
+            this.tablaConDatosProductos = false;
+        }
         this.dsProductos = new MatTableDataSource(success.respuesta);
         this.dsProductos.paginator = this.paginator;
         this.dsProductos.paginator._intl.itemsPerPageLabel = 'items por pagina';
@@ -162,6 +174,7 @@ export class ProductosComponent implements OnInit {
     this.API.mostrarCategorias().subscribe(
       (success: any)=>{
         this.arregloCategoria = success.respuesta;
+        console.log("arreglo categorias: ",this.arregloCategoria);
       },
       (error)=>{
         console.log("hubo un problema: ",error)
@@ -298,6 +311,14 @@ export class ProductosComponent implements OnInit {
   public generarPdfParticular(etiquetaPDF:string){
     this.PDF.generarPDF(etiquetaPDF);
   }
+
+
+  /*ELIMINA LA LEYENDA DE TABLA VACIA UNA VEZ QUESE DETECTAN DATOS EN LA TABLA
+  public removerLeyendaTablaVacia(){
+      if (this.dsProductos  != null) {
+          console.log("prueba contenido ds");
+      }
+  }*/
 
 
   ngOnInit() {

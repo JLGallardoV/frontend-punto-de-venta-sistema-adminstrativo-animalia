@@ -56,6 +56,9 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsDevoluciones"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsDevoluciones;"></tr>
               </table>
+              <div id="tablaVaciaDevoluciones" style="text-align: center;font-size: 20px;" *ngIf="!this.tablaConDatosDevoluciones">
+                <p class="fuenteCuerpos" style="color:#012440"><i>Tabla vacía</i></p>
+              </div>
             </div>
             <mat-paginator #MatPaginatorDevoluciones [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador"></mat-paginator>
           </mat-card>
@@ -108,7 +111,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumnsTiposProblemas"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumnsTiposProblemas;"></tr>
           </table>
-
+          <div id="tablaVaciaProblemas" style="text-align: center;font-size: 20px;" *ngIf="!this.tablaConDatosProblemas">
+            <p class="fuenteCuerpos" style="color:#012440"><i>Tabla vacía</i></p>
+          </div>
             </div>
             <mat-paginator #MatPaginatorTiposProblemas [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador"></mat-paginator>
           </mat-card>
@@ -165,7 +170,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumnsCompensaciones"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumnsCompensaciones;"></tr>
           </table>
-
+          <div id="tablaVaciaCompensaciones" style="text-align: center;font-size: 20px;" *ngIf="!this.tablaConDatosCompensaciones">
+            <p class="fuenteCuerpos" style="color:#012440"><i>Tabla vacía</i></p>
+          </div>
 
             </div>
             <mat-paginator #MatPaginatorCompensaciones [pageSize]="4" [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons class="colorPaginador"></mat-paginator>
@@ -224,7 +231,7 @@
         </mat-form-field>
         <label *ngIf="frmDevoluciones.controls.idTipoProblema.invalid && frmDevoluciones.controls.idTipoProblema.dirty" style="color:#dbd8d1;">Este campo es obligatorio</label>
         <br>
-        <mat-form-field class="fuenteCuerpos" style="font-size:20px; width: 100%;">
+        <mat-form-field class="fuenteCuerpos" style="width: 100%;">
           <input formControlName="motivoDevolucion" type="text" matInput placeholder="Detalles" style="text-align: center;">
         </mat-form-field>
         <label *ngIf="frmDevoluciones.controls.motivoDevolucion.invalid && frmDevoluciones.controls.motivoDevolucion.dirty">Este campo es obligatorio</label>

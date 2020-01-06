@@ -46,9 +46,9 @@
         <mat-card style="background:#f9f9f9;height:99%">
           <br>
           <div name="renglonOutpus" class="row bordeOutputs">
-            <div name="columnaIzquierdaOuputs" class="col-md-6">
+            <div name="columnaIzquierdaOuputs" class="col-md-12">
 
-              <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#012440;"><i class='fas fa-shopping-cart'></i>&nbsp; Productos:</p>
+              <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#012440;"><i class='fas fa-shopping-basket' style="font-size: 22px !important;"></i>&nbsp; Productos a Comprar:</p>
               <div name="tablaProductos" class="listaEntidad">
                 <table mat-table [dataSource]="dsProductos" class="fuenteCuerpos" style="font-size:98px">
                   <ng-container matColumnDef="nombreProducto">
@@ -79,30 +79,10 @@
                 <div id="tablaVentaConcluidaVacia" style="text-align: center;font-size: 20px;">
                   <p class="fuenteCuerpos"><i>Tabla vacía</i></p>
                 </div>
-                <hr>
+                <hr style="background: #2d618c;">
               </div>
-              <label class="fuenteCuerpos" style="font-size:24px;">Monto $: <input class="outputMonto" type="text" readonly [(ngModel)]="montoAcumulado"></label>
-            </div>
-
-            <div name="columnaDerechaOuputs" class="col-md-6">
-              <p class="fuenteCuerpos fuenteEncabezadosCentrada" style="color:#012440;"><i class='fas fa-clipboard'></i>&nbsp; Detalles de la Compra:</p>
-              <hr>
-              <div id="idDetallesCompras" name="informacionCompra" class="fuenteCuerpos" style="text-align:center;font-size: 17px;" *ngFor="let i of arregloCompras">
-                <p class="fuenteCuerpos" style="font-size:22px;text-align:center;color:#012440;">
-                  <b>ID Compra: </b> {{i.idCompra}}
-                  <br><b>Monto $: </b> {{i.montoCompra}}
-                  <br><b>Fecha : </b> {{i.fechaCompra | date: 'yyyy-MM-dd HH:mm:ss'}}
-                  <br><b>Proveedor: </b> {{i.nombreProveedor}}
-                  <br><b>Comprador : </b> {{i.nombreUsuario}}
-                  <br><b>Productos: </b> {{i.productos}}
-                </p>
-              </div>
-              <div id="idTablaDetalles" style="text-align: center;font-size: 20px;color:#012440;">
-                <p class="fuenteCuerpos"><i>Sin detalles</i></p>
-              </div>
-              <hr>
-              <br>
-              <button id="idLimpiarPantallaCompras"  mat-flat-button color="accent" class="fuenteCuerpos nvaCompra" (click)="limpiarFormularioC()">Limpiar Pantalla [F4] </button>
+              <label class="fuenteCuerpos labelOutput" style="font-size:24px;">Monto $: <input class="outputMonto" type="text" readonly [(ngModel)]="montoAcumulado"></label>
+              <button id="idLimpiarPantallaCompras"  mat-flat-button color="accent" class="fuenteCuerpos nvaCompra" style="margin-top:25px;" (click)="limpiarFormularioC()">Limpiar Pantalla [F4] </button>
             </div>
           </div>
           <br>

@@ -32,7 +32,7 @@
 
 //FUENTE USADA PARA EL ENCABEZADO ARRIBA DE LA TABLA Y LISTA DE OUTPUTS
 .fuenteEncabezadosCentrada{
-  font-size: 22px;
+  font-size: 27px;
   text-align: center;
 }
 
@@ -58,6 +58,8 @@
   overflow-y: auto;
   margin-bottom: 12px;
   width: 100%;
+  min-height: 60%;
+  max-height: 63%;
 }
 
 //ESTILO PARA ETIQUETAS DE MONTO,CAMBIO,PAGO
@@ -66,6 +68,14 @@
   color: #2a2d3b;
   margin-bottom: 0px;
   font-size: 22px!important;
+}
+
+
+//MONTO, MODIFICA EL LABEL EN GENERAL
+.labelOutput{
+  font-size:24px;
+  margin-top: 25px;
+  width:25%
 }
 
 //BOTON NUEVA COMPRA (LIMPIAR PANTALLA)

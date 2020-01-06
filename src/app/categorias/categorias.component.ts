@@ -36,7 +36,7 @@ quedaria 6 - 6 de 6 que es lo correcto).*/
   styleUrls: ['./categorias.component.scss']
 })
 export class CategoriasComponent implements OnInit {
-
+  public tablaConDatos: boolean;
   public closeResult: string; //modal
   public modal: NgbModalRef; //modal
   public titulo:string; //para el modal
@@ -61,6 +61,7 @@ export class CategoriasComponent implements OnInit {
       subCategoria:["",Validators.required],
       descripcionCategoria:["",Validators.required]
     });
+    this.tablaConDatos = false;
   }
 
   //FUNCION PARA ABRIR EL MODAL, CONFIGURACIONES DE BOOTSTRAP
@@ -85,6 +86,13 @@ export class CategoriasComponent implements OnInit {
   public listarCategorias(){
     this.API.mostrarCategorias().subscribe(
       (success:any)=>{
+        //manipulamos esta variable para dar uso a un ngif que se uso en la vista en un label
+        if (success.estatus > 0) {
+            this.tablaConDatos = true;
+        }
+        if (success.estatus == 0){
+            this.tablaConDatos = false;
+        }
         this.dsCategorias = new MatTableDataSource(success.respuesta);
         this.dsCategorias.paginator = this.paginator;
         this.dsCategorias.paginator._intl.itemsPerPageLabel = 'items por pagina';
@@ -142,6 +150,7 @@ export class CategoriasComponent implements OnInit {
       this.API.borrarCategoria(idCategoria).subscribe(
         (success:any)=>{
           alert(success.respuesta);
+          //document.getElementById('tablaVaciaProductos').style.display = "block";
           this.listarCategorias();
 
         },
