@@ -34,3 +34,7 @@
 ::ng-deep.mat-tab-body-content {
   padding: 2px!important;
 }
+//SOBREESCRIBIR OPTIONS DEL SELECT PARA QUE SE VEAN ARRIBA DEL MODAL
+::ng-deep.cdk-overlay-container {
+  z-index: 10001!important;
+}
