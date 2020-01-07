@@ -8,6 +8,27 @@ import {LoginJwtService} from '../login-jwt.service';
 import {ConfirmarEliminarService} from '../confirmar-eliminar.service';
 import {GenerarPDFsService} from '../generar-pdfs.service';
 
+/*ESTA FUNCION UNICAMENTE ES PARA CAMBIAR EL "OF" DEL PAGINADOR A "DE" Y NO SE VEA FEO MEZCLADO EL ESPAÑOL CON INGLES,
+ESTAMOS CONFIGURANDO LOS RANGOS DEL PAGINADOR - CORTESÍA: https://stackblitz.com/edit/angular-5mgfxh-6mbpdq */
+
+const etiquetaRango = (page: number, pageSize: number, length: number) => {
+  if (length == 0 || pageSize == 0) { //caso paginador vacio
+    return `0 de ${length}`;
+  }
+  length = Math.max(length, 0);
+
+  const startIndex = page * pageSize; //indice de inicio
+
+/*if resumido; si el indice de inicio excede la logitud de la lista (6 - 5 de 6 por ejemplo) se veria: 6 - 10 de 6 gracias al
+[pageSizeOptions] lo cual es incorrecto pues solo hay 6 elementos en tal rango ENTONCES mejor coloca como indice final el indice inicial
+quedaria 6 - 6 de 6 que es lo correcto).*/
+  const endIndex = startIndex < length ?
+      Math.min(startIndex + pageSize, length) :
+      startIndex + pageSize;
+
+  return `${startIndex + 1} - ${endIndex} de ${length}`;
+}
+
 
 @Component({
   selector: 'app-devoluciones',
@@ -144,7 +165,12 @@ export class DevolucionesComponent implements OnInit {
             this.tablaConDatosDevoluciones = false;
         }
         this.dsDevoluciones = new MatTableDataSource(success.respuesta);
-        this.dsDevoluciones.paginator = this.paginatorDevoluciones;
+        if(!this.dsDevoluciones.paginator){
+          this.dsDevoluciones.paginator = this.paginatorDevoluciones;
+          this.dsDevoluciones.paginator._intl.itemsPerPageLabel = 'items por pagina';
+          this.dsDevoluciones.paginator._intl.getRangeLabel = etiquetaRango;
+
+        }
       },
       (error)=>{
         console.log("hubo un problema",error)
