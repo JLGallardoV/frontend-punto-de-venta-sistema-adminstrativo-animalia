@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos" [disabled]="frmFiltrado.invalid" (click)="generarReportes()">Filtrar</button>
+                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="fuenteCuerpos" [disabled]="frmFiltrado.invalid" (click)="generarUtilidad()">Filtrar</button>
                   </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="btnFiltrar fuenteCuerpos" [disabled]="frmViabilidadProductos.invalid" (click)="generarViabilidad()">Filtrar</button>
+                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="btnFiltrar fuenteCuerpos" [disabled]="frmViabilidadProductos.invalid" (click)="mostrarVentasProductos()">Filtrar</button>
                   </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@
                 </div>
                 <div class="col-3">
                   <div style="margin-top: 15px;">
-                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="btnFiltrar fuenteCuerpos" [disabled]="frmRendimientoVendedores.invalid" (click)="generarRendimientoVendedores()">Filtrar</button>
+                    <button mat-flat-button color="accent" style="width: 100%;font-size: 22px;" class="btnFiltrar fuenteCuerpos" [disabled]="frmRendimientoVendedores.invalid" (click)="mostrarVentasVendedores()">Filtrar</button>
                   </div>
                 </div>
             </div>

@@ -96,8 +96,8 @@ export class HerramientasComponent implements OnInit {
     this.titulo = "Agregar Proveedor";
   }
 
-  //MOSTRAR REPORTES ECONOMICOS
-  public generarReportes() {
+  //MOSTRAR UTILIDAD
+  public generarUtilidad() {
     let fechaInicioForm: string = "";
     let fechaFinalForm: string = "";
     fechaInicioForm = this.frmFiltrado.get('fechaInicio').value;
@@ -131,8 +131,8 @@ export class HerramientasComponent implements OnInit {
     );
   }
 
-  //MOSTRAR VIABILIDAD DE PRODUCTOS
-  public generarViabilidad() {
+  //MOSTRAR VENTAS DE PRODUCTOS
+  public mostrarVentasProductos() {
     let fechaInicioForm: string = "";
     let fechaFinalForm: string = "";
     fechaInicioForm = this.frmViabilidadProductos.get('fechaInicio').value;
@@ -146,8 +146,6 @@ export class HerramientasComponent implements OnInit {
           this.dsViabilidadProductos = new MatTableDataSource(success.respuesta);
           if (!this.dsViabilidadProductos.paginator) {
             this.dsViabilidadProductos.paginator = this.MatPaginatorVentasProducto;
-            this.dsViabilidadProductos.paginator._intl.itemsPerPageLabel = 'items por pagina';
-            this.dsViabilidadProductos.paginator._intl.getRangeLabel = etiquetaRango;
             document.getElementById('tablaVentaConcluidaVaciaProductos').style.display = "none";
 
 
@@ -163,8 +161,8 @@ export class HerramientasComponent implements OnInit {
   }
 
 
-  //MOSTRAR RENDIMIENTO VENDEDORES
-  public generarRendimientoVendedores() {
+  //MOSTRAR VENTAS VENDEDORES
+  public mostrarVentasVendedores() {
     let fechaInicioForm: string = "";
     let fechaFinalForm: string = "";
     fechaInicioForm = this.frmRendimientoVendedores.get('fechaInicio').value;
@@ -179,8 +177,6 @@ export class HerramientasComponent implements OnInit {
           this.dsRendimientoVendedores = new MatTableDataSource(success.respuesta);
           if (!this.dsRendimientoVendedores.paginator) {
             this.dsRendimientoVendedores.paginator = this.MatPaginatorVentasVendedores;
-            this.dsRendimientoVendedores.paginator._intl.itemsPerPageLabel = 'items por pagina';
-            this.dsRendimientoVendedores.paginator._intl.getRangeLabel = etiquetaRango;
             document.getElementById('tablaVentaConcluidaVaciaVendedores').style.display = "none";
 
           }
@@ -261,6 +257,9 @@ export class HerramientasComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.MatPaginatorReporteEconomico._intl.itemsPerPageLabel = "items por pagina"; //inicializo los labels del paginador
+    this.MatPaginatorReporteEconomico._intl.getRangeLabel = etiquetaRango; //inicializo los labels del paginador
+
     this.guardian.restringirAcceso();
   }
 }
