@@ -14,6 +14,10 @@ export class AppComponent {
   }
   title = 'puntoVentaMascotas';
   public openNav() {
+    if (document.getElementById("contenido").style.pointerEvents == "none") {
+        this.closeNav();
+        return;
+    }
     document.getElementById("mySidenav").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
     document.getElementById("contenido").style.opacity = "0.4";
