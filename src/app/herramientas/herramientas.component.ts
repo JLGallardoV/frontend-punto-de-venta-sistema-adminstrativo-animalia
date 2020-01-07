@@ -118,12 +118,11 @@ export class HerramientasComponent implements OnInit {
         this.dsReporteEconomico = new MatTableDataSource(arregloReportesEconomicos);
         document.getElementById('tablaVentaConcluidaVaciaUtilidad').style.display = "none";
 
-        /*(!this.dsReporteEconomico.paginator){
-          this.dsReporteEconomico.paginator = this.MatPaginatorReporteEconomico;
-          //this.dsReporteEconomico.paginator._intl.itemsPerPageLabel = 'items por pagina';
-          //this.dsReporteEconomico.paginator._intl.getRangeLabel = etiquetaRango;
-
-        }*/
+        if(!this.dsReporteEconomico.paginator){
+            this.dsReporteEconomico.paginator = this.MatPaginatorReporteEconomico;
+            this.dsReporteEconomico.paginator._intl.itemsPerPageLabel = 'items por pagina';
+            this.dsReporteEconomico.paginator._intl.getRangeLabel = etiquetaRango;
+        }
 
       },
       (error) => {
