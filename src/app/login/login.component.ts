@@ -5,6 +5,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { LoginJwtService } from '../login-jwt.service';
 import { sha256} from 'js-sha256';
 import { AppComponent} from '../app.component'; //invocaremos el metodo que cierra el login el cual se encuentra aquí
+import { APIService } from '../api.service';
 
 export interface ITiposDeUsuarios {
   idTipoUsuario: number;
@@ -20,7 +21,14 @@ export class LoginComponent implements OnInit {
    public formValid:Boolean=false;
    public arregloTiposDeUsuarios:ITiposDeUsuarios[];
 
-  constructor(public router: Router,public formBuilder: FormBuilder, private jwt: LoginJwtService,private _snackBar: MatSnackBar,public cerrarMenu:AppComponent){
+  constructor(
+    public router: Router,
+    public formBuilder: FormBuilder,
+    private jwt: LoginJwtService,
+    private _snackBar: MatSnackBar,
+    public cerrarMenu:AppComponent,
+    public API: APIService
+  ){
     this.frmLogin = this.formBuilder.group({
           nombreUsuario:["",Validators.required],
           passwordUsuario:["",Validators.required],
@@ -38,6 +46,19 @@ export class LoginComponent implements OnInit {
   public login() {
     var constrasenaEncriptada = sha256(this.frmLogin.get('passwordUsuario').value)//Encriptacion de constraña sha256
     this.jwt.login(this.frmLogin.get('nombreUsuario').value,constrasenaEncriptada);//invocando metodo con la peticon del login, proveniente del servicio
+  }
+
+  public enviarCorreo(emailUsuario:string){
+      console.log("valor pasado por parametro: ",emailUsuario);
+      this.API.enviarCorreo(emailUsuario).subscribe(
+        (success:any)=>{
+          alert(JSON.stringify(success.respuesta)+" en caso de no encontrar tu correo en la bandeja de entrada, revisa tu spam");
+        },
+        (error:any)=>{
+          alert("Asegurate de ingresar tu correo electronico correctamente");
+          console.log("verdadero error",error)
+        }
+      );
   }
 
   ngOnInit() {

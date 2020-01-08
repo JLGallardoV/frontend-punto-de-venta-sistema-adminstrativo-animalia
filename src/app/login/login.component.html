@@ -24,7 +24,13 @@
       <br>
       <div name="contenidoAbajoDeInputs" class="margenSuperior">
         <u>
-          <p class="fuenteCuerpos textoProblemasAcceder"(click)="openSnackBar()">
+          <p class="fuenteCuerpos textoProblemasAcceder" (click)="enviarCorreo(frmLogin.controls.nombreUsuario.value)">
+            ¿Olvidaste tu contraseña?
+          </p>
+        </u>
+
+        <u>
+          <p class="fuenteCuerpos textoProblemasAcceder" style="margin-top: -16px;font-size: 14px;" (click)="openSnackBar()">
             ¿Problemas para acceder?
           </p>
         </u>
