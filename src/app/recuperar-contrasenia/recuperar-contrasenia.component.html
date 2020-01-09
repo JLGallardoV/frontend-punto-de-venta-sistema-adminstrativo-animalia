@@ -1,0 +1,33 @@
+<div class="background" id="idLogin">
+  <br>
+  <mat-card class="cardFormulario">
+    <form [formGroup]= "frmRecuperarContrasenia"  class="fuenteCuerpos">
+      <div style="text-align: center;">
+        <br>
+        <img src="../../assets/img/logoAnimaliaV2.png" alt="logo" style="height: 145px;width: 150px;">
+      </div>
+      <br>
+      <div class="contenedorInputs">
+        <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+          <input formControlName="nuevaContrasenia" matInput placeholder="Cambiar contraseña" type="password">
+        </mat-form-field>
+        <label *ngIf="frmRecuperarContrasenia.controls.nuevaContrasenia.invalid && frmRecuperarContrasenia.controls.nuevaContrasenia.dirty" style="color: #e6832d;font-size: 20px;">Este campo es obligatorio</label>
+
+        <mat-form-field class="fuenteCuerpos" style="font-size:20px;">
+          <input formControlName="confirmarContrasenia" matInput placeholder="Confirmar contraseña" type="password" (keyup)=confirmarContrasenia($event)>
+        </mat-form-field>
+        <!--mat-hint>Errors appear instantly!</mat-hint>
+    <mat-error *ngIf="frmRecuperarContrasenia.controls.passwordUsuario.hasError('email') && !frmRecuperarContrasenia.controls.passwordUsuario.hasError('required')">
+      Please enter a valid email address
+    </mat-error-->
+        <label *ngIf="!this.coincidencia && frmRecuperarContrasenia.controls.nuevaContrasenia.dirty" style="color: #e6832d;font-size: 20px;">Este campo debe coincidir con el anterior</label>
+        <br>
+      </div>
+    </form>
+    <br>
+    <div name="contenidoAbajoDeInputs" class="margenSuperior">
+      <hr>
+      <button mat-flat-button color="accent" class="btLogin fuenteCuerpos" style="font-size:22px;" [disabled]="frmRecuperarContrasenia.invalid || !this.coincidencia" (click)="login()">Actualizar</button>
+    </div>
+  </mat-card>
+</div>

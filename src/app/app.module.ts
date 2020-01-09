@@ -45,13 +45,14 @@ import {GenerarPDFsService} from './generar-pdfs.service';
 import {RecuperarContraseniaService} from './recuperar-contrasenia.service';
 import {ConfirmarEliminarService} from './confirmar-eliminar.service';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { RecuperarContraseniaComponent } from './recuperar-contrasenia/recuperar-contrasenia.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent, ComprasComponent, ConfiguracionComponent
+    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent, ComprasComponent, ConfiguracionComponent, RecuperarContraseniaComponent
   ],
   imports: [
     AppRoutingModule,
