@@ -329,12 +329,6 @@ export class APIService {
     return this.http.delete(`http://localhost:3000/proveedoresWS/eliminarProveedor/${idProveedor}`, { headers: this.headers });
   }
 
-  //WS PARA RECUPERAR CONTRASEÑA
-  public enviarCorreo(emailUsuario:string) {
-    console.log("esto llega al servicio: ",emailUsuario);
-    return this.http.post(`http://localhost:3000/loginWS/recuperarContrasenia`,{emailUsuario},{ headers: this.headers });
-  }
-
   //WS PARA REPORTES ECONOMICOS
   public mostrarReporte(fechaInicio: string, fechaFinal: string) {
     return this.http.get(`http://localhost:3000/reportesEconomicosWS/listarReportesEconomicos/${fechaInicio}/${fechaFinal}`, { headers: this.headers });
