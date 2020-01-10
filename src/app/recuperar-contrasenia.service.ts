@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class RecuperarContraseniaService {
   public headers: any;
   constructor(public actRoute: ActivatedRoute, public http: HttpClient) {
+    //anexamos el token antes de que envie la peticion sin token y mande algun error
     this.actRoute.queryParams.subscribe((params: any) => {
       let token: string = "";
       token = params['token'];
@@ -20,7 +21,6 @@ export class RecuperarContraseniaService {
         'Content-Type': 'application/json',//tipo de contenido JSON
         'Accept': 'application/json' //acepta el cuerpo de la peticion JSON
       });
-      console.log("token de recuperar: ", localStorage.getItem('token'));
     }, 0);
   }
   //ENVIA CORREO DESDE EL LOGIN
@@ -35,11 +35,13 @@ export class RecuperarContraseniaService {
         let idUsuario = success.respuesta[0].idUsuario;
         let emailUsuario = success.respuesta[0].emailUsuario;
 
+        document.getElementById('idEnviarMail').style.pointerEvents = "none";// evitamos que el usuario oprima el btn de peticion
         console.log("enviando correo a: ", emailUsuario, " \n idUsuario", idUsuario);
         this.http.post(`http://localhost:3000/loginWS/enviarEmail`, { emailUsuario, idUsuario }, { headers: this.headers }).subscribe(
           (success: any) => {
             alert("Revisa tu email para reestablecer tu contraseña | En caso de no encontrar tu correo en la bandeja de entrada, revisa tu spam");
             console.log("mensaje exitoso completo: ", success.respuesta)
+            document.getElementById('idEnviarMail').style.pointerEvents = "unset";// desbloqueamos nuevamente el boton de peticiones
           },
           (error: any) => {
             console.log("este es el error", error)
