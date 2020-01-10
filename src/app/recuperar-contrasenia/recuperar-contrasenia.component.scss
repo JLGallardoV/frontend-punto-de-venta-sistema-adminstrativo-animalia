@@ -1,0 +1,46 @@
+.background{
+  background: #012440;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center;
+  background-size: cover;
+	height: 100vh;
+	width: 100vw;
+}
+
+
+.contenedorInputs > * {
+  width: 100%;
+}
+.cardFormulario {
+  background:#f4f4f4;
+  //#dfdcd4
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  height: auto;
+  width: 600px;
+  box-shadow: #353434 0px 1px 4px 0px;
+}
+.btLogin{
+  width: 100%;
+}
+//ESPINER QUE APARECE CADA QUE SE LOGUEA EL USUARIO
+.spinner{
+		position: absolute;
+		z-index: 2;
+    margin-top: 35vh;
+    margin-left: 47%;
+}
+
+//SEPARA EL BOTON DE INGRESAR DE LOS INPUTS
+.margenSuperior{
+  margin-top: 75px;
+}
+
+//CAMBIA EL ANCHO DEL CARD PRINCIPAL EN CASO DE PANTALLAS MENORES A LAS
+@media screen and (max-width: 700px) {
+  .cardFormulario{
+    width:320px
+  }
+}

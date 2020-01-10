@@ -42,15 +42,17 @@ import { HttpClientModule} from '@angular/common/http';
 import { ComprasComponent} from './compras/compras.component';
 import{AuthGuard} from './auth.guard';
 import {GenerarPDFsService} from './generar-pdfs.service';
+import {RecuperarContraseniaService} from './recuperar-contrasenia.service';
 import {ConfirmarEliminarService} from './confirmar-eliminar.service';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { RecuperarContraseniaComponent } from './recuperar-contrasenia/recuperar-contrasenia.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent, ComprasComponent, ConfiguracionComponent
+    ProveedoresComponent, TransaccionesComponent, ClientesComponent, FacturasComponent, ProductosComponent, DevolucionesComponent, CategoriasComponent, VendedoresComponent, UsuariosComponent, AccesosComponent, HerramientasComponent, ComprasComponent, ConfiguracionComponent, RecuperarContraseniaComponent
   ],
   imports: [
     AppRoutingModule,
@@ -86,6 +88,7 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
     AuthGuard,
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'}, //cambiamos los datapicker de la app a español mexico
     GenerarPDFsService,
+    RecuperarContraseniaService,
     AppComponent,
     ConfirmarEliminarService
   ],

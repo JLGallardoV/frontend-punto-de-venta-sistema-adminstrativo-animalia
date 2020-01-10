@@ -9,11 +9,13 @@ import {DevolucionesComponent} from './devoluciones/devoluciones.component';
 import {ProductosComponent} from './productos/productos.component';
 import {UsuariosComponent} from './usuarios/usuarios.component';
 import {HerramientasComponent} from './herramientas/herramientas.component';
+import {RecuperarContraseniaComponent} from './recuperar-contrasenia/recuperar-contrasenia.component';
 
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent,canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
+  {path: 'recuperarContrasenia', component: RecuperarContraseniaComponent},
   {path: 'transacciones', component: TransaccionesComponent,canActivate:[AuthGuard]},
   {path: 'facturas', component: FacturasComponent,canActivate:[AuthGuard]},
   {path: 'productos', component: ProductosComponent,canActivate:[AuthGuard]},
