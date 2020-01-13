@@ -85,7 +85,8 @@ export class RecuperarContraseniaComponent implements OnInit {
                 },0);
               return;
           }
-          console.log("success de actualizar: ",success);
+            alert("Lo siento intentalo nuevamente");
+            console.log("motivo: ",success.respuesta);
         },
         (error:any)=>{
           console.log("error: ",error);
@@ -96,6 +97,14 @@ export class RecuperarContraseniaComponent implements OnInit {
   }
 
   ngOnInit() {
+    /*con esto por ninguna razon mostramos el menu en este modulo,
+    esperamos 2s para asegurarnos de que la parte fisica de la app se haya cargado por completo para actuar*/
+    setTimeout(()=>{
+      if(document.getElementById('idToolbar').style.display = 'flex'){
+        document.getElementById('idToolbar').style.display = 'none';
+      }
+    },2000);
+
   }
 
 }

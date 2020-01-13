@@ -45,6 +45,7 @@ export class LoginJwtService {
         }
       },
       (error) => {
+        alert("Problemas de conexión");
         console.log("este es tu error:", error);
       });
   }
