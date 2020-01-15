@@ -49,7 +49,7 @@ export class RecuperarContraseniaService {
         );
       },
       (error: any) => {
-        alert("Problemas de conexión");
+        alert("Algo a ocurrido. \n Por favor verifica que hayas ingresado bien tu usuario");
         console.log("verdadero error: ", error);
       }
     );
